@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:glx="http://immunogenomics.org/gl-resource-xlink"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  targetNamespace="http://immunogenomics.org/gl-resource-xlink"
+  elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"></xs:import>
+  <xs:complexType name="GlResource">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="id" type="xs:string"></xs:element>
+      <xs:element minOccurs="1" maxOccurs="1" name="glstring" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Locus">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence></xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Allele">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="accession" type="xs:string"></xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="locus">
+            <xs:complexType>
+              <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+              <xs:attribute ref="xlink:role" fixed="hasLocus"></xs:attribute>
+              <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AlleleList">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="allele">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasAllele"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Haplotype">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="alleleList">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasAlleleList"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Genotype">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="alleleList">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasAlleleList"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="haplotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="haplotype">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasHaplotype"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GenotypeList">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="genotype">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasGenotype"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MultilocusUnphasedGenotype">
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypeLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="genotypeList">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasGenotypeList"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

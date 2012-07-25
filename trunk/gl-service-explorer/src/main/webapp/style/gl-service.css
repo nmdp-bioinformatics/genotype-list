@@ -1,0 +1,37 @@
+/*
+$light: #d3d7cf;
+$medium: #babdb6;
+$dark: #555753;
+$black: #2e3436;
+$blue: rgb(203, 213, 232);
+$red: rgb(244, 202, 228);
+$green: rgb(230, 245, 201);
+$orange: rgb(253, 205, 172);
+$brown: rgb(241, 226, 204);
+$yellow: rgb(255, 242, 174);
+$teal: rgb(179, 226, 205);
+*/
+
+body, h1, h2, h3, h4, h5, h6
+{
+  color: #2e3436;
+}
+pre
+{
+  background-color: #eeeeec;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  overflow: auto;
+  padding: 5px;
+  width: auto;
+}
+.errorResponse
+{
+  color: rgb(200, 0, 0);
+  padding: 64px;
+  overflow: hidden;
+  background-image: url("../images/error.png");
+  background-repeat: no-repeat;
+  background-position: left;
+}

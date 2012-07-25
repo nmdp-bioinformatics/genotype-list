@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gl:MultilocusUnphasedGenotype xmlns:gl="http://immunogenomics.org/gl-resource.xsd">
+  <gl:id>${multilocusUnphasedGenotype.Id}</gl:id>
+  <gl:glstring>${multilocusUnphasedGenotype.Glstring}</gl:glstring>
+  <gl:genotypeLists>
+#foreach ($genotypeList in ${multilocusUnphasedGenotype.GenotypeLists})
+    <gl:GenotypeList>
+      <gl:id>${genotypeList.Id}</gl:id>
+      <gl:glstring>${genotypeList.Glstring}</gl:glstring>
+      <gl:genotypes>
+#foreach ($genotype in ${genotypeList.Genotypes})
+        <gl:Genotype>
+          <gl:id>${genotype.Id}</gl:id>
+          <gl:glstring>${genotype.Glstring}</gl:glstring>
+          <gl:alleleLists>
+#foreach ($alleleList in ${genotype.AlleleLists})
+            <gl:AlleleList>
+              <gl:id>${alleleList.Id}</gl:id>
+              <gl:glstring>${alleleList.Glstring}</gl:glstring>
+              <gl:alleles>
+#foreach ($allele in ${alleleList.Alleles})
+                <gl:Allele>
+                  <gl:id>${allele.Id}</gl:id>
+                  <gl:accession>${allele.Accession}</gl:accession>
+                  <gl:glstring>${allele.Glstring}</gl:glstring>
+                  <gl:locus>
+                    <gl:Locus>
+                      <gl:id>${allele.Locus.Id}</gl:id>
+                      <gl:glstring>${allele.Locus.Glstring}</gl:glstring>
+                    </gl:Locus>
+                  </gl:locus>
+                </gl:Allele>
+#end
+              </gl:alleles>
+            </gl:AlleleList>
+#end
+          </gl:alleleLists>
+          <gl:haplotypes>
+#foreach ($haplotype in ${genotype.Haplotypes})
+            <gl:Haplotype>
+              <gl:id>${haplotype.Id}</gl:id>
+              <gl:glstring>${haplotype.Glstring}</gl:glstring>
+              <gl:alleleLists>
+#foreach ($alleleList in ${haplotype.AlleleLists})
+                <gl:AlleleList>
+                  <gl:id>${alleleList.Id}</gl:id>
+                  <gl:glstring>${alleleList.Glstring}</gl:glstring>
+                  <gl:alleles>
+#foreach ($allele in ${alleleList.Alleles})
+                    <gl:Allele>
+                      <gl:id>${allele.Id}</gl:id>
+                      <gl:accession>${allele.Accession}</gl:accession>
+                      <gl:glstring>${allele.Glstring}</gl:glstring>
+                      <gl:locus>
+                        <gl:Locus>
+                          <gl:id>${allele.Locus.Id}</gl:id>
+                          <gl:glstring>${allele.Locus.Glstring}</gl:glstring>
+                        </gl:Locus>
+                      </gl:locus>
+                    </gl:Allele>
+#end
+                  </gl:alleles>
+                </gl:AlleleList>
+#end
+              </gl:alleleLists>
+            </gl:Haplotype>
+#end
+          </gl:haplotypes>
+        </gl:Genotype>
+#end
+      </gl:genotypes>
+    </gl:GenotypeList>
+#end
+  </gl:genotypeLists>
+</gl:MultilocusUnphasedGenotype>

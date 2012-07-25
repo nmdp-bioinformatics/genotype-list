@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glx:AlleleList xmlns:glx="http://immunogenomics.org/gl-resource-xlink.xsd" xmlns:xlink="http://www.w3.org/1999/xlink.xsd">
+  <glx:id>${alleleList.Id}</glx:id>
+  <glx:glstring>${alleleList.Glstring}</glx:glstring>
+  <glx:alleles>
+#foreach ($allele in ${alleleList.Alleles})
+    <glx:allele xlink:href="${allele.Id}"></glx:allele>
+#end
+  </glx:allele>
+</glx:Allele>

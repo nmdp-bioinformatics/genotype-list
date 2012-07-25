@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:gl="http://immunogenomics.org/gl-resource"
+  targetNamespace="http://immunogenomics.org/gl-resource"
+  elementFormDefault="qualified">
+
+  <xs:complexType name="GlResource">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="id" type="xs:string"></xs:element>
+      <xs:element minOccurs="1" maxOccurs="1" name="glstring" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Locus">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence></xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Allele">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="accession" type="xs:string"></xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="locus" type="gl:Locus"></xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AlleleList">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Allele" type="gl:Allele"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Haplotype">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="AlleleList" type="gl:AlleleList"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Genotype">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="AlleleList" type="gl:AlleleList"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="haplotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Haplotype" type="gl:Haplotype"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GenotypeList">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Genotype" type="gl:Genotype"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MultilocusUnphasedGenotype">
+    <xs:complexContent>
+      <xs:extension base="gl:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypeLists">
+            <xs:complexType>
+              <xs:sequence>
+               <xs:element minOccurs="1" maxOccurs="unbounded" name="GenotypeList" type="gl:GenotypeList"></xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

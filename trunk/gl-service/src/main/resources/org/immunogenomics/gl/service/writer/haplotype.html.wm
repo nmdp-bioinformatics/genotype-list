@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>${haplotype.Id}</title>
+  </head>
+  <body>
+    <p class="type"><a href="http://immunogenomics.org/gl-ontology/Haplotype">http://immunogenomics.org/gl-ontology/Haplotype</a></p>
+    <p class="title">${haplotype.Id}</p>
+    <p class="identifier">${haplotype.Id}</p>
+    <p class="label">${haplotype.Id}</p>
+    <p class="comment">A haplotype with ${haplotype.AlleleLists.size()} allele lists represented by glstring ${haplotype.Glstring}</p>
+    <p class="hasGlstring">${haplotype.Glstring}</p>
+#foreach ($al in ${haplotype.AlleleLists})
+    <p class="hasAlleleList"><a href="http://immunogenomics.org/gl-ontology/AlleleList">http://immunogenomics.org/gl-ontology/AlleleList</a> <a href="${al.Id}.html">${al.Id}</a></p>
+#end
+  </body>
+</html>
