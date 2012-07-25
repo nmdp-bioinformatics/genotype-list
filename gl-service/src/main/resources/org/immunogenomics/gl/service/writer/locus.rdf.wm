@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gl="http://immunogenomics.org/gl-ontology/1.0"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="${locus.Id}">
+    <rdf:type rdf:resource="http://immunogenomics.org/gl-ontology/Locus"/>
+    <dc:title>${locus.Id}</dc:title>
+    <dc:identifier>${locus.Id}</dc:identifier>
+    <rdfs:label>${locus.Id}</rdfs:label>
+    <rdfs:comment>A locus represented by glstring ${locus.Glstring}</rdfs:comment>
+    <gl:hasGlstring>${locus.Glstring}</gl:hasGlstring>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>${locus.Id}</title>
+  </head>
+  <body>
+    <p class="type"><a href="http://immunogenomics.org/gl-ontology/Locus">http://immunogenomics.org/gl-ontology/Locus</a></p>
+    <p class="title">${locus.Id}</p>
+    <p class="identifier">${locus.Id}</p>
+    <p class="label">${locus.Id}</p>
+    <p class="comment">A locus represented by glstring ${locus.Glstring}</p>
+    <p class="hasGlstring">${locus.Glstring}</p>
+  </body>
+</html>

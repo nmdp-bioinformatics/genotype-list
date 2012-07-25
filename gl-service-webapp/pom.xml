@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+
+    gl-service-webapp  URI-based RESTful service webapp for the gl project.
+    Copyright (c) 2012 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.immunogenomics.gl</groupId>
+    <artifactId>gl</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.immunogenomics.gl</groupId>
+  <artifactId>gl-service-webapp</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>gl-service-webapp</name>
+  <description>URI-based RESTful service webapp for the gl project.</description>
+
+  <build>
+    <finalName>gl</finalName>
+  </build>
+  <properties>
+    <immunogenomics.componentId>gl.service.webapp</immunogenomics.componentId>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.immunogenomics.gl</groupId>
+        <artifactId>gl-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.immunogenomics.gl</groupId>
+        <artifactId>gl-service-spark</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>gl-service</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>gl-service-spark</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.tuckey.urlrewrite</groupId>
+      <artifactId>urlrewritefilter</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>
