@@ -118,3 +118,14 @@ $ mvn install -rf :gl-service-voldemort
 
 <br/>
 Spark is only available from its own Maven repository, and has enough transitive dependencies to make a local install troublesome.  . . .
+
+<br/>
+URLRewriteFilter is also hosted in the local third-party Nexus repository
+
+{{{
+<dependency>
+  <groupId>org.tuckey.urlrewrite</groupId>
+  <artifactId>urlrewritefilter</artifactId>
+  <version>3.2.0</version>
+</dependency>
+}}}
