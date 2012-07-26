@@ -1,4 +1,4 @@
-#summary This page describes the datatypes created for use within the GL Service.
+#summary GL String Datatypes - Locus, Allele, AlleleList, etc.
 
 = Introduction =
 There are currently seven GL datatypes used within the GL Service, listed in ascending order of size:
