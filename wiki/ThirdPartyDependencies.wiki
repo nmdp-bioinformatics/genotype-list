@@ -62,10 +62,6 @@ $ mvn install:install-file \
       -Dpackaging=jar \
       -Dfile=voldemort-0.90.1/dist/voldemort-0.90.1.jar 
 [INFO] Scanning for projects...
-Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.pom
-Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.pom (5 KB at 9.8 KB/sec)
-Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.jar
-Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.jar (17 KB at 86.0 KB/sec)
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
 [INFO] Building Maven Stub Project (No POM) 1
