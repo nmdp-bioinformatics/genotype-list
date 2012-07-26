@@ -75,7 +75,7 @@ public final class AlleleComparators {
         private static final long serialVersionUID = 1L;
 
         private int valueOf(final String value) {
-            return Integer.parseInt(value.replaceAll("[ACLNQ]+", ""));
+            return Integer.parseInt(value.replaceAll("[ACLNQG]+", ""));
         }
 
         @Override

@@ -23,14 +23,22 @@
 */
 package org.immunogenomics.gl.service.ft;
 
-import org.junit.Before;
+import static com.jayway.restassured.RestAssured.given;
 
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.common.collect.ImmutableList;
 import com.jayway.restassured.http.ContentType;
 
 /**
  * Functional test for /allele glstring content type.
  */
 public final class AlleleGlstringFT extends AbstractFunctionalTest {
+    private final List<String> validAlleleQualifiers = ImmutableList.of("A", "C", "L", "N", "Q", "G");
+    private final List<String> invalidAlleleQualifiers = ImmutableList.of("+", "~", "|", "^", "*");
 
     @Before
     public void setUp() {
@@ -43,5 +51,19 @@ public final class AlleleGlstringFT extends AbstractFunctionalTest {
         validRequestBody = "HLA-A*03:01:01:01";
         invalidRequestBody = "invalid glstring";
         location = "http://localhost:10080/gl/allele/";
+    }
+
+    @Test
+    public void testPostValidAlleleQualifiers() {
+        for (String validAlleleQualifier : validAlleleQualifiers) {
+            given().body("HLA-A*99:01:01:01" + validAlleleQualifier).contentType(contentType).expect().statusCode(201).when().post(uri);
+        }
+    }
+
+    @Test
+    public void testPostInvalidAlleleQualifiers() {
+        for (String invalidAlleleQualifier : invalidAlleleQualifiers) {
+            given().body("HLA-A*99:01:01:01" + invalidAlleleQualifier).contentType(contentType).expect().statusCode(400).when().post(uri);
+        }
     }
 }
