@@ -15,7 +15,7 @@ Each GL String is made out of smaller elements. For example, an {{{AlleleList}}}
 
 A particular string's datatype is its largest component, and no larger. For example, a {{{GenotypeList}}} with one element should be called a {{{Genotype}}} by convention.
 
-Each datatype can be registered in the GL Service individually.
+Each datatype is registered in the GL Service individually.
 
 = Details =
 
