@@ -2,9 +2,6 @@
 
 = Introduction =
 
-rename to GL String GL Reader?
-
-
 The GL Service utilizes the {{{GlStringGlReader}}} to read a glstring and return an object and a URI.
 
 In brief, the reader:
@@ -16,14 +13,22 @@ In brief, the reader:
 = Details =
 
 ==Components==
-The following classes are part of the GL Reader:
-|| *Name* || *Function* || *Namespace* ||
-|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlReader.java GlReader.java] || Interface || org.immunogenomics.gl.service.GlReader ||
-|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/reader/GlstringGlReader.java GlStringGlReader.java] || GL String Implementation of GlReader || org.immunogenomics.gl.service.GlStringGlReader ||
+The following classes are _part_ of the GL Reader:
+|| *Name* || *Function* ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlReader.java GlReader.java] || Interface ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/reader/GlstringGlReader.java GlStringGlReader.java] || GL String Implementation of GlReader ||
 
-The following classes are referenced by the GL Reader:
+The following classes are _referenced_ by the GL Reader:
+|| *Name* || *Function* ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java GlstringResolver.java] || Interface: Resolve glstring to ID ||
+|| [ IdResolver.java] || Interface: Resolve ID to [Datatype <datatype>]object ||
+|| [ GlRegistry.java] || Interface: FUNCTION||
 
 ==How it Works==
+===Setting up the Reader===
+{{{GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)}}}
+This allows for an easy change in the caching implementation. Caching options currently being evaluated include Voldemort and Redis/Jedis. 
+
 ===Resolving IDs===
 The computation involved with resolving IDs is handled primarily by the [{{{glStringResolver}}}] and [{{{idResolver}}}]. 
 
@@ -40,21 +45,17 @@ We'll leave the details about the Resolvers for a separate page, so let's just t
  * If the glstring/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
 
 ===Recursive Reading===
-
 Recursive reading happens/The reader recurses when the glstring and ID do not already exist in the cache, or when the resolver times out. 
 Since each object [Datatypes contains a list of its components], we need to make sure that all of its components are also registered.
 
 ====Special cases:====
-
 {{{Locus}}}
-  Since the {{{locus}}} is the smallest possible datatype, the reader only has to make sure it is in a valid format before registering a new {{{locus}}}. In the future, it may be desirable to add additional validation to prevent creating loci that are not part of nomenclature.
+  Since the {{{locus}}} is the smallest possible datatype, the reader only has to make sure it is in a valid format before registering a new {{{locus}}}. In the future, it may be desirable to add additional validation to prevent creating loci that are not part of [http://hla.alleles.org/ HLA nomenclature].
 
 {{{Alleles}}}
- Much like a {{{locus}}}, the reader has to make sure the {{{allele}}} is in a valid format before registering anything new. The {{{locus}}} is also verified. Because any new alleles registered with the GL Service are not necessarily in the [IMGT Database], they are not given an accession number and are  relates to the accession number. All alleles in [http://hla.alleles.org/ HLA Nomenclature] have an accession number
+ Much like a {{{locus}}}, the reader has to make sure the {{{allele}}} is in a valid format before registering anything new. The {{{locus}}} is also verified. Because any new alleles registered with the GL Service are not necessarily in the [IMGT Database] and are therefore not official, this may be something we choose to disable to prevent creating alleles that are not part of [http://hla.alleles.org/ HLA nomenclature].
 
 ====All other cases:====
-
-The GL String is split into components by its [Delimiters delimiters] in order of precedence. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. Continuing this example, the Reader calls 
-{{{readGenotypeList(genotypeListPart;}}} <fixme need to add info>
+The GL String is split into components by its [Delimiters delimiters] in order of precedence. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. After calling {{{readGenotypeList(component)}}} on each part, each is added to a list to be registered as part of the new object. 
 
 ===Registering Objects===
