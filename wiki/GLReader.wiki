@@ -15,6 +15,14 @@ In brief, the reader:
 
 = Details =
 
+==Components==
+The following classes are part of the GL Reader:
+|| *Name* || *Function* || *Namespace* ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlReader.java GlReader.java] || Interface || org.immunogenomics.gl.service.GlReader ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/reader/GlstringGlReader.java GlStringGlReader.java] || GL String Implementation of GlReader || org.immunogenomics.gl.service.GlStringGlReader ||
+
+The following classes are referenced by the GL Reader:
+
 ==How it Works==
 ===Resolving IDs===
 The computation involved with resolving IDs is handled primarily by the [{{{glStringResolver}}}] and [{{{idResolver}}}]. 
@@ -50,8 +58,3 @@ The GL String is split into components by its [Delimiters delimiters] in order o
 {{{readGenotypeList(genotypeListPart;}}} <fixme need to add info>
 
 ===Registering Objects===
-
-==Components==
-The following classes are part of the GL Reader:
-
-The following classes are referenced by the GL Reader:
