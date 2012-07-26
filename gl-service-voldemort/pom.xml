@@ -37,6 +37,11 @@
   <name>gl-service-voldemort</name>
   <description>Implementation of persistent cache for gl-service using Voldemort.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-voldemort</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-voldemort</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <properties>
     <immunogenomics.componentId>gl.service.voldemort</immunogenomics.componentId>
   </properties>

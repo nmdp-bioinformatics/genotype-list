@@ -37,6 +37,11 @@
   <name>gl-service-performance-tests</name>
   <description>Performance tests for the URI-based RESTful service for the gl project.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-performance-tests</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-performance-tests</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <properties>
     <immunogenomics.componentId>gl.service.pt</immunogenomics.componentId>
   </properties>

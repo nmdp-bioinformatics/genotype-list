@@ -37,6 +37,11 @@
   <name>gl-service-redis</name>
   <description>Implementation of persistent cache for gl-service using Redis+jedis.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-redis</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-redis</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <properties>
     <immunogenomics.componentId>gl.service.redis</immunogenomics.componentId>
   </properties>

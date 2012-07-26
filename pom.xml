@@ -36,12 +36,23 @@
 
   <name>gl</name>
   <description>Multimodule build for the gl project.</description>
-  <url>http://immunogenomics.org/gl</url>
+  <url>http://code.google.com/p/genotype-list</url>
 
   <organization>
     <name>Immunogenomics data analysis working group (IDAWG)</name>
     <url>http://immunogenomics.org</url>
   </organization>
+
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
+
+  <issueManagement>
+    <system>Google Code</system>
+    <url>http://code.google.com/p/genotype-list/issues/list</url>
+  </issueManagement>
 
   <modules>
     <module>gl-core</module>
