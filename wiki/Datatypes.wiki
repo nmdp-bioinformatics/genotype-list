@@ -1,7 +1,7 @@
 #summary This page describes the datatypes created for use within the GL Service.
 
 = Introduction =
-There are currently seven GL datatypes used within the GL Service:
+There are currently seven GL datatypes used within the GL Service, listed in ascending order of size:
 
  * {{{Locus}}}
  * {{{Allele}}}
@@ -11,7 +11,9 @@ There are currently seven GL datatypes used within the GL Service:
  * {{{GenotypeList}}}
  * {{{MultilocusUnphasedGenotype}}}
 
-Each GL String is made out of these components; for example, an {{{AlleleList}}} contains {{{Alleles}}} and {{{Loci}}}, separated by delimiters.
+Each GL String is made out of smaller elements. For example, an {{{AlleleList}}} contains {{{Alleles}}} and {{{Loci}}}, separated by delimiters.
+
+A particular string's datatype is its largest component, and no larger. For example, a {{{GenotypeList}}} with one element should be called a {{{Genotype}}} by convention.
 
 Each datatype can be registered in the GL Service individually.
 
