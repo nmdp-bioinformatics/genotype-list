@@ -17,7 +17,7 @@ In brief, the reader:
 
 ==How it Works==
 ===Resolving IDs===
-The computation involved with resolving IDs is handled primarily by the {{{glStringResolver}}} and {{{idResolver}}}. 
+The computation involved with resolving IDs is handled primarily by the [{{{glStringResolver}}}] and [{{{idResolver}}}]. 
 
 The resolvers are called as follows:
 {{{
@@ -39,13 +39,15 @@ Since each object [Datatypes contains a list of its components], we need to make
 ====Special cases:====
 
 {{{Locus}}}
-  Since the locus is the smallest possible datatype, 
+  Since the {{{locus}}} is the smallest possible datatype, the reader only has to make sure it is in a valid format before registering a new {{{locus}}}. In the future, it may be desirable to add additional validation to prevent creating loci that are not part of nomenclature.
 
 {{{Alleles}}}
+ Much like a {{{locus}}}, the reader has to make sure the {{{allele}}} is in a valid format before registering anything new. The {{{locus}}} is also verified. Because any new alleles registered with the GL Service are not necessarily in the [IMGT Database], they are not given an accession number and are  relates to the accession number. All alleles in [http://hla.alleles.org/ HLA Nomenclature] have an accession number
 
 ====All other cases:====
 
-The GL String is split into components by its [delimiters]. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. Continuing this example, the reader then calls {{{readGenotypeList(genotypeListPart;}}} <fixme need to add info>
+The GL String is split into components by its [Delimiters delimiters] in order of precedence. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. Continuing this example, the Reader calls 
+{{{readGenotypeList(genotypeListPart;}}} <fixme need to add info>
 
 ===Registering Objects===
 
