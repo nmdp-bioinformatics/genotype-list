@@ -90,9 +90,9 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <!--  hosted under org.nmdp.gl.voldemort group id until available on maven central repo -->
+    <!--  hosted under org.immunogenomics.gl.voldemort group id until available on maven central repo -->
     <dependency>
-      <groupId>org.nmdp.gl.voldemort</groupId>
+      <groupId>org.immunogenomics.gl.voldemort</groupId>
       <artifactId>voldemort</artifactId>
       <scope>compile</scope>
     </dependency>
