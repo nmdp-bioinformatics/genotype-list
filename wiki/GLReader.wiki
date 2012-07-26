@@ -5,7 +5,7 @@
 rename to GL String GL Reader?
 
 
-The GL Service utilizes the GlStrinGlReader to read a glstring and return an object and a URI.
+The GL Service utilizes the GlStringGlReader to read a glstring and return an object and a URI.
 
 In brief, the reader:
  * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
@@ -24,15 +24,13 @@ The resolvers are called as follows:
 final String id = glstringResolver.resolveLocus(glstring);
 Locus locus = idResolver.findLocus(id);
 }}}
+where "Locus" is replaced by any datatype.
 
-If the ID already exists, it is returned to the user as is.
+We'll leave the details about the Resolvers for a separate page, so let's just talk about what this means to the Reader.
 
-If the ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered through recursive reading.
+ * If the ID already exists, it is returned to the user as is.
 
-Calls glstringResolver.resolveX(glstring);
-
-Calls idResolver.findX(id);
-where X is the most general element of the glstring, determined by the [delimiters].
+ * If the ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered through recursive reading.
 
 ===Recursive Reading===
 
