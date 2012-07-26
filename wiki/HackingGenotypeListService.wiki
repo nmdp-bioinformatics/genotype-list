@@ -2,6 +2,8 @@
 
 <wiki:toc max_depth="1" />
 
+Building, deploying, and using the genotype list service.
+
 
 <br/>
 = Prerequisites =
