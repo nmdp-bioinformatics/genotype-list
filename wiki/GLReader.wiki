@@ -1,0 +1,76 @@
+#summary This page contains an overview of the Reader component of the GL Service.
+
+= Introduction =
+
+rename to GL String GL Reader?
+
+
+The GL Service utilizes the GlStrinGlReader to read a glstring and return an object and a URI.
+
+In brief, the reader:
+ * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
+ * Registers the GL String if the ID/object doesn't exist 
+   * Recursively reads smaller and smaller pieces based on the delimiters, resolving and registering new objects along the way.   
+ * Returns the object
+
+= Details =
+
+==How it Works==
+===Resolving IDs===
+The computation involved with resolving IDs is handled primarily by the {{{glStringResolver}}} and {{{idResolver}}}. 
+
+The resolvers are called as follows:
+{{{
+final String id = glstringResolver.resolveLocus(glstring);
+Locus locus = idResolver.findLocus(id);
+}}}
+
+If the ID already exists, it is returned to the user as is.
+
+If the ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered through recursive reading.
+
+Calls glstringResolver.resolveX(glstring);
+
+Calls idResolver.findX(id);
+where X is the most general element of the glstring, determined by the [delimiters].
+
+===Recursive Reading===
+
+Loci
+
+Alleles 
+
+Larger Objects
+
+===Registering Objects===
+
+==Components==
+The following classes are part of the GL Reader:
+
+The following classes are referenced by the GL Reader:
+
+
+
+
+
+
+
+
+
+
+
+=Garbage:=
+ in the cache or the resolver times out, the GL String needs to be registered.
+
+====== Components ======
+The following classes are part of the GL Reader:
+
+The following classes are referenced by the GL Reader:
+
+
+====== Details ======
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
