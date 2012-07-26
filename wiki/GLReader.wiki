@@ -5,12 +5,12 @@
 rename to GL String GL Reader?
 
 
-The GL Service utilizes the GlStringGlReader to read a glstring and return an object and a URI.
+The GL Service utilizes the {{{GlStringGlReader}}} to read a glstring and return an object and a URI.
 
 In brief, the reader:
  * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
  * Registers the GL String if the ID/object doesn't exist 
-   * Recursively reads smaller and smaller pieces based on the delimiters, resolving and registering new objects along the way.   
+   * Recursively reads smaller and smaller pieces based on the [delimiters], resolving and registering new objects along the way.   
  * Returns the object
 
 = Details =
@@ -24,21 +24,28 @@ The resolvers are called as follows:
 final String id = glstringResolver.resolveLocus(glstring);
 Locus locus = idResolver.findLocus(id);
 }}}
-where "Locus" is replaced by any datatype.
+where {{{Locus}}} is replaced by any [datatype].
 
 We'll leave the details about the Resolvers for a separate page, so let's just talk about what this means to the Reader.
 
- * If the ID already exists, it is returned to the user as is.
-
- * If the ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered through recursive reading.
+ * If the glstring/ID already exists, its object is returned.
+ * If the glstring/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
 
 ===Recursive Reading===
 
-Loci
+Recursive reading happens/The reader recurses when the glstring and ID do not already exist in the cache, or when the resolver times out. 
+Since each object [Datatypes contains a list of its components], we need to make sure that all of its components are also registered.
 
-Alleles 
+====Special cases:====
 
-Larger Objects
+{{{Locus}}}
+  Since the locus is the smallest possible datatype, 
+
+{{{Alleles}}}
+
+====All other cases:====
+
+When the 
 
 ===Registering Objects===
 
