@@ -1,0 +1,58 @@
+#summary This page describes the datatypes created for use within the GL Service.
+
+= Introduction =
+There are currently seven GL datatypes used within the GL Service:
+
+ * {{{Locus}}}
+ * {{{Allele}}}
+ * {{{AlleleList}}}
+ * {{{Haplotype}}}
+ * {{{Genotype}}}
+ * {{{GenotypeList}}}
+ * {{{MultilocusUnphasedGenotype}}}
+
+Each GL String is made out of these components; for example, an {{{AlleleList}}} contains {{{Alleles}}} and {{{Loci}}}, separated by delimiters.
+
+Each datatype can be registered in the GL Service individually.
+
+= Details =
+
+ * All seven datatypes implement the interface {{{GlResource}}}
+ * Each contains its id, glstring, and a list of any subcomponents
+
+
+===Locus:===
+ * ID
+ * GL String
+
+===Allele:===
+ * ID
+ * GL String
+ * Accession number (link to IMGT or explanation)
+ * {{{Locus}}}
+
+===AlleleList:===
+ * ID
+ * GL String
+ * List of {{{Alleles}}}
+
+===Haplotype:===
+ * ID
+ * GL String
+ * List of {{{AlleleLists}}}
+
+===Genotype:===
+ * ID
+ * GL String
+ * List of {{{AlleleLists}}}
+ * List of {{{Haplotypes}}}
+
+===GenotypeList:===
+ * ID
+ * GL String
+ * Nothing else (sic)
+
+===MultilocusUnphasedGenotype:===
+ * ID
+ * GL String
+ * List of {{{GenotypeLists}}}
