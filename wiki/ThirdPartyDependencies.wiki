@@ -1,0 +1,124 @@
+#summary Third party dependencies.
+
+= Third party dependencies =
+
+Two third party dependencies are currently not available in the Maven Central repository.  As such, the build may fail:
+
+{{{
+$ mvn install
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] gl ................................................ SUCCESS [44.779s]
+[INFO] gl-core ........................................... SUCCESS [18.601s]
+[INFO] gl-service ........................................ SUCCESS [17.017s]
+[INFO] gl-service-jdbc ................................... SUCCESS [5.586s]
+[INFO] gl-service-redis .................................. SUCCESS [8.325s]
+[INFO] gl-service-voldemort .............................. FAILURE [13.668s]
+[INFO] gl-service-spark .................................. SKIPPED
+[INFO] gl-service-explorer ............................... SKIPPED
+[INFO] gl-service-webapp ................................. SKIPPED
+[INFO] gl-service-functional-tests ....................... SKIPPED
+[INFO] gl-service-performance-tests ...................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1:48.964s
+[INFO] Finished at: Wed Jul 25 21:03:24 CDT 2012
+[INFO] Final Memory: 16M/65M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project gl-service-voldemort:
+Could not resolve dependencies for project org.immunogenomics.gl:gl-service-voldemort:jar:1.0-SNAPSHOT:
+Could not find artifact org.immunogenomics.gl.voldemort:voldemort:jar:0.90.1
+in central (http://repo.maven.apache.org/maven2) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :gl-service-voldemort
+}}}
+
+
+<br/>
+Download voldemort-0.90.1 from
+
+https://github.com/downloads/voldemort/voldemort/voldemort-0.90.1.tar.gz
+
+
+<br/>
+Extract voldemort-0.90.1.jar and install to the local repository with
+
+{{{
+$ tar xvfz voldemort-0.90.1.tar.gz
+$ mvn install:install-file \
+      -DgroupId=org.immunogenomics.gl.voldemort \
+      -DartifactId=voldemort \
+      -Dversion=0.90.1 \
+      -Dpackaging=jar \
+      -Dfile=voldemort-0.90.1/dist/voldemort-0.90.1.jar 
+[INFO] Scanning for projects...
+Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.pom
+Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.pom (5 KB at 9.8 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.jar
+Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.3/maven-clean-plugin-2.3.jar (17 KB at 86.0 KB/sec)
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-install-plugin:2.3:install-file (default-cli) @ standalone-pom ---
+[INFO] Installing /home/xxx/Downloads/voldemort-0.90.1/dist/voldemort-0.90.1.jar to
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.90.1/voldemort-0.90.1.jar
+[INFO] Installing /tmp/mvninstall2332719942582336652.pom to
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.90.1/voldemort-0.90.1.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.902s
+[INFO] Finished at: Wed Jul 25 21:09:31 CDT 2012
+[INFO] Final Memory: 3M/72M
+[INFO] ------------------------------------------------------------------------
+}}}
+
+
+<br/>
+Continue build
+{{{
+$ mvn install -rf :gl-service-voldemort
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] gl-service-voldemort .............................. SUCCESS [8.631s]
+[INFO] gl-service-spark .................................. FAILURE [4.241s]
+[INFO] gl-service-explorer ............................... SKIPPED
+[INFO] gl-service-webapp ................................. SKIPPED
+[INFO] gl-service-functional-tests ....................... SKIPPED
+[INFO] gl-service-performance-tests ...................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 13.851s
+[INFO] Finished at: Wed Jul 25 21:11:16 CDT 2012
+[INFO] Final Memory: 18M/141M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project gl-service-spark: Could not resolve dependencies for project org.immunogenomics.gl:gl-service-spark:jar:1.0-SNAPSHOT: Could not find artifact spark:spark:jar:0.9.9.3-SNAPSHOT in sonatype-nexus-snapshots (https://oss.sonatype.org/content/repositories/snapshots) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :gl-service-spark
+}}}
+
+
+<br/>
+Spark is only available from its own Maven repository, and has enough transitive dependencies to make a local install troublesome.  . . .
