@@ -37,6 +37,11 @@
   <name>gl-service-webapp</name>
   <description>URI-based RESTful service webapp for the gl project.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-webapp</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-webapp</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <build>
     <finalName>gl</finalName>
   </build>

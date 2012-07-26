@@ -38,6 +38,11 @@
   <name>gl-service-explorer</name>
   <description>URI-based RESTful service API explorer webapp.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-explorer</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-explorer</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <build>
     <finalName>explorer</finalName>
   </build>

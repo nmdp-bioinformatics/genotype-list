@@ -37,6 +37,11 @@
   <name>gl-service-jdbc</name>
   <description>Implementation of persistent cache for gl-service using JDBC.</description>
 
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-jdbc</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-jdbc</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
   <properties>
     <immunogenomics.componentId>gl.service.jdbc</immunogenomics.componentId>
   </properties>
