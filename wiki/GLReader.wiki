@@ -45,7 +45,7 @@ Since each object [Datatypes contains a list of its components], we need to make
 
 ====All other cases:====
 
-When the 
+The GL String is split into components by its [delimiters]. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. Continuing this example, the reader then calls {{{readGenotypeList(genotypeListPart;}}} <fixme need to add info>
 
 ===Registering Objects===
 
