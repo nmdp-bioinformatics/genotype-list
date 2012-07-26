@@ -1,4 +1,4 @@
-#summary This page describes the delimiters used to separate components within a GL String.
+#summary Delimiters that separate components in a GL String.
 
 = Introduction =
 
