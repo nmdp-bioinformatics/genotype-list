@@ -1,4 +1,4 @@
-#summary This page contains an overview of the Reader component of the GL Service.
+#summary An overview of the GlStringGlReader
 
 = Introduction =
 
