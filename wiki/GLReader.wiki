@@ -53,29 +53,3 @@ The GL String is split into components by its [delimiters]. For example, the {{{
 The following classes are part of the GL Reader:
 
 The following classes are referenced by the GL Reader:
-
-
-
-
-
-
-
-
-
-
-
-=Garbage:=
- in the cache or the resolver times out, the GL String needs to be registered.
-
-====== Components ======
-The following classes are part of the GL Reader:
-
-The following classes are referenced by the GL Reader:
-
-
-====== Details ======
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
