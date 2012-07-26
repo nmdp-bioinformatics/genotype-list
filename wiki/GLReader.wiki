@@ -10,7 +10,7 @@ The GL Service utilizes the {{{GlStringGlReader}}} to read a glstring and return
 In brief, the reader:
  * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
  * Registers the GL String if the ID/object doesn't exist 
-   * Recursively reads smaller and smaller pieces based on the [delimiters], resolving and registering new objects along the way.   
+   * Recursively reads smaller and smaller pieces based on the [Delimiters delimiters], resolving and registering new objects along the way.   
  * Returns the object
 
 = Details =
@@ -24,7 +24,7 @@ The resolvers are called as follows:
 final String id = glstringResolver.resolveLocus(glstring);
 Locus locus = idResolver.findLocus(id);
 }}}
-where {{{Locus}}} is replaced by any [datatype].
+where {{{Locus}}} is replaced by any [Datatypes datatype].
 
 We'll leave the details about the Resolvers for a separate page, so let's just talk about what this means to the Reader.
 
