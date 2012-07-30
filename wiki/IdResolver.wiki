@@ -8,7 +8,7 @@ The GL Service utilizes the {{{IdResolver}}} to look up a GL String in the cache
 
 In brief, all implementations of the resolver:
  * Take in an id (usually returned by the [GlStringResolver GlstringResolver]).
- * Return a [Datatype GL Resource] or null if the id has been registered.
+ * Return a [Datatypes GL Resource] or null if the id has been registered.
 
 = Details =
 
