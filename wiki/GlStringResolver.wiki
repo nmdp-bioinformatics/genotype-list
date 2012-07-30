@@ -27,17 +27,45 @@ The following classes are _part_ of the GlStringResolver:
 
 The following classes are _referenced_ by the GlStringResolver:
 || *Name* || *Function* ||
-|| Varies. || Depends on the implementation. || 
+|| [ IdSupplier.java] || Generates new IDs by [Datatype GlResource Type] when called. || 
 
 ==How it Works==
-There are several different implementations ......... addmore
 
-The implementation of the {{{GlstringResolver}}} is determined when the GLReader is initialized. 
+===Initializing an Implementation===
+There are several different implementations of the {{{GlstringResolver}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the application, the resolver implementation is determined when the [GLReader GlReader] is initialized.
 {{{
 GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
 }}}
 
-The {{{GlstringResolver}}} is also called by the Reader. 
+The {{{GlstringResolver}}} is then called by the Reader. 
 {{{
 final String id = glstringResolver.resolveLocus(glstring);
 }}}
+
+
+===Finding an ID===
+The way the resolver finds an id depends on the chosen implementation. More details to be added soon.
+
+=====Cache:=====
+Uses {{{com.google.common.cache.LoadingCache}}}
+
+=====JDBC:=====
+Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
+
+=====Redis/Jedis:=====
+Uses {{{redis.clients.jedis.Jedis}}}
+
+=====Voldemort:=====
+Uses {{{voldemort.client.StoreClient}}}
+
+===Supply New IDs===
+If the ID is found, it is returned and there is no need to supply a new one. 
+{{{
+return id;
+}}}
+
+If the ID is not found, the {{{idSupplier}}} is called and a new id is returned.
+{{{
+return idSupplier.createLocusId();
+}}}
+The mechanics of the idSupplier are revealed [ here].
