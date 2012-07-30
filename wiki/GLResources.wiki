@@ -31,7 +31,7 @@ Each GL Resource type is registered in the GL Service individually.
 ===Allele:===
  * ID
  * GL String
- * Accession number (link to IMGT or explanation)
+ * [http://www.ebi.ac.uk/imgt/hla/allele.html Accession number]
  * {{{Locus}}}
 
 ===AlleleList:===
