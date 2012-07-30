@@ -43,7 +43,7 @@ Locus locus = idResolver.findLocus(id);
 }}}
 where {{{Locus}}} is replaced by any [GlResources GL Resource].
 
-We'll leave the details about the [Resolver Resolvers] for a different discussion, so let's just talk about what this means to the Reader.
+We'll leave the details about the [Resolvers Resolvers] for a different discussion, so let's just talk about what this means to the Reader.
 
  * If the GL String/ID already exists, its object is returned.
  * If the GL String/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
