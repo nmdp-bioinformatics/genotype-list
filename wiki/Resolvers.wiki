@@ -1,0 +1,9 @@
+
+= Resolvers =
+
+There are two "resolvers" in the GL Service.
+
+Click for details:
+
+ * GlstringResolver (GL String -> ID)
+ * IdResolver (ID -> [GLResources GL Resource])
