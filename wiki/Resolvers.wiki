@@ -1,3 +1,6 @@
+#summary Landing page differentiating the two resolvers.
+#labels Phase-Implementation
+
 = Resolvers =
 
 There are two "resolvers" in the GL Service.
