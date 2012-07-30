@@ -41,7 +41,7 @@ The resolvers are called as follows:
 final String id = glstringResolver.resolveLocus(glstring);
 Locus locus = idResolver.findLocus(id);
 }}}
-where {{{Locus}}} is replaced by any [GlResources GL Resource].
+where {{{Locus}}} is replaced by any [GLResources GL Resource].
 
 We'll leave the details about the [Resolvers Resolvers] for a different discussion, so let's just talk about what this means to the Reader.
 
