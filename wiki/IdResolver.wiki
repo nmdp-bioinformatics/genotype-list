@@ -56,12 +56,5 @@ Uses {{{redis.clients.jedis.Jedis}}}
 Uses {{{voldemort.client.StoreClient}}}
 
 ===Supply New IDs===
-If the ID has been registered, its corresponding GL Resource is returned. 
-{{{
-return X;
-}}}
-
-If the ID has not been registered, the IdResolver returns null. 
-{{{
-return null;
-}}}
+If the ID has been registered, its corresponding GL Resource is returned by the cache implementation. 
+If the ID has not been registered, the cache implementation returns null, and the IdResolver returns null to the GLReader. 
