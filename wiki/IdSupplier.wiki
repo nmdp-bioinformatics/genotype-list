@@ -6,7 +6,7 @@
 The GlStringResolver utilizes the {{{IdSupplier}}} to create a new id for an unregistered or otherwise not found GL String.
 
 In brief, the {{{IdSupplier}}}:
- * Creates and returns a new identifier for a given GL Resource.
+ * Creates and returns new identifiers.
 
 = Details =
 
