@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The GL Service utilizes the {{{GlStringGlReader}}} to read a glstring and return an object and a URI.
+The GL Service utilizes the {{{GlStringGlReader}}} to read a GL String and return an object and a URI.
 
 In brief, the reader:
  * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
@@ -21,7 +21,7 @@ The following classes are _part_ of the GL Reader:
 
 The following classes are _referenced_ by the GL Reader:
 || *Name* || *Function* ||
-|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java GlstringResolver.java] || Interface: Resolve glstring to ID ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java GlstringResolver.java] || Interface: Resolve GL String to ID ||
 || [ IdResolver.java] || Interface: Resolve ID to [Datatype <datatype>]object ||
 || [ GlRegistry.java] || Interface: FUNCTION||
 
@@ -45,11 +45,11 @@ where {{{Locus}}} is replaced by any [Datatypes datatype].
 
 We'll leave the details about the [Resolver Resolvers] for a different discussion, so let's just talk about what this means to the Reader.
 
- * If the glstring/ID already exists, its object is returned.
- * If the glstring/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
+ * If the GL String/ID already exists, its object is returned.
+ * If the GL String/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
 
 ===Recursive Reading===
-The reader recurses when the glstring and ID do not already exist in the cache, or when the resolver times out. 
+The reader recurses when the GL String and ID do not already exist in the cache, or when the resolver times out. 
 Since each object [Datatypes contains a list of its components], we need to make sure that all of its components are also registered.
 
 ====Special cases:====
