@@ -26,12 +26,15 @@ The following classes are _referenced_ by the GL Reader:
 || [ GlRegistry.java] || Interface: FUNCTION||
 
 ==How it Works==
-===Setting up the Reader===
-{{{GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)}}}
-This allows for an easy change in the caching implementation. Caching options currently being evaluated include Voldemort and Redis/Jedis. 
+===Initializing the Reader===
+The reader uses the following constructor:
+{{{
+GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
+}}}
+This allows for an easy change in the caching and registry implementations. Caching options currently being evaluated include Voldemort and Redis/Jedis. Final decisions will be made based on the outcome of several performance [tests].
 
 ===Resolving IDs===
-The computation involved with resolving IDs is handled primarily by the [{{{glStringResolver}}}] and [{{{idResolver}}}]. 
+The computation involved with resolving IDs is handled primarily by the {{{glStringResolver}}} and {{{idResolver}}}. 
 
 The resolvers are called as follows:
 {{{
@@ -40,13 +43,13 @@ Locus locus = idResolver.findLocus(id);
 }}}
 where {{{Locus}}} is replaced by any [Datatypes datatype].
 
-We'll leave the details about the Resolvers for a separate page, so let's just talk about what this means to the Reader.
+We'll leave the details about the [Resolver Resolvers] for a different discussion, so let's just talk about what this means to the Reader.
 
  * If the glstring/ID already exists, its object is returned.
  * If the glstring/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
 
 ===Recursive Reading===
-Recursive reading happens/The reader recurses when the glstring and ID do not already exist in the cache, or when the resolver times out. 
+The reader recurses when the glstring and ID do not already exist in the cache, or when the resolver times out. 
 Since each object [Datatypes contains a list of its components], we need to make sure that all of its components are also registered.
 
 ====Special cases:====
@@ -54,9 +57,15 @@ Since each object [Datatypes contains a list of its components], we need to make
   Since the {{{locus}}} is the smallest possible datatype, the reader only has to make sure it is in a valid format before registering a new {{{locus}}}. In the future, it may be desirable to add additional validation to prevent creating loci that are not part of [http://hla.alleles.org/ HLA nomenclature].
 
 {{{Alleles}}}
- Much like a {{{locus}}}, the reader has to make sure the {{{allele}}} is in a valid format before registering anything new. The {{{locus}}} is also verified. Because any new alleles registered with the GL Service are not necessarily in the [IMGT Database] and are therefore not official, this may be something we choose to disable to prevent creating alleles that are not part of [http://hla.alleles.org/ HLA nomenclature].
+ Much like a {{{locus}}}, the reader verifies that the {{{allele}}} is in a valid format before registering anything new. The {{{locus}}} is also verified in this case. Because any new alleles registered with the GL Service are not necessarily in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database] and are therefore not official, this may be something we choose to disable to prevent creating alleles that are not part of [http://hla.alleles.org/ HLA nomenclature].
 
 ====All other cases:====
 The GL String is split into components by its [Delimiters delimiters] in order of precedence. For example, the {{{MultilocusUnphasedGenotype}}} splits the string into {{{GenotypeLists}}} wherever there is a {{{^}}}. After calling {{{readGenotypeList(component)}}} on each part, each is added to a list to be registered as part of the new object. 
 
 ===Registering Objects===
+The work (reword) involved with registering objects is primarily handled by the {{{glRegistry}}}. The reader simply makes a call to the {{{glRegistry}}} as follows, using the new {{{<datatype>object}}} created in the previous steps. 
+{{{
+glRegistry.registerLocus(locus);
+}}}
+
+Current implementations of the {{{glRegistry}}} include CacheGlRegistry.java, JedisGlRegistry.java, VoldemortGlRegistry.java, and JdbcRegistry.java.
