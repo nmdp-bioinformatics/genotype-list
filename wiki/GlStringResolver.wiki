@@ -1,0 +1,43 @@
+#summary Implementation of the GlStringResolver
+#labels Phase-Implementation
+
+= Introduction =
+
+The GL Service utilizes the {{{GlStringResolver}}} to look up a GL String in the cache and find or assign an id.
+
+(statement about no guarantee of uniqueness and link to follow the controversy on the blog)
+
+In brief, all implementations of the resolver:
+ * Take in a GL String exactly as given by the user.
+ * Check the cache for existence (dependent on the caching implementation).
+   * If found in the cache: return the existing id.
+   * If not found in the cache or the search times out: return a new id.
+
+= Details =
+
+==Components==
+The following classes are _part_ of the GlStringResolver:
+|| *Name* || *Function* ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java GlStringResolver.java] || Interface ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/cache/CacheGlstringResolver.java CacheGlResolver.java] || Cache implementation of the GlStringResolver ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-jdbc/src/main/java/org/immunogenomics/gl/service/jdbc/JdbcGlstringResolver.java JdbcGlResolver.java] || JDBC implementation of the GlStringResolver ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-redis/src/main/java/org/immunogenomics/gl/service/redis/JedisGlstringResolver.java JedisGlResolver.java] || Redis/Jedis implementation of the GlStringResolver ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-voldemort/src/main/java/org/immunogenomics/gl/service/voldemort/VoldemortGlstringResolver.java VoldemortGlResolver.java] || Voldemort implementation of the GlStringResolver ||
+
+
+The following classes are _referenced_ by the GlStringResolver:
+|| *Name* || *Function* ||
+|| Varies. || Depends on the implementation. || 
+
+==How it Works==
+There are several different implementations ......... addmore
+
+The implementation of the {{{GlstringResolver}}} is determined when the GLReader is initialized. 
+{{{
+GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
+}}}
+
+The {{{GlstringResolver}}} is also called by the Reader. 
+{{{
+final String id = glstringResolver.resolveLocus(glstring);
+}}}
