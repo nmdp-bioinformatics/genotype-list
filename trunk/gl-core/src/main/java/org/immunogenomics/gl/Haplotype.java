@@ -44,16 +44,26 @@ public final class Haplotype extends GlResource implements Serializable {
 
 
     /**
+     * Create a new haplotype with the specified identifier and allele list.
+     *
+     * @param id identifier for this haplotype, must not be null
+     * @param alleleList allele list for this haplotype, must not be null
+     */
+    public Haplotype(final String id, final AlleleList alleleList) {
+        this(id, ImmutableList.of(alleleList));
+    }
+
+    /**
      * Create a new haplotype with the specified identifier and list of allele lists.
      *
      * @param id identifier for this haplotype, must not be null
-     * @param alleleLists list of allele lists, must not be null and must contain at least two allele lists
+     * @param alleleLists list of allele lists, must not be null and must contain at least one allele list
      */
     public Haplotype(final String id, final List<AlleleList> alleleLists) {
         super(id);
         checkNotNull(alleleLists, "alleleLists must not be null");
-        if (alleleLists.size() < 2) {
-            throw new IllegalArgumentException("alleles must contain at least two allele lists");
+        if (alleleLists.isEmpty()) {
+            throw new IllegalArgumentException("alleles must contain at least one allele list");
         }
         this.alleleLists = ImmutableList.copyOf(alleleLists);
         this.glstring = Joiner.on("~").join(this.alleleLists);

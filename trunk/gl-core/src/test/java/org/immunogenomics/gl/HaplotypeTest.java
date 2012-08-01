@@ -24,6 +24,7 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,8 +53,13 @@ public final class HaplotypeTest {
     }
 
     @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleleList() {
+        new Haplotype("http://immunogenomics.org/haplotype/0", (AlleleList) null);
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testConstructorNullAlleleLists() {
-        new Haplotype("http://immunogenomics.org/haplotype/0", null);
+        new Haplotype("http://immunogenomics.org/haplotype/0", (List<AlleleList>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -61,9 +67,18 @@ public final class HaplotypeTest {
         new Haplotype("http://immunogenomics.org/haplotype/0", empty);
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testConstructorNotEnough() {
-        new Haplotype("http://immunogenomics.org/haplotype/0", single);
+    @Test
+    public void testConstructorAlleleList() {
+        Haplotype haplotype = new Haplotype("http://immunogenomics.org/haplotype/0", alleleList0);
+        assertNotNull(haplotype);
+        assertEquals(alleleList0, haplotype.getAlleleLists().get(0));
+    }
+
+    @Test
+    public void testConstructorSingletonAlleleList() {
+        Haplotype haplotype = new Haplotype("http://immunogenomics.org/haplotype/0", single);
+        assertNotNull(haplotype);
+        assertEquals(single, haplotype.getAlleleLists());
     }
 
     @Test
