@@ -34,12 +34,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 
 import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
@@ -48,9 +43,10 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.Switch;
 import org.dishevelled.commandline.Usage;
 import org.dishevelled.commandline.argument.FileArgument;
-import org.dishevelled.commandline.argument.IntegerArgument;
 
-import com.google.common.collect.ListMultimap;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 
 /**
  * Generate graph structure and node annotation files for import into Cytoscape for a nomenclature graph.
