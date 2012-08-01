@@ -54,7 +54,6 @@ public final class Allele extends GlResource implements Serializable {
         checkNotNull(glstring, "glstring must not be null");
         checkNotNull(locus, "locus must not be null");
         this.accession = accession;
-        // todo:  or create glstring by combining locus*passed-in value?
         this.glstring = glstring;
         this.locus = locus;
     }
