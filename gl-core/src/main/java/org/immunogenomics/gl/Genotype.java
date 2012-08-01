@@ -26,14 +26,12 @@ package org.immunogenomics.gl;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterators;
 
 /**
  * Genotype.
@@ -42,19 +40,8 @@ import com.google.common.collect.Iterators;
 public final class Genotype extends GlResource implements Serializable {
     private static final long serialVersionUID = 1L;
     private final String glstring;
-    private final List<AlleleList> alleleLists;
     private final List<Haplotype> haplotypes;
 
-
-    /**
-     * Create a new genotype with the specified identifier and allele list.
-     *
-     * @param id identifier for this genotype, must not be null
-     * @param alleleList allele list for this genotype, must not be null
-     */
-    public Genotype(final String id, final AlleleList alleleList) {
-        this(id, ImmutableList.of(alleleList), Collections.<Haplotype>emptyList());
-    }
 
     /**
      * Create a new genotype with the specified identifier and haplotype.
@@ -63,42 +50,29 @@ public final class Genotype extends GlResource implements Serializable {
      * @param haplotype haplotype for this genotype, must not be null
      */
     public Genotype(final String id, final Haplotype haplotype) {
-        this(id, Collections.<AlleleList>emptyList(), ImmutableList.of(haplotype));
+        this(id, ImmutableList.of(haplotype));
     }
 
     /**
-     * Create a new genotype with the specified identifier, list of allele lists, and list of haplotypes.
-     * The list of allele lists and list of haplotypes must not both be empty.
+     * Create a new genotype with the specified identifier and list of haplotypes.
      *
      * @param id identifier for this genotype, must not be null
-     * @param alleleLists list of allele lists for this genotype, must not be null
-     * @param haplotypes list of haplotypes for this genotype, must not be null
+     * @param haplotypes list of haplotypes for this genotype, must not be null and must contain at least one haplotype
      */
-    public Genotype(final String id, final List<AlleleList> alleleLists, final List<Haplotype> haplotypes) {
+    public Genotype(final String id, final List<Haplotype> haplotypes) {
         super(id);
-        checkNotNull(alleleLists, "alleleLists must not be null");
         checkNotNull(haplotypes, "haplotypes must not be null");
-        if (alleleLists.isEmpty() && haplotypes.isEmpty()) {
-            throw new IllegalArgumentException("alleleLists and haplotypes must not both be empty");
+        if (haplotypes.isEmpty()) {
+            throw new IllegalArgumentException("haplotypes must contain at least one haplotype");
         }
-        this.alleleLists = ImmutableList.copyOf(alleleLists);
         this.haplotypes = ImmutableList.copyOf(haplotypes);
-        this.glstring = Joiner.on("+").join(Iterators.concat(this.alleleLists.iterator(), this.haplotypes.iterator()));
+        this.glstring = Joiner.on("+").join(this.haplotypes);
     }
 
 
     @Override
     public String getGlstring() {
         return glstring;
-    }
-
-    /**
-     * Return the list of allele lists for this genotype.
-     *
-     * @return the list of allele lists for this genotype
-     */
-    public List<AlleleList> getAlleleLists() {
-        return alleleLists;
     }
 
     /**

@@ -44,25 +44,13 @@ public final class GenotypeTest {
 
     private final AlleleList alleleList0 = new AlleleList("http://immunogenomics.org/allele-list/0", ImmutableList.of(allele0));
     private final AlleleList alleleList1 = new AlleleList("http://immunogenomics.org/allele-list/1", ImmutableList.of(allele1));
-    private final List<AlleleList> emptyAlleleLists = Collections.emptyList();
-    private final List<AlleleList> singleAlleleList = ImmutableList.of(alleleList0);
     private final List<AlleleList> alleleLists = ImmutableList.of(alleleList0, alleleList1);
 
     private final Haplotype haplotype0 = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
     private final Haplotype haplotype1 = new Haplotype("http://immunogenomics.org/haplotype/1", alleleLists);
-    private final List<Haplotype> emptyHaplotypes = Collections.emptyList();
-    private final List<Haplotype> singleHaplotype = ImmutableList.of(haplotype0);
+    private final List<Haplotype> empty = Collections.emptyList();
+    private final List<Haplotype> single = ImmutableList.of(haplotype0);
     private final List<Haplotype> haplotypes = ImmutableList.of(haplotype0, haplotype1);
-
-    @Test(expected=NullPointerException.class)
-    public void testConstructorAlleleListNullIdentifier() {
-        new Genotype(null, alleleList0);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testConstructorNullAlleleList() {
-        new Genotype("http://immunogenomics.org/genotype/0", (AlleleList) null);
-    }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorHaplotypeNullIdentifier() {
@@ -76,58 +64,30 @@ public final class GenotypeTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullIdentifier() {
-        new Genotype(null, alleleLists, haplotypes);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testConstructorNullAlleleLists() {
-        new Genotype("http://immunogenomics.org/genotype/0", null, haplotypes);
+        new Genotype(null, haplotypes);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullHaplotypes() {
-        new Genotype("http://immunogenomics.org/genotype/0", alleleLists, null);
+        new Genotype("http://immunogenomics.org/genotype/0", (List<Haplotype>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testConstructorEmpty() {
-        new Genotype("http://immunogenomics.org/genotype/0", emptyAlleleLists, emptyHaplotypes);
+        new Genotype("http://immunogenomics.org/genotype/0", empty);
     }
 
     @Test
-    public void testConstructorNotEnoughAlleleLists() {
-        // cardinality of 1 is ok
-        assertNotNull(new Genotype("http://immunogenomics.org/genotype/0", singleAlleleList, emptyHaplotypes));
-    }
-
-    @Test
-    public void testConstructorNotEnoughHaplotypes() {
-        // cardinality of 1 is ok
-        assertNotNull(new Genotype("http://immunogenomics.org/genotype/0", emptyAlleleLists, singleHaplotype));
-    }
-
-    @Test
-    public void testMixedAlleleListAndHaplotype() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", singleAlleleList, singleHaplotype);
-        assertEquals(singleAlleleList, genotype.getAlleleLists());
-        assertEquals(singleHaplotype, genotype.getHaplotypes());
-    }
-
-    @Test
-    public void testAlleleListOnly() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleList0);
-        assertNotNull(genotype.getAlleleLists());
-        assertEquals(1, genotype.getAlleleLists().size());
-        assertTrue(genotype.getAlleleLists().contains(alleleList0));
-        assertNotNull(genotype.getHaplotypes());
-        assertTrue(genotype.getHaplotypes().isEmpty());
-    }
-
-    @Test
-    public void testHaplotypeOnly() {
+    public void testHaplotype() {
         Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotype0);
-        assertNotNull(genotype.getAlleleLists());
-        assertTrue(genotype.getAlleleLists().isEmpty());
+        assertNotNull(genotype.getHaplotypes());
+        assertEquals(1, genotype.getHaplotypes().size());
+        assertTrue(genotype.getHaplotypes().contains(haplotype0));
+    }
+
+    @Test
+    public void testSingleHaplotype() {
+        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", single);
         assertNotNull(genotype.getHaplotypes());
         assertEquals(1, genotype.getHaplotypes().size());
         assertTrue(genotype.getHaplotypes().contains(haplotype0));
@@ -135,25 +95,19 @@ public final class GenotypeTest {
 
     @Test
     public void testId() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleLists, emptyHaplotypes);
+        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
         assertEquals("http://immunogenomics.org/genotype/0", genotype.getId());
     }
 
     @Test
     public void testGlstring() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleLists, emptyHaplotypes);
-        assertEquals("HLA-A*01:01:01:01+HLA-A*02:01:01:01", genotype.getGlstring());
-    }
-
-    @Test
-    public void testAlleleLists() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleLists, haplotypes);
-        assertEquals(alleleLists, genotype.getAlleleLists());
+        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+        assertEquals("HLA-A*01:01:01:01~HLA-A*02:01:01:01+HLA-A*01:01:01:01~HLA-A*02:01:01:01", genotype.getGlstring());
     }
 
     @Test
     public void testHaplotypes() {
-        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleLists, haplotypes);
+        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
         assertEquals(haplotypes, genotype.getHaplotypes());
     }
 }

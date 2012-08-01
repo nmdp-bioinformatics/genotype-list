@@ -49,6 +49,8 @@ public abstract class AbstractGlWriterTest {
     protected Allele allele;
     protected AlleleList alleleList0;
     protected AlleleList alleleList1;
+    protected Haplotype haplotype0;
+    protected Haplotype haplotype1;
     protected Haplotype haplotype;
     protected Genotype genotype;
     protected GenotypeList genotypeList0;
@@ -63,8 +65,10 @@ public abstract class AbstractGlWriterTest {
         allele = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
         alleleList0 = new AlleleList("http://immunogenomics.org/allele-list/0", allele);
         alleleList1 = new AlleleList("http://immunogenomics.org/allele-list/1", allele);
-        haplotype = new Haplotype("http://immunogenomics.org/haplotype/0", ImmutableList.of(alleleList0, alleleList1));
-        genotype = new Genotype("http://immunogenomics.org/genotype/0", alleleList0);
+        haplotype0 = new Haplotype("http://immunogenomics.org/haplotype/0", alleleList0);
+        haplotype1 = new Haplotype("http://immunogenomics.org/haplotype/1", alleleList1);
+        haplotype = new Haplotype("http://immunogenomics.org/haplotype/2", ImmutableList.of(alleleList0, alleleList1));
+        genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotype0);
         genotypeList0 = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotype);
         genotypeList1 = new GenotypeList("http://immunogenomics.org/genotype-list/1", genotype);
         multilocusUnphasedGenotype = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", ImmutableList.of(genotypeList0, genotypeList1));

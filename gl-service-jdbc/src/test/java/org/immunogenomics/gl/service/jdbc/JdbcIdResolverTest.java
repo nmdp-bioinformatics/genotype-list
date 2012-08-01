@@ -85,7 +85,8 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
         alleleList0 = new AlleleList(validAlleleListId, allele);
         alleleList1 = new AlleleList(validAlleleListId, allele);
         haplotype = new Haplotype(validHaplotypeId, ImmutableList.of(alleleList0, alleleList1));
-        genotype = new Genotype(validGenotypeId, alleleList0);
+        Haplotype haplotype0 = new Haplotype(validHaplotypeId, alleleList0);
+        genotype = new Genotype(validGenotypeId, haplotype0);
         genotypeList0 = new GenotypeList(validGenotypeListId, genotype);
         genotypeList1 = new GenotypeList(validGenotypeListId, genotype);
         multilocusUnphasedGenotype = new MultilocusUnphasedGenotype(validMultilocusUnphasedGenotypeId, ImmutableList.of(genotypeList0, genotypeList1));

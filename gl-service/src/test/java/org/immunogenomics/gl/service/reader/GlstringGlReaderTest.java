@@ -316,16 +316,24 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
         when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
+        when(glstringResolver.resolveHaplotype(anyString())).thenReturn("haplotype/id");
         when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
 
         Genotype genotype = reader.readGenotype("HLA-Z*01:01:01:01+HLA-Z*01:01:01:01/HLA-Z*02:01:01:01");
         assertNotNull(genotype);
         assertEquals("genotype/id", genotype.getId());
         assertEquals("HLA-Z*01:01:01:01+HLA-Z*01:01:01:01/HLA-Z*02:01:01:01", genotype.getGlstring());
-        assertNotNull(genotype.getAlleleLists());
-        assertEquals(2, genotype.getAlleleLists().size());
+        assertNotNull(genotype.getHaplotypes());
+        assertEquals(2, genotype.getHaplotypes().size());
 
-        AlleleList alleleList0 = genotype.getAlleleLists().get(0);
+        Haplotype haplotype0 = genotype.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
         assertNotNull(alleleList0);
         assertEquals("allele-list/id", alleleList0.getId());
         assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
@@ -340,7 +348,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele0.getLocus().getId());
         assertEquals("HLA-Z", allele0.getLocus().getGlstring());
 
-        AlleleList alleleList1 = genotype.getAlleleLists().get(1);
+        Haplotype haplotype1 = genotype.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Z*01:01:01:01/HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(1, haplotype1.getAlleleLists().size());
+
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
         assertNotNull(alleleList1);
         assertEquals("allele-list/id", alleleList1.getId());
         assertEquals("HLA-Z*01:01:01:01/HLA-Z*02:01:01:01", alleleList1.getGlstring());
@@ -376,12 +391,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype);
         assertEquals("genotype/id", genotype.getId());
         assertEquals("HLA-Z*01:01:01:01+HLA-Y*01:01:01:01~HLA-Z*02:01:01:01", genotype.getGlstring());
-        assertNotNull(genotype.getAlleleLists());
-        assertEquals(1, genotype.getAlleleLists().size());
         assertNotNull(genotype.getHaplotypes());
-        assertEquals(1, genotype.getHaplotypes().size());
+        assertEquals(2, genotype.getHaplotypes().size());
 
-        AlleleList alleleList0 = genotype.getAlleleLists().get(0);
+        Haplotype haplotype0 = genotype.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
         assertNotNull(alleleList0);
         assertEquals("allele-list/id", alleleList0.getId());
         assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
@@ -396,14 +416,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele0.getLocus().getId());
         assertEquals("HLA-Z", allele0.getLocus().getGlstring());
 
-        Haplotype haplotype = genotype.getHaplotypes().get(0);
-        assertNotNull(haplotype);
-        assertEquals("haplotype/id", haplotype.getId());
-        assertEquals("HLA-Y*01:01:01:01~HLA-Z*02:01:01:01", haplotype.getGlstring());
-        assertNotNull(haplotype.getAlleleLists());
-        assertEquals(2, haplotype.getAlleleLists().size());
+        Haplotype haplotype1 = genotype.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Y*01:01:01:01~HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(2, haplotype1.getAlleleLists().size());
 
-        AlleleList alleleList1 = haplotype.getAlleleLists().get(0);
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
         assertNotNull(alleleList1);
         assertEquals("allele-list/id", alleleList1.getId());
         assertEquals("HLA-Y*01:01:01:01", alleleList1.getGlstring());
@@ -418,7 +438,7 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele1.getLocus().getId());
         assertEquals("HLA-Y", allele1.getLocus().getGlstring());
 
-        AlleleList alleleList2 = haplotype.getAlleleLists().get(1);
+        AlleleList alleleList2 = haplotype1.getAlleleLists().get(1);
         assertNotNull(alleleList2);
         assertEquals("allele-list/id", alleleList2.getId());
         assertEquals("HLA-Z*02:01:01:01", alleleList2.getGlstring());
@@ -432,62 +452,6 @@ public final class GlstringGlReaderTest {
         assertNotNull(allele2.getLocus());
         assertEquals("locus/id", allele2.getLocus().getId());
         assertEquals("HLA-Z", allele2.getLocus().getGlstring());
-    }
-
-    @Test
-    public void testReadGenotypeSingletonAlleleLists() throws IOException {
-        when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
-        when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
-        when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
-        when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
-
-        Genotype genotype = reader.readGenotype("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01");
-        assertNotNull(genotype);
-        assertEquals("genotype/id", genotype.getId());
-        assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotype.getGlstring());
-        assertNotNull(genotype.getAlleleLists());
-        assertEquals(2, genotype.getAlleleLists().size());
-
-        AlleleList alleleList0 = genotype.getAlleleLists().get(0);
-        assertNotNull(alleleList0);
-        assertEquals("allele-list/id", alleleList0.getId());
-        assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
-        assertNotNull(alleleList0.getAlleles());
-        assertEquals(1, alleleList0.getAlleles().size());
-
-        Allele allele0 = alleleList0.getAlleles().get(0);
-        assertNotNull(allele0);
-        assertEquals("allele/id", allele0.getId());
-        assertEquals("HLA-Z*01:01:01:01", allele0.getGlstring());
-        assertNotNull(allele0.getLocus());
-        assertEquals("locus/id", allele0.getLocus().getId());
-        assertEquals("HLA-Z", allele0.getLocus().getGlstring());
-
-        AlleleList alleleList1 = genotype.getAlleleLists().get(1);
-        assertNotNull(alleleList1);
-        assertEquals("allele-list/id", alleleList1.getId());
-        assertEquals("HLA-Z*02:01:01:01", alleleList1.getGlstring());
-        assertNotNull(alleleList1.getAlleles());
-        assertEquals(1, alleleList1.getAlleles().size());
-
-        Allele allele1 = alleleList1.getAlleles().get(0);
-        assertNotNull(allele1);
-        assertEquals("allele/id", allele1.getId());
-        assertEquals("HLA-Z*02:01:01:01", allele1.getGlstring());
-        assertNotNull(allele1.getLocus());
-        assertEquals("locus/id", allele1.getLocus().getId());
-        assertEquals("HLA-Z", allele1.getLocus().getGlstring());
-    }
-
-    @Test
-    public void testReadGenotypeSingletonAlleleList() throws IOException {
-        when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
-        when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
-        when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
-        when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
-
-        Genotype genotype = reader.readGenotype("HLA-Z*01:01:01:01");
-        assertNotNull(genotype);
     }
 
     @Test
@@ -519,6 +483,7 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
         when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
+        when(glstringResolver.resolveHaplotype(anyString())).thenReturn("haplotype/id");
         when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
         when(glstringResolver.resolveGenotypeList(anyString())).thenReturn("genotype-list/id");
 
@@ -533,10 +498,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype0);
         assertEquals("genotype/id", genotype0.getId());
         assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotype0.getGlstring());
-        assertNotNull(genotype0.getAlleleLists());
-        assertEquals(2, genotype0.getAlleleLists().size());
+        assertNotNull(genotype0.getHaplotypes());
+        assertEquals(2, genotype0.getHaplotypes().size());
 
-        AlleleList alleleList0 = genotype0.getAlleleLists().get(0);
+        Haplotype haplotype0 = genotype0.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
         assertNotNull(alleleList0);
         assertEquals("allele-list/id", alleleList0.getId());
         assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
@@ -551,7 +523,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele0.getLocus().getId());
         assertEquals("HLA-Z", allele0.getLocus().getGlstring());
 
-        AlleleList alleleList1 = genotype0.getAlleleLists().get(1);
+        Haplotype haplotype1 = genotype0.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(1, haplotype1.getAlleleLists().size());
+
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
         assertNotNull(alleleList1);
         assertEquals("allele-list/id", alleleList1.getId());
         assertEquals("HLA-Z*02:01:01:01", alleleList1.getGlstring());
@@ -570,10 +549,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype1);
         assertEquals("genotype/id", genotype1.getId());
         assertEquals("HLA-Z*02:01:01:01+HLA-Z*03:01:01:01", genotype1.getGlstring());
-        assertNotNull(genotype1.getAlleleLists());
-        assertEquals(2, genotype1.getAlleleLists().size());
+        assertNotNull(genotype1.getHaplotypes());
+        assertEquals(2, genotype1.getHaplotypes().size());
 
-        AlleleList alleleList2 = genotype1.getAlleleLists().get(0);
+        Haplotype haplotype2 = genotype1.getHaplotypes().get(0);
+        assertNotNull(haplotype2);
+        assertEquals("haplotype/id", haplotype2.getId());
+        assertEquals("HLA-Z*02:01:01:01", haplotype2.getGlstring());
+        assertNotNull(haplotype2.getAlleleLists());
+        assertEquals(1, haplotype2.getAlleleLists().size());
+
+        AlleleList alleleList2 = haplotype2.getAlleleLists().get(0);
         assertNotNull(alleleList2);
         assertEquals("allele-list/id", alleleList2.getId());
         assertEquals("HLA-Z*02:01:01:01", alleleList2.getGlstring());
@@ -588,7 +574,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele2.getLocus().getId());
         assertEquals("HLA-Z", allele2.getLocus().getGlstring());
 
-        AlleleList alleleList3 = genotype1.getAlleleLists().get(1);
+        Haplotype haplotype3 = genotype1.getHaplotypes().get(1);
+        assertNotNull(haplotype3);
+        assertEquals("haplotype/id", haplotype3.getId());
+        assertEquals("HLA-Z*03:01:01:01", haplotype3.getGlstring());
+        assertNotNull(haplotype3.getAlleleLists());
+        assertEquals(1, haplotype3.getAlleleLists().size());
+
+        AlleleList alleleList3 = haplotype3.getAlleleLists().get(0);
         assertNotNull(alleleList3);
         assertEquals("allele-list/id", alleleList3.getId());
         assertEquals("HLA-Z*03:01:01:01", alleleList3.getGlstring());
@@ -609,6 +602,7 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
         when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
+        when(glstringResolver.resolveHaplotype(anyString())).thenReturn("haplotype/id");
         when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
         when(glstringResolver.resolveGenotypeList(anyString())).thenReturn("genotype-list/id");
 
@@ -623,10 +617,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype0);
         assertEquals("genotype/id", genotype0.getId());
         assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotype0.getGlstring());
-        assertNotNull(genotype0.getAlleleLists());
-        assertEquals(2, genotype0.getAlleleLists().size());
+        assertNotNull(genotype0.getHaplotypes());
+        assertEquals(2, genotype0.getHaplotypes().size());
 
-        AlleleList alleleList0 = genotype0.getAlleleLists().get(0);
+        Haplotype haplotype0 = genotype0.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
         assertNotNull(alleleList0);
         assertEquals("allele-list/id", alleleList0.getId());
         assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
@@ -641,7 +642,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele0.getLocus().getId());
         assertEquals("HLA-Z", allele0.getLocus().getGlstring());
 
-        AlleleList alleleList1 = genotype0.getAlleleLists().get(1);
+        Haplotype haplotype1 = genotype0.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(1, haplotype1.getAlleleLists().size());
+
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
         assertNotNull(alleleList1);
         assertEquals("allele-list/id", alleleList1.getId());
         assertEquals("HLA-Z*02:01:01:01", alleleList1.getGlstring());
@@ -674,11 +682,11 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
         when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
+        when(glstringResolver.resolveHaplotype(anyString())).thenReturn("haplotype/id");
         when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
         when(glstringResolver.resolveGenotypeList(anyString())).thenReturn("genotype-list/id");
         when(glstringResolver.resolveMultilocusUnphasedGenotype(anyString())).thenReturn("multilocus-unphased-genotype/id");
 
-        // todo:  locus sort order?
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = reader.readMultilocusUnphasedGenotype("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01^HLA-Y*01:01:01:01+HLA-Y*02:01:01:01");
         assertNotNull(multilocusUnphasedGenotype);
         assertEquals("multilocus-unphased-genotype/id", multilocusUnphasedGenotype.getId());
@@ -697,10 +705,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype0);
         assertEquals("genotype/id", genotype0.getId());
         assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotype0.getGlstring());
-        assertNotNull(genotype0.getAlleleLists());
-        assertEquals(2, genotype0.getAlleleLists().size());
+        assertNotNull(genotype0.getHaplotypes());
+        assertEquals(2, genotype0.getHaplotypes().size());
 
-        AlleleList alleleList0 = genotype0.getAlleleLists().get(0);
+        Haplotype haplotype0 = genotype0.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
         assertNotNull(alleleList0);
         assertEquals("allele-list/id", alleleList0.getId());
         assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
@@ -715,7 +730,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele0.getLocus().getId());
         assertEquals("HLA-Z", allele0.getLocus().getGlstring());
 
-        AlleleList alleleList1 = genotype0.getAlleleLists().get(1);
+        Haplotype haplotype1 = genotype0.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(1, haplotype1.getAlleleLists().size());
+
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
         assertNotNull(alleleList1);
         assertEquals("allele-list/id", alleleList1.getId());
         assertEquals("HLA-Z*02:01:01:01", alleleList1.getGlstring());
@@ -741,10 +763,17 @@ public final class GlstringGlReaderTest {
         assertNotNull(genotype1);
         assertEquals("genotype/id", genotype1.getId());
         assertEquals("HLA-Y*01:01:01:01+HLA-Y*02:01:01:01", genotype1.getGlstring());
-        assertNotNull(genotype1.getAlleleLists());
-        assertEquals(2, genotype1.getAlleleLists().size());
+        assertNotNull(genotype1.getHaplotypes());
+        assertEquals(2, genotype1.getHaplotypes().size());
 
-        AlleleList alleleList2 = genotype1.getAlleleLists().get(0);
+        Haplotype haplotype2 = genotype1.getHaplotypes().get(0);
+        assertNotNull(haplotype2);
+        assertEquals("haplotype/id", haplotype2.getId());
+        assertEquals("HLA-Y*01:01:01:01", haplotype2.getGlstring());
+        assertNotNull(haplotype2.getAlleleLists());
+        assertEquals(1, haplotype2.getAlleleLists().size());
+
+        AlleleList alleleList2 = haplotype2.getAlleleLists().get(0);
         assertNotNull(alleleList2);
         assertEquals("allele-list/id", alleleList2.getId());
         assertEquals("HLA-Y*01:01:01:01", alleleList2.getGlstring());
@@ -759,7 +788,14 @@ public final class GlstringGlReaderTest {
         assertEquals("locus/id", allele2.getLocus().getId());
         assertEquals("HLA-Y", allele2.getLocus().getGlstring());
 
-        AlleleList alleleList3 = genotype1.getAlleleLists().get(1);
+        Haplotype haplotype3 = genotype1.getHaplotypes().get(1);
+        assertNotNull(haplotype3);
+        assertEquals("haplotype/id", haplotype3.getId());
+        assertEquals("HLA-Y*02:01:01:01", haplotype3.getGlstring());
+        assertNotNull(haplotype3.getAlleleLists());
+        assertEquals(1, haplotype3.getAlleleLists().size());
+
+        AlleleList alleleList3 = haplotype3.getAlleleLists().get(0);
         assertNotNull(alleleList3);
         assertEquals("allele-list/id", alleleList3.getId());
         assertEquals("HLA-Y*02:01:01:01", alleleList3.getGlstring());
@@ -780,10 +816,12 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
         when(glstringResolver.resolveAlleleList(anyString())).thenReturn("allele-list/id");
+        when(glstringResolver.resolveHaplotype(anyString())).thenReturn("haplotype/id");
         when(glstringResolver.resolveGenotype(anyString())).thenReturn("genotype/id");
         when(glstringResolver.resolveGenotypeList(anyString())).thenReturn("genotype-list/id");
         when(glstringResolver.resolveMultilocusUnphasedGenotype(anyString())).thenReturn("multilocus-unphased-genotype/id");
 
+        // todo: remove this restriction . . .
         // genotypeLists must contain at least two genotype lists
         reader.readMultilocusUnphasedGenotype("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01");
     }

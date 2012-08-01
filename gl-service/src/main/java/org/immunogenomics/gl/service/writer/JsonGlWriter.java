@@ -120,14 +120,6 @@ public final class JsonGlWriter implements GlWriter {
         generator.writeStartObject();
         generator.writeStringField("id", genotype.getId());
         generator.writeStringField("glstring", genotype.getGlstring());
-        generator.writeFieldName("alleleLists");
-        generator.writeStartArray();
-        for (AlleleList alleleList : genotype.getAlleleLists()) {
-            generator.writeStartObject();
-            generator.writeStringField("alleleList", alleleList.getId());
-            generator.writeEndObject();
-        }
-        generator.writeEndArray();
         generator.writeFieldName("haplotypes");
         generator.writeStartArray();
         for (Haplotype haplotype : genotype.getHaplotypes()) {
