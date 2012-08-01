@@ -74,7 +74,8 @@ public final class VoldemortIdResolverTest extends AbstractIdResolverTest {
         AlleleList alleleList0 = new AlleleList(validAlleleListId, allele);
         AlleleList alleleList1 = new AlleleList(validAlleleListId, allele);
         Haplotype haplotype = new Haplotype(validHaplotypeId, ImmutableList.of(alleleList0, alleleList1));
-        Genotype genotype = new Genotype(validGenotypeId, alleleList0);
+        Haplotype haplotype0 = new Haplotype(validHaplotypeId, alleleList0);
+        Genotype genotype = new Genotype(validGenotypeId, haplotype0);
         GenotypeList genotypeList0 = new GenotypeList(validGenotypeListId, genotype);
         GenotypeList genotypeList1 = new GenotypeList(validGenotypeListId, genotype);
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype(validMultilocusUnphasedGenotypeId, ImmutableList.of(genotypeList0, genotypeList1));

@@ -143,17 +143,11 @@ public final class GlstringGlReader implements GlReader {
         Genotype genotype = idResolver.findGenotype(id);
         if (genotype == null) {
             String[] split = glstring.split("\\+");
-            List<AlleleList> alleleLists = new ArrayList<AlleleList>(split.length);
             List<Haplotype> haplotypes = new ArrayList<Haplotype>(split.length);
             for (String part : split) {
-                if (part.contains("~")) {
-                    haplotypes.add(readHaplotype(part));
-                }
-                else {
-                    alleleLists.add(readAlleleList(part));
-                }
+                haplotypes.add(readHaplotype(part));
             }
-            genotype = new Genotype(id, alleleLists, haplotypes);
+            genotype = new Genotype(id, haplotypes);
             glRegistry.registerGenotype(genotype);
         }
         return genotype;

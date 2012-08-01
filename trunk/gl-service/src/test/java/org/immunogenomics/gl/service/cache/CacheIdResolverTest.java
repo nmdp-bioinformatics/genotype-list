@@ -56,8 +56,9 @@ public final class CacheIdResolverTest extends AbstractIdResolverTest {
         Allele allele = new Allele(validAlleleId, "A01234", "HLA-A*01:01:01:01", locus);
         AlleleList alleleList0 = new AlleleList(validAlleleListId, allele);
         AlleleList alleleList1 = new AlleleList(validAlleleListId, allele);
+        Haplotype haplotype0 = new Haplotype(validHaplotypeId, alleleList0);
         Haplotype haplotype = new Haplotype(validHaplotypeId, ImmutableList.of(alleleList0, alleleList1));
-        Genotype genotype = new Genotype(validGenotypeId, alleleList0);
+        Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotype0);
         GenotypeList genotypeList0 = new GenotypeList(validGenotypeListId, genotype);
         GenotypeList genotypeList1 = new GenotypeList(validGenotypeListId, genotype);
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype(validMultilocusUnphasedGenotypeId, ImmutableList.of(genotypeList0, genotypeList1));

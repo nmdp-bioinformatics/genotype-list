@@ -43,10 +43,11 @@ public final class GenotypeListTest {
     private final Allele allele1 = new Allele("http://immunogenomics.org/allele/1", "A00002", "HLA-A*02:01:01:01", locus);
     private final AlleleList alleleList0 = new AlleleList("http://immunogenomics.org/allele-list/0", ImmutableList.of(allele0));
     private final AlleleList alleleList1 = new AlleleList("http://immunogenomics.org/allele-list/1", ImmutableList.of(allele1));
-    private final List<AlleleList> alleleLists = ImmutableList.of(alleleList0, alleleList1);
-    private final List<Haplotype> haplotypes = Collections.emptyList();
-    private final Genotype genotype0 = new Genotype("http://immunogenomics.org/genotype/0", alleleLists, haplotypes);
-    private final Genotype genotype1 = new Genotype("http://immunogenomics.org/genotype/1", alleleLists, haplotypes);
+    private final Haplotype haplotype0 = new Haplotype("http://immunogenomics.org/haplotype/0", alleleList0);
+    private final Haplotype haplotype1 = new Haplotype("http://immunogenomics.org/haplotype/1", alleleList1);
+    private final List<Haplotype> haplotypes = ImmutableList.of(haplotype0, haplotype1);
+    private final Genotype genotype0 = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+    private final Genotype genotype1 = new Genotype("http://immunogenomics.org/genotype/1", haplotypes);
     private final List<Genotype> empty = Collections.emptyList();
     private final List<Genotype> single = ImmutableList.of(genotype0);
     private final List<Genotype> genotypes = ImmutableList.of(genotype0, genotype1);

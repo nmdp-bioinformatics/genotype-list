@@ -25,7 +25,6 @@ package org.immunogenomics.gl.service.ft;
 
 import static com.jayway.restassured.RestAssured.with;
 
-import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.immunogenomics.gl.Allele;
@@ -59,10 +58,14 @@ class FunctionalTestSetup {
             AlleleList bAlleles0 = new AlleleList("http://localhost:10080/gl/allele-list/1", ImmutableList.of(b01, b02));
             AlleleList bAlleles1 = new AlleleList("http://localhost:10080/gl/allele-list/1", ImmutableList.of(b01, b02));
             Haplotype haplotype = new Haplotype("http://localhost:10080/gl/haplotype/0", ImmutableList.of(aAlleles0, bAlleles0));
-            Genotype aGenotype0 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(aAlleles0, aAlleles1), Collections.<Haplotype>emptyList());
-            Genotype aGenotype1 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(aAlleles0, aAlleles1), Collections.<Haplotype>emptyList());
-            Genotype bGenotype0 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(bAlleles0, bAlleles1), Collections.<Haplotype>emptyList());
-            Genotype bGenotype1 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(bAlleles0, bAlleles1), Collections.<Haplotype>emptyList());
+            Haplotype aHaplotype0 = new Haplotype("http://localhost:10080/gl/haplotype/0", aAlleles0);
+            Haplotype aHaplotype1 = new Haplotype("http://localhost:10080/gl/haplotype/0", aAlleles1);
+            Haplotype bHaplotype0 = new Haplotype("http://localhost:10080/gl/haplotype/0", bAlleles0);
+            Haplotype bHaplotype1 = new Haplotype("http://localhost:10080/gl/haplotype/0", bAlleles1);
+            Genotype aGenotype0 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(aHaplotype0, aHaplotype1));
+            Genotype aGenotype1 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(aHaplotype0, aHaplotype1));
+            Genotype bGenotype0 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(bHaplotype0, bHaplotype1));
+            Genotype bGenotype1 = new Genotype("http://localhost:10080/gl/genotype/0", ImmutableList.of(bHaplotype0, bHaplotype1));
             GenotypeList aGenotypes = new GenotypeList("http://localhost:10080/gl/genotype-list/0", ImmutableList.of(aGenotype0, aGenotype1));
             GenotypeList bGenotypes = new GenotypeList("http://localhost:10080/gl/genotype-list/0", ImmutableList.of(bGenotype0, bGenotype1));
             MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype("http://localhost:10080/gl/multilocus-unphased-genotype/0", ImmutableList.of(aGenotypes, bGenotypes));
@@ -76,6 +79,10 @@ class FunctionalTestSetup {
             with().body(aAlleles0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/allele-list");
             with().body(bAlleles0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/allele-list");
             with().body(haplotype.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/haplotype");
+            with().body(aHaplotype0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/haplotype");
+            with().body(aHaplotype1.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/haplotype");
+            with().body(bHaplotype0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/haplotype");
+            with().body(bHaplotype1.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/haplotype");
             with().body(aGenotype0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/genotype");
             with().body(bGenotype0.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/genotype");
             with().body(aGenotypes.getGlstring()).contentType("text/plain").expect().statusCode(201).when().post("http://localhost:10080/gl/genotype-list");
