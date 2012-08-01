@@ -811,7 +811,7 @@ public final class GlstringGlReaderTest {
         assertEquals("HLA-Y", allele3.getLocus().getGlstring());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testReadMultilocusUnphasedGenotypeSingleton() throws IOException {
         when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
         when(glstringResolver.resolveAllele(anyString())).thenReturn("allele/id");
@@ -821,9 +821,70 @@ public final class GlstringGlReaderTest {
         when(glstringResolver.resolveGenotypeList(anyString())).thenReturn("genotype-list/id");
         when(glstringResolver.resolveMultilocusUnphasedGenotype(anyString())).thenReturn("multilocus-unphased-genotype/id");
 
-        // todo: remove this restriction . . .
-        // genotypeLists must contain at least two genotype lists
-        reader.readMultilocusUnphasedGenotype("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01");
+        MultilocusUnphasedGenotype multilocusUnphasedGenotype = reader.readMultilocusUnphasedGenotype("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01");
+        assertNotNull(multilocusUnphasedGenotype);
+        assertEquals("multilocus-unphased-genotype/id", multilocusUnphasedGenotype.getId());
+        assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", multilocusUnphasedGenotype.getGlstring());
+        assertNotNull(multilocusUnphasedGenotype.getGenotypeLists());
+        assertEquals(1, multilocusUnphasedGenotype.getGenotypeLists().size());
+
+        GenotypeList genotypeList0 = multilocusUnphasedGenotype.getGenotypeLists().get(0);
+        assertNotNull(genotypeList0);
+        assertEquals("genotype-list/id", genotypeList0.getId());
+        assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotypeList0.getGlstring());
+        assertNotNull(genotypeList0.getGenotypes());
+        assertEquals(1, genotypeList0.getGenotypes().size());
+
+        Genotype genotype0 = genotypeList0.getGenotypes().get(0);
+        assertNotNull(genotype0);
+        assertEquals("genotype/id", genotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01+HLA-Z*02:01:01:01", genotype0.getGlstring());
+        assertNotNull(genotype0.getHaplotypes());
+        assertEquals(2, genotype0.getHaplotypes().size());
+
+        Haplotype haplotype0 = genotype0.getHaplotypes().get(0);
+        assertNotNull(haplotype0);
+        assertEquals("haplotype/id", haplotype0.getId());
+        assertEquals("HLA-Z*01:01:01:01", haplotype0.getGlstring());
+        assertNotNull(haplotype0.getAlleleLists());
+        assertEquals(1, haplotype0.getAlleleLists().size());
+
+        AlleleList alleleList0 = haplotype0.getAlleleLists().get(0);
+        assertNotNull(alleleList0);
+        assertEquals("allele-list/id", alleleList0.getId());
+        assertEquals("HLA-Z*01:01:01:01", alleleList0.getGlstring());
+        assertNotNull(alleleList0.getAlleles());
+        assertEquals(1, alleleList0.getAlleles().size());
+
+        Allele allele0 = alleleList0.getAlleles().get(0);
+        assertNotNull(allele0);
+        assertEquals("allele/id", allele0.getId());
+        assertEquals("HLA-Z*01:01:01:01", allele0.getGlstring());
+        assertNotNull(allele0.getLocus());
+        assertEquals("locus/id", allele0.getLocus().getId());
+        assertEquals("HLA-Z", allele0.getLocus().getGlstring());
+
+        Haplotype haplotype1 = genotype0.getHaplotypes().get(1);
+        assertNotNull(haplotype1);
+        assertEquals("haplotype/id", haplotype1.getId());
+        assertEquals("HLA-Z*02:01:01:01", haplotype1.getGlstring());
+        assertNotNull(haplotype1.getAlleleLists());
+        assertEquals(1, haplotype1.getAlleleLists().size());
+
+        AlleleList alleleList1 = haplotype1.getAlleleLists().get(0);
+        assertNotNull(alleleList1);
+        assertEquals("allele-list/id", alleleList1.getId());
+        assertEquals("HLA-Z*02:01:01:01", alleleList1.getGlstring());
+        assertNotNull(alleleList1.getAlleles());
+        assertEquals(1, alleleList1.getAlleles().size());
+
+        Allele allele1 = alleleList1.getAlleles().get(0);
+        assertNotNull(allele1);
+        assertEquals("allele/id", allele1.getId());
+        assertEquals("HLA-Z*02:01:01:01", allele1.getGlstring());
+        assertNotNull(allele1.getLocus());
+        assertEquals("locus/id", allele1.getLocus().getId());
+        assertEquals("HLA-Z", allele1.getLocus().getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
