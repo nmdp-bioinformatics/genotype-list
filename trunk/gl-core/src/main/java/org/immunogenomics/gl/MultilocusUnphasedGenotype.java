@@ -56,7 +56,7 @@ public final class MultilocusUnphasedGenotype extends GlResource implements Seri
      * Create a new multilocus unphased genotype with the specified identifier and list of genotype lists.
      *
      * @param id identifier for this multilocus unphased genotype, must not be null
-     * @param genotypeLists list of genotype lists, must not be null and must contain at least one genotype lists
+     * @param genotypeLists list of genotype lists, must not be null and must contain at least one genotype list
      */
     public MultilocusUnphasedGenotype(final String id, final List<GenotypeList> genotypeLists) {
         super(id);
