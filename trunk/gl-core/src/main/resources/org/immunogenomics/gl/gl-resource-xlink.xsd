@@ -82,19 +82,6 @@
     <xs:complexContent>
       <xs:extension base="glx:GlResource">
         <xs:sequence>
-          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element minOccurs="0" maxOccurs="unbounded" name="alleleList">
-                  <xs:complexType>
-                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
-                    <xs:attribute ref="xlink:role" fixed="hasAlleleList"></xs:attribute>
-                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
           <xs:element minOccurs="1" maxOccurs="1" name="haplotypes">
             <xs:complexType>
               <xs:sequence>

@@ -45,14 +45,7 @@
     <owl:ObjectProperty rdf:about="http://immunogenomics.org/gl-ontology/hasAlleleList">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdfs:range rdf:resource="http://immunogenomics.org/gl-ontology/AlleleList"/>
-        <rdfs:domain>
-          <owl:Class>
-            <owl:unionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Genotype"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Haplotype"/>
-            </owl:unionOf>
-          </owl:Class>
-        </rdfs:domain>
+        <rdfs:domain rdf:resource="http://immunogenomics.org/gl-ontology/Haplotype"/>
     </owl:ObjectProperty>
     
 
