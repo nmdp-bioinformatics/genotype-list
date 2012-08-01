@@ -57,7 +57,8 @@ public final class Haplotype extends GlResource implements Serializable {
      * Create a new haplotype with the specified identifier and list of allele lists.
      *
      * @param id identifier for this haplotype, must not be null
-     * @param alleleLists list of allele lists, must not be null and must contain at least one allele list
+     * @param alleleLists list of allele lists, must not be null,
+     *    must contain at least one allele list, and must not contain any null allele lists
      */
     public Haplotype(final String id, final List<AlleleList> alleleLists) {
         super(id);
