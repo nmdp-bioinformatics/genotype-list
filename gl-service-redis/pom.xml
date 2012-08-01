@@ -29,9 +29,7 @@
     <artifactId>gl</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.immunogenomics.gl</groupId>
   <artifactId>gl-service-redis</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>gl-service-redis</name>
