@@ -24,6 +24,7 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,8 +69,13 @@ public final class MultilocusUnphasedGenotypeTest {
     }
 
     @Test(expected=NullPointerException.class)
+    public void testConstructorNullGenotypeList() {
+        new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", (GenotypeList) null);
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testConstructorNullGenotypeLists() {
-        new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", null);
+        new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", (List<GenotypeList>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -77,9 +83,18 @@ public final class MultilocusUnphasedGenotypeTest {
         new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", empty);
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testConstructorNotEnoughGenotypeLists() {
-        new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", single);
+    @Test
+    public void testConstructorGenotypeList() {
+        MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", aGenotypeList);
+        assertNotNull(multilocusUnphasedGenotype);
+        assertEquals(aGenotypeList, multilocusUnphasedGenotype.getGenotypeLists().get(0));
+    }
+
+    @Test
+    public void testConstructorSingleGenotypeLists() {
+        MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", single);
+        assertNotNull(multilocusUnphasedGenotype);
+        assertEquals(single, multilocusUnphasedGenotype.getGenotypeLists());
     }
 
     @Test
