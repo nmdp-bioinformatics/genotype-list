@@ -8,11 +8,8 @@
     <p class="title">${genotype.Id}</p>
     <p class="identifier">${genotype.Id}</p>
     <p class="label">${genotype.Id}</p>
-    <p class="comment">A genotype with ${genotype.AlleleLists.size()} allele lists and ${genotype.Haplotypes.size()} haplotypes represented by glstring ${genotype.Glstring}</a>
+    <p class="comment">A genotype with ${genotype.Haplotypes.size()} haplotypes represented by glstring ${genotype.Glstring}</a>
     <p class="hasGlstring">${genotype.Glstring}</p>
-#foreach ($al in ${genotype.AlleleLists})
-    <p class="hasAlleleList"><a href="http://immunogenomics.org/gl-ontology/AlleleList">http://immunogenomics.org/gl-ontology/AlleleList</a> <a href="${al.Id}.html">${al.Id}</a></p>
-#end
 #foreach ($h in ${genotype.Haplotypes})
     <p class="hasHaplotype"><a href="http://immunogenomics.org/gl-ontology/Haplotype">http://immunogenomics.org/gl-ontology/Haplotype</a> <a href="${h.Id}.html">${h.Id}</a></p>
 #end
