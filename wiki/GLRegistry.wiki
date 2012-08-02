@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The GL Service utilizes the {{{GlRegistry}}} to add GLResources to their respective caches.
+The GL Service utilizes the {{{GlRegistry}}} to add [GLResources GL Resources] to their respective caches.
 
 In brief, all implementations of the resolver:
  * Take in a GL Resource of any type
