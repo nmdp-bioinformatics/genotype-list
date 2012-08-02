@@ -22,6 +22,28 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Object Properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -113,17 +135,17 @@
 
     <owl:DatatypeProperty rdf:about="http://immunogenomics.org/gl-ontology/hasGlstring">
         <rdfs:domain>
-          <owl:Class>
-            <owl:unionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Allele"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/AlleleList"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Genotype"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/GenotypeList"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Haplotype"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Locus"/>
-              <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
-            </owl:unionOf>
-          </owl:Class>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/Allele"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/AlleleList"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/Genotype"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/GenotypeList"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/Haplotype"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/Locus"/>
+                    <rdf:Description rdf:about="http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+                </owl:unionOf>
+            </owl:Class>
         </rdfs:domain>
     </owl:DatatypeProperty>
     
@@ -142,43 +164,57 @@
 
     <!-- http://immunogenomics.org/gl-ontology/Allele -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Allele"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Allele">
+        <rdfs:comment rdf:datatype="&xsd;string">An allele describes variation at a particular locus.  The allele representation in GL String format must not contain any of the following characters: &apos;/&apos;, &apos;~&apos;, &apos;+&apos;, &apos;|&apos;, &apos;^&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/AlleleList -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/AlleleList"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/AlleleList">
+        <rdfs:comment rdf:datatype="&xsd;string">An allele list is an unordered collection of one or more alleles representing alleleic ambiguity separated in GL String format by the character &apos;/&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/Genotype -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Genotype"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Genotype">
+        <rdfs:comment rdf:datatype="&xsd;string">A genotype is an unordered collection of one or more haplotypes separated in GL String format by the character &apos;+&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/GenotypeList -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/GenotypeList"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/GenotypeList">
+        <rdfs:comment rdf:datatype="&xsd;string">A genotype list is an unordered collection of one or more genotypes representing genotypic ambiguity separated in GL String format by the character &apos;|&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/Haplotype -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Haplotype"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Haplotype">
+        <rdfs:comment rdf:datatype="&xsd;string">A haplotype is an unordered collection of one or more allele lists in phase separated in GL String format by the character &apos;~&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/Locus -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Locus"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/Locus">
+        <rdfs:comment rdf:datatype="&xsd;string">A locus identifies a genomic location at which alleles may be defined.  The locus representation in GL String format must not contain any of the following characters: &apos;*&apos;, &apos;/&apos;, &apos;~&apos;, &apos;+&apos;, &apos;|&apos;, &apos;^&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
     <!-- http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype -->
 
-    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+    <owl:Class rdf:about="http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype">
+        <rdfs:comment rdf:datatype="&xsd;string">A multilocus unphased genotype is an unordered collection of one or more genotype lists separated in GL String format by the character &apos;^&apos;.</rdfs:comment>
+    </owl:Class>
     
 
 
