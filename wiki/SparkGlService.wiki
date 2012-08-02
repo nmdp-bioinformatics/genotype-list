@@ -41,6 +41,9 @@ Calling {{{spark.init();}}} initializes the post and get routes for each [GLReso
 
 
 ===HTTP POST===
+
+https://genotype-list.googlecode.com/svn/wiki/images/GlServicePOST.png
+
 Each HTTP POST Route is based on the abstract HTTP POST Route defined in the Spark class.
 
 [GLResources GL Resource]-specific HTTP POST Routes:
@@ -64,6 +67,10 @@ The abstract HTTP POST Route:
 
 
 ===HTTP GET===
+
+https://genotype-list.googlecode.com/svn/wiki/images/GlServiceGET.png
+
+
 [GLResources GL Resource]-specific HTTP GET Routes:
 {{{
 get(new GetRoute<Locus>("/locus/:id") {
