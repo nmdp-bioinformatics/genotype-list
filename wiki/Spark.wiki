@@ -1,0 +1,106 @@
+#summary Webapp implementation of the URI-based RESTful service for the GL Service.
+
+= Introduction =
+
+The GL Service utilizes {{{Spark}}} as its webapp implementation of the URI-based RESTful service. 
+
+In brief, Spark:
+ * GET/POST
+ * Does not implement all of the CRUD operations - no updating or deleting, externally- or internally-facing
+
+= Details =
+
+==Components==
+The following classes are _part_ of Spark:
+|| *Name* || *Function* ||
+
+
+The following classes are _referenced_ by Spark:
+|| *Name* || *Function* ||
+
+==How it Works==
+===Initializing Spark===
+Spark uses the following constructor:
+{{{
+SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
+}}}
+This allows for an easy change in the namespace, GlReader, IdResolver, and GlWriter, based on implementation decisions.
+
+Calling {{{spark.init();}}} initializes the post and get routes for each [GLResources GLResource], and loads the IMGT alleles.
+
+
+===HTTP POST===
+Each HTTP POST Route is based on the abstract HTTP POST Route defined in the Spark class.
+
+[GLResources GL Resource]-specific HTTP POST Routes:
+{{{
+post(new PostRoute("/locus") {
+        @Override
+        protected GlResource readGlResource(final String value) throws IOException {
+            return glReader.readLocus(value);
+        }
+    });
+}}}
+
+The abstract HTTP POST Route:
+ * Replaces the "/" and "-" characters in the path with "" and " ", respectively.
+ * Creates HTTP Responses
+   * Response for empty request body:
+        * Status: {{{400}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"Unable to create [GL Resource] (400), request body was empty"}}}
+   * Response for successful POST:
+        * Status: {{{201}}}
+        * Type: {{{text/plain}}}
+        * Header: {{{Location, glResource.getId()}}}
+        * Logged message: {{{"Created (201) Location [ID]"}}}
+   * Response for IO Exception:
+        * Status: {{{400}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"Unable to create [GL Resource] (400), caught [exception]"}}}
+ * Reads a [GLResources GL Resource] from a specified string
+
+===HTTP GET===
+[GLResources GL Resource]-specific HTTP GET Routes:
+{{{
+get(new GetRoute<Locus>("/locus/:id") {
+        @Override
+        protected Locus findGlResource(final String id) {
+            return idResolver.findLocus(id);
+        }
+
+        @Override
+        protected void writeGlResource(final GlWriter glWriter, final Locus locus, final Writer writer) throws IOException {
+            glWriter.writeLocus(locus, writer);
+        }
+    });
+}}}
+
+The abstract HTTP GET Route:
+ * Replaces path substrings "/" and ":id" with "", and type substrings "/" "-" with "" and " ", respectively. 
+ * 
+ 
+===Loading IMGT Alleles===
+The GL Service is initially populated with all currently registered alleles in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database]. This occurs in the {{{init()}}} method of the Spark service as shown below. 
+
+{{{
+post(new Route("/load-imgt-alleles") {
+        @Override
+        public Object handle(final Request request, final Response response) {
+            try {
+                loadImgtAlleles();
+                response.status(307);
+                response.redirect(".");
+                return "Redirect";
+            }
+            catch (IOException e) {
+                response.status(400);
+                response.type("text/plain");
+                logger.warn("Failed to load IMGT alleles, caught {}", e.getMessage());
+                return "Failed to load IMGT alleles";
+            }
+        }
+    });
+}}}
+
+The method {{{loadImgtAlleles();}}}  parses the list of alleles found at ftp://ftp.ebi.ac.uk/pub/databases/imgt/mhc/hla/Allelelist.txt and calls {{{glReader.readAllele(glstring, accession);}}} from the GLReader on each, which posts the alleles to the service.
