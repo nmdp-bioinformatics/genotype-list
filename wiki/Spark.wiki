@@ -56,24 +56,13 @@ post(new PostRoute("/locus") {
 
 The abstract HTTP POST Route:
  * Replaces the "/" and "-" characters in the path with "" and " ", respectively.
- * Creates HTTP Responses
-   * Response for empty request body:
-        * Status: {{{400}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"Unable to create [GL Resource] (400), request body was empty"}}}
-        * Return: {{{"Unable to create [GL Resource]"}}}
-   * Response for successful POST:
-        * Status: {{{201}}}
-        * Type: {{{text/plain}}}
-        * Header: {{{Location, glResource.getId()}}}
-        * Logged message: {{{"Created (201) Location [ID]"}}}
-        * Return: {{{glResource.getGlstring();}}}
-   * Response for IO Exception:
-        * Status: {{{400}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"Unable to create [GL Resource] (400), caught [exception]"}}}
-        * Return: {{{"Unable to create [GL Resource]"}}}
  * Reads a [GLResources GL Resource] from a specified string
+ * Returns HTTP Responses:
+|| || *Status* || *Type* || *Logged message* || *Return* ||
+|| *Empty request body* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create [GL Resource] (400), request body was empty"}}}||{{{"Unable to create [GL Resource]"}}}||
+|| *Successful POST* || {{{201}}} ||{{{text/plain}}}||{{{"Created (201) Location [ID]"}}}||{{{glResource.getGlstring();}}}||
+|| *IO Exception* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create [GL Resource] (400), caught [exception]"}}}||{{{"Unable to create [GL Resource]"}}}||
+
 
 ===HTTP GET===
 [GLResources GL Resource]-specific HTTP GET Routes:
@@ -93,39 +82,16 @@ get(new GetRoute<Locus>("/locus/:id") {
 
 The abstract HTTP GET Route:
  * Replaces path substrings "/" and ":id" with "", and type substrings "/" "-" with "" and " ", respectively. 
- * Creates HTTP Responses
-   * Invalid ID
-        * Status: {{{404}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"Invalid identifier or file extension (404) [ID]"}}}
-        * Return: {{{"Invalid identifier or file extension"}}}
-   * GL Resource not found
-        * Status: {{{404}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"[GL Resource] not found [ID]"}}}
-        * Return: {{{"[name] not found"}}}
-   * Successful GET of QR Code (hack to support QR Code redirect)
-        * Status: {{{307}}}
-        * Redirect: {{{"http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=" + encode(glResource.getId())}}}
-        * Return: {{{"Redirect"}}}
-   * Invalid file extension
-        * Status: {{{404}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"Invalid file extension (404) [ID], [file extension]"}}}
-        * Return: {{{"Invalid file extension"}}}
-   * Writer IO Exception
-        * Status: {{{500}}}
-        * Type: {{{text/plain}}}
-        * Logged message: {{{"Could not write [GL Resource] (500) [ID], caught [exception]"}}}
-        * Return: {{{"Could not write [name]"}}}
-   * Successful GET
-        * Status: {{{200}}}
-        * Type: {{{Content Type}}} (HTML, GL String, XML, RDF, etc.)
-        * Logged message: {{{"OK (200) [ID]"}}}
-        * Return: {{{stringwriter.toString();}}}
  * Resolve the ID to a [GLResources GL Resource], if it exists
  * Write the specified [GLResources GL Resource] to the specified writer
-
+ * Returns HTTP Responses:
+|| || *Status* || *Type* || *Logged message* || *Return* ||
+|| *Invalid ID* ||{{{404}}} ||{{{text/plain}}} ||{{{"Invalid identifier or file extension (404) [ID]"}}} ||{{{"Invalid identifier or file extension"}}} ||
+|| *GL Resource not found*||{{{404}}} ||{{{text/plain}}} ||{{{"[GL Resource] not found [ID]"}}} ||{{{"[name] not found"}}} ||
+|| *Successful GET of QR Code*||{{{307}}} ||Redirect: {{{"http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=" + encode(glResource.getId())}}} || ||{{{"Redirect"}}} ||
+|| *Invalid file extension*|| {{{404}}}||{{{text/plain}}} ||{{{"Invalid file extension (404) [ID], [file extension]"}}} ||{{{"Invalid file extension"}}} ||
+||*Writer IO Exception* ||{{{500}}} ||{{{text/plain}}} ||{{{"Could not write [GL Resource] (500) [ID], caught [exception]"}}} ||{{{"Could not write [name]"}}} ||
+||*Successful GET* ||{{{200}}} ||{{{Content Type}}} (HTML, GL String, XML, RDF, etc.) ||{{{"OK (200) [ID]"}}} ||{{{stringwriter.toString();}}} ||
  
 ===Loading IMGT Alleles===
 The GL Service is initially populated with all currently registered alleles in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database]. This occurs in the {{{init()}}} method of the Spark service as shown below. 
