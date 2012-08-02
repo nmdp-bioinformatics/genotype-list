@@ -1,0 +1,37 @@
+#summary An overview of the GlWriter
+
+= Introduction =
+
+The GL Service utilizes the {{{GlWriter}}} to write GLResources to a specific format.
+
+In brief, the GL Writer:
+ * 
+
+= Details =
+
+==Components==
+The following classes are _part_ of the GL Writer:
+|| *Name* || *Function* ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlWriter.java GlWriter.java] || Interface - Write a specified resource to a specified writer ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/writer/AbstractTemplatedGlWriter.java AbstractTemplatedGlWriter.java]|| Abstract Templated Writer, implements GlWriter ||
+|| [ GlstringGlWriter.java] ||  ||
+|| [ HtmlGlWriter.java] ||  ||
+|| [ JsonGlWriter.java] ||  ||
+|| [ N3GlWriter.java] ||  ||
+|| [ RdfGlWriter.java] ||  ||
+|| [ XlinkXmlGlWriter.java] ||  ||
+|| [ XmlGlWriter.java] ||  ||
+
+
+The following classes are _referenced_ by the GL Writer:
+|| *Name* || *Function* ||
+
+
+==How it Works==
+===Initializing the Writer===
+There are several different implementations of the {{{GlWriter}}}. 
+When the SparkGlService is initialized, all types of the {{{GlWriter}}} are passed in via a map linking each file extension to each writer.
+
+{{{
+SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
+}}} 
