@@ -12,7 +12,7 @@ This class is invoked within both the GET and POST operations of the Spark RESTf
 
 In brief, all implementations of the resolver:
  * Take in an id (usually returned by the [GlStringResolver GlstringResolver]).
- * Return a [Datatypes GL Resource] or null if the id has been registered.
+ * Return a [GLResources GL Resource] or null if the id has been registered.
 
 = Details =
 
