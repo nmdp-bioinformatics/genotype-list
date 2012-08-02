@@ -26,7 +26,7 @@ The following classes are _part_ of the IdResolver:
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-voldemort/src/main/java/org/immunogenomics/gl/service/voldemort/VoldemortIdResolver.java VoldemortIdResolver.java] || Voldemort implementation of the IdResolver ||
 
 
-The following classes are _referenced_ by the GlStringResolver:
+The following classes are _referenced_ by the IdResolver:
 || *Name* || *Function* ||
 || None || n/a ||
 
