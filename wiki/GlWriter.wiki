@@ -28,6 +28,15 @@ The following classes are _referenced_ by the GL Writer:
 
 
 ==How it Works==
+===Structure===
+{format}Writer extends AbstractTemplatedGlWriter, which implements GlWriter.
+
+glwriter ... getContentType() and writeXXX() methods
+abstracttemplatedglwriter defines writeXXX() methods for undefined resource templates and resources and writers that are plugged in
+writers provide resource templates based on desired file format .
+
+For example, the XmlGlWriter provides resource templates that validate to an XML Schema (gl-resource.xsd).
+
 ===Initializing the Writer===
 There are several different implementations of the {{{GlWriter}}}. 
 When the SparkGlService is initialized, all types of the {{{GlWriter}}} are passed in via a map linking each file extension to each writer.
@@ -36,5 +45,22 @@ When the SparkGlService is initialized, all types of the {{{GlWriter}}} are pass
 SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
 }}} 
 
-==AbstractTemplatedGlWriter==
-The only classes that do not take advantage of the (((AbstractTemplatedGlWriter}}} have implemented the {{{writeXXX()}}} separately for various reasons. 
+===Writing===
+format is selected via spark, map maps extension to writer type, 
+
+==!AbstractTemplatedGlWriter==
+
+
+The only classes that do not take advantage of the {{{AbstractTemplatedGlWriter}}} have implemented the {{{writeXXX()}}} separately for various reasons. 
+
+Using Genotype as an example:
+{{{
+@Override
+    public final void writeGenotype(final Genotype genotype, final Writer writer) throws IOException {
+        checkNotNull(genotype);
+        checkNotNull(writer);
+        VelocityContext context = new VelocityContext();
+        context.put("genotype", genotype);
+        genotypeTemplate.merge(context, writer);
+    }
+}}}
