@@ -28,7 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.Serializable;
 
 /**
- * Abstract class for all resources representable in glstring format.
+ * Abstract class for all resources representable in GL String format.
  */
 public abstract class GlResource implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -54,9 +54,9 @@ public abstract class GlResource implements Serializable {
     }
 
     /**
-     * Return the representation of this gl resource in glstring format.
+     * Return the representation of this gl resource in GL String format.
      *
-     * @return the representation of this gl resource in glstring format
+     * @return the representation of this gl resource in GL String format
      */
     public abstract String getGlstring();
 }

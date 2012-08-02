@@ -30,7 +30,10 @@ import java.io.Serializable;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * Locus.
+ * A locus identifies a genomic location at which alleles may be defined. The locus representation
+ * in GL String format must not contain any of the following characters: '<code>*</code>',
+ * '<code>/</code>', '<code>~</code>', '<code>+</code>', '<code>|</code>',
+ * or '<code>^</code>'.
  */
 @Immutable
 public final class Locus extends GlResource implements Serializable {
@@ -42,7 +45,7 @@ public final class Locus extends GlResource implements Serializable {
      * Create a new locus with the specified identifier and glstring.
      *
      * @param id identifier for this locus, must not be null
-     * @param glstring representation of this locus in glstring format, must not be null
+     * @param glstring representation of this locus in GL String format, must not be null
      */
     public Locus(final String id, final String glstring) {
         super(id);

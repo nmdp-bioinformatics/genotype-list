@@ -87,7 +87,7 @@
 
         <label for="content-type">Content type</label>
         <select name="content-type" id="content-type">
-          <option value="gls">Glstring (text/plain)</option>
+          <option value="gls">GL String (text/plain)</option>
           <option value="html">HTML (text/html)</option>
           <option value="json">JSON (application/json)</option>
           <option value="rdf">RDF (application/rdf+xml)</option>
@@ -103,7 +103,7 @@
 
       <div class="eight columns">
         <label for="post-args">HTTP POST</label>
-        <p>Enter <span class="servicePrefix">a</span> <span class="serviceName">locus</span> in glstring format.</p>
+        <p>Enter <span class="servicePrefix">a</span> <span class="serviceName">locus</span> in GL String format.</p>
         <div id="postMethod">
           <span id="glServicePostURL"><%=serverURL%>locus/</span>
         </div>

@@ -30,7 +30,9 @@ import java.io.Serializable;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * Allele.
+ * An allele describes variation at a particular locus.  The allele representation
+ * in GL String format must not contain any of the following characters: '<code>/</code>',
+ * '<code>~</code>', '<code>+</code>', '<code>|</code>', or '<code>^</code>'.
  */
 @Immutable
 public final class Allele extends GlResource implements Serializable {
@@ -45,7 +47,7 @@ public final class Allele extends GlResource implements Serializable {
      *
      * @param id identifier for this allele, must not be null
      * @param accession accession for this allele, must not be null
-     * @param glstring representation of this allele in glstring format, must not be null
+     * @param glstring representation of this allele in GL String format, must not be null
      * @param locus locus for this allele, must not be null
      */
     public Allele(final String id, final String accession, final String glstring, final Locus locus) {

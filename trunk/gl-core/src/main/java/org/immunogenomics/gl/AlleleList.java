@@ -34,7 +34,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Allele list.
+ * An allele list is an unordered collection of one or more alleles representing alleleic
+ * ambiguity separated in GL String format by the character '<code>/</code>'.
  */
 @Immutable
 public final class AlleleList extends GlResource implements Serializable {

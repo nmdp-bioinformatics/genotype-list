@@ -5,13 +5,19 @@
   targetNamespace="http://immunogenomics.org/gl-resource"
   elementFormDefault="qualified">
 
-  <xs:complexType name="GlResource">
+  <xs:complexType name="GlResource" >
+    <xs:annotation>
+      <xs:documentation>Abstract class for all resources representable in GL String format.</xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <xs:element minOccurs="1" maxOccurs="1" name="id" type="xs:string"></xs:element>
       <xs:element minOccurs="1" maxOccurs="1" name="glstring" type="xs:string"></xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="Locus">
+    <xs:annotation>
+      <xs:documentation>A locus identifies a genomic location at which alleles may be defined.  The locus representation in GL String format must not contain any of the following characters: '*', '/', '~', '+', '|', '^'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence></xs:sequence>
@@ -19,6 +25,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="Allele">
+    <xs:annotation>
+      <xs:documentation>An allele describes variation at a particular locus.  The allele representation in GL String format must not contain any of the following characters: '/', '~', '+', '|', '^'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
@@ -29,6 +38,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="AlleleList">
+    <xs:annotation>
+      <xs:documentation>An allele list is an unordered collection of one or more alleles representing alleleic ambiguity separated in GL String format by the character '/'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
@@ -44,6 +56,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="Haplotype">
+    <xs:annotation>
+      <xs:documentation>A haplotype is an unordered collection of one or more allele lists in phase separated in GL String format by the character '~'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
@@ -59,6 +74,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="Genotype">
+    <xs:annotation>
+      <xs:documentation>A genotype is an unordered collection of one or more haplotypes separated in GL String format by the character '+'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
@@ -74,6 +92,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="GenotypeList">
+    <xs:annotation>
+      <xs:documentation>A genotype list is an unordered collection of one or more genotypes representing genotypic ambiguity separated in GL String format by the character '|'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
@@ -89,6 +110,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="MultilocusUnphasedGenotype">
+    <xs:annotation>
+      <xs:documentation>A multilocus unphased genotype is an unordered collection of one or more genotype lists separated in GL String format by the character '^'.</xs:documentation>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="gl:GlResource">
         <xs:sequence>
