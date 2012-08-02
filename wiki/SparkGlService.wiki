@@ -6,9 +6,8 @@
 The GL Service utilizes {{{Spark}}} as its webapp implementation of the URI-based RESTful service. 
 
 In brief, the SparkGlService:
- * TODO writeme. include:
- * GET/POST
- * Does not implement all of the CRUD operations - no updating or deleting, externally- or internally-facing
+ * Uses RESTful services to store and retrieve GL Strings, IDs, and [GLResources GL Resources].
+ * Does not implement all of the CRUD operations - only create (POST) and retrieve (GET), no updating or deleting.
 
 = Details =
 
