@@ -10,7 +10,7 @@ When creating a new issue, set Status to New and Owner to empty.
 
 ==== New --> Accepted ====
 
-New issue should be triaged.  If an issue is acceptable, set Status to Accepted.  If an issue is not acceptable, set Status to one of Invalid, Duplicate, or !WontFix as appropriate.
+New issues should be triaged.  If an issue is acceptable, set Status to Accepted.  If an issue is not acceptable, set Status to one of Invalid, Duplicate, or !WontFix as appropriate.
 
 
 ==== Accepted --> Started ====
