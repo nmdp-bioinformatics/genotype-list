@@ -36,7 +36,7 @@ Spark uses the following constructor:
 {{{
 SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
 }}}
-This allows for an easy change in the namespace, GlReader, IdResolver, and GlWriter, based on implementation decisions.
+This allows for an easy change in the namespace, GLReader, IdResolver, and GlWriter, based on implementation decisions.
 
 Calling {{{spark.init();}}} initializes the post and get routes for each [GLResources GLResource], and loads the IMGT alleles.
 
