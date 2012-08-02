@@ -4,7 +4,11 @@
 
 The GL Service utilizes the {{{IdResolver}}} to look up a GL String in the cache and find or assign an id.
 
-(statement about no guarantee of uniqueness and link to follow the controversy on the blog)
+This class is invoked within both the GET and POST operations of the Spark RESTful service webapp.
+ * GET calls the IdResolver directly to return a GLResource registered under a particular ID.
+ * POST invokes the GLReader, which calls the IdResolver to determine whether a GLResource has been registered.
+
+(statement about no guarantee of uniqueness and link to follow the controversy on the blog hiedfs.wordpress.com)
 
 In brief, all implementations of the resolver:
  * Take in an id (usually returned by the [GlStringResolver GlstringResolver]).
