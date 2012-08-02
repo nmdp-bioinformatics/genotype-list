@@ -1,4 +1,5 @@
 #summary An overview of the GlWriter
+#labels Phase-Implementation
 
 = Introduction =
 
@@ -25,20 +26,20 @@ The following classes are _part_ of the GL Writer:
 
 The following classes are _referenced_ by the GL Writer:
 || *Name* || *Function* ||
-
+|| TODO ||  ||
 
 ==How it Works==
 ===Structure===
-{format}GlWriter extends AbstractTemplatedGlWriter, which implements GlWriter.
+The {{{{format}GlWriter}}} *extends* {{{AbstractTemplatedGlWriter}}}, which *implements* {{{GlWriter}}}.
 
-glwriter ... getContentType() and writeXXX() methods
-abstracttemplatedglwriter defines writeXXX() methods for undefined resource templates and resources and writers that are plugged in
-writers provide resource templates based on desired file format .
+{{{GlWriter}}} is an interface that declares required {{{getContentType()}}} and {{{writeXXX()}}} methods for use in every type of {{{GlWriter}}}. 
 
-For example, the XmlGlWriter provides resource templates that validate to an XML Schema (gl-resource.xsd).
+[GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] is an abstract class that defines {{{writeXXX(resource, writer)}}} methods for various GLResources and arbitrary writers. It also contains undefined templates representing the file format, to be defined by each specific writer.
+
+The various format-specific {{{GlWriter}}}s provide templates to hold the actual written content. Some writers do not extend the Abstract Template, but rather define their own {{{writeXXX()}}} methods and implement the {{{GlWriter}}} directly.
 
 ===Initializing the Writer===
-There are several different implementations of the {{{GlWriter}}}. 
+There are several different format-specific implementations of the {{{GlWriter}}}. 
 When the SparkGlService is initialized, all types of the {{{GlWriter}}} are passed in via a map linking each file extension to each writer.
 
 {{{
@@ -46,12 +47,28 @@ SparkGlService(@Namespace final String ns, final GlReader glReader, final IdReso
 }}} 
 
 ===Writing===
-format is selected via spark, map maps extension to writer type, 
+The GlWriter is typically called from [SparkGlService Spark] within HTTP GET operations. The writer converts the retrieved GL Resource to the desired file format, for output to the user. 
+
+Spark calls {{{writeGlResource()}}} with the GL Resource and the writer, looking up the writer by file extension. The writer then inserts the information contained by the GL Resource into the template, and passes it back to spark, where it is output as a string in the header location. 
+
+{{{
+get(new GetRoute<Locus>("/locus/:id") {
+        @Override
+        protected Locus findGlResource(final String id) {
+            return idResolver.findLocus(id);
+        }
+
+        @Override
+        protected void writeGlResource(final GlWriter glWriter, final Locus locus, final Writer writer) throws IOException {
+            glWriter.writeLocus(locus, writer);
+        }
+    });
+}}}
 
 ==!AbstractTemplatedGlWriter==
 The Abstract Templated GL Writer acts as a core for most of the various writers. It provides two main components: {{{writeXXX()}}} methods and undefined templates for each resource, to be determined by the requirements of each file format. 
 
-Each resource type has its own write method, in the format {{{writeXXX, resource, writer)}}}. These methods write the various GLResources to the desired file format. 
+Each resource type has its own write method, in the format {{{writeXXX(resource, writer)}}}. These methods write the various GLResources to the desired file format. 
 
 The templates are used within the {{{writeXXX()}}} methods to produce content based on the file type. For example, the {{{XmlGlWriter}}} provides resource-specific templates that, when filled by the writer, validate to an XML Schema (gl-resource.xsd). 
 
