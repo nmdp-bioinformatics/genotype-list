@@ -6,7 +6,7 @@
 The GL Service utilizes the {{{GlWriter}}} to write GLResources to a specific format.
 
 In brief, the GL Writer:
- * 
+ * Converts retrieved GLResources to the desired file format for output.
 
 = Details =
 
@@ -26,7 +26,7 @@ The following classes are _part_ of the GL Writer:
 
 The following classes are _referenced_ by the GL Writer:
 || *Name* || *Function* ||
-|| TODO ||  ||
+|| None || n/a ||
 
 ==How it Works==
 ===Structure===
