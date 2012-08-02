@@ -1,10 +1,12 @@
 #summary Webapp implementation of the URI-based RESTful service for the GL Service.
+#labels Phase-Implementation
 
 = Introduction =
 
 The GL Service utilizes {{{Spark}}} as its webapp implementation of the URI-based RESTful service. 
 
 In brief, Spark:
+ * TODO writeme. include:
  * GET/POST
  * Does not implement all of the CRUD operations - no updating or deleting, externally- or internally-facing
 
@@ -49,15 +51,18 @@ The abstract HTTP POST Route:
         * Status: {{{400}}}
         * Type: {{{text/plain}}}
         * Logged message: {{{"Unable to create [GL Resource] (400), request body was empty"}}}
+        * Return: {{{"Unable to create [GL Resource]"}}}
    * Response for successful POST:
         * Status: {{{201}}}
         * Type: {{{text/plain}}}
         * Header: {{{Location, glResource.getId()}}}
         * Logged message: {{{"Created (201) Location [ID]"}}}
+        * Return: {{{glResource.getGlstring();}}}
    * Response for IO Exception:
         * Status: {{{400}}}
         * Type: {{{text/plain}}}
         * Logged message: {{{"Unable to create [GL Resource] (400), caught [exception]"}}}
+        * Return: {{{"Unable to create [GL Resource]"}}}
  * Reads a [GLResources GL Resource] from a specified string
 
 ===HTTP GET===
@@ -78,7 +83,39 @@ get(new GetRoute<Locus>("/locus/:id") {
 
 The abstract HTTP GET Route:
  * Replaces path substrings "/" and ":id" with "", and type substrings "/" "-" with "" and " ", respectively. 
- * 
+ * Creates HTTP Responses
+   * Invalid ID
+        * Status: {{{404}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"Invalid identifier or file extension (404) [ID]"}}}
+        * Return: {{{"Invalid identifier or file extension"}}}
+   * GL Resource not found
+        * Status: {{{404}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"[GL Resource] not found [ID]"}}}
+        * Return: {{{"[name] not found"}}}
+   * Successful GET of QR Code (hack to support QR Code redirect)
+        * Status: {{{307}}}
+        * Redirect: {{{"http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=" + encode(glResource.getId())}}}
+        * Return: {{{"Redirect"}}}
+   * Invalid file extension
+        * Status: {{{404}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"Invalid file extension (404) [ID], [file extension]"}}}
+        * Return: {{{"Invalid file extension"}}}
+   * Writer IO Exception
+        * Status: {{{500}}}
+        * Type: {{{text/plain}}}
+        * Logged message: {{{"Could not write [GL Resource] (500) [ID], caught [exception]"}}}
+        * Return: {{{"Could not write [name]"}}}
+   * Successful GET
+        * Status: {{{200}}}
+        * Type: {{{Content Type}}} (HTML, GL String, XML, RDF, etc.)
+        * Logged message: {{{"OK (200) [ID]"}}}
+        * Return: {{{stringwriter.toString();}}}
+ * Resolve the ID to a [GLResources GL Resource], if it exists
+ * Write the specified [GLResources GL Resource] to the specified writer
+
  
 ===Loading IMGT Alleles===
 The GL Service is initially populated with all currently registered alleles in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database]. This occurs in the {{{init()}}} method of the Spark service as shown below. 
