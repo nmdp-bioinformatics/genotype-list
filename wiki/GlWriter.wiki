@@ -29,7 +29,7 @@ The following classes are _referenced_ by the GL Writer:
 
 ==How it Works==
 ===Structure===
-{format}Writer extends AbstractTemplatedGlWriter, which implements GlWriter.
+{format}GlWriter extends AbstractTemplatedGlWriter, which implements GlWriter.
 
 glwriter ... getContentType() and writeXXX() methods
 abstracttemplatedglwriter defines writeXXX() methods for undefined resource templates and resources and writers that are plugged in
@@ -49,7 +49,11 @@ SparkGlService(@Namespace final String ns, final GlReader glReader, final IdReso
 format is selected via spark, map maps extension to writer type, 
 
 ==!AbstractTemplatedGlWriter==
+The Abstract Templated GL Writer acts as a core for most of the various writers. It provides two main components: {{{writeXXX()}}} methods and undefined templates for each resource, to be determined by the requirements of each file format. 
 
+Each resource type has its own write method, in the format {{{writeXXX, resource, writer)}}}. These methods write the various GLResources to the desired file format. 
+
+The templates are used within the {{{writeXXX()}}} methods to produce content based on the file type. For example, the {{{XmlGlWriter}}} provides resource-specific templates that, when filled by the writer, validate to an XML Schema (gl-resource.xsd). 
 
 The only classes that do not take advantage of the {{{AbstractTemplatedGlWriter}}} have implemented the {{{writeXXX()}}} separately for various reasons. 
 
