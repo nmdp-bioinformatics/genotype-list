@@ -93,6 +93,7 @@ The abstract HTTP GET Route:
 ||*Writer IO Exception* ||{{{500}}} ||{{{text/plain}}} ||{{{"Could not write [GL Resource] (500) [ID], caught [exception]"}}} ||{{{"Could not write [name]"}}} ||
 ||*Successful GET* ||{{{200}}} ||{{{Content Type}}} (HTML, GL String, XML, RDF, etc.) ||{{{"OK (200) [ID]"}}} ||{{{stringwriter.toString();}}} ||
  
+
 ===Loading IMGT Alleles===
 The GL Service is initially populated with all currently registered alleles in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database]. This occurs in the {{{init()}}} method of the Spark service as shown below. 
 
