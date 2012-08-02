@@ -14,13 +14,13 @@ The following classes are _part_ of the GL Writer:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlWriter.java GlWriter.java] || Interface - Write a specified resource to a specified writer ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/writer/AbstractTemplatedGlWriter.java AbstractTemplatedGlWriter.java]|| Abstract Templated Writer, implements GlWriter ||
-|| [ GlstringGlWriter.java] ||  ||
-|| [ HtmlGlWriter.java] ||  ||
-|| [ JsonGlWriter.java] ||  ||
-|| [ N3GlWriter.java] ||  ||
-|| [ RdfGlWriter.java] ||  ||
-|| [ XlinkXmlGlWriter.java] ||  ||
-|| [ XmlGlWriter.java] ||  ||
+|| [ GlstringGlWriter.java] || implements GlWriter ||
+|| [ HtmlGlWriter.java] || extends [GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] ||
+|| [ JsonGlWriter.java] || implements GlWriter ||
+|| [ N3GlWriter.java] || extends [GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] ||
+|| [ RdfGlWriter.java] || extends [GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] ||
+|| [ XlinkXmlGlWriter.java] || extends [GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] ||
+|| [ XmlGlWriter.java] || extends [GlWriter#AbstractTemplatedGlWriter AbstractTemplatedGlWriter] ||
 
 
 The following classes are _referenced_ by the GL Writer:
@@ -35,3 +35,6 @@ When the SparkGlService is initialized, all types of the {{{GlWriter}}} are pass
 {{{
 SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
 }}} 
+
+==AbstractTemplatedGlWriter==
+The only classes that do not take advantage of the (((AbstractTemplatedGlWriter}}} have implemented the {{{writeXXX()}}} separately for various reasons. 
