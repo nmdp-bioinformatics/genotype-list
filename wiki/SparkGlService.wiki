@@ -25,9 +25,9 @@ The following classes are _part_ of Spark:
 
 The following classes are _referenced_ by Spark:
 || *Name* || *Function* ||
-|| [ GlReader] || Used in POST operations to parse and register GL Strings ||
-|| [ IdResolver] || Used in GET operations to retrieve GLResources corresponding with IDs. ||
-|| [ GlWriters] || Used in GET operations to write GLResources out to the desired format. ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlReader.java GlReader.java] || Used in POST operations to parse and register GL Strings ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/IdResolver.java IdResolver.java] || Used in GET operations to retrieve GLResources corresponding with IDs. ||
+|| [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlWriter.java GlWriter.java] || Used in GET operations to write GLResources out to the desired format. ||
 
 ==How it Works==
 ===Initializing Spark===
