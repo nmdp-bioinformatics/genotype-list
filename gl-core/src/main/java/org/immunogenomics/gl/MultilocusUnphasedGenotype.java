@@ -34,13 +34,15 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Multilocus unphased genotype.
+ * A multilocus unphased genotype is an unordered collection of one or more
+ * genotype lists separated in GL String format by the character '<code>^</code>'.
  */
 @Immutable
 public final class MultilocusUnphasedGenotype extends GlResource implements Serializable {
     private static final long serialVersionUID = 1L;
     private final String glstring;
     private final List<GenotypeList> genotypeLists;
+
 
     /**
      * Create a new multilocus unphased genotype with the specified identifier and genotype list.

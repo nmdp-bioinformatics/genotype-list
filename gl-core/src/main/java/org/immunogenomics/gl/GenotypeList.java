@@ -34,7 +34,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Genotype list.
+ * A genotype list is an unordered collection of one or more genotypes representing genotypic
+ * ambiguity separated in GL String format by the character '<code>|</code>'.
  */
 @Immutable
 public final class GenotypeList extends GlResource implements Serializable {

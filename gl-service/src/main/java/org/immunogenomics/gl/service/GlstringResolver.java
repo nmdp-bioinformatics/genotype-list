@@ -24,62 +24,62 @@
 package org.immunogenomics.gl.service;
 
 /**
- * Genotype list glstring --&gt; identifier resolver.
+ * Genotype list GL String --&gt; identifier resolver.
  */
 public interface GlstringResolver {
 
     /**
-     * Resolve the specified locus in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified locus in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring locus in glstring format, must not be null or empty
+     * @param glstring locus in GL String format, must not be null or empty
      * @return the identifier for the specified locus
      */
     String resolveLocus(String glstring);
 
     /**
-     * Resolve the specified allele in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified allele in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring allele in glstring format, must not be null or empty
+     * @param glstring allele in GL String format, must not be null or empty
      * @return the identifier for the specified allele
      */
     String resolveAllele(String glstring);
 
     /**
-     * Resolve the specified allele list in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified allele list in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring allele list in glstring format, must not be null or empty
+     * @param glstring allele list in GL String format, must not be null or empty
      * @return the identifier for the specified allele list
      */
     String resolveAlleleList(String glstring);
 
     /**
-     * Resolve the specified haplotype in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified haplotype in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring haplotype in glstring format, must not be null or empty
+     * @param glstring haplotype in GL String format, must not be null or empty
      * @return the identifier for the specified haplotype
      */
     String resolveHaplotype(String glstring);
 
     /**
-     * Resolve the specified genotype in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified genotype in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring genotype in glstring format, must not be null or empty
+     * @param glstring genotype in GL String format, must not be null or empty
      * @return the identifier for the specified genotype
      */
     String resolveGenotype(String glstring);
 
     /**
-     * Resolve the specified genotype list in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified genotype list in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring genotype list in glstring format, must not be null or empty
+     * @param glstring genotype list in GL String format, must not be null or empty
      * @return the identifier for the specified genotype list
      */
     String resolveGenotypeList(String glstring);
 
     /**
-     * Resolve the specified multilocus unphased genotype in glstring format to an identifier, creating one if necessary.
+     * Resolve the specified multilocus unphased genotype in GL String format to an identifier, creating one if necessary.
      *
-     * @param glstring multilocus unphased genotype in glstring format, must not be null or empty
+     * @param glstring multilocus unphased genotype in GL String format, must not be null or empty
      * @return the identifier for the specified multilocus unphased genotype
      */
     String resolveMultilocusUnphasedGenotype(String glstring);

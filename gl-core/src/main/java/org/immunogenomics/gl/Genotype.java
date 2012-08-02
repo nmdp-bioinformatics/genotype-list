@@ -34,7 +34,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Genotype.
+ * A genotype is an unordered collection of one or more haplotypes separated in
+ * GL String format by the character '<code>+<code>'.
  */
 @Immutable
 public final class Genotype extends GlResource implements Serializable {

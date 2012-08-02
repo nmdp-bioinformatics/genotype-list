@@ -34,7 +34,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Haplotype.
+ * A haplotype is an unordered collection of one or more allele lists in phase separated
+ * in GL String format by the character '<code>~<code>'.
  */
 @Immutable
 public final class Haplotype extends GlResource implements Serializable {
