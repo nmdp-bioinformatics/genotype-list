@@ -3,7 +3,7 @@
   <glx:id>${genotypeList.Id}</glx:id>
   <glx:glstring>${genotypeList.Glstring}</glx:glstring>
   <glx:genotypes>
- #foreach ($genotype in ${genotypeList.Genotypes})
+#foreach ($genotype in ${genotypeList.Genotypes})
     <glx:genotype xlink:href="${genotype.Id}"></glx:genotype>
 #end
   </glx:genotype>
