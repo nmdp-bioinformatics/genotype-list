@@ -11,7 +11,7 @@
     <dc:title>${allele.Id}</dc:title>
     <dc:identifier>${allele.Id}</dc:identifier>
     <rdfs:label>${allele.Id}</rdfs:label>
-    <rdfs:comment>An allele with accession ${allele.Accession} and locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</rdfs:comment>
+    <rdfs:comment>An allele with#if (${allele.Accession} != "") accession ${allele.Accession} and#end locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</rdfs:comment>
     <gl:hasAccession>${allele.Accession}</gl:hasAccession>
     <gl:hasGlstring>${allele.Glstring}</gl:hasGlstring>
     <gl:hasLocus rdf:Resource="${allele.Locus.Id}"/>

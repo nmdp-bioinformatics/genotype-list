@@ -8,7 +8,7 @@
     <p class="title">${allele.Id}</p>
     <p class="identifier">${allele.Id}</p>
     <p class="label">${allele.Id}</p>
-    <p class="comment">An allele with accession ${allele.Accession} and locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</p>
+    <p class="comment">An allele with#if (${allele.Accession} != "") accession ${allele.Accession} and#end locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</p>
     <p class="hasAccession">${allele.Accession}</p>
     <p class="hasGlstring">${allele.Glstring}</p>
     <p class="hasLocus"><a href="http://immunogenomics.org/gl-ontology/Locus">http://immunogenomics.org/gl-ontology/Locus</a> <a href="${allele.Locus.Id}.html">${allele.Locus.Id}</a></p>

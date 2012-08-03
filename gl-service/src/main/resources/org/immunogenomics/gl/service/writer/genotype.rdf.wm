@@ -11,7 +11,7 @@
     <dc:title>${genotype.Id}</dc:title>
     <dc:identifier>${genotype.Id}</dc:identifier>
     <rdfs:label>${genotype.Id}</rdfs:label>
-    <rdfs:comment>A genotype with ${genotype.Haplotypes.size()} haplotypes represented by glstring ${genotype.Glstring}</rdfs:comment>
+    <rdfs:comment>A genotype with ${genotype.Haplotypes.size()} haplotype#if (${genotype.Haplotypes.size()} != 1)s#end represented by glstring ${genotype.Glstring}</rdfs:comment>
     <gl:hasGlstring>${genotype.Glstring}</gl:hasGlstring>
 #foreach ($h in ${genotype.Haplotypes})
     <gl:hasHaplotype rdf:Resource="${h.Id}"/>

@@ -8,7 +8,7 @@
   dc:title "${allele.Id}" ;
   dc:identifier "${allele.Id}" ;
   rdfs:label "${allele.Id}" ;
-  rdfs:comment "An allele with accession ${allele.Accession} and locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}" ;
+  rdfs:comment "An allele with#if (${allele.Accession} != "") accession ${allele.Accession} and#end locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}" ;
   gl:hasAccession "${allele.Accession}" ;
   gl:hasGlstring "${allele.Glstring}" ;
   gl:hasLocus <${allele.Locus.Id}> ;

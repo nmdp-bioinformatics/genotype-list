@@ -11,7 +11,7 @@
     <dc:title>${alleleList.Id}</dc:title>
     <dc:identifier>${alleleList.Id}</dc:identifier>
     <rdfs:label>${alleleList.Id}</rdfs:label>
-    <rdfs:comment>An allele list with ${alleleList.Alleles.size()} alleles represented by glstring ${alleleList.Glstring}</rdfs:comment>
+    <rdfs:comment>An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}</rdfs:comment>
 #foreach ($a in ${alleleList.Alleles})
     <gl:Allele rdf:Resource="${a.Id}"/>
 #end
