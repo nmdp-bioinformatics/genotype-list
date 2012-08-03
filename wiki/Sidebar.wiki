@@ -1,7 +1,5 @@
 #summary Default sidebar for all pages.
 
-#sidebar TableOfContents
-
 Getting Started
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
  * [Delimiters GL String Delimiters]
