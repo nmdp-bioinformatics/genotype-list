@@ -18,7 +18,7 @@ In brief, all implementations of the resolver:
 
 ==Components==
 
-The following classes are _part_ of the GlRegistry:
+The following classes are _part_ of the GLRegistry:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlRegistry.java GL Registry.java] || Interface ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/cache/CacheGlRegistry.java CacheGlRegistry.java] || Cache implementation of the GL Registry ||
@@ -26,7 +26,7 @@ The following classes are _part_ of the GlRegistry:
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-redis/src/main/java/org/immunogenomics/gl/service/redis/JedisGlRegistry.java JedisGlRegistry.java] || Redis/Jedis implementation of the GL Registry ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-voldemort/src/main/java/org/immunogenomics/gl/service/voldemort/VoldemortGlRegistry.java VoldemortGlRegistry.java] || Voldemort implementation of the GL Registry ||
 
-The following classes are _referenced_ by the GlRegistry:
+The following classes are _referenced_ by the GLRegistry:
 || *Name* || *Function* ||
 || None || n/a || 
 
