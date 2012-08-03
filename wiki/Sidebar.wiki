@@ -1,12 +1,12 @@
 #summary Default sidebar for all pages.
 
-#sidebar TableOfContents
+==Table of Contents==
 
-Getting Started
+*Getting Started*
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
  * [Delimiters GL String Delimiters]
 
-Implementation Details
+*Implementation Details*
  * [SparkGlService Spark RESTful Web Service]
    * [SparkGlService#Components Components]
    * [SparkGlService#How_it_Works How it Works]
@@ -28,6 +28,6 @@ Implementation Details
  * [GLRegistry GL Registry]
  * [GlWriter GL Writer]
 
-Other Need-To-Know Information
+*Other Need-To-Know Information*
  * [ThirdPartyDependencies Third Party Dependencies]
  * [IssueWorkflow Issue Tracker Workflow]
