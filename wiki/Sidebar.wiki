@@ -1,21 +1,33 @@
 #summary Default sidebar for all pages.
 
-*Getting Started*
+#sidebar TableOfContents
+
+Getting Started
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
  * [Delimiters GL String Delimiters]
 
-*Implementation Details*
+Implementation Details
  * [SparkGlService Spark RESTful Web Service]
+   * [SparkGlService#Components Components]
+   * [SparkGlService#How_it_Works How it Works]
+     * [SparkGlService#Initializing_Spark Initializing Spark]
+     * [SparkGlService#HTTP_POST HTTP POST]
+       * Sequence Diagrams
+       * POST Route Definitions
+       * HTTP Responses
+     * [SparkGlService#HTTP_GET HTTP GET]
+       * Sequence Diagrams
+       * POST Route Definitions
+       * HTTP Responses
+     * [SparkGlService#Loading_IMGT_Alleles Loading IMGT Alleles]
  * [GLReader GL Reader]
  * [Resolvers Resolvers]
    * [GlStringResolver GL String Resolver]
    * [IdResolver ID Resolver]
- * [GlStringResolver GL String Resolver]
- * [IdResolver ID Resolver]
  * [IdSupplier ID Supplier]
  * [GLRegistry GL Registry]
  * [GlWriter GL Writer]
 
-*Other Need-To-Know Information*
+Other Need-To-Know Information
  * [ThirdPartyDependencies Third Party Dependencies]
  * [IssueWorkflow Issue Tracker Workflow]
