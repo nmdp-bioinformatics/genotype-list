@@ -8,7 +8,7 @@
   dc:title "${multilocusUnphasedGenotype.Id}" ;
   dc:identifier "${multilocusUnphasedGenotype.Id}" ;
   rdfs:label "${multilocusUnphasedGenotype.Id}" ;
-  rdfs:comment "A multilocus unphased genotype with ${multilocusUnphasedGenotype.GenotypeLists.size()} genotype lists represented by glstring ${multilocusUnphasedGenotype.Glstring}" ;
+  rdfs:comment "A multilocus unphased genotype with ${multilocusUnphasedGenotype.GenotypeLists.size()} genotype list#if (${multilocusUnphasedGenotype.GenotypeLists.size()} != 1)s#end represented by glstring ${multilocusUnphasedGenotype.Glstring}" ;
   gl:hasGlstring "${multilocusUnphasedGenotype.Glstring}" ;
 #foreach ($gl in ${multilocusUnphasedGenotype.GenotypeLists})
   gl:hasGenotypeList <${gl.Id}> ;

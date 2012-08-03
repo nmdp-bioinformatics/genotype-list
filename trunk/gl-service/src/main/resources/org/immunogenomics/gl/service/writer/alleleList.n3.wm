@@ -8,7 +8,7 @@
   dc:title "${alleleList.Id}" ;
   dc:identifier "${alleleList.Id}" ;
   rdfs:label "${alleleList.Id}" ;
-  rdfs:comment "An allele list with ${alleleList.Alleles.size()} alleles represented by glstring ${alleleList.Glstring}" ;
+  rdfs:comment "An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}" ;
   gl:hasGlstring "${alleleList.Glstring}" ;
 #foreach ($a in ${alleleList.Alleles})
   gl:hasAllele <${a.Id}> ;

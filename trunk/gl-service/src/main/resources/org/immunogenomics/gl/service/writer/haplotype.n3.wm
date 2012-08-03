@@ -8,7 +8,7 @@
   dc:title "${haplotype.Id}" ;
   dc:identifier "${haplotype.Id}" ;
   rdfs:label "${haplotype.Id}" ;
-  rdfs:comment "A haplotype with ${haplotype.AlleleLists.size()} allele lists represented by glstring ${haplotype.Glstring}" ;
+  rdfs:comment "A haplotype with ${haplotype.AlleleLists.size()} allele list#if (${haplotype.AlleleLists.size()} != 1)s#end represented by glstring ${haplotype.Glstring}" ;
   gl:hasGlstring "${haplotype.Glstring}" ;
 #foreach ($al in ${haplotype.AlleleLists})
   gl:hasAlleleList <${al.Id}> ;

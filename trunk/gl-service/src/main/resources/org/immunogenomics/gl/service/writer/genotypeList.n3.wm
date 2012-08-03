@@ -8,7 +8,7 @@
   dc:title "${genotypeList.Id}" ;
   dc:identifier "${genotypeList.Id}" ;
   rdfs:label "${genotypeList.Id}" ;
-  rdfs:comment "A genotype list with ${genotypeList.Genotypes.size()} genotypes represented by glstring ${genotypeList.Glstring}" ;
+  rdfs:comment "A genotype list with ${genotypeList.Genotypes.size()} genotype#if (${genotypeList.Genotypes.size()} != 1)s#end represented by glstring ${genotypeList.Glstring}" ;
   gl:hasGlstring "${genotypeList.Glstring}" ;
 #foreach ($a in ${genotypeList.Genotypes})
   gl:hasGenotype <${a.Id}> ;
