@@ -58,18 +58,18 @@ locusIds.put(locus.getGlstring(), locus.getId());
 }}}
 
 
-====Cache:====
+====Cache====
 
 Uses {{{com.google.common.cache.Cache}}}
 
-====JDBC:====
+====JDBC====
 
 Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
 
-====Redis/Jedis:====
+====Redis/Jedis====
 
 Uses {{{redis.clients.jedis.Jedis}}}
 
-====Voldemort:====
+====Voldemort====
 
 Uses {{{voldemort.client.StoreClient}}}

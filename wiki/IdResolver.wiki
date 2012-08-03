@@ -51,19 +51,19 @@ Locus locus = idResolver.findLocus(id);
 
 The way the resolver finds an id depends on the chosen implementation. More details to be added soon.
 
-====Cache:====
+====Cache====
 
 Uses {{{com.google.common.cache.LoadingCache}}}
 
-====JDBC:====
+====JDBC====
 
 Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
 
-====Redis/Jedis:====
+====Redis/Jedis====
 
 Uses {{{redis.clients.jedis.Jedis}}}
 
-====Voldemort:====
+====Voldemort====
 
 Uses {{{voldemort.client.StoreClient}}}
 

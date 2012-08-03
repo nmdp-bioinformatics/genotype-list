@@ -77,9 +77,9 @@ The abstract HTTP POST Route:
 ====HTTP Responses====
 
 || || *Status* || *Type* || *Logged message* || *Return* ||
-|| *Empty request body* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create [GL Resource] (400), request body was empty"}}}||{{{"Unable to create [GL Resource]"}}}||
-|| *Successful POST* || {{{201}}} ||{{{text/plain}}}||{{{"Created (201) Location [ID]"}}}||{{{glResource.getGlstring();}}}||
-|| *IO Exception* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create [GL Resource] (400), caught [exception]"}}}||{{{"Unable to create [GL Resource]"}}}||
+|| *Empty request body* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create {GL Resource} (400), request body was empty"}}}||{{{"Unable to create {GL Resource}"}}}||
+|| *Successful POST* || {{{201}}} ||{{{text/plain}}}||{{{"Created (201) Location {ID}"}}}||{{{glResource.getGlstring();}}}||
+|| *IO Exception* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create {GL Resource} (400), caught {exception}"}}}||{{{"Unable to create {GL Resource}"}}}||
 
 
 ===HTTP GET===
@@ -117,12 +117,12 @@ The abstract HTTP GET Route:
 ====HTTP Responses====
 
 || || *Status* || *Type* || *Logged message* || *Return* ||
-|| *Invalid ID* ||{{{404}}} ||{{{text/plain}}} ||{{{"Invalid identifier or file extension (404) [ID]"}}} ||{{{"Invalid identifier or file extension"}}} ||
-|| *GL Resource not found*||{{{404}}} ||{{{text/plain}}} ||{{{"[GL Resource] not found [ID]"}}} ||{{{"[name] not found"}}} ||
+|| *Invalid ID* ||{{{404}}} ||{{{text/plain}}} ||{{{"Invalid identifier or file extension (404) {ID}]"}}} ||{{{"Invalid identifier or file extension"}}} ||
+|| *GL Resource not found*||{{{404}}} ||{{{text/plain}}} ||{{{"{GL Resource} not found {ID}"}}} ||{{{"{name} not found"}}} ||
 || *Successful GET of QR Code*||{{{307}}} ||Redirect: {{{"http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=" + encode(glResource.getId())}}} || ||{{{"Redirect"}}} ||
-|| *Invalid file extension*|| {{{404}}}||{{{text/plain}}} ||{{{"Invalid file extension (404) [ID], [file extension]"}}} ||{{{"Invalid file extension"}}} ||
-|| *Writer IO Exception* ||{{{500}}} ||{{{text/plain}}} ||{{{"Could not write [GL Resource] (500) [ID], caught [exception]"}}} ||{{{"Could not write [name]"}}} ||
-|| *Successful GET* ||{{{200}}} ||{{{Content Type}}} (HTML, GL String, XML, RDF, etc.) ||{{{"OK (200) [ID]"}}} ||{{{stringwriter.toString();}}} ||
+|| *Invalid file extension*|| {{{404}}}||{{{text/plain}}} ||{{{"Invalid file extension (404) {ID}, {file extension}"}}} ||{{{"Invalid file extension"}}} ||
+|| *Writer IO Exception* ||{{{500}}} ||{{{text/plain}}} ||{{{"Could not write {GL Resource} (500) {ID}, caught {exception}"}}} ||{{{"Could not write {name}"}}} ||
+|| *Successful GET* ||{{{200}}} ||{{{Content Type}}} (HTML, GL String, XML, RDF, etc.) ||{{{"OK (200) {ID}"}}} ||{{{stringwriter.toString();}}} ||
  
 
 ===Loading IMGT Alleles===
