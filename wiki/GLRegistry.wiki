@@ -51,7 +51,7 @@ The registry's mechanics vary depending on the implementation, but the basic log
 
 The ID and GL String are extracted as needed from the GL Resource, and entered in each cache.
 
-The following example is from the CacheGlRegistry: 
+The following example is from the [Cache#CacheGlRegistry CacheGlRegistry]: 
 {{{
 loci.put(locus.getId(), locus);
 locusIds.put(locus.getGlstring(), locus.getId());
