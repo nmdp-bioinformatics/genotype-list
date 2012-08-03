@@ -67,6 +67,21 @@ public final class GlClientTest {
         assertEquals("HLA-A", locus.getGlstring());
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateLocusNullGlstring() {
+        client.createLocus((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetLocusNullIdentifier() {
+        client.getLocus(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterLocusNullGlstring() {
+        client.registerLocus(null);
+    }
+
     @Test
     public void testCreateAllele() {
         Locus locus = client.createLocus("HLA-A");
@@ -78,6 +93,23 @@ public final class GlClientTest {
         assertEquals(locus, allele.getLocus());
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateAlleleNullLocus() {
+        client.createAllele(null, "HLA-A*01:01:01:01");
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateAlleleNullGlstring() {
+        Locus locus = client.createLocus("HLA-A");
+        client.createAllele(locus, null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testCreateAlleleLocusAndGlstringDoNotMatch() {
+        Locus locus = client.createLocus("HLA-A");
+        client.createAllele(locus, "HLA-B*02:07:01");
+    }
+
     @Test
     public void testCreateAlleleGlstring() {
         Allele allele = client.createAllele("HLA-A*01:01:01:01");
@@ -86,6 +118,21 @@ public final class GlClientTest {
         assertNotNull(allele.getId());
         assertEquals("HLA-A*01:01:01:01", allele.getGlstring());
         assertEquals("HLA-A", allele.getLocus().getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateAlleleGlstringNullGlstring() {
+        client.createAllele(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetAlleleNullIdentifier() {
+        client.getAllele(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterAlleleNullGlstring() {
+        client.registerAllele(null);
     }
 
     @Test
@@ -103,6 +150,11 @@ public final class GlClientTest {
         assertEquals(a02n, alleleList.getAlleles().get(1));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateAlleleListNullAlleles() {
+        client.createAlleleList((Allele) null);
+    }
+
     @Test
     public void testCreateAlleleListGlstring() {
         AlleleList alleleList = client.createAlleleList("HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
@@ -113,6 +165,21 @@ public final class GlClientTest {
         assertEquals(2, alleleList.getAlleles().size());
         assertEquals("HLA-A*01:01:01:01", alleleList.getAlleles().get(0).getGlstring());
         assertEquals("HLA-A*01:01:01:02N", alleleList.getAlleles().get(1).getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateAlleleListNullGlstring() {
+        client.createAlleleList((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetAlleleListNullIdentifier() {
+        client.getAlleleList(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterAlleleListNullGlstring() {
+        client.registerAlleleList(null);
     }
 
     @Test
@@ -133,6 +200,11 @@ public final class GlClientTest {
         assertEquals(bAlleles, haplotype.getAlleleLists().get(1));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateHaplotypeNullAlleleLists() {
+        client.createHaplotype((AlleleList) null);
+    }
+
     @Test
     public void testCreateHaplotypeGlstring() {
         Haplotype haplotype = client.createHaplotype("HLA-A*01:01:01:01~HLA-B*02:07:01");
@@ -143,6 +215,21 @@ public final class GlClientTest {
         assertEquals(2, haplotype.getAlleleLists().size());
         assertEquals("HLA-A*01:01:01:01", haplotype.getAlleleLists().get(0).getGlstring());
         assertEquals("HLA-B*02:07:01", haplotype.getAlleleLists().get(1).getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateHaplotypeNullGlstring() {
+        client.createHaplotype((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetHaplotypeNullIdentifier() {
+        client.getHaplotype(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterHaplotypeNullGlstring() {
+        client.registerHaplotype(null);
     }
 
     @Test
@@ -164,6 +251,11 @@ public final class GlClientTest {
         assertEquals(haplotype1, genotype.getHaplotypes().get(1));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateGenotypeNullHaplotypes() {
+        client.createGenotype((Haplotype) null);
+    }
+
     @Test
     public void testCreateGenotypeGlstring() {
         Genotype genotype = client.createGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N");
@@ -174,6 +266,21 @@ public final class GlClientTest {
         assertEquals(2, genotype.getHaplotypes().size());
         assertEquals("HLA-A*01:01:01:01", genotype.getHaplotypes().get(0).getGlstring());
         assertEquals("HLA-A*01:01:01:02N", genotype.getHaplotypes().get(1).getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateGenotypeNullGlstring() {
+        client.createGenotype((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetGenotypeNullIdentifier() {
+        client.getGenotype(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterGenotypeNullGlstring() {
+        client.registerGenotype(null);
     }
 
     @Test
@@ -200,6 +307,11 @@ public final class GlClientTest {
         assertEquals(genotype1, genotypeList.getGenotypes().get(1));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateGenotypeListNullGenotypes() {
+        client.createGenotypeList((Genotype) null);
+    }
+
     @Test
     public void testCreateGenotypeListGlstring() {
         GenotypeList genotypeList = client.createGenotypeList("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*01:01:01:01+HLA-A*02:01:01:01");
@@ -210,6 +322,21 @@ public final class GlClientTest {
         assertEquals(2, genotypeList.getGenotypes().size());
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotypeList.getGenotypes().get(0).getGlstring());
         assertEquals("HLA-A*01:01:01:01+HLA-A*02:01:01:01", genotypeList.getGenotypes().get(1).getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateGenotypeListNullGlstring() {
+        client.createGenotypeList((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetGenotypeListNullIdentifier() {
+        client.getGenotypeList(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterGenotypeListNullGlstring() {
+        client.registerGenotypeList(null);
     }
 
     @Test
@@ -242,6 +369,11 @@ public final class GlClientTest {
         assertEquals(genotypeList1, multilocusUnphasedGenotype.getGenotypeLists().get(1));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testCreateMultilocusUnphasedGenotypeNullGenotypeLists() {
+        client.createMultilocusUnphasedGenotype((GenotypeList) null);
+    }
+
     @Test
     public void testCreateMultilocusUnphasedGenotypeGlstring() {
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = client.createMultilocusUnphasedGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N^HLA-B*02:07:01+HLA-B*02:07:02");
@@ -252,5 +384,20 @@ public final class GlClientTest {
         assertEquals(2, multilocusUnphasedGenotype.getGenotypeLists().size());
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", multilocusUnphasedGenotype.getGenotypeLists().get(0).getGlstring());
         assertEquals("HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype.getGenotypeLists().get(1).getGlstring());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateMultilocusUnphasedGenotypeNullGlstring() {
+        client.createMultilocusUnphasedGenotype((String) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetMultilocusUnphasedGenotypeNullIdentifier() {
+        client.getMultilocusUnphasedGenotype(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testRegisterMultilocusUnphasedGenotypeNullGlstring() {
+        client.registerMultilocusUnphasedGenotype(null);
     }
 }
