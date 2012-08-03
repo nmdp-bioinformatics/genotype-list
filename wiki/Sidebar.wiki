@@ -1,19 +1,21 @@
 #summary Default sidebar for all pages.
 
-Getting Started
+*Getting Started*
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
  * [Delimiters GL String Delimiters]
 
-Implementation Details
+*Implementation Details*
  * [SparkGlService Spark RESTful Web Service]
  * [GLReader GL Reader]
  * [Resolvers Resolvers]
    * [GlStringResolver GL String Resolver]
    * [IdResolver ID Resolver]
+ * [GlStringResolver GL String Resolver]
+ * [IdResolver ID Resolver]
  * [IdSupplier ID Supplier]
  * [GLRegistry GL Registry]
  * [GlWriter GL Writer]
 
-Other Need-To-Know Information
+*Other Need-To-Know Information*
  * [ThirdPartyDependencies Third Party Dependencies]
  * [IssueWorkflow Issue Tracker Workflow]
