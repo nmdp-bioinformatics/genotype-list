@@ -1,14 +1,14 @@
 #summary Default sidebar for all pages.
 
-==Table of Contents==
+=Table of Contents=
 
-===Getting Started===
+==Getting Started==
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
  * [IssueWorkflow Using the Issue Tracker]
  * [SequenceDiagrams Sequence Diagrams]
  * [Delimiters GL String Delimiters]
 
-===Implementation Details===
+==Implementation Details==
  * [SparkGlService Spark RESTful Web Service]
    * [SparkGlService#Components Components]
    * [SparkGlService#How_it_Works How it Works]
@@ -32,6 +32,5 @@
    * [GlWriter#Components Components]
    * [GlWriter#How_it_Works How it Works]
 
-===Other Need-To-Know Information===
+==Other Need-To-Know Information==
  * [ThirdPartyDependencies Third Party Dependencies]
-
