@@ -1,0 +1,12 @@
+#summary Investigating the JDBC implementation of the GL Service.
+
+Contents:
+<wiki:toc/>
+
+=Introduction=
+
+=Details=
+
+=Performance Testing Results=
+
+To be added after performance tests have been completed.

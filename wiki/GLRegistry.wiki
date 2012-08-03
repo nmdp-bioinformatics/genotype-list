@@ -34,7 +34,7 @@ The following classes are _referenced_ by the GlRegistry:
 
 ===Initializing an Implementation===
 
-There are several different implementations of the {{{GlRegistry}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the application, the resolver implementation is determined when the [GLReader GlReader] is initialized.
+There are several different implementations of the {{{GlRegistry}}}: Cache, JDBC, Redis-Jedis, and Voldemort. For any given instance of the application, the resolver implementation is determined when the [GLReader GlReader] is initialized.
 {{{
 GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
 }}}
