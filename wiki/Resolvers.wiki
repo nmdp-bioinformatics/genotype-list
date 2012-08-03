@@ -7,5 +7,8 @@ There are two "resolvers" in the GL Service.
 
 Click for details:
 
- * GlStringResolver (GL String -> ID)
- * IdResolver (ID -> [GLResources GL Resource])
+ * GlStringResolver
+   * Maps GL String to ID
+
+ * IdResolver 
+   * Maps ID to [GLResources GL Resource]

@@ -1,6 +1,9 @@
 #summary Implementation of the IdSupplier
 #labels Phase-Implementation
 
+Contents:
+<wiki:toc/>
+
 = Introduction =
 
 The GlStringResolver utilizes the {{{IdSupplier}}} to create a new id for an unregistered or otherwise not found GL String.
@@ -11,6 +14,7 @@ In brief, the {{{IdSupplier}}}:
 = Details =
 
 ==Components==
+
 The following classes are _part_ of the IdSupplier:
 || *Name* || *Function* ||
 || [ IdSupplier.java] || Interface ||
@@ -26,6 +30,7 @@ The following classes are _referenced_ by the IdSupplier:
 ==How it Works==
 
 ===Initializing an Implementation===
+
 There are several different implementations of the {{{IdSupplier}}}: Atomic Long, Base 36, and Shared Atomic Long. For any given instance of the service, the {{{IdSupplier}}} implementation is determined when the [GlStringResolver GlStringResolver] is initialized.
 
 For example, with the Jedis implementation of the GlStringResolver:
@@ -40,14 +45,15 @@ JedisGlstringResolver(final IdSupplier idSupplier, final JedisPool jedisPool) {
 
 The {{{IdSupplier}}} is then called by the {{{GlStringResolver}}}. 
 {{{
-idSupplier.createLocusId()
+idSupplier.createLocusId();
 }}}
 
 
 ===Assigning New IDs===
+
 Regardless of the ID type, a new ID is generated the same way.
 
-IDs are assigned in ascending order. Each [Datatypes GL Resource Type] has its own set of IDs, e.g. locusId, alleleId, and genotypeId, etc. and are all incremented separately. The IdSupplier only keeps track of the last ID assigned for each resource, so to generate a new ID, the IdSupplier calls the following:   
+IDs are assigned in ascending order. Each type of [GLResources GL Resource] has its own set of IDs, e.g. locusId, alleleId, and genotypeId, etc., and are all incremented separately. The IdSupplier only keeps track of the next free ID for each resource, so to generate a new ID, the IdSupplier calls the following:   
 {{{
 locusId.getAndIncrement();
 }}}

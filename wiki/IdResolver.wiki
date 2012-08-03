@@ -1,22 +1,24 @@
 #summary Implementation of the IdResolver
 
+Contents:
+<wiki:toc/>
+
 = Introduction =
 
-The GL Service utilizes the {{{IdResolver}}} to look up a GL String in the cache and find or assign an id.
+The GL Service utilizes the {{{IdResolver}}} to look up an ID in the cache and return a [GLResources GL Resource] or null. 
 
-This class is invoked within both the GET and POST operations of the Spark RESTful service webapp.
+This class is invoked within both the GET and POST operations of the [SparkGlService Spark RESTful service] webapp.
  * GET calls the IdResolver directly to return a GLResource registered under a particular ID.
  * POST invokes the GLReader, which calls the IdResolver to determine whether a GLResource has been registered.
 
-(statement about no guarantee of uniqueness and link to follow the controversy on the blog hiedfs.wordpress.com)
-
 In brief, all implementations of the resolver:
- * Take in an id (usually returned by the [GlStringResolver GlstringResolver]).
+ * Take in an id (usually returned by the [GlStringResolver GlstringResolver] or passed in by the user).
  * Return a [GLResources GL Resource] or null if the id has been registered.
 
 = Details =
 
 ==Components==
+
 The following classes are _part_ of the IdResolver:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/IdResolver.java IdResolver.java] || Interface ||
@@ -33,7 +35,8 @@ The following classes are _referenced_ by the IdResolver:
 ==How it Works==
 
 ===Initializing an Implementation===
-There are several different implementations of the {{{IdResolver}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the service, the resolver implementation is determined when the [GLReader GlReader] is initialized.
+
+There are several different implementations of the {{{IdResolver}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the service, the resolver implementation is determined when the [GLReader GL Reader] is initialized.
 {{{
 GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
 }}}
@@ -45,21 +48,27 @@ Locus locus = idResolver.findLocus(id);
 
 
 ===Finding an ID===
+
 The way the resolver finds an id depends on the chosen implementation. More details to be added soon.
 
-=====Cache:=====
+====Cache:====
+
 Uses {{{com.google.common.cache.LoadingCache}}}
 
-=====JDBC:=====
+====JDBC:====
+
 Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
 
-=====Redis/Jedis:=====
+====Redis/Jedis:====
+
 Uses {{{redis.clients.jedis.Jedis}}}
 
-=====Voldemort:=====
+====Voldemort:====
+
 Uses {{{voldemort.client.StoreClient}}}
 
 ===Supply New IDs===
+
 If the ID has been registered, its corresponding GL Resource is returned by the cache implementation. 
 If the ID has not been registered, the cache implementation returns null, and the IdResolver returns null to the GLReader. 
 

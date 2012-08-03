@@ -4,7 +4,6 @@
 Contents:
 <wiki:toc/>
 
-
 = Introduction =
 
 The GL Service utilizes {{{Spark}}} as its webapp implementation of the URI-based RESTful service. 
@@ -16,6 +15,7 @@ In brief, the SparkGlService:
 = Details =
 
 ==Components==
+
 The following classes are _part_ of Spark:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-spark/src/main/java/org/immunogenomics/gl/service/spark/SparkGlService.java SparkGlService.java] || Webapp implementation of a URI-based RESTful service for the gl project using Spark. ||
@@ -34,7 +34,9 @@ The following classes are _referenced_ by Spark:
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlWriter.java GlWriter.java] || Used in GET operations to write GLResources out to the desired format. ||
 
 ==How it Works==
+
 ===Initializing Spark===
+
 Spark uses the following constructor:
 {{{
 SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters)
@@ -45,13 +47,16 @@ Calling {{{spark.init();}}} initializes the post and get routes for each [GLReso
 
 
 ===HTTP POST===
+
 ====Sequence Diagrams====
+
 Sequence diagrams with and without comments for reference (click to enlarge):
 
 <a href="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST.png"><img src="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST.png" alt="HTTP POST sequence diagram for the GL Service, with comments." width="317px" height="200px"/></a>
 <a href="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST-NoComments.png"><img src="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST-NoComments.png" alt="HTTP POST sequence diagram for the GL Service, without comments." width="371px" height="200px"/></a>
 
 ====POST Route Definitions====
+
 Each HTTP POST Route is based on the abstract HTTP POST Route defined in the Spark class.
 
 [GLResources GL Resource]-specific HTTP POST Routes:
@@ -70,6 +75,7 @@ The abstract HTTP POST Route:
  * Returns HTTP Responses
 
 ====HTTP Responses====
+
 || || *Status* || *Type* || *Logged message* || *Return* ||
 || *Empty request body* || {{{400}}} || {{{text/plain}}} ||{{{"Unable to create [GL Resource] (400), request body was empty"}}}||{{{"Unable to create [GL Resource]"}}}||
 || *Successful POST* || {{{201}}} ||{{{text/plain}}}||{{{"Created (201) Location [ID]"}}}||{{{glResource.getGlstring();}}}||
@@ -77,13 +83,16 @@ The abstract HTTP POST Route:
 
 
 ===HTTP GET===
+
 ====Sequence Diagrams====
+
 Sequence diagrams with and without comments for reference (click to enlarge):
 
 <a href="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET.png"><img src="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET.png" alt="HTTP GET sequence diagram for the GL Service, with comments." width="287px" height="200px"/></a>
 <a href="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET-NoComments.png"><img src="https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET-NoComments.png" alt="HTTP GET sequence diagram for the GL Service, without comments." width="301px" height="200px"/></a>
 
 ====GET Route Definitions====
+
 [GLResources GL Resource]-specific HTTP GET Routes:
 {{{
 get(new GetRoute<Locus>("/locus/:id") {
@@ -106,6 +115,7 @@ The abstract HTTP GET Route:
  * Returns HTTP Responses
 
 ====HTTP Responses====
+
 || || *Status* || *Type* || *Logged message* || *Return* ||
 || *Invalid ID* ||{{{404}}} ||{{{text/plain}}} ||{{{"Invalid identifier or file extension (404) [ID]"}}} ||{{{"Invalid identifier or file extension"}}} ||
 || *GL Resource not found*||{{{404}}} ||{{{text/plain}}} ||{{{"[GL Resource] not found [ID]"}}} ||{{{"[name] not found"}}} ||
@@ -116,6 +126,7 @@ The abstract HTTP GET Route:
  
 
 ===Loading IMGT Alleles===
+
 The GL Service is initially populated with all currently registered alleles in the [http://www.ebi.ac.uk/imgt/hla/ IMGT Database]. This occurs in the {{{init()}}} method of the Spark service as shown below. 
 
 {{{

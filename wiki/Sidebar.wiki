@@ -2,32 +2,36 @@
 
 ==Table of Contents==
 
-*Getting Started*
+===Getting Started===
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
+ * [IssueWorkflow Using the Issue Tracker]
+ * [SequenceDiagrams Sequence Diagrams]
  * [Delimiters GL String Delimiters]
 
-*Implementation Details*
+===Implementation Details===
  * [SparkGlService Spark RESTful Web Service]
    * [SparkGlService#Components Components]
    * [SparkGlService#How_it_Works How it Works]
-     * [SparkGlService#Initializing_Spark Initializing Spark]
-     * [SparkGlService#HTTP_POST HTTP POST]
-       * Sequence Diagrams
-       * POST Route Definitions
-       * HTTP Responses
-     * [SparkGlService#HTTP_GET HTTP GET]
-       * Sequence Diagrams
-       * POST Route Definitions
-       * HTTP Responses
-     * [SparkGlService#Loading_IMGT_Alleles Loading IMGT Alleles]
  * [GLReader GL Reader]
+   * [GLReader#Components Components]
+   * [GLReader#How_it_Works How it Works]
  * [Resolvers Resolvers]
    * [GlStringResolver GL String Resolver]
+     * [GlStringResolver#Components Components]
+     * [GlStringResolver#How_it_Works How it Works]
    * [IdResolver ID Resolver]
+     * [IdResolver#Components Components]
+     * [IdResolver#How_it_Works How it Works]
  * [IdSupplier ID Supplier]
+   * [IdSupplier#Components Components]
+   * IdSupplier#How_it_Works How it Works]
  * [GLRegistry GL Registry]
+   * [GLRegistry#Components Components]
+   * [GLRegistry#How_it_Works How it Works]
  * [GlWriter GL Writer]
+   * [GlWriter#Components Components]
+   * [GlWriter#How_it_Works How it Works]
 
-*Other Need-To-Know Information*
+===Other Need-To-Know Information===
  * [ThirdPartyDependencies Third Party Dependencies]
- * [IssueWorkflow Issue Tracker Workflow]
+

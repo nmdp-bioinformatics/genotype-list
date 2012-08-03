@@ -1,6 +1,9 @@
 #summary Implementation of the GlRegistry
 #labels Phase-Implementation
 
+Contents:
+<wiki:toc/>
+
 = Introduction =
 
 The GL Service utilizes the {{{GlRegistry}}} to add [GLResources GL Resources] to their respective caches.
@@ -14,6 +17,7 @@ In brief, all implementations of the resolver:
 = Details =
 
 ==Components==
+
 The following classes are _part_ of the GlRegistry:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlRegistry.java GL Registry.java] || Interface ||
@@ -29,6 +33,7 @@ The following classes are _referenced_ by the GlRegistry:
 ==How it Works==
 
 ===Initializing an Implementation===
+
 There are several different implementations of the {{{GlRegistry}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the application, the resolver implementation is determined when the [GLReader GlReader] is initialized.
 {{{
 GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
@@ -41,7 +46,8 @@ glRegistry.registerLocus(locus);
 
 
 ===Registering===
-The register's mechanics vary depending on the implementation, but the basic logic remains the same.
+
+The registry's mechanics vary depending on the implementation, but the basic logic remains the same.
 
 The ID and GL String are extracted as needed from the GL Resource, and entered in each cache.
 
@@ -52,14 +58,18 @@ locusIds.put(locus.getGlstring(), locus.getId());
 }}}
 
 
-=====Cache:=====
+====Cache:====
+
 Uses {{{com.google.common.cache.Cache}}}
 
-=====JDBC:=====
+====JDBC:====
+
 Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
 
-=====Redis/Jedis:=====
+====Redis/Jedis:====
+
 Uses {{{redis.clients.jedis.Jedis}}}
 
-=====Voldemort:=====
+====Voldemort:====
+
 Uses {{{voldemort.client.StoreClient}}}

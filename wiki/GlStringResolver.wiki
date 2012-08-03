@@ -1,11 +1,12 @@
 #summary Implementation of the GlStringResolver
 #labels Phase-Implementation
 
+Contents:
+<wiki:toc/>
+
 = Introduction =
 
 The GL Service utilizes the {{{GlStringResolver}}} to look up a GL String in the cache and find or assign an id.
-
-(statement about no guarantee of uniqueness and link to follow the controversy on the blog)
 
 In brief, all implementations of the resolver:
  * Take in a GL String exactly as given by the user.
@@ -16,6 +17,7 @@ In brief, all implementations of the resolver:
 = Details =
 
 ==Components==
+
 The following classes are _part_ of the GlStringResolver:
 || *Name* || *Function* ||
 || [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java GlStringResolver.java] || Interface ||
@@ -32,6 +34,7 @@ The following classes are _referenced_ by the GlStringResolver:
 ==How it Works==
 
 ===Initializing an Implementation===
+
 There are several different implementations of the {{{GlstringResolver}}}: Cache, JDBC, Jedis/Redis, and Voldemort. For any given instance of the application, the resolver implementation is determined when the [GLReader GlReader] is initialized.
 {{{
 GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
@@ -44,21 +47,27 @@ final String id = glstringResolver.resolveLocus(glstring);
 
 
 ===Finding an ID===
+
 The way the resolver finds an id depends on the chosen implementation. More details to be added soon.
 
-=====Cache:=====
+====Cache:====
+
 Uses {{{com.google.common.cache.LoadingCache}}}
 
-=====JDBC:=====
+====JDBC:====
+
 Runs SQL queries via {{{org.apache.commons.dbutils.QueryRunner}}}
 
-=====Redis/Jedis:=====
+====Redis/Jedis:====
+
 Uses {{{redis.clients.jedis.Jedis}}}
 
-=====Voldemort:=====
+====Voldemort:====
+
 Uses {{{voldemort.client.StoreClient}}}
 
 ===Supply New IDs===
+
 If the ID is found, it is returned and there is no need to supply a new one. 
 {{{
 return id;
@@ -68,4 +77,4 @@ If the ID is not found, the {{{idSupplier}}} is called and a new id is returned.
 {{{
 return idSupplier.createLocusId();
 }}}
-The mechanics of the idSupplier are revealed [ here].
+The mechanics of the idSupplier are revealed [IdSupplier here].
