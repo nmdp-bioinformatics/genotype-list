@@ -52,6 +52,10 @@ gl-service-explorer/src/main/resources/gl-service.properties
 <br/>
 = Usage =
 
+There are currently two use cases supported:
+ * [HLAUseCase HLA Use Case] (also explained below)
+ * [KIRUseCase KIR Use Case]
+
 To load loci and alleles from the IMGT nomenclature database version 3.9.0, either
 
 {{{
