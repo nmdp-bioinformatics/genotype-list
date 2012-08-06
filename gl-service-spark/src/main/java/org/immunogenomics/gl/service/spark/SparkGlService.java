@@ -223,26 +223,35 @@ public final class SparkGlService implements SparkApplication {
                 @Override
                 public Object handle(final Request request, final Response response) {
                     try {
-                        //long locusCount = loci.size();
-                        //long alleleCount = alleles.size();
                         loadImgtAlleles();
                         response.status(307);
                         response.redirect(".");
                         return "Redirect";
-                        //response.status(200);
-                        //response.type("text/plain");
-                        //StringBuilder sb = new StringBuilder();
-                        //sb.append("Loaded " + (loci.size() - locusCount) + " IMGT loci\n");
-                        //sb.append("Loaded " + (alleles.size() - alleleCount) + " IMGT alleles\n");
-                        //logger.trace("Loaded " + (loci.size() - locusCount) + " IMGT loci\n");
-                        //logger.trace("Loaded " + (alleles.size() - alleleCount) + " IMGT alleles\n");
-                        //return sb.toString();
                     }
                     catch (IOException e) {
                         response.status(400);
                         response.type("text/plain");
                         logger.warn("Failed to load IMGT alleles, caught {}", e.getMessage());
                         return "Failed to load IMGT alleles";
+                    }
+                }
+            });
+
+        // todo:  copy and paste of load-imgt-alleles post handler
+        post(new Route("/load-kir-alleles") {
+                @Override
+                public Object handle(final Request request, final Response response) {
+                    try {
+                        loadKirAlleles();
+                        response.status(307);
+                        response.redirect(".");
+                        return "Redirect";
+                    }
+                    catch (IOException e) {
+                        response.status(400);
+                        response.type("text/plain");
+                        logger.warn("Failed to load KIR alleles, caught {}", e.getMessage());
+                        return "Failed to load KIR alleles";
                     }
                 }
             });
@@ -402,6 +411,36 @@ public final class SparkGlService implements SparkApplication {
                     String glstring = nonHlaLoci.contains(tokens[1].substring(0, 4)) ? tokens[1] : "HLA-" + tokens[1];
                     Allele allele = glReader.readAllele(glstring, accession);
                     logger.trace("Loaded IMGT allele {} {}", allele.getId(), allele.getGlstring());
+                }
+            }
+        }
+        catch (IOException e) {
+            throw e;
+        }
+        finally {
+            try {
+                reader.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
+    // todo:  copy and paste of loadImgtAlleles()
+    private void loadKirAlleles() throws IOException {
+        // save ftp://ftp.ebi.ac.uk/pub/databases/ipd/kir/Allelelist.240.txt to src/main/resources/org/immunogenomics/gl/service/KirAllelelist.txt
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(SparkGlService.class.getResourceAsStream("KirAllelelist.txt")));
+            while (reader.ready()) {
+                String line = reader.readLine();
+                if (line != null) {
+                    String[] tokens = line.split(" ");
+                    String accession = tokens[0];
+                    String glstring = tokens[1].startsWith("Mamu-KIR") ? tokens[1] : "KIR" + tokens[1];
+                    Allele allele = glReader.readAllele(glstring, accession);
+                    logger.trace("Loaded KIR allele {} {}", allele.getId(), allele.getGlstring());
                 }
             }
         }
