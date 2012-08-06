@@ -155,6 +155,16 @@ public final class GlClient {
     }
 
     /**
+     * Create and register an allele list containing the specified alleles.
+     *
+     * @param alleles alleles, must not be null
+     * @return an allele list containing the specified alleles
+     */
+    public AlleleList createAlleleList(final Iterable<Allele> alleles) {
+        return createAlleleList(Joiner.on("/").join(alleles));
+    }
+
+    /**
      * Return the allele list identified by <code>identifier</code> or null if no such allele list exists.
      *
      * @param identifier allele list identifier, must not be null
@@ -192,6 +202,16 @@ public final class GlClient {
      * @return a haplotype containing the specified allele lists
      */
     public Haplotype createHaplotype(final AlleleList... alleleLists) {
+        return createHaplotype(Joiner.on("~").join(alleleLists));
+    }
+
+    /**
+     * Create and register a haplotype containing the specified allele lists.
+     *
+     * @param alleleLists allele lists, must not be null
+     * @return a haplotype containing the specified allele lists
+     */
+    public Haplotype createHaplotype(final Iterable<AlleleList> alleleLists) {
         return createHaplotype(Joiner.on("~").join(alleleLists));
     }
 
@@ -237,6 +257,16 @@ public final class GlClient {
     }
 
     /**
+     * Create and register a genotype containing the specified haplotypes.
+     *
+     * @param haplotypes haplotypes, must not be null
+     * @return a genotype containing the specified haplotypes
+     */
+    public Genotype createGenotype(final Iterable<Haplotype> haplotypes) {
+        return createGenotype(Joiner.on("+").join(haplotypes));
+    }
+
+    /**
      * Return the genotype identified by <code>identifier</code> or null if no such genotype exists.
      *
      * @param identifier genotype identifier, must not be null
@@ -278,6 +308,16 @@ public final class GlClient {
     }
 
     /**
+     * Create and register a genotype list containing the specified genotypes.
+     *
+     * @param genotypes genotypes, must not be null
+     * @return a genotype list containing the specified genotypes
+     */
+    public GenotypeList createGenotypeList(final Iterable<Genotype> genotypes) {
+        return createGenotypeList(Joiner.on("|").join(genotypes));
+    }
+
+    /**
      * Return the genotype list identified by <code>identifier</code> or null if no such genotype list exists.
      *
      * @param identifier genotype list identifier, must not be null
@@ -315,6 +355,16 @@ public final class GlClient {
      * @return a multilocus unphased genotype containing the specified genotype lists
      */
     public MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists) {
+        return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
+    }
+
+    /**
+     * Create and register a multilocus unphased genotype containing the specified genotype lists.
+     *
+     * @param genotypeLists genotype lists, must not be null
+     * @return a multilocus unphased genotype containing the specified genotype lists
+     */
+    public MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists) {
         return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
     }
 
