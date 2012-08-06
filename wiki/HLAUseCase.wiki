@@ -1,0 +1,19 @@
+#summary Using the genotype list service with HLA nomenclature.
+
+= Usage =
+
+To load loci and alleles from the IMGT HLA nomenclature database version 2.4.0, either
+
+{{{
+$ curl -X post http://localhost:8080/gl/load-imgt-alleles
+}}}
+
+or visit
+
+http://localhost:8080/gl
+
+in a web browser and hit the Load IMGT alleles button
+
+
+//
+Continue with IMGT HLA examples.
