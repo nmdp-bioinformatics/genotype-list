@@ -1,0 +1,117 @@
+#summary Example output types from the GL Service.
+
+=Introduction=
+
+When we perform a [SparkGlService#HTTP_GET GET] operation on the GL Service, we can choose which format we would like the data to be returned.  
+
+The current supported formats (content types) are:
+ * [ContentTypes#GL_String GL String]
+ * [ContentTypes#HTML HTML]
+ * [ContentTypes#HML HML]
+ * [ContentTypes#JSON JSON]
+ * [ContentTypes#RDF RDF]
+ * [ContentTypes#N3 N3]
+
+In the future, we expect to add support for QR Codes and OWL.
+
+For the purposes of this example, we've chosen a single resource for easy comparison between the output types. The [ContentTypes#Sample_input sample input] to the service is shown below. 
+
+=Sample input=
+
+Method: allele
+
+Content type: VARIES; see [ContentTypes#Response below].
+
+GET: {{{http://localhost:8080/gl/allele/5672}}}
+
+<a href="http://genotype-list.googlecode.com/svn/wiki/images/GlServiceContentTypesSampleInput.png"><img src="http://genotype-list.googlecode.com/svn/wiki/images/GlServiceContentTypesSampleInput.png"/></a>
+
+=Response=
+
+==GL String==
+
+{{{http://localhost:8080/gl/allele/5672.glstring}}}
+
+{{{
+HLA-C*15:54
+}}}
+
+==HTML==
+
+{{{http://localhost:8080/gl/allele/5672.html}}}
+
+{{{
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>http://localhost:8080/gl/allele/5672</title>
+  </head>
+  <body>
+    <p class="type">http://nmdp.org/gl-ontology/Allele</p>
+    <p class="title">http://localhost:8080/gl/allele/5672</p>
+<!--
+    <p class="identifier">http://localhost:8080/gl/allele/5672</p>
+    <p class="label">http://localhost:8080/gl/allele/5672</p>
+-->
+    <p class="accession"></p>
+    <p class="comment">HLA-C*15:54</p>
+    <p class="reference">http://nmdp.org/gl-ontology/Locus <a href="http://localhost:8080/gl/locus/4377.html">http://localhost:8080/gl/locus/4377</a></p>
+  </body>
+</html> 
+}}}
+
+==HML==
+
+Should be:
+{{{http://localhost:8080/gl/allele/5672.hml}}}
+
+{{{
+no response (?)
+}}}
+
+==JSON==
+
+{{{http://localhost:8080/gl/allele/5672.json}}}
+
+{{{
+{"id":"http://localhost:8080/gl/allele/5672","accession":"","glstring":"HLA-C*15:54","locus":"http://localhost:8080/gl/locus/4377"}
+}}}
+
+==RDF==
+
+{{{http://localhost:8080/gl/allele/5672.rdf}}}
+
+ {{{
+<rdf:RDF>
+  <rdf:Description rdf:about="http://localhost:8080/gl/allele/5672">
+    <rdf:type rdf:resource="http://nmdp.org/gl-ontology/Allele"/>
+    <dc:title>http://localhost:8080/gl/allele/5672</dc:title>
+    <dc:identifier>http://localhost:8080/gl/allele/5672</dc:identifier>
+    <rdfs:label>http://localhost:8080/gl/allele/5672</rdfs:label>
+    <rdfs:comment>HLA-C*15:54</rdfs:comment>
+    <gl:hasAccession/>
+    <gl:hasGlstring>HLA-C*15:54</gl:hasGlstring>
+    <gl:hasLocus rdf:Resource="http://localhost:8080/gl/locus/4377"/>
+  </rdf:Description>
+</rdf:RDF>
+}}}
+
+==N3==
+
+{{{http://localhost:8080/gl/allele/5672.n3}}}
+
+{{{
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix gl: <http://nmdp.org/gl-ontology/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://localhost:8080/gl/allele/5672> a <http://nmdp.org/gl-ontology/Allele> ;
+  dc:title "http://localhost:8080/gl/allele/5672" ;
+  dc:identifier "http://localhost:8080/gl/allele/5672" ;
+  rdfs:label "http://localhost:8080/gl/allele/5672" ;
+  rdfs:comment "HLA-C*15:54" ;
+  gl:hasAccession "" ;
+  gl:hasLocus <http://localhost:8080/gl/locus/4377> ; 
+}}}
