@@ -23,11 +23,23 @@
 */
 package org.immunogenomics.gl.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.AlleleList;
+import org.immunogenomics.gl.Haplotype;
+import org.immunogenomics.gl.Genotype;
+import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.MultilocusUnphasedGenotype;
+
 /**
  * Fluent builder-style client API for creating and registering gl resources.
  */
 public final class GlResourceBuilder {
-    /*
     private GlClient client;
     private Locus locus;
     private Allele allele;
@@ -41,78 +53,90 @@ public final class GlResourceBuilder {
     private GenotypeList genotypeList;
     private List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
 
-    GlResourceBuilder locus(final String glstring) {
+
+    public GlResourceBuilder(final GlClient client) {
+        checkNotNull(client);
+        this.client = client;
+    }
+
+
+    public GlResourceBuilder locus(final String glstring) {
         alleles.clear();
         alleleLists.clear();
         haplotypes.clear();
         genotypes.clear();
         genotypeLists.clear();
         locus = client.createLocus(glstring);
+        return this;
     }
 
-    GlResourceBuilder allele(final String glstring) {
+    public GlResourceBuilder allele(final String glstring) {
         allele = client.createAllele(glstring);
         locus = allele.getLocus();
+        return this;
     }
 
-    GlResourceBuilder allelicAmbiguity() {
+    public GlResourceBuilder allelicAmbiguity() {
         alleles.add(allele);
         alleleList = client.createAlleleList(alleles);
+        return this;
     }
 
-    GlResourceBuilder inPhase() {
+    public GlResourceBuilder inPhase() {
         alleles.clear();
         alleleLists.add(alleleList);
         haplotype = client.createHaplotype(alleleLists);
+        return this;
     }
 
-    GlResourceBuilder phaseAmbiguity() {
+    public GlResourceBuilder xxx() {
         alleles.clear();
-        alleleLists.add(alleleList);
+        alleleLists.clear();
         haplotypes.add(haplotype);
-        genotype = client.createGenotype(alleleLists, haplotypes);
+        genotype = client.createGenotype(haplotypes);
+        return this;
     }
 
-    GlResourceBuilder genotypicAmbiguity() {
+    public GlResourceBuilder genotypicAmbiguity() {
         alleles.clear();
         alleleLists.clear();
         haplotypes.clear();
         genotypes.add(genotype);
         genotypeList = client.createGenotypeList(genotypes);
+        return this;
     }
 
-    Locus buildLocus() {
+    public Locus buildLocus() {
         if (locus == null) {
             throw new IllegalStateException("must call locus(String) or allele(String) at least once");
         }
         return locus;
     }
 
-    Allele buildAllele() {
+    public Allele buildAllele() {
         if (allele == null) {
             throw new IllegalStateException("must call allele(String) at least once");
         }
         return allele;
     }
 
-    AlleleList buildAlleleList() {
+    public AlleleList buildAlleleList() {
         return client.createAlleleList(alleles);
     }
 
-    Haplotype buildHaplotype() {
+    public Haplotype buildHaplotype() {
         return client.createHaplotype(alleleLists);
     }
 
-    Genotype buildGenotype() {
-        return client.createGenotype(alleleLists, haplotypes);
+    public Genotype buildGenotype() {
+        return client.createGenotype(haplotypes);
     }
 
-    GenotypeList buildGenotypeList() {
+    public GenotypeList buildGenotypeList() {
         return client.createGenotypeList(genotypes);
     }
 
-    MultilocusUnphasedGenotype buildMultilocusUnphasedGenotype() {
+    public MultilocusUnphasedGenotype buildMultilocusUnphasedGenotype() {
         return client.createMultilocusUnphasedGenotype(genotypeLists);
     }
-    */
 }

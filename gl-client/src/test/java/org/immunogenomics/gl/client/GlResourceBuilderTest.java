@@ -23,24 +23,41 @@
 */
 package org.immunogenomics.gl.client;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.AlleleList;
+import org.immunogenomics.gl.Haplotype;
+import org.immunogenomics.gl.Genotype;
+import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 /**
  * Unit test for GlResourceBuilder.
  */
 public final class GlResourceBuilderTest {
-    /*
+    private GlClient client;
     private GlResourceBuilder builder;
 
     @Before
     public void setUp() {
-        builder = new GlResourceBuilder();
+        client = new GlClient("http://localhost:8080/gl");
+        builder = new GlResourceBuilder(client);
     }
 
     @Test
     public void testConstructor() {
         assertNotNull(builder);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullClient() {
+        new GlResourceBuilder(null);
     }
 
     @Test(expected=IllegalStateException.class)
@@ -149,24 +166,6 @@ public final class GlResourceBuilderTest {
     }
 
     @Test
-    public void testBuildLocus() {
-        Locus locus = builder.locus("HLA-A").buildLocus();
-        assertEquals("HLA-A", locus.getGlstring());
-    }
-
-    @Test
-    public void testBuildAllele() {
-        Allele allele = builder.allele("HLA-A*01:01:01:01").buildAllele();
-        assertEquals("HLA-A*01:01:01:01", allele.getGlstring());
-    }
-
-    @Test
-    public void testBuildAlleleList() {
-        AlleleList alleleList = builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().allele("HLA-A*01:01:01:02N").buildAlleleList();
-        assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList.getGlstring());
-    }
-
-    @Test
     public void testBuildHaplotype() {
         Haplotype haplotype = builder.allele("HLA-A*01:01:01:01").inPhase().allele("HLA-B*02:07:01").allelicAmbiguity().allele("HLA-B*02:07:02").buildHaplotype();
         assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01/HLA-B*02:07:02", haplotype.getGlstring());
@@ -175,13 +174,13 @@ public final class GlResourceBuilderTest {
     @Test
     public void testBuildGenotype() {
         Genotype genotype = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").buildGenotype();
-        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N");
+        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotype.getGlstring());
     }
 
     @Test
     public void testBuildGenotypeList() {
         GenotypeList genotypeList = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02").buildGenotypeList();
-        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02");
+        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02", genotypeList.getGlstring());
     }
 
     @Test
@@ -191,7 +190,6 @@ public final class GlResourceBuilderTest {
             .locus("HLA-B").allele("HLA-B*02:07:01").xxx().allele("HLA-B*02:07:02")
             .buildMultilocusUnphasedGenotype();
 
-        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02^HLA-B*02:07:01+HLA-B*02:07:02", haplotype.getGlstring());
+        assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02^HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype.getGlstring());
     }
-    */
 }
