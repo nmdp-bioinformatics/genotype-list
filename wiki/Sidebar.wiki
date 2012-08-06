@@ -4,6 +4,8 @@
 
 ==Getting Started==
  * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
+   * [HLAUseCase HLA Use Case]
+   * [KIRUseCase KIR Use Case]
  * [IssueWorkflow Using the Issue Tracker]
  * [SequenceDiagrams Sequence Diagrams]
  * [Delimiters GL String Delimiters]
