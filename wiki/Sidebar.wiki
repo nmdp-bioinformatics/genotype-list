@@ -24,7 +24,7 @@
      * [IdResolver#How_it_Works How it Works]
  * [IdSupplier ID Supplier]
    * [IdSupplier#Components Components]
-   * IdSupplier#How_it_Works How it Works]
+   * [IdSupplier#How_it_Works How it Works]
  * [GLRegistry GL Registry]
    * [GLRegistry#Components Components]
    * [GLRegistry#How_it_Works How it Works]
