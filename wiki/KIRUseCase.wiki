@@ -1,0 +1,19 @@
+#summary Using the genotype list service with KIR nomenclature.
+
+= Usage =
+
+To load loci and alleles from the KIR nomenclature database version 2.4.0, either
+
+{{{
+$ curl -X post http://localhost:8080/gl/load-kir-alleles
+}}}
+
+or visit
+
+http://localhost:8080/gl
+
+in a web browser and hit the Load KIR alleles button
+
+
+<br/>
+Continue with KIR examples.
