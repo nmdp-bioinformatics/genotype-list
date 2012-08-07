@@ -53,8 +53,13 @@ public final class GlstringBuilderTest {
     @Test
     public void testBuildLocus() {
         String locus = builder.locus("HLA-A").build();
-        assertNotNull(locus);
         assertEquals("HLA-A", locus);
+    }
+
+    @Test
+    public void testBuildLocusTwice() {
+        String locus = builder.locus("HLA-A").locus("HLA-B").build();
+        assertEquals("HLA-B", locus);
     }
 
     @Test
@@ -63,10 +68,30 @@ public final class GlstringBuilderTest {
         assertEquals("HLA-A*01:01:01:01", allele);
     }
 
+    @Test(expected=IllegalStateException.class)
+    public void testAlleleTwice() {
+        builder.allele("HLA-A*01:01:01:01").allele("HLA-A*01:01:01:02N");
+    }
+
     @Test
     public void testBuildAlleleList() {
         String alleleList = builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().allele("HLA-A*01:01:01:02N").build();
         assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList);
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguity() {
+        builder.allelicAmbiguity();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testBuildDanglingAllelicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().build();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguityTwice() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().allelicAmbiguity();
     }
 
     @Test
@@ -75,16 +100,91 @@ public final class GlstringBuilderTest {
         assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01/HLA-B*02:07:02", haplotype);
     }
 
+    @Test(expected=IllegalStateException.class)
+    public void testInPhase() {
+        builder.inPhase();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testBuildDanglingInPhase() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().build();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testInPhaseTwice() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().inPhase();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguityInPhase() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().inPhase();
+    }
+
     @Test
     public void testBuildGenotype() {
         String genotype = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").build();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotype);
     }
 
+    @Test(expected=IllegalStateException.class)
+    public void testXxx() {
+        builder.xxx();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testBuildDanglingXxx() {
+        builder.allele("HLA-A*01:01:01:01").xxx().build();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testXxxTwice() {
+        builder.allele("HLA-A*01:01:01:01").xxx().xxx();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguityXxx() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().xxx();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testInPhaseXxx() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().xxx();
+    }
+
     @Test
     public void testBuildGenotypeList() {
         String genotypeList = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02").build();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02", genotypeList);
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testGenotypicAmbiguity() {
+        builder.genotypicAmbiguity();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testBuildDanglingGenotypicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").genotypicAmbiguity().build();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testGenotypicAmbiguityTwice() {
+        builder.allele("HLA-A*01:01:01:01").genotypicAmbiguity().genotypicAmbiguity();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguityGenotypicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().genotypicAmbiguity();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testInPhaseGenotypicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().genotypicAmbiguity();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testXxxGenotypicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").xxx().genotypicAmbiguity();
     }
 
     @Test
@@ -96,4 +196,35 @@ public final class GlstringBuilderTest {
 
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02^HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype);
     }
+
+    @Test(expected=IllegalStateException.class)
+    public void testBuildDanglingLocusOperator() {
+        builder.allele("HLA-A*01:01:01:01").locus("HLA-B").build();
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testLocusOperatorTwice() {
+        builder.allele("HLA-A*01:01:01:01").locus("HLA-B").locus("HLA-C");
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testAllelicAmbiguityLocus() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().locus("HLA-C");
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testInPhaseLocus() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().locus("HLA-C");
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testXxxLocus() {
+        builder.allele("HLA-A*01:01:01:01").xxx().locus("HLA-C");
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void testGenotypicAmbiguityLocus() {
+        builder.allele("HLA-A*01:01:01:01").genotypicAmbiguity().locus("HLA-C");
+    }
+
 }
