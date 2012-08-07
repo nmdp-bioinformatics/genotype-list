@@ -23,24 +23,27 @@
 */
 package org.immunogenomics.gl.client;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 /**
- * Fluent builder-style client API for ... GL String format.
+ * Fluent builder-style client API for creating GL String-formatted representations of gl resources.
  */
 public final class GlstringBuilder {
     // todo:  replace this hack with antlr grammar
     private String locus;
     private Tree tree = new Tree();
 
+
+    /**
+     * Return this GL String builder configured with the specified locus.  If an allele has
+     * already been added to this builder, this call provides the locus operator ('<code>^</code>' character).
+     *
+     * @param glstring locus in GL String format, must not be null
+     * @return this GL String builder configured with the specified locus
+     */
     public GlstringBuilder locus(final String glstring) {
-        if (tree.isEmpty())
-        {
+        if (tree.isEmpty()) {
             locus = glstring;
         }
-        else
-        {
+        else {
             Node root = new Node();
             root.value = "^";
             root.left = tree.root;
@@ -49,6 +52,14 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder configured with the specified allele. Calls to this method must
+     * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
+     * {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
+     *
+     * @param glstring allele in GL String format, must not be null
+     * @return this GL String builder configured with the specified allele
+     */
     public GlstringBuilder allele(final String glstring) {
         Node node = new Node();
         node.value = glstring;
@@ -69,6 +80,11 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder configured with an allelic ambiguity operator ('<code>/</code>' character).
+     *
+     * @return this GL String builder configured with an allelic ambiguity operator ('<code>/</code>' character)
+     */
     public GlstringBuilder allelicAmbiguity() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
@@ -80,6 +96,11 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder configured with an in phase operator ('<code>~</code>' character).
+     *
+     * @return this GL String builder configured with an in phase operator ('<code>~</code>' character)
+     */
     public GlstringBuilder inPhase() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
@@ -91,6 +112,11 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder configured with an xxx operator ('<code>+</code>' character).
+     *
+     * @return this GL String builder configured with an xxx operator ('<code>+</code>' character)
+     */
     public GlstringBuilder xxx() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
@@ -102,6 +128,11 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder configured with a genotypic ambiguity operator ('<code>|</code>' character).
+     *
+     * @return this GL String builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
+     */
     public GlstringBuilder genotypicAmbiguity() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
@@ -113,11 +144,21 @@ public final class GlstringBuilder {
         return this;
     }
 
+    /**
+     * Return this GL String builder with its configuration reset.
+     *
+     * @return this GL String builder with its configuration reset
+     */
     public GlstringBuilder reset() {
         tree.root = null;
         return this;
     }
 
+    /**
+     * Build and return a new GL String configured from the properties of this GL String builder.
+     *
+     * @return a new GL String configured from the properties of this GL String builder
+     */
     public String build() {
         if (locus == null && tree.isEmpty()) {
             throw new IllegalStateException("must call locus(String) or allele(String) at least once");
@@ -125,7 +166,7 @@ public final class GlstringBuilder {
         return tree.isEmpty() ? locus : tree.toString();
     }
 
-    final class Tree {
+    private final class Tree {
         Node root;
 
         boolean isEmpty() {
@@ -158,7 +199,7 @@ public final class GlstringBuilder {
         }
     }
 
-    final class Node {
+    private final class Node {
         Node left;
         Node right;
         String value;

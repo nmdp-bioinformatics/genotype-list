@@ -54,12 +54,24 @@ public final class GlResourceBuilder {
     private List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
 
 
+    /**
+     * Create a new gl resource builder with the specified client.
+     *
+     * @param client gl client, must not be null
+     */
     public GlResourceBuilder(final GlClient client) {
         checkNotNull(client);
         this.client = client;
     }
 
 
+    /**
+     * Return this gl resource builder configured with the specified locus.  If an allele has
+     * already been added to this builder, this call provides the locus operator ('<code>^</code>' character).
+     *
+     * @param glstring locus in GL String format, must not be null
+     * @return this gl resource builder configured with the specified locus
+     */
     public GlResourceBuilder locus(final String glstring) {
         alleles.clear();
         alleleLists.clear();
@@ -70,18 +82,36 @@ public final class GlResourceBuilder {
         return this;
     }
 
+    /**
+     * Return this gl resource builder configured with the specified allele. Calls to this method must
+     * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
+     * {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
+     *
+     * @param glstring allele in GL String format, must not be null
+     * @return this gl resource builder configured with the specified allele
+     */
     public GlResourceBuilder allele(final String glstring) {
         allele = client.createAllele(glstring);
         locus = allele.getLocus();
         return this;
     }
 
+    /**
+     * Return this gl resource builder configured with an allelic ambiguity operator ('<code>/</code>' character).
+     *
+     * @return this gl resource builder configured with an allelic ambiguity operator ('<code>/</code>' character)
+     */
     public GlResourceBuilder allelicAmbiguity() {
         alleles.add(allele);
         alleleList = client.createAlleleList(alleles);
         return this;
     }
 
+    /**
+     * Return this gl resource builder configured with an in phase operator ('<code>~</code>' character).
+     *
+     * @return this gl resource builder configured with an in phase operator ('<code>~</code>' character)
+     */
     public GlResourceBuilder inPhase() {
         alleles.clear();
         alleleLists.add(alleleList);
@@ -89,6 +119,11 @@ public final class GlResourceBuilder {
         return this;
     }
 
+    /**
+     * Return this gl resource builder configured with an xxx operator ('<code>+</code>' character).
+     *
+     * @return this gl resource builder configured with an xxx operator ('<code>+</code>' character)
+     */
     public GlResourceBuilder xxx() {
         alleles.clear();
         alleleLists.clear();
@@ -97,6 +132,11 @@ public final class GlResourceBuilder {
         return this;
     }
 
+    /**
+     * Return this gl resource builder configured with a genotypic ambiguity operator ('<code>|</code>' character).
+     *
+     * @return this gl resource builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
+     */
     public GlResourceBuilder genotypicAmbiguity() {
         alleles.clear();
         alleleLists.clear();
@@ -106,6 +146,31 @@ public final class GlResourceBuilder {
         return this;
     }
 
+    /**
+     * Return this gl resource builder with its configuration reset.
+     *
+     * @return this gl resource builder with its configuration reset
+     */
+    public GlstringBuilder reset() {
+        alleles.clear();
+        alleleLists.clear();
+        haplotypes.clear();
+        genotypes.clear();
+        genotypeLists.clear();
+        locus = null;
+        allele = null;
+        alleleList = null;
+        haplotype = null;
+        genotype = null;
+        genotypeList = null;
+        return this;
+    }
+
+    /**
+     * Build and return a new locus configured from the properties of this gl resource builder.
+     *
+     * @return a new locus configured from the properties of this gl resource builder
+     */
     public Locus buildLocus() {
         if (locus == null) {
             throw new IllegalStateException("must call locus(String) or allele(String) at least once");
@@ -113,6 +178,11 @@ public final class GlResourceBuilder {
         return locus;
     }
 
+    /**
+     * Build and return a new allele configured from the properties of this gl resource builder.
+     *
+     * @return a new allele configured from the properties of this gl resource builder
+     */
     public Allele buildAllele() {
         if (allele == null) {
             throw new IllegalStateException("must call allele(String) at least once");
@@ -120,22 +190,48 @@ public final class GlResourceBuilder {
         return allele;
     }
 
+    // todo:  higher level build methods don't create singletons as necessary
+    /**
+     * Build and return a new allele list configured from the properties of this gl resource builder.
+     *
+     * @return a new allele list configured from the properties of this gl resource builder
+     */
     public AlleleList buildAlleleList() {
         return client.createAlleleList(alleles);
     }
 
+    /**
+     * Build and return a new haplotype configured from the properties of this gl resource builder.
+     *
+     * @return a new haplotype configured from the properties of this gl resource builder
+     */
     public Haplotype buildHaplotype() {
         return client.createHaplotype(alleleLists);
     }
 
+    /**
+     * Build and return a new genotype configured from the properties of this gl resource builder.
+     *
+     * @return a new genotype configured from the properties of this gl resource builder
+     */
     public Genotype buildGenotype() {
         return client.createGenotype(haplotypes);
     }
 
+    /**
+     * Build and return a new genotype list configured from the properties of this gl resource builder.
+     *
+     * @return a new genotype list configured from the properties of this gl resource builder
+     */
     public GenotypeList buildGenotypeList() {
         return client.createGenotypeList(genotypes);
     }
 
+    /**
+     * Build and return a new multilocus unphased genotype configured from the properties of this gl resource builder.
+     *
+     * @return a new multilocus unphased genotype configured from the properties of this gl resource builder
+     */
     public MultilocusUnphasedGenotype buildMultilocusUnphasedGenotype() {
         return client.createMultilocusUnphasedGenotype(genotypeLists);
     }
