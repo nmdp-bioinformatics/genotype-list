@@ -1,0 +1,156 @@
+			---
+			GL Service Quick Start Guide
+			---
+			Guide author: Kathryn Doroschak
+			---
+			10-Jul-2012
+			---
+
+GL Service Quick Start Guide
+
+  Uses JDK version 1.6 or later, Maven 3.0.4 or later, Jetty or Tomcat, and CVS.
+
+*Table of Contents
+
+**Overview
+
+  (Uses GUI > terminal when possible)
+
+  [[1]] Check out & install files
+
+  [[2]] Deploy web server
+
+  [[3]] Load alleles & loci
+
+  [[4]] Use API
+
+    * General instructions
+
+    * Usage examples
+
+**Other Information:
+
+  * Get help with required software
+
+  * Run performance tests
+
+  * Install web server to non-default host:port
+
+  * Load alleles & loci via terminal
+
+  * Main README.txt
+
+[]
+
+================================================================================
+
+*Overview
+
+**1. Check Out & Install Files
+
+  * Using CVS, check out the files located at /usr/local/cvs/rposdir/codebase/nmdp/maven/gl
+
+    * For help configuring and using CVS, see Other Information.
+
+  * Navigate to the newly checked out directory via the terminal, and execute the following command:\
+    $ mvn install
+
+**2. Deploy Web Server
+
+  * While in the checked out gl directory, execute the following commands:\
+    $ cp gl-service-webapp/target/gl.war $CONTAINER_HOME/webapps\
+    $ cp gl-service-api-explorer/target/api-explorer.war $CONTAINER_HOME/webapps
+
+  * By default, the web server will be installed to http://localhost:8080. See Other Information to install to a host:port other than the default.
+
+**3. Load Alleles & Loci
+
+  * Currently, loci and alleles must be loaded from the IMGT nomenclature database (verion 3.8.0) before use in the service. To do so, visit\
+    http://localhost:8080/gl\
+in a web browser and hit the Load IMGT alleles button.
+
+**4. Use API
+
+  General Instructions & Usage Examples
+
+  * Select the Method and Content type from the drop-down menus.
+
+    * For GET operations, enter the id in the text box and click HTTP GET.
+
+    * Ex: Method: locus,\
+          Content type: GLString,\
+          and Get: 1886,\
+          returns "HLA-B."
+
+    * For POST operations, enter the data in the text box in a GL String format and click HTTP GET.
+
+    * Ex: Method: multilocus-unphased-genotype,\
+          Content type: GLString,\
+          and Post: HLA-A*31:43+HLA-A*02:01:31^HLA-B*44:99+HLA-B*15:30^HLA-C*03:08+HLA-C*07:209^HLA-DRB1*13:138+HLA-DRB1*01:45~HLA-DRB4*01:02^HLA-DQB1*06:01:04+HLA-DQB1*06:32,\
+          creates a new URI and returns the same GLString for the output as entered as the input. 
+
+================================================================================
+
+*Other Information
+
+**Get Help With Required Software
+
+  * JDK 1.6 or later
+
+    * http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
+  * Install Maven 3.0.4 or later
+
+    * http://maven.apache.org/download.html
+
+    * Configure ~/.m2/settings.xml per
+
+      * http://twiki/twiki/bin/view/BioinformaticsRG/MavenUsageNotes
+
+    * Usage notes can be found at
+
+      * http://twiki/twiki/bin/view/BioinformaticsRG/MavenUsageNotes
+
+  * Install CVS 
+
+    * http://www.nongnu.org/cvs/
+
+      * General info can be found at
+        http://twiki/twiki/bin/view/BioinformaticsRG/WebHome#CVS_Info
+
+  * Install Jetty OR Tomcat
+
+    * Jetty
+
+      * http://docs.codehaus.org/display/JETTY/Downloading+Jetty
+
+    * Tomcat
+
+      * http://tomcat.apache.org/download-70.cgi
+
+**Run Performance Tests
+
+  * Refer to gl-service-performance-tests/README.txt for further instructions.
+    $ cd gl-service-performance-tests
+    $ mvn -DdescriptorId=jar-with-dependencies assembly:assembly
+
+**Install Web Server to Non-Default host:port
+
+  * Edit the following property files, rebuild the war files, and redeploy as above.
+    gl-service-webapp/src/main/resources/gl-service.properties
+    gl-service-api-explorer/src/main/resources/gl-server.properties
+
+**Load alleles & loci via terminal
+
+  $ curl -X post http://localhost:8080/gl/load-imgt-alleles
+
+**Main README.txt
+
+  * Main readme file is located at ..../gl/README.txt
+
+[]
+
+===============================================================================
+
+  Notes for future edits:\
+  The APT formatting guide for this page can be found at http://maven.apache.org/doxia/format.html?.
