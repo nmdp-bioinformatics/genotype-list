@@ -1,6 +1,6 @@
 #summary Using the genotype list service with KIR nomenclature.
 
-= Usage =
+=== Load KIR nomenclature ===
 
 To load loci and alleles from the KIR nomenclature database version 2.4.0, either
 
@@ -12,8 +12,63 @@ or visit
 
 http://localhost:8080/gl
 
-in a web browser and hit the Load KIR alleles button
+in a web browser and hit the Load KIR alleles button.
 
 
 <br/>
-Continue with KIR examples.
+=== Example ===
+
+Given the following KIR typing interpretation example
+{{{
+KIR2DL1 Y       001+00301|001+00302
+KIR2DL2 N
+KIR2DL3 Y       001+005
+KIR2DL4 Y       00102+00202|00102+00801|00103+00202|00103+00801|00105+00202|00105+00801
+KIR2DL5 Y       001
+KIR2DS1 Y       002
+KIR2DS2 Y       001
+KIR2DS3 N
+KIR2DS4 Y       101
+KIR2DS5 Y       002
+KIR3DL1 Y       004+005
+KIR3DL2 Y       001+003
+KIR3DL3 Y       002+003
+KIR3DS1 N
+}}}
+
+
+a multilocus unphased genotype representation in GL String format might be
+{{{
+KIR2DL1*001+KIR2DL1*00301|KIR2DL1*001+KIR2DL1*00302^
+KIR2DL3*001+KIR2DL3*005^KIR2DL4*00102+KIR2DL4*00202|KIR2DL4*00102+
+KIR2DL4*00801|KIR2DL4*00103+KIR2DL4*00202|KIR2DL4*00103+KIR2DL4*00801|
+KIR2DL4*00105+KIR2DL4*00202|KIR2DL4*00105+KIR2DL4*00801^KIR2DL5*001^
+KIR2DS1*002^KIR2DS2*001^KIR2DS4*101^KIR2DS5*002^KIR3DL1*004+
+KIR3DL1*005^KIR3DL2*001+KIR3DL2*003^KIR3DL3*002+KIR3DL3*003
+}}}
+
+
+or using `NNNN` alleles for missing or null loci
+{{{
+KIR2DL1*001+KIR2DL1*00301|KIR2DL1*001+KIR2DL1*00302^KIR2DL2*NNNN^
+KIR2DL3*001+KIR2DL3*005^KIR2DL4*00102+KIR2DL4*00202|KIR2DL4*00102+
+KIR2DL4*00801|KIR2DL4*00103+KIR2DL4*00202|KIR2DL4*00103+KIR2DL4*00801|
+KIR2DL4*00105+KIR2DL4*00202|KIR2DL4*00105+KIR2DL4*00801^KIR2DL5*001^
+KIR2DS1*002^KIR2DS2*001^KIR2DS3*NNNN^KIR2DS4*101^KIR2DS5*002^
+KIR3DL1*004+KIR3DL1*005^KIR3DL2*001+KIR3DL2*003^KIR3DL3*002+KIR3DL3*003^
+KIR3DS1*NNNN
+}}}
+
+
+<br/>
+Register the multilocus unphased genotype using curl
+{{{
+$ curl --header "content-type: text/plain" \
+       --data "HLA-A*02:01:44+HLA-A*24:20^HLA-B*15:29+HLA-B*82:02^HLA-C*05:42+HLA-C*12:13^HLA-DRB1*12:06~HLA-DRB4*01:03:01:01+HLA-DRB1*10:01:01~HLA-DRB3*02:02:03^HLA-DQB1*03:03:02:02+HLA-DQB1*06:15" \
+       -X POST http://localhost:8080/gl/multilocus-unphased-genotype -v && echo
+}}}
+
+and retrieve in n3 format using wget
+{{{
+$ wget -q -O - http://localhost:8080/gl/multilocus-unphased-genotype/0.n3 && echo
+}}}
