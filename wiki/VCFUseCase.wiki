@@ -42,7 +42,7 @@ $ wget --mirror --no-parent \\
 }}}
 
 <br/>
-Run the VariantToGlstring walker via the GATK commandline
+Run the !VariantToGlstring walker via the GATK commandline
 {{{
 $ java -jar dist/GenomeAnalysisTK.jar \\
        -T VariantsToGlstring \\
