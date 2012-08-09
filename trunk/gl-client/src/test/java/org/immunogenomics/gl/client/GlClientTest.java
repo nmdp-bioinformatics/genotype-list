@@ -45,7 +45,7 @@ public final class GlClientTest {
 
     @Before
     public void setUp() {
-        client = new GlClient("http://localhost:8080/gl");
+        client = new GlClient("http://localhost:8080/gl", null);
     }
 
     @Test
@@ -55,7 +55,12 @@ public final class GlClientTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullNamespace() {
-        new GlClient(null);
+        new GlClient(null, null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullJsonFactory() {
+        new GlClient(null, null);
     }
 
     @Test

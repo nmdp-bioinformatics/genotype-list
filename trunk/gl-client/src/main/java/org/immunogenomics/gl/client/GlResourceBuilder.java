@@ -151,7 +151,7 @@ public final class GlResourceBuilder {
      *
      * @return this gl resource builder with its configuration reset
      */
-    public GlstringBuilder reset() {
+    public GlResourceBuilder reset() {
         alleles.clear();
         alleleLists.clear();
         haplotypes.clear();

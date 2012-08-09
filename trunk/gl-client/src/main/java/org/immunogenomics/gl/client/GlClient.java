@@ -24,9 +24,20 @@
 package org.immunogenomics.gl.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.with;
 
+import java.io.InputStream;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.base.Joiner;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
@@ -43,16 +54,19 @@ import org.immunogenomics.gl.service.Namespace;
  */
 public final class GlClient {
     private final String namespace;
-
+    private final JsonFactory jsonFactory;
 
     /**
      * Create a new gl client with the specified namespace.
      *
      * @param namespace namespace for this gl client, must not be null
+     * @param jsonFactory JSON factory for this gl client, must not be null
      */
-    public GlClient(@Namespace final String namespace) {
+    public GlClient(@Namespace final String namespace, final JsonFactory jsonFactory) {
         checkNotNull(namespace);
+        checkNotNull(jsonFactory);
         this.namespace = namespace;
+        this.jsonFactory = jsonFactory;
     }
 
 
@@ -74,6 +88,39 @@ public final class GlClient {
      */
     public Locus getLocus(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+            }
+            return new Locus(identifier, glstring);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -121,6 +168,48 @@ public final class GlClient {
      */
     public Allele getAllele(final String identifier) {
         checkNotNull(identifier);
+
+        String accession = null;
+        String glstring = null;
+        Locus locus = null;
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("accession".equals(field)) {
+                    accession = parser.getText();
+                }
+                else if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("locus".equals(field)) {
+                    String locusId = parser.getText();
+                    locus = getLocus(locusId);
+                }
+            }
+            return new Allele(identifier, accession, glstring, locus);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -172,6 +261,44 @@ public final class GlClient {
      */
     public AlleleList getAlleleList(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        List<Allele> alleles = new ArrayList<Allele>();
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("allele".equals(field)) {
+                    String alleleId = parser.getText();
+                    alleles.add(getAllele(alleleId));
+                }
+            }
+            return new AlleleList(identifier, alleles);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -223,6 +350,44 @@ public final class GlClient {
      */
     public Haplotype getHaplotype(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        List<AlleleList> alleleLists = new ArrayList<AlleleList>();
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("alleleList".equals(field)) {
+                    String alleleListId = parser.getText();
+                    alleleLists.add(getAlleleList(alleleListId));
+                }
+            }
+            return new Haplotype(identifier, alleleLists);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -274,6 +439,44 @@ public final class GlClient {
      */
     public Genotype getGenotype(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        List<Haplotype> haplotypes = new ArrayList<Haplotype>();
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("haplotype".equals(field)) {
+                    String haplotypeId = parser.getText();
+                    haplotypes.add(getHaplotype(haplotypeId));
+                }
+            }
+            return new Genotype(identifier, haplotypes);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -325,6 +528,44 @@ public final class GlClient {
      */
     public GenotypeList getGenotypeList(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        List<Genotype> genotypes = new ArrayList<Genotype>();
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("genotype".equals(field)) {
+                    String genotypeId = parser.getText();
+                    genotypes.add(getGenotype(genotypeId));
+                }
+            }
+            return new GenotypeList(identifier, genotypes);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 
@@ -376,6 +617,44 @@ public final class GlClient {
      */
     public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
         checkNotNull(identifier);
+
+        String glstring = null;
+        List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
+        InputStream inputStream = null;
+        JsonParser parser = null;
+        try {
+            inputStream = get(identifier + ".json").body().asInputStream();
+            parser = jsonFactory.createJsonParser(inputStream);
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String field = parser.getCurrentName();
+                parser.nextToken();
+                if ("glstring".equals(field)) {
+                    glstring = parser.getText();
+                }
+                else if ("genotypeList".equals(field)) {
+                    String genotypeListId = parser.getText();
+                    genotypeLists.add(getGenotypeList(genotypeListId));
+                }
+            }
+            return new MultilocusUnphasedGenotype(identifier, genotypeLists);
+        }
+        catch (IOException e) {
+            // log e, might also want to catch IAE
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+            try {
+                parser.close();
+            }
+            catch (Exception e) {
+                // ignored
+            }
+        }
         return null;
     }
 

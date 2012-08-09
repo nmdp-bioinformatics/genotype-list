@@ -46,7 +46,7 @@ public final class GlResourceBuilderTest {
 
     @Before
     public void setUp() {
-        client = new GlClient("http://localhost:8080/gl");
+        client = new GlClient("http://localhost:8080/gl", null);
         builder = new GlResourceBuilder(client);
     }
 
