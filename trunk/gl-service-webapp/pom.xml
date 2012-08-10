@@ -77,7 +77,7 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.tuckey.urlrewrite</groupId>
+      <groupId>org.tuckey</groupId>
       <artifactId>urlrewritefilter</artifactId>
       <scope>runtime</scope>
     </dependency>
