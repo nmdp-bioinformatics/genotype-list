@@ -137,10 +137,12 @@ Index: pom.xml
  -->
    </modules>
  
-+  <repository>
-+    <id>Spark repository</id>
-+    <url>http://www.sparkjava.com/nexus/content/repositories/spark/</url>
-+  </repository>
++  <repositories>
++    <repository>
++      <id>Spark repository</id>
++      <url>http://www.sparkjava.com/nexus/content/repositories/spark/</url>
++    </repository>
++  </repositories>
 +
    <build>
     <pluginManagement>
