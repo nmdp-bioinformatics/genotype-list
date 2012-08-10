@@ -117,7 +117,7 @@ $ mvn install -rf :gl-service-voldemort
 
 
 <br/>
-Spark is only available from its own Maven repository, and has enough transitive dependencies to make a local install troublesome.
+Spark is only available from its own Maven repository and has enough transitive dependencies to make a local install troublesome.
 
 One workaround is to use Nexus, which is a Maven repository manager and proxy.
 
