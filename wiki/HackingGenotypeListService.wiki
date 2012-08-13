@@ -17,6 +17,8 @@ $ mvn install
 
 Functional tests are executed against an embedded jetty during the build.
 
+||*Important:* If your build fails due to unresolved dependencies, check out the wiki page on [ThirdPartyDependencies third party dependencies].||
+
 
 <br/>
 = Performance tests =
