@@ -89,12 +89,17 @@ public final class GlClient {
     public Locus getLocus(final String identifier) {
         checkNotNull(identifier);
 
+        // todo:  add logging
+        System.out.println("getLocus\t" + identifier);
         String glstring = null;
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            // todo:  hack to prevent hanging up during unit tests, does jetty throttle by default?
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
@@ -169,14 +174,17 @@ public final class GlClient {
     public Allele getAllele(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getAllele\t" + identifier);
         String accession = null;
         String glstring = null;
         Locus locus = null;
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
@@ -262,22 +270,33 @@ public final class GlClient {
     public AlleleList getAlleleList(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getAlleleList\t" + identifier);
         String glstring = null;
         List<Allele> alleles = new ArrayList<Allele>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
                 if ("glstring".equals(field)) {
                     glstring = parser.getText();
                 }
-                else if ("allele".equals(field)) {
-                    String alleleId = parser.getText();
-                    alleles.add(getAllele(alleleId));
+                else if ("alleles".equals(field)) {
+                    while (parser.nextToken() != JsonToken.END_ARRAY) {
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String alleleField = parser.getCurrentName();
+                            parser.nextToken();
+                            if ("allele".equals(alleleField)) {
+                                String alleleId = parser.getText();
+                                alleles.add(getAllele(alleleId));
+                            }
+                        }
+                    }
                 }
             }
             return new AlleleList(identifier, alleles);
@@ -351,22 +370,33 @@ public final class GlClient {
     public Haplotype getHaplotype(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getHaplotype\t" + identifier);
         String glstring = null;
         List<AlleleList> alleleLists = new ArrayList<AlleleList>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
                 if ("glstring".equals(field)) {
                     glstring = parser.getText();
                 }
-                else if ("alleleList".equals(field)) {
-                    String alleleListId = parser.getText();
-                    alleleLists.add(getAlleleList(alleleListId));
+                else if ("alleleLists".equals(field)) {
+                    while (parser.nextToken() != JsonToken.END_ARRAY) {
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String alleleListField = parser.getCurrentName();
+                            parser.nextToken();
+                            if ("alleleList".equals(alleleListField)) {
+                                String alleleListId = parser.getText();
+                                alleleLists.add(getAlleleList(alleleListId));
+                            }
+                        }
+                    }
                 }
             }
             return new Haplotype(identifier, alleleLists);
@@ -440,22 +470,33 @@ public final class GlClient {
     public Genotype getGenotype(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getGenotype\t" + identifier);
         String glstring = null;
         List<Haplotype> haplotypes = new ArrayList<Haplotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
                 if ("glstring".equals(field)) {
                     glstring = parser.getText();
                 }
-                else if ("haplotype".equals(field)) {
-                    String haplotypeId = parser.getText();
-                    haplotypes.add(getHaplotype(haplotypeId));
+                else if ("haplotypes".equals(field)) {
+                    while (parser.nextToken() != JsonToken.END_ARRAY) {
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String haplotypeField = parser.getCurrentName();
+                            parser.nextToken();
+                            if ("haplotype".equals(haplotypeField)) {
+                                String haplotypeId = parser.getText();
+                                haplotypes.add(getHaplotype(haplotypeId));
+                            }
+                        }
+                    }
                 }
             }
             return new Genotype(identifier, haplotypes);
@@ -479,7 +520,7 @@ public final class GlClient {
         }
         return null;
     }
-
+   
     /**
      * Register a genotype described by the specified GL String and return its identifier.
      *
@@ -529,22 +570,33 @@ public final class GlClient {
     public GenotypeList getGenotypeList(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getGenotypeList\t" + identifier);
         String glstring = null;
         List<Genotype> genotypes = new ArrayList<Genotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
                 if ("glstring".equals(field)) {
                     glstring = parser.getText();
                 }
-                else if ("genotype".equals(field)) {
-                    String genotypeId = parser.getText();
-                    genotypes.add(getGenotype(genotypeId));
+                else if ("genotypes".equals(field)) {
+                    while (parser.nextToken() != JsonToken.END_ARRAY) {
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String genotypeField = parser.getCurrentName();
+                            parser.nextToken();
+                            if ("genotype".equals(genotypeField)) {
+                                String genotypeId = parser.getText();
+                                genotypes.add(getGenotype(genotypeId));
+                            }
+                        }
+                    }
                 }
             }
             return new GenotypeList(identifier, genotypes);
@@ -618,22 +670,33 @@ public final class GlClient {
     public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
         checkNotNull(identifier);
 
+        System.out.println("getMultilocusUnphasedGenotype\t" + identifier);
         String glstring = null;
         List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
+            pause();
             inputStream = get(identifier + ".json").body().asInputStream();
             parser = jsonFactory.createJsonParser(inputStream);
+            parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
                 if ("glstring".equals(field)) {
                     glstring = parser.getText();
                 }
-                else if ("genotypeList".equals(field)) {
-                    String genotypeListId = parser.getText();
-                    genotypeLists.add(getGenotypeList(genotypeListId));
+                else if ("genotypeLists".equals(field)) {
+                    while (parser.nextToken() != JsonToken.END_ARRAY) {
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String genotypeListField = parser.getCurrentName();
+                            parser.nextToken();
+                            if ("genotypeList".equals(genotypeListField)) {
+                                String genotypeListId = parser.getText();
+                                genotypeLists.add(getGenotypeList(genotypeListId));
+                            }
+                        }
+                    }
                 }
             }
             return new MultilocusUnphasedGenotype(identifier, genotypeLists);
@@ -668,8 +731,19 @@ public final class GlClient {
         return register("multilocus-unphased-genotype", glstring);
     }
 
+    private void pause() {
+        try {
+            Thread.sleep(100L);
+        }
+        catch (Exception e) {
+            // ignore
+        }
+    }
+
     private String register(final String type, final String glstring) {
         checkNotNull(glstring);
+        System.out.println("posting " + glstring + " to URL " + namespace + type);
+        pause();
         return with().body(glstring).contentType("text/plain").post(namespace + type).getHeader("Location");
     }
 }

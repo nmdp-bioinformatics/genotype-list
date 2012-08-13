@@ -26,6 +26,8 @@ package org.immunogenomics.gl.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.fasterxml.jackson.core.JsonFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,10 +45,12 @@ import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 public final class GlResourceBuilderTest {
     private GlClient client;
     private GlResourceBuilder builder;
+    private JsonFactory jsonFactory;
 
     @Before
     public void setUp() {
-        client = new GlClient("http://localhost:8080/gl", null);
+        jsonFactory = new JsonFactory();
+        client = new GlClient("http://localhost:8080/gl/", jsonFactory);
         builder = new GlResourceBuilder(client);
     }
 
