@@ -26,6 +26,8 @@ package org.immunogenomics.gl.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.fasterxml.jackson.core.JsonFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,10 +44,12 @@ import org.immunogenomics.gl.MultilocusUnphasedGenotype;
  */
 public final class GlClientTest {
     private GlClient client;
+    private JsonFactory jsonFactory;
 
     @Before
     public void setUp() {
-        client = new GlClient("http://localhost:8080/gl", null);
+        jsonFactory = new JsonFactory();
+        client = new GlClient("http://localhost:8080/gl/", jsonFactory);
     }
 
     @Test
@@ -55,7 +59,7 @@ public final class GlClientTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullNamespace() {
-        new GlClient(null, null);
+        new GlClient(null, jsonFactory);
     }
 
     @Test(expected=NullPointerException.class)
@@ -95,7 +99,8 @@ public final class GlClientTest {
         assertNotNull(allele);
         assertNotNull(allele.getId());
         assertEquals("HLA-A*01:01:01:01", allele.getGlstring());
-        assertEquals(locus, allele.getLocus());
+        assertEquals(locus.getId(), allele.getLocus().getId());
+        assertEquals(locus.getGlstring(), allele.getLocus().getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
@@ -151,8 +156,10 @@ public final class GlClientTest {
         assertNotNull(alleleList.getId());
         assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList.getGlstring());
         assertEquals(2, alleleList.getAlleles().size());
-        assertEquals(a01, alleleList.getAlleles().get(0));
-        assertEquals(a02n, alleleList.getAlleles().get(1));
+        assertEquals(a01.getId(), alleleList.getAlleles().get(0).getId());
+        assertEquals(a01.getGlstring(), alleleList.getAlleles().get(0).getGlstring());
+        assertEquals(a02n.getId(), alleleList.getAlleles().get(1).getId());
+        assertEquals(a02n.getGlstring(), alleleList.getAlleles().get(1).getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
@@ -201,8 +208,10 @@ public final class GlClientTest {
         assertNotNull(haplotype.getId());
         assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01", haplotype.getGlstring());
         assertEquals(2, haplotype.getAlleleLists().size());
-        assertEquals(aAlleles, haplotype.getAlleleLists().get(0));
-        assertEquals(bAlleles, haplotype.getAlleleLists().get(1));
+        assertEquals(aAlleles.getId(), haplotype.getAlleleLists().get(0).getId());
+        assertEquals(aAlleles.getGlstring(), haplotype.getAlleleLists().get(0).getGlstring());
+        assertEquals(bAlleles.getId(), haplotype.getAlleleLists().get(1).getId());
+        assertEquals(bAlleles.getGlstring(), haplotype.getAlleleLists().get(1).getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
@@ -251,9 +260,11 @@ public final class GlClientTest {
         assertNotNull(genotype);
         assertNotNull(genotype.getId());
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotype.getGlstring());
-        assertEquals(0, genotype.getHaplotypes().size());
-        assertEquals(haplotype0, genotype.getHaplotypes().get(0));
-        assertEquals(haplotype1, genotype.getHaplotypes().get(1));
+        assertEquals(2, genotype.getHaplotypes().size());
+        assertEquals(haplotype0.getId(), genotype.getHaplotypes().get(0).getId());
+        assertEquals(haplotype0.getGlstring(), genotype.getHaplotypes().get(0).getGlstring());
+        assertEquals(haplotype1.getId(), genotype.getHaplotypes().get(1).getId());
+        assertEquals(haplotype1.getGlstring(), genotype.getHaplotypes().get(1).getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
@@ -308,8 +319,10 @@ public final class GlClientTest {
         assertNotNull(genotypeList.getId());
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*01:01:01:01+HLA-A*02:01:01:01", genotypeList.getGlstring());
         assertEquals(2, genotypeList.getGenotypes().size());
-        assertEquals(genotype0, genotypeList.getGenotypes().get(0));
-        assertEquals(genotype1, genotypeList.getGenotypes().get(1));
+        assertEquals(genotype0.getId(), genotypeList.getGenotypes().get(0).getId());
+        assertEquals(genotype0.getGlstring(), genotypeList.getGenotypes().get(0).getGlstring());
+        assertEquals(genotype1.getId(), genotypeList.getGenotypes().get(1).getId());
+        assertEquals(genotype1.getGlstring(), genotypeList.getGenotypes().get(1).getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
@@ -370,8 +383,10 @@ public final class GlClientTest {
         assertNotNull(multilocusUnphasedGenotype.getId());
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N^HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype.getGlstring());
         assertEquals(2, multilocusUnphasedGenotype.getGenotypeLists().size());
-        assertEquals(genotypeList0, multilocusUnphasedGenotype.getGenotypeLists().get(0));
-        assertEquals(genotypeList1, multilocusUnphasedGenotype.getGenotypeLists().get(1));
+        assertEquals(genotypeList0.getId(), multilocusUnphasedGenotype.getGenotypeLists().get(0).getId());
+        assertEquals(genotypeList0.getGlstring(), multilocusUnphasedGenotype.getGenotypeLists().get(0).getGlstring());
+        assertEquals(genotypeList1.getId(), multilocusUnphasedGenotype.getGenotypeLists().get(1).getId());
+        assertEquals(genotypeList1.getGlstring(), multilocusUnphasedGenotype.getGenotypeLists().get(1).getGlstring());
     }
 
     @Test(expected=NullPointerException.class)
