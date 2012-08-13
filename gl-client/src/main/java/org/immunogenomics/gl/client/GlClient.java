@@ -23,22 +23,6 @@
 */
 package org.immunogenomics.gl.client;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.jayway.restassured.RestAssured.get;
-import static com.jayway.restassured.RestAssured.with;
-
-import java.io.InputStream;
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.common.base.Joiner;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
 import org.immunogenomics.gl.Haplotype;
@@ -47,28 +31,10 @@ import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
-import org.immunogenomics.gl.service.Namespace;
-
 /**
  * Client API for creating and registering gl resources.
  */
-public final class GlClient {
-    private final String namespace;
-    private final JsonFactory jsonFactory;
-
-    /**
-     * Create a new gl client with the specified namespace.
-     *
-     * @param namespace namespace for this gl client, must not be null
-     * @param jsonFactory JSON factory for this gl client, must not be null
-     */
-    public GlClient(@Namespace final String namespace, final JsonFactory jsonFactory) {
-        checkNotNull(namespace);
-        checkNotNull(jsonFactory);
-        this.namespace = namespace;
-        this.jsonFactory = jsonFactory;
-    }
-
+public interface GlClient {
 
     /**
      * Create and register a locus described by the specified GL String.
@@ -76,9 +42,7 @@ public final class GlClient {
      * @param glstring locus in GL String format, must not be null
      * @return a locus described by the specified GL String
      */
-    public Locus createLocus(final String glstring) {
-        return getLocus(registerLocus(glstring));
-    }
+    Locus createLocus(final String glstring);
 
     /**
      * Return the locus identified by <code>identifier</code> or null if no such locus exists.
@@ -86,48 +50,7 @@ public final class GlClient {
      * @param identifier locus identifier, must not be null
      * @return the locus identified by <code>identifier</code> or null if no such locus exists
      */
-    public Locus getLocus(final String identifier) {
-        checkNotNull(identifier);
-
-        // todo:  add logging
-        System.out.println("getLocus\t" + identifier);
-        String glstring = null;
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            // todo:  hack to prevent hanging up during unit tests, does jetty throttle by default?
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-            }
-            return new Locus(identifier, glstring);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    Locus getLocus(final String identifier);
 
     /**
      * Register a locus described by the specified GL String and return its identifier.
@@ -135,9 +58,7 @@ public final class GlClient {
      * @param glstring locus in GL String format
      * @return the identifier of the locus described by the specified GL String
      */
-    public String registerLocus(final String glstring) {
-        return register("locus", glstring);
-    }
+    String registerLocus(final String glstring);
 
     /**
      * Create and register an allele described by the specified GL String.
@@ -145,9 +66,7 @@ public final class GlClient {
      * @param glstring allele in GL String format, must not be null
      * @return an allele described by the specified GL String
      */
-    public Allele createAllele(final String glstring) {
-        return getAllele(registerAllele(glstring));
-    }
+    Allele createAllele(final String glstring);
 
     /**
      * Create and register an allele described by the specified GL String.
@@ -156,14 +75,7 @@ public final class GlClient {
      * @param glstring allele in GL String format, must not be null
      * @return an allele described by the specified GL String
      */
-    public Allele createAllele(final Locus locus, final String glstring) {
-        checkNotNull(locus);
-        checkNotNull(glstring);
-        if (!glstring.startsWith(locus.getGlstring())) {
-            throw new IllegalArgumentException("locus " + locus.getGlstring() + " and allele glstring " + glstring + " do not match");
-        }
-        return createAllele(glstring);
-    }
+    Allele createAllele(final Locus locus, final String glstring);
 
     /**
      * Return the allele identified by <code>identifier</code> or null if no such allele exists.
@@ -171,55 +83,7 @@ public final class GlClient {
      * @param identifier allele identifier, must not be null
      * @return the allele identified by <code>identifier</code> or null if no such allele exists
      */
-    public Allele getAllele(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getAllele\t" + identifier);
-        String accession = null;
-        String glstring = null;
-        Locus locus = null;
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("accession".equals(field)) {
-                    accession = parser.getText();
-                }
-                else if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("locus".equals(field)) {
-                    String locusId = parser.getText();
-                    locus = getLocus(locusId);
-                }
-            }
-            return new Allele(identifier, accession, glstring, locus);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    Allele getAllele(final String identifier);
 
     /**
      * Register an allele described by the specified GL String and return its identifier.
@@ -227,9 +91,7 @@ public final class GlClient {
      * @param glstring allele in GL String format
      * @return the identifier of the allele described by the specified GL String
      */
-    public String registerAllele(final String glstring) {
-        return register("allele", glstring);
-    }
+    String registerAllele(final String glstring);
 
     /**
      * Create and register an allele list described by the specified GL String.
@@ -237,9 +99,7 @@ public final class GlClient {
      * @param glstring allele list in GL String format, must not be null
      * @return an allele list described by the specified GL String
      */
-    public AlleleList createAlleleList(final String glstring) {
-        return getAlleleList(registerAlleleList(glstring));
-    }
+    AlleleList createAlleleList(final String glstring);
 
     /**
      * Create and register an allele list containing the specified alleles.
@@ -247,9 +107,7 @@ public final class GlClient {
      * @param alleles variable number of alleles, must not be null
      * @return an allele list containing the specified alleles
      */
-    public AlleleList createAlleleList(final Allele... alleles) {
-        return createAlleleList(Joiner.on("/").join(alleles));
-    }
+    AlleleList createAlleleList(final Allele... alleles);
 
     /**
      * Create and register an allele list containing the specified alleles.
@@ -257,9 +115,7 @@ public final class GlClient {
      * @param alleles alleles, must not be null
      * @return an allele list containing the specified alleles
      */
-    public AlleleList createAlleleList(final Iterable<Allele> alleles) {
-        return createAlleleList(Joiner.on("/").join(alleles));
-    }
+    AlleleList createAlleleList(final Iterable<Allele> alleles);
 
     /**
      * Return the allele list identified by <code>identifier</code> or null if no such allele list exists.
@@ -267,59 +123,7 @@ public final class GlClient {
      * @param identifier allele list identifier, must not be null
      * @return the allele list identified by <code>identifier</code> or null if no such allele list exists
      */
-    public AlleleList getAlleleList(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getAlleleList\t" + identifier);
-        String glstring = null;
-        List<Allele> alleles = new ArrayList<Allele>();
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("alleles".equals(field)) {
-                    while (parser.nextToken() != JsonToken.END_ARRAY) {
-                        while (parser.nextToken() != JsonToken.END_OBJECT) {
-                            String alleleField = parser.getCurrentName();
-                            parser.nextToken();
-                            if ("allele".equals(alleleField)) {
-                                String alleleId = parser.getText();
-                                alleles.add(getAllele(alleleId));
-                            }
-                        }
-                    }
-                }
-            }
-            return new AlleleList(identifier, alleles);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    AlleleList getAlleleList(final String identifier);
 
     /**
      * Register an allele list described by the specified GL String and return its identifier.
@@ -327,9 +131,7 @@ public final class GlClient {
      * @param glstring allele list in GL String format
      * @return the identifier of the allele list described by the specified GL String
      */
-    public String registerAlleleList(final String glstring) {
-        return register("allele-list", glstring);
-    }
+    String registerAlleleList(final String glstring);
 
     /**
      * Create and register a haplotype described by the specified GL String.
@@ -337,9 +139,7 @@ public final class GlClient {
      * @param glstring haplotype in GL String format, must not be null
      * @return a haplotype described by the specified GL String
      */
-    public Haplotype createHaplotype(final String glstring) {
-        return getHaplotype(registerHaplotype(glstring));
-    }
+    Haplotype createHaplotype(final String glstring);
 
     /**
      * Create and register a haplotype containing the specified allele lists.
@@ -347,9 +147,7 @@ public final class GlClient {
      * @param alleleLists variable number of allele lists, must not be null
      * @return a haplotype containing the specified allele lists
      */
-    public Haplotype createHaplotype(final AlleleList... alleleLists) {
-        return createHaplotype(Joiner.on("~").join(alleleLists));
-    }
+    Haplotype createHaplotype(final AlleleList... alleleLists);
 
     /**
      * Create and register a haplotype containing the specified allele lists.
@@ -357,9 +155,7 @@ public final class GlClient {
      * @param alleleLists allele lists, must not be null
      * @return a haplotype containing the specified allele lists
      */
-    public Haplotype createHaplotype(final Iterable<AlleleList> alleleLists) {
-        return createHaplotype(Joiner.on("~").join(alleleLists));
-    }
+    Haplotype createHaplotype(final Iterable<AlleleList> alleleLists);
 
     /**
      * Return the haplotype identified by <code>identifier</code> or null if no such haplotype exists.
@@ -367,59 +163,7 @@ public final class GlClient {
      * @param identifier haplotype identifier, must not be null
      * @return the haplotype identified by <code>identifier</code> or null if no such haplotype exists
      */
-    public Haplotype getHaplotype(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getHaplotype\t" + identifier);
-        String glstring = null;
-        List<AlleleList> alleleLists = new ArrayList<AlleleList>();
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("alleleLists".equals(field)) {
-                    while (parser.nextToken() != JsonToken.END_ARRAY) {
-                        while (parser.nextToken() != JsonToken.END_OBJECT) {
-                            String alleleListField = parser.getCurrentName();
-                            parser.nextToken();
-                            if ("alleleList".equals(alleleListField)) {
-                                String alleleListId = parser.getText();
-                                alleleLists.add(getAlleleList(alleleListId));
-                            }
-                        }
-                    }
-                }
-            }
-            return new Haplotype(identifier, alleleLists);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    Haplotype getHaplotype(final String identifier);
 
     /**
      * Register a haplotype described by the specified GL String and return its identifier.
@@ -427,9 +171,7 @@ public final class GlClient {
      * @param glstring haplotype in GL String format
      * @return the identifier of the haplotype described by the specified GL String
      */
-    public String registerHaplotype(final String glstring) {
-        return register("haplotype", glstring);
-    }
+    String registerHaplotype(final String glstring);
 
     /**
      * Create and register a genotype described by the specified GL String.
@@ -437,9 +179,7 @@ public final class GlClient {
      * @param glstring genotype in GL String format, must not be null
      * @return a genotype described by the specified GL String
      */
-    public Genotype createGenotype(final String glstring) {
-        return getGenotype(registerGenotype(glstring));
-    }
+    Genotype createGenotype(final String glstring);
 
     /**
      * Create and register a genotype containing the specified haplotypes.
@@ -447,9 +187,7 @@ public final class GlClient {
      * @param haplotypes variable number of haplotypes, must not be null
      * @return a genotype containing the specified haplotypes
      */
-    public Genotype createGenotype(final Haplotype... haplotypes) {
-        return createGenotype(Joiner.on("+").join(haplotypes));
-    }
+    Genotype createGenotype(final Haplotype... haplotypes);
 
     /**
      * Create and register a genotype containing the specified haplotypes.
@@ -457,9 +195,7 @@ public final class GlClient {
      * @param haplotypes haplotypes, must not be null
      * @return a genotype containing the specified haplotypes
      */
-    public Genotype createGenotype(final Iterable<Haplotype> haplotypes) {
-        return createGenotype(Joiner.on("+").join(haplotypes));
-    }
+    Genotype createGenotype(final Iterable<Haplotype> haplotypes);
 
     /**
      * Return the genotype identified by <code>identifier</code> or null if no such genotype exists.
@@ -467,59 +203,7 @@ public final class GlClient {
      * @param identifier genotype identifier, must not be null
      * @return the genotype identified by <code>identifier</code> or null if no such genotype exists
      */
-    public Genotype getGenotype(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getGenotype\t" + identifier);
-        String glstring = null;
-        List<Haplotype> haplotypes = new ArrayList<Haplotype>();
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("haplotypes".equals(field)) {
-                    while (parser.nextToken() != JsonToken.END_ARRAY) {
-                        while (parser.nextToken() != JsonToken.END_OBJECT) {
-                            String haplotypeField = parser.getCurrentName();
-                            parser.nextToken();
-                            if ("haplotype".equals(haplotypeField)) {
-                                String haplotypeId = parser.getText();
-                                haplotypes.add(getHaplotype(haplotypeId));
-                            }
-                        }
-                    }
-                }
-            }
-            return new Genotype(identifier, haplotypes);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    Genotype getGenotype(final String identifier);
    
     /**
      * Register a genotype described by the specified GL String and return its identifier.
@@ -527,9 +211,7 @@ public final class GlClient {
      * @param glstring genotype in GL String format
      * @return the identifier of the genotype described by the specified GL String
      */
-    public String registerGenotype(final String glstring) {
-        return register("genotype", glstring);
-    }
+    String registerGenotype(final String glstring);
 
     /**
      * Create and register a genotype list described by the specified GL String.
@@ -537,9 +219,7 @@ public final class GlClient {
      * @param glstring genotype list in GL String format, must not be null
      * @return a genotype list described by the specified GL String
      */
-    public GenotypeList createGenotypeList(final String glstring) {
-        return getGenotypeList(registerGenotypeList(glstring));
-    }
+    GenotypeList createGenotypeList(final String glstring);
 
     /**
      * Create and register a genotype list containing the specified genotypes.
@@ -547,9 +227,7 @@ public final class GlClient {
      * @param genotypes variable number of genotypes, must not be null
      * @return a genotype list containing the specified genotypes
      */
-    public GenotypeList createGenotypeList(final Genotype... genotypes) {
-        return createGenotypeList(Joiner.on("|").join(genotypes));
-    }
+    GenotypeList createGenotypeList(final Genotype... genotypes);
 
     /**
      * Create and register a genotype list containing the specified genotypes.
@@ -557,9 +235,7 @@ public final class GlClient {
      * @param genotypes genotypes, must not be null
      * @return a genotype list containing the specified genotypes
      */
-    public GenotypeList createGenotypeList(final Iterable<Genotype> genotypes) {
-        return createGenotypeList(Joiner.on("|").join(genotypes));
-    }
+    GenotypeList createGenotypeList(final Iterable<Genotype> genotypes);
 
     /**
      * Return the genotype list identified by <code>identifier</code> or null if no such genotype list exists.
@@ -567,59 +243,7 @@ public final class GlClient {
      * @param identifier genotype list identifier, must not be null
      * @return the genotype list identified by <code>identifier</code> or null if no such genotype list exists
      */
-    public GenotypeList getGenotypeList(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getGenotypeList\t" + identifier);
-        String glstring = null;
-        List<Genotype> genotypes = new ArrayList<Genotype>();
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("genotypes".equals(field)) {
-                    while (parser.nextToken() != JsonToken.END_ARRAY) {
-                        while (parser.nextToken() != JsonToken.END_OBJECT) {
-                            String genotypeField = parser.getCurrentName();
-                            parser.nextToken();
-                            if ("genotype".equals(genotypeField)) {
-                                String genotypeId = parser.getText();
-                                genotypes.add(getGenotype(genotypeId));
-                            }
-                        }
-                    }
-                }
-            }
-            return new GenotypeList(identifier, genotypes);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    GenotypeList getGenotypeList(final String identifier);
 
     /**
      * Register a genotype list described by the specified GL String and return its identifier.
@@ -627,9 +251,7 @@ public final class GlClient {
      * @param glstring genotype list in GL String format
      * @return the identifier of the genotype list described by the specified GL String
      */
-    public String registerGenotypeList(final String glstring) {
-        return register("genotype-list", glstring);
-    }
+    String registerGenotypeList(final String glstring);
 
     /**
      * Create and register a multilocus unphased genotype described by the specified GL String.
@@ -637,9 +259,7 @@ public final class GlClient {
      * @param glstring multilocus unphased genotype in GL String format, must not be null
      * @return a multilocus unphased genotype described by the specified GL String
      */
-    public MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final String glstring) {
-        return getMultilocusUnphasedGenotype(registerMultilocusUnphasedGenotype(glstring));
-    }
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final String glstring);
 
     /**
      * Create and register a multilocus unphased genotype containing the specified genotype lists.
@@ -647,9 +267,7 @@ public final class GlClient {
      * @param genotypeLists variable number of genotype lists, must not be null
      * @return a multilocus unphased genotype containing the specified genotype lists
      */
-    public MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists) {
-        return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
-    }
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists);
 
     /**
      * Create and register a multilocus unphased genotype containing the specified genotype lists.
@@ -657,9 +275,7 @@ public final class GlClient {
      * @param genotypeLists genotype lists, must not be null
      * @return a multilocus unphased genotype containing the specified genotype lists
      */
-    public MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists) {
-        return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
-    }
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists);
 
     /**
      * Return the multilocus unphased genotype identified by <code>identifier</code> or null if no such multilocus unphased genotype exists.
@@ -667,59 +283,7 @@ public final class GlClient {
      * @param identifier multilocus unphased genotype identifier, must not be null
      * @return the multilocus unphased genotype identified by <code>identifier</code> or null if no such multilocus unphased genotype exists
      */
-    public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
-        checkNotNull(identifier);
-
-        System.out.println("getMultilocusUnphasedGenotype\t" + identifier);
-        String glstring = null;
-        List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
-        InputStream inputStream = null;
-        JsonParser parser = null;
-        try {
-            pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
-            parser = jsonFactory.createJsonParser(inputStream);
-            parser.nextToken();
-            while (parser.nextToken() != JsonToken.END_OBJECT) {
-                String field = parser.getCurrentName();
-                parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("genotypeLists".equals(field)) {
-                    while (parser.nextToken() != JsonToken.END_ARRAY) {
-                        while (parser.nextToken() != JsonToken.END_OBJECT) {
-                            String genotypeListField = parser.getCurrentName();
-                            parser.nextToken();
-                            if ("genotypeList".equals(genotypeListField)) {
-                                String genotypeListId = parser.getText();
-                                genotypeLists.add(getGenotypeList(genotypeListId));
-                            }
-                        }
-                    }
-                }
-            }
-            return new MultilocusUnphasedGenotype(identifier, genotypeLists);
-        }
-        catch (IOException e) {
-            // log e, might also want to catch IAE
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-            try {
-                parser.close();
-            }
-            catch (Exception e) {
-                // ignored
-            }
-        }
-        return null;
-    }
+    MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier);
 
     /**
      * Register a multilocus unphased genotype described by the specified GL String and return its identifier.
@@ -727,23 +291,5 @@ public final class GlClient {
      * @param glstring multilocus unphased genotype in GL String format
      * @return the identifier of the multilocus unphased genotype described by the specified GL String
      */
-    public String registerMultilocusUnphasedGenotype(final String glstring) {
-        return register("multilocus-unphased-genotype", glstring);
-    }
-
-    private void pause() {
-        try {
-            Thread.sleep(100L);
-        }
-        catch (Exception e) {
-            // ignore
-        }
-    }
-
-    private String register(final String type, final String glstring) {
-        checkNotNull(glstring);
-        System.out.println("posting " + glstring + " to URL " + namespace + type);
-        pause();
-        return with().body(glstring).contentType("text/plain").post(namespace + type).getHeader("Location");
-    }
+    String registerMultilocusUnphasedGenotype(final String glstring);
 }
