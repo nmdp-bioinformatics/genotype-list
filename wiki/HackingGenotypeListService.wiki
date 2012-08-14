@@ -54,12 +54,7 @@ gl-service-explorer/src/main/resources/gl-service.properties
 <br/>
 = Usage =
 
-There are currently two use cases supported:
- * [HLAUseCase HLA Use Case] (also explained below)
- * [KIRUseCase KIR Use Case]
- * [VCFUseCase VCF Use Case]
-
-To load loci and alleles from the IMGT nomenclature database version 3.9.0, either
+To load loci and alleles from the IMGT HLA nomenclature database version 3.9.0, either
 
 {{{
 $ curl -X post http://localhost:8080/gl/load-imgt-alleles
@@ -228,3 +223,9 @@ $ curl --header "content-type: text/plain" \
        --data "HLA-A*02:01:44+HLA-A*24:20^HLA-B*15:29+HLA-B*82:02^HLA-C*05:42+HLA-C*12:13^HLA-DRB1*12:06~HLA-DRB4*01:03:01:01+HLA-DRB1*10:01:01~HLA-DRB3*02:02:03^HLA-DQB1*03:03:02:02+HLA-DQB1*06:15" \
        -X POST http://localhost:8080/gl/multilocus-unphased-genotype -v && echo
 }}}
+
+<br/>
+For other use cases, see
+ * [HLAUseCase HLA Use Case]
+ * [KIRUseCase KIR Use Case]
+ * [VCFUseCase VCF Use Case]
