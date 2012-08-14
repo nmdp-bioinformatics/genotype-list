@@ -26,11 +26,6 @@ package org.immunogenomics.gl.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.fasterxml.jackson.core.JsonFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
 import org.immunogenomics.gl.Haplotype;
@@ -39,18 +34,24 @@ import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 /**
  * Unit test for GlResourceBuilder.
  */
 public final class GlResourceBuilderTest {
-    private GlClient client;
     private GlResourceBuilder builder;
-    private JsonFactory jsonFactory;
+
+    @Mock
+    private GlClient client;
 
     @Before
     public void setUp() {
-        jsonFactory = new JsonFactory();
-        client = new GlClient("http://localhost:8080/gl/", jsonFactory);
+        MockitoAnnotations.initMocks(this);
         builder = new GlResourceBuilder(client);
     }
 

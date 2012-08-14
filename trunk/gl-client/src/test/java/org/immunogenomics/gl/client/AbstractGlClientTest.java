@@ -26,8 +26,6 @@ package org.immunogenomics.gl.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.fasterxml.jackson.core.JsonFactory;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,35 +38,25 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 /**
- * Unit test for GlClient.
+ * Abstract unit test for implementations of GlClient.
  */
-public final class GlClientTest {
-    private GlClient client;
-    private JsonFactory jsonFactory;
+public abstract class AbstractGlClientTest {
+    protected GlClient client;
+
+    protected abstract GlClient createGlClient();
 
     @Before
     public void setUp() {
-        jsonFactory = new JsonFactory();
-        client = new GlClient("http://localhost:8080/gl/", jsonFactory);
+        client = createGlClient();
     }
 
     @Test
-    public void testConstructor() {
+    public final void testCreateGlClient() {
         assertNotNull(client);
     }
 
-    @Test(expected=NullPointerException.class)
-    public void testConstructorNullNamespace() {
-        new GlClient(null, jsonFactory);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testConstructorNullJsonFactory() {
-        new GlClient(null, null);
-    }
-
     @Test
-    public void testCreateLocus() {
+    public final void testCreateLocus() {
         Locus locus = client.createLocus("HLA-A");
 
         assertNotNull(locus);
@@ -77,22 +65,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateLocusNullGlstring() {
+    public final void testCreateLocusNullGlstring() {
         client.createLocus((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetLocusNullIdentifier() {
+    public final void testGetLocusNullIdentifier() {
         client.getLocus(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterLocusNullGlstring() {
+    public final void testRegisterLocusNullGlstring() {
         client.registerLocus(null);
     }
 
     @Test
-    public void testCreateAllele() {
+    public final void testCreateAllele() {
         Locus locus = client.createLocus("HLA-A");
         Allele allele = client.createAllele(locus, "HLA-A*01:01:01:01");
 
@@ -104,24 +92,24 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateAlleleNullLocus() {
+    public final void testCreateAlleleNullLocus() {
         client.createAllele(null, "HLA-A*01:01:01:01");
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateAlleleNullGlstring() {
+    public final void testCreateAlleleNullGlstring() {
         Locus locus = client.createLocus("HLA-A");
         client.createAllele(locus, null);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void testCreateAlleleLocusAndGlstringDoNotMatch() {
+    public final void testCreateAlleleLocusAndGlstringDoNotMatch() {
         Locus locus = client.createLocus("HLA-A");
         client.createAllele(locus, "HLA-B*02:07:01");
     }
 
     @Test
-    public void testCreateAlleleGlstring() {
+    public final void testCreateAlleleGlstring() {
         Allele allele = client.createAllele("HLA-A*01:01:01:01");
 
         assertNotNull(allele);
@@ -131,22 +119,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateAlleleGlstringNullGlstring() {
+    public final void testCreateAlleleGlstringNullGlstring() {
         client.createAllele(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetAlleleNullIdentifier() {
+    public final void testGetAlleleNullIdentifier() {
         client.getAllele(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAlleleNullGlstring() {
+    public final void testRegisterAlleleNullGlstring() {
         client.registerAllele(null);
     }
 
     @Test
-    public void testCreateAlleleList() {
+    public final void testCreateAlleleList() {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -163,12 +151,12 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateAlleleListNullAlleles() {
+    public final void testCreateAlleleListNullAlleles() {
         client.createAlleleList((Allele) null);
     }
 
     @Test
-    public void testCreateAlleleListGlstring() {
+    public final void testCreateAlleleListGlstring() {
         AlleleList alleleList = client.createAlleleList("HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
 
         assertNotNull(alleleList);
@@ -180,22 +168,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateAlleleListNullGlstring() {
+    public final void testCreateAlleleListNullGlstring() {
         client.createAlleleList((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetAlleleListNullIdentifier() {
+    public final void testGetAlleleListNullIdentifier() {
         client.getAlleleList(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAlleleListNullGlstring() {
+    public final void testRegisterAlleleListNullGlstring() {
         client.registerAlleleList(null);
     }
 
     @Test
-    public void testCreateHaplotype() {
+    public final void testCreateHaplotype() {
         Locus a = client.createLocus("HLA-A");
         Locus b = client.createLocus("HLA-B");
         Allele a01 = client.createAllele(a, "HLA-A*01:01:01:01");
@@ -215,12 +203,12 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateHaplotypeNullAlleleLists() {
+    public final void testCreateHaplotypeNullAlleleLists() {
         client.createHaplotype((AlleleList) null);
     }
 
     @Test
-    public void testCreateHaplotypeGlstring() {
+    public final void testCreateHaplotypeGlstring() {
         Haplotype haplotype = client.createHaplotype("HLA-A*01:01:01:01~HLA-B*02:07:01");
 
         assertNotNull(haplotype);
@@ -232,22 +220,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateHaplotypeNullGlstring() {
+    public final void testCreateHaplotypeNullGlstring() {
         client.createHaplotype((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetHaplotypeNullIdentifier() {
+    public final void testGetHaplotypeNullIdentifier() {
         client.getHaplotype(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterHaplotypeNullGlstring() {
+    public final void testRegisterHaplotypeNullGlstring() {
         client.registerHaplotype(null);
     }
 
     @Test
-    public void testCreateGenotype() {
+    public final void testCreateGenotype() {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -268,12 +256,12 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateGenotypeNullHaplotypes() {
+    public final void testCreateGenotypeNullHaplotypes() {
         client.createGenotype((Haplotype) null);
     }
 
     @Test
-    public void testCreateGenotypeGlstring() {
+    public final void testCreateGenotypeGlstring() {
         Genotype genotype = client.createGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N");
 
         assertNotNull(genotype);
@@ -285,22 +273,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateGenotypeNullGlstring() {
+    public final void testCreateGenotypeNullGlstring() {
         client.createGenotype((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetGenotypeNullIdentifier() {
+    public final void testGetGenotypeNullIdentifier() {
         client.getGenotype(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterGenotypeNullGlstring() {
+    public final void testRegisterGenotypeNullGlstring() {
         client.registerGenotype(null);
     }
 
     @Test
-    public void testCreateGenotypeList() {
+    public final void testCreateGenotypeList() {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -326,12 +314,12 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateGenotypeListNullGenotypes() {
+    public final void testCreateGenotypeListNullGenotypes() {
         client.createGenotypeList((Genotype) null);
     }
 
     @Test
-    public void testCreateGenotypeListGlstring() {
+    public final void testCreateGenotypeListGlstring() {
         GenotypeList genotypeList = client.createGenotypeList("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*01:01:01:01+HLA-A*02:01:01:01");
 
         assertNotNull(genotypeList);
@@ -343,22 +331,22 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateGenotypeListNullGlstring() {
+    public final void testCreateGenotypeListNullGlstring() {
         client.createGenotypeList((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetGenotypeListNullIdentifier() {
+    public final void testGetGenotypeListNullIdentifier() {
         client.getGenotypeList(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterGenotypeListNullGlstring() {
+    public final void testRegisterGenotypeListNullGlstring() {
         client.registerGenotypeList(null);
     }
 
     @Test
-    public void testCreateMultilocusUnphasedGenotype() {
+    public final void testCreateMultilocusUnphasedGenotype() {
         Locus a = client.createLocus("HLA-A");
         Locus b = client.createLocus("HLA-B");
         Allele a01 = client.createAllele(a, "HLA-A*01:01:01:01");
@@ -390,12 +378,12 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateMultilocusUnphasedGenotypeNullGenotypeLists() {
+    public final void testCreateMultilocusUnphasedGenotypeNullGenotypeLists() {
         client.createMultilocusUnphasedGenotype((GenotypeList) null);
     }
 
     @Test
-    public void testCreateMultilocusUnphasedGenotypeGlstring() {
+    public final void testCreateMultilocusUnphasedGenotypeGlstring() {
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = client.createMultilocusUnphasedGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N^HLA-B*02:07:01+HLA-B*02:07:02");
 
         assertNotNull(multilocusUnphasedGenotype);
@@ -407,17 +395,17 @@ public final class GlClientTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateMultilocusUnphasedGenotypeNullGlstring() {
+    public final void testCreateMultilocusUnphasedGenotypeNullGlstring() {
         client.createMultilocusUnphasedGenotype((String) null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testGetMultilocusUnphasedGenotypeNullIdentifier() {
+    public final void testGetMultilocusUnphasedGenotypeNullIdentifier() {
         client.getMultilocusUnphasedGenotype(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterMultilocusUnphasedGenotypeNullGlstring() {
+    public final void testRegisterMultilocusUnphasedGenotypeNullGlstring() {
         client.registerMultilocusUnphasedGenotype(null);
     }
 }
