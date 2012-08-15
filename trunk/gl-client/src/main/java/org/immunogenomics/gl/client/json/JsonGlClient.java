@@ -24,8 +24,6 @@
 package org.immunogenomics.gl.client.json;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.jayway.restassured.RestAssured.get;
-import static com.jayway.restassured.RestAssured.with;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -36,6 +34,9 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Response;
 
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
@@ -49,12 +50,16 @@ import org.immunogenomics.gl.client.cache.CacheGlClient;
 
 import org.immunogenomics.gl.service.Namespace;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implementation of GlClient that uses the JSON representation and RestAssured as the HTTP client.
  */
 public final class JsonGlClient extends CacheGlClient {
     private final String namespace;
     private final JsonFactory jsonFactory;
+    private final Logger logger = LoggerFactory.getLogger(JsonGlClient.class);
 
 
     /**
@@ -78,18 +83,19 @@ public final class JsonGlClient extends CacheGlClient {
 
         Locus locus = getLocusIfPresent(identifier);
         if (locus != null) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("locus {} retrieved from cache", identifier);
+            }
             return locus;
         }
 
-        // todo:  add logging
-        System.out.println("getLocus\t" + identifier);
         String glstring = null;
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             // todo:  hack to prevent hanging up during unit tests, does jetty throttle by default?
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -104,7 +110,7 @@ public final class JsonGlClient extends CacheGlClient {
             return locus;
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get locus " + identifier, e);
         }
         finally {
             try {
@@ -129,6 +135,9 @@ public final class JsonGlClient extends CacheGlClient {
 
         String identifier = getLocusIdIfPresent(glstring);
         if (identifier != null) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("locus id for glstring {} retrieved from cache", glstring);
+            }
             return identifier;
         }
 
@@ -143,10 +152,12 @@ public final class JsonGlClient extends CacheGlClient {
 
         Allele allele = getAlleleIfPresent(identifier);
         if (allele != null) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("allele {} retrieved from cache", identifier);
+            }
             return allele;
         }
 
-        System.out.println("getAllele\t" + identifier);
         String accession = null;
         String glstring = null;
         Locus locus = null;
@@ -154,7 +165,7 @@ public final class JsonGlClient extends CacheGlClient {
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -176,7 +187,7 @@ public final class JsonGlClient extends CacheGlClient {
             return allele;
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get allele " + identifier, e);
         }
         finally {
             try {
@@ -201,6 +212,9 @@ public final class JsonGlClient extends CacheGlClient {
 
         String identifier = getAlleleIdIfPresent(glstring);
         if (identifier != null) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("allele id for glstring {} retrieved from cache", glstring);
+            }
             return identifier;
         }
 
@@ -213,14 +227,13 @@ public final class JsonGlClient extends CacheGlClient {
     public AlleleList getAlleleList(final String identifier) {
         checkNotNull(identifier);
 
-        System.out.println("getAlleleList\t" + identifier);
         String glstring = null;
         List<Allele> alleles = new ArrayList<Allele>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -245,7 +258,7 @@ public final class JsonGlClient extends CacheGlClient {
             return new AlleleList(identifier, alleles);
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get allele list " + identifier, e);
         }
         finally {
             try {
@@ -273,14 +286,13 @@ public final class JsonGlClient extends CacheGlClient {
     public Haplotype getHaplotype(final String identifier) {
         checkNotNull(identifier);
 
-        System.out.println("getHaplotype\t" + identifier);
         String glstring = null;
         List<AlleleList> alleleLists = new ArrayList<AlleleList>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -305,7 +317,7 @@ public final class JsonGlClient extends CacheGlClient {
             return new Haplotype(identifier, alleleLists);
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get haplotype " + identifier, e);
         }
         finally {
             try {
@@ -333,14 +345,13 @@ public final class JsonGlClient extends CacheGlClient {
     public Genotype getGenotype(final String identifier) {
         checkNotNull(identifier);
 
-        System.out.println("getGenotype\t" + identifier);
         String glstring = null;
         List<Haplotype> haplotypes = new ArrayList<Haplotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -365,7 +376,7 @@ public final class JsonGlClient extends CacheGlClient {
             return new Genotype(identifier, haplotypes);
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get genotype " + identifier, e);
         }
         finally {
             try {
@@ -393,14 +404,13 @@ public final class JsonGlClient extends CacheGlClient {
     public GenotypeList getGenotypeList(final String identifier) {
         checkNotNull(identifier);
 
-        System.out.println("getGenotypeList\t" + identifier);
         String glstring = null;
         List<Genotype> genotypes = new ArrayList<Genotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -425,7 +435,7 @@ public final class JsonGlClient extends CacheGlClient {
             return new GenotypeList(identifier, genotypes);
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get genotype list " + identifier, e);
         }
         finally {
             try {
@@ -453,14 +463,13 @@ public final class JsonGlClient extends CacheGlClient {
     public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
         checkNotNull(identifier);
 
-        System.out.println("getMultilocusUnphasedGenotype\t" + identifier);
         String glstring = null;
         List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
             pause();
-            inputStream = get(identifier + ".json").body().asInputStream();
+            inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -485,7 +494,7 @@ public final class JsonGlClient extends CacheGlClient {
             return new MultilocusUnphasedGenotype(identifier, genotypeLists);
         }
         catch (IOException e) {
-            // log e, might also want to catch IAE
+            logger.warn("could not get multilocus unphased genotype " + identifier, e);
         }
         finally {
             try {
@@ -520,8 +529,27 @@ public final class JsonGlClient extends CacheGlClient {
 
     private String register(final String type, final String glstring) {
         checkNotNull(glstring);
-        System.out.println("posting " + glstring + " to URL " + namespace + type);
         pause();
-        return with().body(glstring).contentType("text/plain").post(namespace + type).getHeader("Location");
+        return post(namespace + type, glstring);
+    }
+
+    private InputStream get(final String url) {
+        long start = System.nanoTime();
+        Response response = RestAssured.get(url);
+        long elapsed = System.nanoTime() - start;
+        if (logger.isTraceEnabled()) {
+            logger.trace("HTTP GET {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
+        }
+        return response.body().asInputStream();
+    }
+
+    private String post(final String url, final String body) {
+        long start = System.nanoTime();
+        Response response = RestAssured.with().body(body).contentType("text/plain").post(url);
+        long elapsed = System.nanoTime() - start;
+        if (logger.isTraceEnabled()) {
+            logger.trace("HTTP POST {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
+        }
+        return response.getHeader("Location");
     }
 }
