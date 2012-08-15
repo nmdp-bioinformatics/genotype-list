@@ -25,7 +25,7 @@ package org.immunogenomics.gl.client.json;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.immunogenomics.gl.client.AbstractGlClientTest;
@@ -35,17 +35,18 @@ import org.immunogenomics.gl.client.GlClient;
  * Unit test for JsonGlClient.
  */
 public final class JsonGlClientTest extends AbstractGlClientTest {
-    private JsonFactory jsonFactory;
+    private static JsonFactory jsonFactory;
+    private static JsonGlClient jsonClient;
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void staticSetUp() {
         jsonFactory = new JsonFactory();
-        super.setUp();
+        jsonClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory);
     }
 
     @Override
     protected GlClient createGlClient() {
-        return new JsonGlClient("http://localhost:8080/gl/", jsonFactory);
+        return jsonClient;
     }
 
     @Test(expected=NullPointerException.class)

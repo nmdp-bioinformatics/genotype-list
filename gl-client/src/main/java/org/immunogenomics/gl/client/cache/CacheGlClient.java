@@ -29,21 +29,14 @@ import static com.google.common.cache.CacheBuilder.newBuilder;
 import com.google.common.cache.Cache;
 
 import org.immunogenomics.gl.Allele;
-import org.immunogenomics.gl.AlleleList;
-import org.immunogenomics.gl.Haplotype;
-import org.immunogenomics.gl.Genotype;
-import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Locus;
-import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 import org.immunogenomics.gl.client.AbstractGlClient;
-import org.immunogenomics.gl.client.GlClient;
 
 /**
- * Decorator that provides caching of loci and alleles to a gl client.
+ * Abstract gl client that provides caching of loci and alleles.
  */
-public final class CacheGlClient extends AbstractGlClient {
-    private GlClient client;
+public abstract class CacheGlClient extends AbstractGlClient {
     // todo:  inject these
     private Cache<String, Locus> loci;
     private Cache<String, String> locusIds;
@@ -52,22 +45,54 @@ public final class CacheGlClient extends AbstractGlClient {
 
 
     //@Inject
-    public CacheGlClient(final GlClient client) {
-        checkNotNull(client);
-        this.client = client;
-
-        loci = newBuilder().initialCapacity(1000).maximumSize(1000).build();
-        locusIds = newBuilder().initialCapacity(1000).maximumSize(1000).build();
-        alleles = newBuilder().initialCapacity(10000).maximumSize(10000).build();
-        alleleIds = newBuilder().initialCapacity(10000).maximumSize(10000).build();
+    protected CacheGlClient() {
+        loci = newBuilder().initialCapacity(1000).build();
+        locusIds = newBuilder().initialCapacity(1000).build();
+        alleles = newBuilder().initialCapacity(10000).build();
+        alleleIds = newBuilder().initialCapacity(10000).build();
     }
 
 
+    protected final void putLocus(final String identifier, final Locus locus) {
+        loci.put(identifier, locus);
+    }
+
+    protected final void putLocusId(final String glstring, final String identifier) {
+        locusIds.put(glstring, identifier);
+    }
+
+    protected final Locus getLocusIfPresent(final String identifier) {
+        return loci.getIfPresent(identifier);
+    }
+
+    protected final String getLocusIdIfPresent(final String glstring) {
+        return locusIds.getIfPresent(glstring);
+    }
+
+    protected final void putAllele(final String identifier, final Allele allele) {
+        alleles.put(identifier, allele);
+    }
+
+    protected final void putAlleleId(final String glstring, final String identifier) {
+        alleleIds.put(glstring, identifier);
+    }
+
+    protected final Allele getAlleleIfPresent(final String identifier) {
+        return alleles.getIfPresent(identifier);
+    }
+
+    protected final String getAlleleIdIfPresent(final String glstring) {
+        return alleleIds.getIfPresent(glstring);
+    }
+
+    /*
     @Override
     public Locus getLocus(final String identifier) {
         checkNotNull(identifier);
+        System.out.println("what?");
         Locus locus = loci.getIfPresent(identifier);
         if (locus != null) {
+            System.out.println("getLocus from cache");
             return locus;
         }
         locus = client.getLocus(identifier);
@@ -80,6 +105,7 @@ public final class CacheGlClient extends AbstractGlClient {
         checkNotNull(glstring);
         String identifier = locusIds.getIfPresent(glstring);
         if (identifier != null) {
+            System.out.println("registerLocus from cache");
             return identifier;
         }
         identifier = client.registerLocus(glstring);
@@ -92,6 +118,7 @@ public final class CacheGlClient extends AbstractGlClient {
         checkNotNull(identifier);
         Allele allele = alleles.getIfPresent(identifier);
         if (allele != null) {
+            System.out.println("getAllele from cache");
             return allele;
         }
         allele = client.getAllele(identifier);
@@ -104,60 +131,12 @@ public final class CacheGlClient extends AbstractGlClient {
         checkNotNull(glstring);
         String identifier = alleleIds.getIfPresent(glstring);
         if (identifier != null) {
+            System.out.println("registerAllele from cache");
             return identifier;
         }
         identifier = client.registerAllele(glstring);
         alleleIds.put(glstring, identifier);
         return identifier;
     }
-
-    @Override
-    public AlleleList getAlleleList(final String identifier) {
-        return client.getAlleleList(identifier);
-    }
-
-    @Override
-    public String registerAlleleList(final String glstring) {
-        return client.registerAlleleList(glstring);
-    }
-
-    @Override
-    public Haplotype getHaplotype(final String identifier) {
-        return client.getHaplotype(identifier);
-    }
-
-    @Override
-    public String registerHaplotype(final String glstring) {
-        return client.registerHaplotype(glstring);
-    }
-
-    @Override
-    public Genotype getGenotype(final String identifier) {
-        return client.getGenotype(identifier);
-    }
-   
-    @Override
-    public String registerGenotype(final String glstring) {
-        return client.registerGenotype(glstring);
-    }
-
-    @Override
-    public GenotypeList getGenotypeList(final String identifier) {
-        return client.getGenotypeList(identifier);
-    }
-
-    @Override
-    public String registerGenotypeList(final String glstring) {
-        return client.registerGenotypeList(glstring);
-    }
-
-    @Override
-    public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
-        return client.getMultilocusUnphasedGenotype(identifier);
-    }
-
-    @Override
-    public String registerMultilocusUnphasedGenotype(final String glstring) {
-        return client.registerMultilocusUnphasedGenotype(glstring);
-    }
+    */
 }

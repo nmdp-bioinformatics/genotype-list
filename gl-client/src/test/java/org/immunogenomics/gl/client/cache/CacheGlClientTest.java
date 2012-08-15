@@ -23,35 +23,108 @@
 */
 package org.immunogenomics.gl.client.cache;
 
-import com.fasterxml.jackson.core.JsonFactory;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import org.immunogenomics.gl.client.AbstractGlClientTest;
-import org.immunogenomics.gl.client.GlClient;
-
-import org.immunogenomics.gl.client.json.JsonGlClient;
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.AlleleList;
+import org.immunogenomics.gl.Haplotype;
+import org.immunogenomics.gl.Genotype;
+import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 /**
  * Unit test for CacheGlClient.
  */
-public final class CacheGlClientTest extends AbstractGlClientTest {
-    private JsonFactory jsonFactory;
+public final class CacheGlClientTest {
+    private MockCacheGlClient client;
 
     @Before
     public void setUp() {
-        jsonFactory = new JsonFactory();
-        super.setUp();
+        client = new MockCacheGlClient();
     }
 
-    @Override
-    protected GlClient createGlClient() {
-        return new CacheGlClient(new JsonGlClient("http://localhost:8080/gl/", jsonFactory));
+    @Test
+    public void testConstructor() {
+        assertNotNull(client);
     }
 
-    @Test(expected=NullPointerException.class)
-    public void testConstructorNullClient() {
-        new CacheGlClient(null);
+    /**
+     * Mock cache gl client.
+     */
+    private class MockCacheGlClient extends CacheGlClient {
+
+        @Override
+        public Locus getLocus(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerLocus(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public Allele getAllele(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerAllele(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public AlleleList getAlleleList(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerAlleleList(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public Haplotype getHaplotype(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerHaplotype(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public Genotype getGenotype(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerGenotype(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public GenotypeList getGenotypeList(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerGenotypeList(final String glstring) {
+            return null;
+        }
+
+        @Override
+        public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
+            return null;
+        }
+
+        @Override
+        public String registerMultilocusUnphasedGenotype(final String glstring) {
+            return null;
+        }
     }
 }
