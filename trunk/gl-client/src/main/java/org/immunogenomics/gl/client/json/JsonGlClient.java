@@ -94,6 +94,7 @@ public final class JsonGlClient extends CacheGlClient {
         JsonParser parser = null;
         try {
             // todo:  hack to prevent hanging up during unit tests, does jetty throttle by default?
+            //    only seems to happen on OSX Lion with Oracle JDK 1.7 and jetty as installed by homebrew
             pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
@@ -519,12 +520,14 @@ public final class JsonGlClient extends CacheGlClient {
     }
 
     private void pause() {
+        /*
         try {
             Thread.sleep(100L);
         }
         catch (Exception e) {
             // ignore
         }
+        */
     }
 
     private String register(final String type, final String glstring) {
