@@ -45,14 +45,14 @@ import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
-import org.immunogenomics.gl.client.AbstractGlClient;
+import org.immunogenomics.gl.client.cache.CacheGlClient;
 
 import org.immunogenomics.gl.service.Namespace;
 
 /**
  * Implementation of GlClient that uses the JSON representation and RestAssured as the HTTP client.
  */
-public final class JsonGlClient extends AbstractGlClient {
+public final class JsonGlClient extends CacheGlClient {
     private final String namespace;
     private final JsonFactory jsonFactory;
 
@@ -76,6 +76,11 @@ public final class JsonGlClient extends AbstractGlClient {
     public Locus getLocus(final String identifier) {
         checkNotNull(identifier);
 
+        Locus locus = getLocusIfPresent(identifier);
+        if (locus != null) {
+            return locus;
+        }
+
         // todo:  add logging
         System.out.println("getLocus\t" + identifier);
         String glstring = null;
@@ -94,7 +99,9 @@ public final class JsonGlClient extends AbstractGlClient {
                     glstring = parser.getText();
                 }
             }
-            return new Locus(identifier, glstring);
+            locus = new Locus(identifier, glstring);
+            putLocus(identifier, locus);
+            return locus;
         }
         catch (IOException e) {
             // log e, might also want to catch IAE
@@ -118,12 +125,26 @@ public final class JsonGlClient extends AbstractGlClient {
 
     @Override
     public String registerLocus(final String glstring) {
-        return register("locus", glstring);
+        checkNotNull(glstring);
+
+        String identifier = getLocusIdIfPresent(glstring);
+        if (identifier != null) {
+            return identifier;
+        }
+
+        identifier = register("locus", glstring);
+        putLocusId(glstring, identifier);
+        return identifier;
     }
 
     @Override
     public Allele getAllele(final String identifier) {
         checkNotNull(identifier);
+
+        Allele allele = getAlleleIfPresent(identifier);
+        if (allele != null) {
+            return allele;
+        }
 
         System.out.println("getAllele\t" + identifier);
         String accession = null;
@@ -150,7 +171,9 @@ public final class JsonGlClient extends AbstractGlClient {
                     locus = getLocus(locusId);
                 }
             }
-            return new Allele(identifier, accession, glstring, locus);
+            allele = new Allele(identifier, accession, glstring, locus);
+            putAllele(identifier, allele);
+            return allele;
         }
         catch (IOException e) {
             // log e, might also want to catch IAE
@@ -174,7 +197,16 @@ public final class JsonGlClient extends AbstractGlClient {
 
     @Override
     public String registerAllele(final String glstring) {
-        return register("allele", glstring);
+        checkNotNull(glstring);
+
+        String identifier = getAlleleIdIfPresent(glstring);
+        if (identifier != null) {
+            return identifier;
+        }
+
+        identifier = register("allele", glstring);
+        putAlleleId(glstring, identifier);
+        return identifier;
     }
 
     @Override
