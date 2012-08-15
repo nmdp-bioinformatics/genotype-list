@@ -23,6 +23,6 @@
 */
 
 /**
- * ...
+ * Caching support for gl client implementations.
  */
 package org.immunogenomics.gl.client.cache;
