@@ -23,6 +23,8 @@
 */
 package org.immunogenomics.gl.client;
 
+import com.google.common.base.CharMatcher;
+
 /**
  * Fluent builder-style client API for creating GL String-formatted representations of gl resources.
  */
@@ -30,6 +32,7 @@ public final class GlstringBuilder {
     // todo:  replace this hack with antlr grammar
     private String locus;
     private Tree tree = new Tree();
+    private static final CharMatcher operators = CharMatcher.anyOf("/~+|^");
 
 
     /**
@@ -42,6 +45,9 @@ public final class GlstringBuilder {
     public GlstringBuilder locus(final String glstring) {
         if (tree.isEmpty()) {
             locus = glstring;
+        }
+        if (tree.root.isOperator()) {
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
         }
         else {
             Node root = new Node();
@@ -67,6 +73,9 @@ public final class GlstringBuilder {
             tree.root = node;
         }
         else {
+            if (!tree.root.isOperator()) {
+                throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
+            }
             if (tree.root.left == null) {
                 tree.root.left = node;
             }
@@ -74,6 +83,7 @@ public final class GlstringBuilder {
                 tree.root.right = node;
             }
             else {
+                // todo:  is this ever reached?
                 throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
             }
         }
@@ -88,6 +98,9 @@ public final class GlstringBuilder {
     public GlstringBuilder allelicAmbiguity() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+        }
+        if (tree.root.isOperator()) {
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "/";
@@ -105,6 +118,9 @@ public final class GlstringBuilder {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
         }
+        if (tree.root.isOperator()) {
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+        }
         Node root = new Node();
         root.value = "~";
         root.left = tree.root;
@@ -121,6 +137,9 @@ public final class GlstringBuilder {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
         }
+        if (tree.root.isOperator()) {
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+        }
         Node root = new Node();
         root.value = "+";
         root.left = tree.root;
@@ -136,6 +155,9 @@ public final class GlstringBuilder {
     public GlstringBuilder genotypicAmbiguity() {
         if (tree.isEmpty()) {
             throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+        }
+        if (tree.root.isOperator()) {
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "|";
@@ -163,7 +185,15 @@ public final class GlstringBuilder {
         if (locus == null && tree.isEmpty()) {
             throw new IllegalStateException("must call locus(String) or allele(String) at least once");
         }
-        return tree.isEmpty() ? locus : tree.toString();
+        if (tree.isEmpty()) {
+            return locus;
+        }
+        String glstring = tree.toString();
+        char last = glstring.charAt(glstring.length() - 1);
+        if (operators.matches(last)) {
+            throw new IllegalStateException("last element of a glstring must not be an operator, was " + last);
+        }
+        return glstring;
     }
 
     private final class Tree {
@@ -194,7 +224,6 @@ public final class GlstringBuilder {
 
             StringBuilder sb = new StringBuilder();
             dfs(root, sb);
-            // todo:  trim last character if ends with operator
             return sb.toString();
         }
     }
@@ -206,6 +235,10 @@ public final class GlstringBuilder {
 
         boolean isLeaf() {
           return left == null && right == null;
+        }
+
+        boolean isOperator() {
+            return operators.matchesAnyOf(value);
         }
     }
 }

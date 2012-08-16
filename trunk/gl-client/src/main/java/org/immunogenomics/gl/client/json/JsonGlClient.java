@@ -93,9 +93,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            // todo:  hack to prevent hanging up during unit tests, does jetty throttle by default?
-            //    only seems to happen on OSX Lion with Oracle JDK 1.7 and jetty as installed by homebrew
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -165,7 +162,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -233,7 +229,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -292,7 +287,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -351,7 +345,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -410,7 +403,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -469,7 +461,6 @@ public final class JsonGlClient extends CacheGlClient {
         InputStream inputStream = null;
         JsonParser parser = null;
         try {
-            pause();
             inputStream = get(identifier + ".json");
             parser = jsonFactory.createJsonParser(inputStream);
             parser.nextToken();
@@ -519,20 +510,8 @@ public final class JsonGlClient extends CacheGlClient {
         return register("multilocus-unphased-genotype", glstring);
     }
 
-    private void pause() {
-        /*
-        try {
-            Thread.sleep(100L);
-        }
-        catch (Exception e) {
-            // ignore
-        }
-        */
-    }
-
     private String register(final String type, final String glstring) {
         checkNotNull(glstring);
-        pause();
         return post(namespace + type, glstring);
     }
 
@@ -543,6 +522,7 @@ public final class JsonGlClient extends CacheGlClient {
         if (logger.isTraceEnabled()) {
             logger.trace("HTTP GET {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
         }
+        // todo:  check status code
         return response.body().asInputStream();
     }
 
@@ -553,6 +533,7 @@ public final class JsonGlClient extends CacheGlClient {
         if (logger.isTraceEnabled()) {
             logger.trace("HTTP POST {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
         }
+        // todo:  check status code
         return response.getHeader("Location");
     }
 }
