@@ -8,7 +8,7 @@ Add reference to the GL String publication soon.
 
 = Details =
 
-GLString Delimiters and Precedence
+GL String Delimiters and Precedence
 
 || *Order* || *Delimiter* || *Description* || *GLString Example* ||
 || 1 || {{{^}}} || Gene/Locus || {{{HLA-A*02:69+HLA-A*23:30|HLA-A*02:302+HLA-A*23:26/HLA-A*23:39^HLA-B*44:02:13+HLA-B*49:08}}} ||
@@ -16,3 +16,7 @@ GLString Delimiters and Precedence
 || 3 || {{{+}}} || Genotype || {{{HLA-A*02:302+HLA-A*23:26/HLA-A*23:39}}}||
 || 4 || {{{~}}} || Haplotype || {{{HLA-A*23:26~HLA-B*44:02:13}}} ||
 || 5 || {{{/}}} || Alleles || {{{HLA-A*23:26/HLA-A*23:39}}} ||
+
+Although the GL String was built with HLA in mind, the GL String can be used for *additional types of genotypic information*. 
+
+In these cases, the delimiters *maintain the same precedence*, but the description may be shifted around slightly to accommodate varying formats.
