@@ -100,6 +100,18 @@ public final class GlstringBuilderTest {
         assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01/HLA-B*02:07:02", haplotype);
     }
 
+    @Test
+    public void testBuildSimpleHaplotype() {
+        String haplotype = builder.allele("HLA-A*01:01:01:01").inPhase().allele("HLA-B*02:07:01").build();
+        assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01", haplotype);
+    }
+
+    @Test
+    public void testBuildThreeTermHaplotype() {
+        String haplotype = builder.allele("HLA-A*01:01:01:01").inPhase().allele("HLA-B*02:07:01").inPhase().allele("HLA-C*01:01:01:01").build();
+        assertEquals("HLA-A*01:01:01:01~HLA-B*02:07:01~HLA-C*01:01:01:01", haplotype);
+    }
+
     @Test(expected=IllegalStateException.class)
     public void testInPhase() {
         builder.inPhase();
