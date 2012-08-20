@@ -68,6 +68,8 @@
 <!--
     <module>gl-service-webroot</module>
 -->
+    <module>gl-client</module>
+    <module>gl-client-functional-tests</module>
   </modules>
 
   <build>
