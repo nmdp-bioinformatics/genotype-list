@@ -23,7 +23,6 @@
 */
 package org.immunogenomics.gl.client;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
@@ -35,7 +34,6 @@ import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Genotype;
 import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Locus;
-import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 /**
  * Abstract unit test for implementations of GlClient.

@@ -23,7 +23,6 @@
 */
 package org.immunogenomics.gl.client.cache;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.cache.CacheBuilder.newBuilder;
 
 import com.google.common.cache.Cache;

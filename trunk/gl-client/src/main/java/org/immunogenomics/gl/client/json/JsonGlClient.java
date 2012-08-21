@@ -224,7 +224,6 @@ public final class JsonGlClient extends CacheGlClient {
     public AlleleList getAlleleList(final String identifier) {
         checkNotNull(identifier);
 
-        String glstring = null;
         List<Allele> alleles = new ArrayList<Allele>();
         InputStream inputStream = null;
         JsonParser parser = null;
@@ -235,10 +234,7 @@ public final class JsonGlClient extends CacheGlClient {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("alleles".equals(field)) {
+                if ("alleles".equals(field)) {
                     while (parser.nextToken() != JsonToken.END_ARRAY) {
                         while (parser.nextToken() != JsonToken.END_OBJECT) {
                             String alleleField = parser.getCurrentName();
@@ -282,7 +278,6 @@ public final class JsonGlClient extends CacheGlClient {
     public Haplotype getHaplotype(final String identifier) {
         checkNotNull(identifier);
 
-        String glstring = null;
         List<AlleleList> alleleLists = new ArrayList<AlleleList>();
         InputStream inputStream = null;
         JsonParser parser = null;
@@ -293,10 +288,7 @@ public final class JsonGlClient extends CacheGlClient {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("alleleLists".equals(field)) {
+                if ("alleleLists".equals(field)) {
                     while (parser.nextToken() != JsonToken.END_ARRAY) {
                         while (parser.nextToken() != JsonToken.END_OBJECT) {
                             String alleleListField = parser.getCurrentName();
@@ -340,7 +332,6 @@ public final class JsonGlClient extends CacheGlClient {
     public Genotype getGenotype(final String identifier) {
         checkNotNull(identifier);
 
-        String glstring = null;
         List<Haplotype> haplotypes = new ArrayList<Haplotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
@@ -351,10 +342,7 @@ public final class JsonGlClient extends CacheGlClient {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("haplotypes".equals(field)) {
+                if ("haplotypes".equals(field)) {
                     while (parser.nextToken() != JsonToken.END_ARRAY) {
                         while (parser.nextToken() != JsonToken.END_OBJECT) {
                             String haplotypeField = parser.getCurrentName();
@@ -398,7 +386,6 @@ public final class JsonGlClient extends CacheGlClient {
     public GenotypeList getGenotypeList(final String identifier) {
         checkNotNull(identifier);
 
-        String glstring = null;
         List<Genotype> genotypes = new ArrayList<Genotype>();
         InputStream inputStream = null;
         JsonParser parser = null;
@@ -409,10 +396,7 @@ public final class JsonGlClient extends CacheGlClient {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("genotypes".equals(field)) {
+                if ("genotypes".equals(field)) {
                     while (parser.nextToken() != JsonToken.END_ARRAY) {
                         while (parser.nextToken() != JsonToken.END_OBJECT) {
                             String genotypeField = parser.getCurrentName();
@@ -456,7 +440,6 @@ public final class JsonGlClient extends CacheGlClient {
     public MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier) {
         checkNotNull(identifier);
 
-        String glstring = null;
         List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
         InputStream inputStream = null;
         JsonParser parser = null;
@@ -467,10 +450,7 @@ public final class JsonGlClient extends CacheGlClient {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
                 String field = parser.getCurrentName();
                 parser.nextToken();
-                if ("glstring".equals(field)) {
-                    glstring = parser.getText();
-                }
-                else if ("genotypeLists".equals(field)) {
+                if ("genotypeLists".equals(field)) {
                     while (parser.nextToken() != JsonToken.END_ARRAY) {
                         while (parser.nextToken() != JsonToken.END_OBJECT) {
                             String genotypeListField = parser.getCurrentName();
