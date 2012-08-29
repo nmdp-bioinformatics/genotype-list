@@ -173,21 +173,21 @@ public final class GlResourceBuilderTest {
 
     @Test
     public void testBuildGenotype() {
-        Genotype genotype = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").buildGenotype();
+        Genotype genotype = builder.allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").buildGenotype();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotype.getGlstring());
     }
 
     @Test
     public void testBuildGenotypeList() {
-        GenotypeList genotypeList = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02").buildGenotypeList();
+        GenotypeList genotypeList = builder.allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").plus().allele("HLA-A*02:01:01:02").buildGenotypeList();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02", genotypeList.getGlstring());
     }
 
     @Test
     public void testBuildMultilocusUnphasedGenotype() {
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = builder
-            .locus("HLA-A").allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02")
-            .locus("HLA-B").allele("HLA-B*02:07:01").xxx().allele("HLA-B*02:07:02")
+            .locus("HLA-A").allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").plus().allele("HLA-A*02:01:01:02")
+            .locus("HLA-B").allele("HLA-B*02:07:01").plus().allele("HLA-B*02:07:02")
             .buildMultilocusUnphasedGenotype();
 
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02^HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype.getGlstring());

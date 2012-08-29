@@ -134,38 +134,38 @@ public final class GlstringBuilderTest {
 
     @Test
     public void testBuildGenotype() {
-        String genotype = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").build();
+        String genotype = builder.allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").build();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N", genotype);
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testXxx() {
-        builder.xxx();
+    public void testPlus() {
+        builder.plus();
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testBuildDanglingXxx() {
-        builder.allele("HLA-A*01:01:01:01").xxx().build();
+    public void testBuildDanglingPlus() {
+        builder.allele("HLA-A*01:01:01:01").plus().build();
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testXxxTwice() {
-        builder.allele("HLA-A*01:01:01:01").xxx().xxx();
+    public void testPlusTwice() {
+        builder.allele("HLA-A*01:01:01:01").plus().plus();
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testAllelicAmbiguityXxx() {
-        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().xxx();
+    public void testAllelicAmbiguityPlus() {
+        builder.allele("HLA-A*01:01:01:01").allelicAmbiguity().plus();
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testInPhaseXxx() {
-        builder.allele("HLA-A*01:01:01:01").inPhase().xxx();
+    public void testInPhasePlus() {
+        builder.allele("HLA-A*01:01:01:01").inPhase().plus();
     }
 
     @Test
     public void testBuildGenotypeList() {
-        String genotypeList = builder.allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02").build();
+        String genotypeList = builder.allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").plus().allele("HLA-A*02:01:01:02").build();
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02", genotypeList);
     }
 
@@ -195,15 +195,15 @@ public final class GlstringBuilderTest {
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testXxxGenotypicAmbiguity() {
-        builder.allele("HLA-A*01:01:01:01").xxx().genotypicAmbiguity();
+    public void testPlusGenotypicAmbiguity() {
+        builder.allele("HLA-A*01:01:01:01").plus().genotypicAmbiguity();
     }
 
     @Test
     public void testBuildMultilocusUnphasedGenotype() {
         String multilocusUnphasedGenotype = builder
-            .locus("HLA-A").allele("HLA-A*01:01:01:01").xxx().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").xxx().allele("HLA-A*02:01:01:02")
-            .locus("HLA-B").allele("HLA-B*02:07:01").xxx().allele("HLA-B*02:07:02")
+            .locus("HLA-A").allele("HLA-A*01:01:01:01").plus().allele("HLA-A*01:01:01:02N").genotypicAmbiguity().allele("HLA-A*02:01:01:01").plus().allele("HLA-A*02:01:01:02")
+            .locus("HLA-B").allele("HLA-B*02:07:01").plus().allele("HLA-B*02:07:02")
             .build();
 
         assertEquals("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*02:01:01:01+HLA-A*02:01:01:02^HLA-B*02:07:01+HLA-B*02:07:02", multilocusUnphasedGenotype);
@@ -230,8 +230,8 @@ public final class GlstringBuilderTest {
     }
 
     @Test(expected=IllegalStateException.class)
-    public void testXxxLocus() {
-        builder.allele("HLA-A*01:01:01:01").xxx().locus("HLA-C");
+    public void testPlusLocus() {
+        builder.allele("HLA-A*01:01:01:01").plus().locus("HLA-C");
     }
 
     @Test(expected=IllegalStateException.class)
