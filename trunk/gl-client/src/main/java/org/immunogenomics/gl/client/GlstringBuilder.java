@@ -37,14 +37,15 @@ public final class GlstringBuilder {
 
     /**
      * Return this GL String builder configured with the specified locus.  If an allele has already been added
-     * to this builder, this call provides the locus operator ('<code>^</code>' character).
+     * to this builder, this call provides the locus operator ('<code>^</code>' character).  The locus
+     * operator combines two or more genotype lists into a multilocus unphased genotype.
      * 
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @param glstring locus in GL String format, must not be null
      * @return this GL String builder configured with the specified locus
      * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
-     *    {@link #inPhase()}, {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
+     *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
     public GlstringBuilder locus(final String glstring) {
@@ -52,7 +53,7 @@ public final class GlstringBuilder {
             locus = glstring;
         }
         else if (tree.root.isOperator() && tree.root.right == null) {
-            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }        
         else {
             Node root = new Node();
@@ -66,12 +67,12 @@ public final class GlstringBuilder {
     /**
      * Return this GL String builder configured with the specified allele.  Calls to this method must
      * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
-     * {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
+     * {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
      *
      * @param glstring allele in GL String format, must not be null
      * @return this GL String builder configured with the specified allele
      * @throws IllegalStateException if successive calls to this method are made without an interspersed
-     *    call to an operator method ({@link #allicAmbiguity()}, {@link #inPhase()}, {@link #xxx()},
+     *    call to an operator method ({@link #allicAmbiguity()}, {@link #inPhase()}, {@link #plus()},
      *    {@link #genotypicAmbiguity()}, and {@link #locus(String)})
      */
     public GlstringBuilder allele(final String glstring) {
@@ -82,7 +83,7 @@ public final class GlstringBuilder {
         }
         else {
             if (!tree.root.isOperator()) {
-                throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
+                throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
             }
             if (tree.root.left == null) {
                 tree.root.left = node;
@@ -92,7 +93,7 @@ public final class GlstringBuilder {
             }
             else {
                 // todo:  is this ever reached?
-                throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
+                throw new IllegalStateException("must provide an operator(allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus) between successive calls to allele(glstring)");
             }
         }
         return this;
@@ -100,20 +101,21 @@ public final class GlstringBuilder {
 
     /**
      * Return this GL String builder configured with an allelic ambiguity operator ('<code>/</code>' character).
+     * The allelic ambiguity operator combines two or more alleles into an allele list.
      *
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @return this GL String builder configured with an allelic ambiguity operator ('<code>/</code>' character)
      * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
-     *    {@link #inPhase()}, {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
+     *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
     public GlstringBuilder allelicAmbiguity() {
         if (tree.isEmpty()) {
-            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         if (tree.root.isOperator() && tree.root.right == null) {
-            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "/";
@@ -124,21 +126,21 @@ public final class GlstringBuilder {
 
     /**
      * Return this GL String builder configured with an in phase operator ('<code>~</code>' character).
-     * As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.
+     * The in phase operator combines two or more allele lists into a haplotype.
      *
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @return this GL String builder configured with an in phase operator ('<code>~</code>' character)
      * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
-     *    {@link #inPhase()}, {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
+     *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
     public GlstringBuilder inPhase() {
         if (tree.isEmpty()) {
-            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         if (tree.root.isOperator() && tree.root.right == null) {
-            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "~";
@@ -148,22 +150,23 @@ public final class GlstringBuilder {
     }
 
     /**
-     * Return this GL String builder configured with an xxx operator ('<code>+</code>' character).
+     * Return this GL String builder configured with an plus operator ('<code>+</code>' character).  The
+     * plus operator combines two or more haplotypes into a genotype.
      *
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
-     * @return this GL String builder configured with an xxx operator ('<code>+</code>' character)
+     * @return this GL String builder configured with an plus operator ('<code>+</code>' character)
      * @throws IllegalStateException if this operator method is called before a call to {@link #allele(String)}
      * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
-     *    {@link #inPhase()}, {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
+     *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
-    public GlstringBuilder xxx() {
+    public GlstringBuilder plus() {
         if (tree.isEmpty()) {
-            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         if (tree.root.isOperator() && tree.root.right == null) {
-            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "+";
@@ -174,21 +177,22 @@ public final class GlstringBuilder {
 
     /**
      * Return this GL String builder configured with a genotypic ambiguity operator ('<code>|</code>' character).
+     * The genotypic ambiguity operator combines two or more genotypes into a genotype list.
      *
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @return this GL String builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
      * @throws IllegalStateException if this operator method is called before a call to {@link #allele(String)}
      * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
-     *    {@link #inPhase()}, {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
+     *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
     public GlstringBuilder genotypicAmbiguity() {
         if (tree.isEmpty()) {
-            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) before any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         if (tree.root.isOperator() && tree.root.right == null) {
-            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, xxx, genotypicAmbiguity, locus)");
+            throw new IllegalStateException("must call allele(String) between successive calls to any operator (allelicAmbiguity, inPhase, plus, genotypicAmbiguity, locus)");
         }
         Node root = new Node();
         root.value = "|";
@@ -213,7 +217,7 @@ public final class GlstringBuilder {
      * @return a new GL String configured from the properties of this GL String builder
      * @throws IllegalStateException if {@link #locus(String)} or {@link #allele(String)} has not been called at least once
      * @throws IllegalStateException if the last call was an operator ({@link #allicAmbiguity()}, {@link #inPhase()},
-     *    {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)})
+     *    {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)})
      */
     public String build() {
         if (locus == null && tree.isEmpty()) {

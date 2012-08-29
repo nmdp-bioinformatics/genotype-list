@@ -68,6 +68,7 @@ public final class GlResourceBuilder {
     /**
      * Return this gl resource builder configured with the specified locus.  If an allele has
      * already been added to this builder, this call provides the locus operator ('<code>^</code>' character).
+     * The locus operator combines two or more genotype lists into a multilocus unphased genotype.
      *
      * @param glstring locus in GL String format, must not be null
      * @return this gl resource builder configured with the specified locus
@@ -85,7 +86,7 @@ public final class GlResourceBuilder {
     /**
      * Return this gl resource builder configured with the specified allele. Calls to this method must
      * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
-     * {@link #xxx()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
+     * {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
      *
      * @param glstring allele in GL String format, must not be null
      * @return this gl resource builder configured with the specified allele
@@ -98,6 +99,7 @@ public final class GlResourceBuilder {
 
     /**
      * Return this gl resource builder configured with an allelic ambiguity operator ('<code>/</code>' character).
+     * The allelic ambiguity operator combines two or more alleles into an allele list.
      *
      * @return this gl resource builder configured with an allelic ambiguity operator ('<code>/</code>' character)
      */
@@ -109,6 +111,7 @@ public final class GlResourceBuilder {
 
     /**
      * Return this gl resource builder configured with an in phase operator ('<code>~</code>' character).
+     * The in phase operator combines two or more allele lists into a haplotype.
      *
      * @return this gl resource builder configured with an in phase operator ('<code>~</code>' character)
      */
@@ -120,11 +123,12 @@ public final class GlResourceBuilder {
     }
 
     /**
-     * Return this gl resource builder configured with an xxx operator ('<code>+</code>' character).
+     * Return this gl resource builder configured with an plus operator ('<code>+</code>' character).  The
+     * plus operator combines two ore more haplotypes into a genotype.
      *
-     * @return this gl resource builder configured with an xxx operator ('<code>+</code>' character)
+     * @return this gl resource builder configured with an plus operator ('<code>+</code>' character)
      */
-    public GlResourceBuilder xxx() {
+    public GlResourceBuilder plus() {
         alleles.clear();
         alleleLists.clear();
         haplotypes.add(haplotype);
@@ -134,6 +138,7 @@ public final class GlResourceBuilder {
 
     /**
      * Return this gl resource builder configured with a genotypic ambiguity operator ('<code>|</code>' character).
+     * The genotypic ambiguity operator combines two or more genotypes into a genotype list.
      *
      * @return this gl resource builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
      */
