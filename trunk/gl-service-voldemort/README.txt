@@ -11,3 +11,7 @@ If you see log4j configuration errors on startup, the 0.90.1 homebrew installati
 -java -Dlog4j.configuration=src/java/log4j.properties $VOLD_OPTS -cp $CLASSPATH voldemort.server.VoldemortServer $@
 +java $VOLD_OPTS -cp $CLASSPATH voldemort.server.VoldemortServer $@
 
+
+If using the mysql storage engine, install a mysql JDBC driver
+
+$ cp ~/.m2/repository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar /usr/local/Cellar/voldemort/0.90.1/libexec/lib/
