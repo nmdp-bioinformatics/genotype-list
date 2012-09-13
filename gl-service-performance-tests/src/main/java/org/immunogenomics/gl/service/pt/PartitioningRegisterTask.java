@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.collect.Lists;
 
@@ -61,6 +62,7 @@ class PartitioningRegisterTask extends AbstractRegisterTask {
             List<List<String>> partitions = Lists.partition(glstrings, glstrings.size() / n);
             List<Future<?>> futures = new LinkedList<Future<?>>();
             long start = System.nanoTime();
+            final AtomicInteger count = new AtomicInteger();
             for (int i = 0; i < n; i++) {
                 final List<String> partition = partitions.get(i);
                 futures.add(executorService.submit(new Runnable() {
@@ -68,6 +70,9 @@ class PartitioningRegisterTask extends AbstractRegisterTask {
                         public void run() {
                             for (String glstring : partition) {
                                 with().body(glstring).contentType("text/plain").post(ns + type);
+                                if (count.getAndIncrement() % 1000 == 0) {
+                                    System.out.print(".");
+                                }
                             }
                         }
                     }));
@@ -76,7 +81,7 @@ class PartitioningRegisterTask extends AbstractRegisterTask {
                 future.get();
             }
             long now = System.nanoTime();
-            System.out.println("registered " + glstrings.size() + " glstrings of type " + type + " in " + (now - start) + " ns (" + TimeUnit.SECONDS.convert(now - start, TimeUnit.NANOSECONDS) + " s) with " + n + " thread(s)");
+            System.out.println("registered " + count.intValue() + " glstrings of type " + type + " in " + (now - start) + " ns (" + TimeUnit.SECONDS.convert(now - start, TimeUnit.NANOSECONDS) + " s) with " + n + " thread(s)");
             executorService.shutdownNow();
         }
         catch (ExecutionException e) {

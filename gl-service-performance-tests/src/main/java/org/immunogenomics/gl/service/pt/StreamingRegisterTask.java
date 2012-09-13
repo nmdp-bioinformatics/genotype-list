@@ -71,7 +71,9 @@ class StreamingRegisterTask extends AbstractRegisterTask {
                         @Override
                         public void run() {
                             with().body(line).contentType("text/plain").post(ns + type);
-                            count.getAndIncrement();
+                            if (count.getAndIncrement() % 1000 == 0) {
+                                System.out.print(".");
+                            }
                         }
                     }));
                 if (futures.size() == n) {
