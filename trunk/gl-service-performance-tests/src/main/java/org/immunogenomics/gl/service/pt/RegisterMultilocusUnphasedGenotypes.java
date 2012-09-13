@@ -38,7 +38,7 @@ import org.dishevelled.commandline.argument.StringArgument;
 /**
  * Register multilocus unphased genotypes.
  */
-public final class RegisterMultilocusUnphasedGenotypes extends PartitioningRegisterTask {
+public final class RegisterMultilocusUnphasedGenotypes extends StreamingRegisterTask {
     private static final int DEFAULT_N = 2;
     private static final String USAGE = "java RegisterMultilocusUnphasedGenotypes --namespace http://localhost:8080/gl [-n 4] [-g glstrings.txt]";
 
