@@ -119,14 +119,7 @@ $ mvn install -rf :gl-service-voldemort
 <br/>
 Spark is only available from its own Maven repository and has enough transitive dependencies to make a local install troublesome.
 
-One workaround is to use Nexus, which is a Maven repository manager and proxy.
-
-http://www.sonatype.org/nexus
-
-After downloading and installing the open source version of Nexus, it may be configured to proxy the Spark repository.
-
-<br/>
-Another option is to add this patch to pom.xml
+One option is to add this patch to pom.xml
 {{{
 $ svn diff pom.xml
 Index: pom.xml
@@ -148,4 +141,13 @@ Index: pom.xml
     <pluginManagement>
        <plugins>
 }}}
-Just don't check it in.
+
+Just *don't check it in*.
+
+
+<br/>
+Another workaround is to use Nexus, which is a Maven repository manager and proxy.
+
+http://www.sonatype.org/nexus
+
+After downloading and installing the open source version of Nexus, it may be configured to proxy the Spark repository.
