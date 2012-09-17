@@ -40,7 +40,13 @@ import com.amazonaws.services.dynamodb.model.GetItemResult;
 
 import com.google.common.collect.ImmutableMap;
 
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.AlleleList;
+import org.immunogenomics.gl.Genotype;
+import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 import org.immunogenomics.gl.service.AbstractIdResolverTest;
 import org.immunogenomics.gl.service.IdResolver;
 
@@ -59,8 +65,13 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
     @Mock
     private GetItemResult getItemResult;
 
-    private AttributeValue attributeValue;
-    private Map<String, AttributeValue> item;
+    private Map<String, AttributeValue> locusItem;
+    private Map<String, AttributeValue> alleleItem;
+    private Map<String, AttributeValue> alleleListItem;
+    private Map<String, AttributeValue> haplotypeItem;
+    private Map<String, AttributeValue> genotypeItem;
+    private Map<String, AttributeValue> genotypeListItem;
+    private Map<String, AttributeValue> multilocusUnphasedGenotypeItem;
     private Double consumedCapacityUnits = Double.valueOf(1.0d);
 
     @Override
@@ -73,13 +84,22 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
         catch (Exception e) {
             fail(e.getMessage());
         }
-        Locus locus = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
-        byte[] bytes = serialize(locus);
-        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        attributeValue = new AttributeValue().withB(byteBuffer);
-        item = ImmutableMap.of("glResource", attributeValue);
-        when(getItemResult.getItem()).thenReturn(item);
         when(getItemResult.getConsumedCapacityUnits()).thenReturn(consumedCapacityUnits);
+
+        Locus locus = new Locus(validLocusId, "HLA-A");
+        Allele allele = new Allele(validAlleleId, "A01234", "HLA-A*01:01:01:01", locus);
+        AlleleList alleleList = new AlleleList(validAlleleListId, allele);
+        Haplotype haplotype = new Haplotype(validHaplotypeId, alleleList);
+        Genotype genotype = new Genotype(validGenotypeId, haplotype);
+        GenotypeList genotypeList = new GenotypeList(validGenotypeListId, genotype);
+        MultilocusUnphasedGenotype multilocusUnphasedGenotype = new MultilocusUnphasedGenotype(validMultilocusUnphasedGenotypeId, genotypeList);
+        locusItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(locus))));
+        alleleItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(allele))));
+        alleleListItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(alleleList))));
+        haplotypeItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(haplotype))));
+        genotypeItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(genotype))));
+        genotypeListItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(genotypeList))));
+        multilocusUnphasedGenotypeItem = ImmutableMap.of("glResource", new AttributeValue().withB(ByteBuffer.wrap(serialize(multilocusUnphasedGenotype))));
 
         return new DynamoIdResolver(dynamo);
     }
@@ -87,5 +107,47 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
     @Test(expected=NullPointerException.class)
     public void testConstructorNullDynamo() {
         new DynamoIdResolver(null);
+    }
+
+    @Test
+    public void testFindLocus() {
+        when(getItemResult.getItem()).thenReturn(locusItem);
+        super.testFindLocus();
+    }
+
+    @Test
+    public void testFindAllele() {
+        when(getItemResult.getItem()).thenReturn(alleleItem);
+        super.testFindAllele();
+    }
+
+    @Test
+        public void testFindAlleleList() {
+        when(getItemResult.getItem()).thenReturn(alleleListItem);
+        super.testFindAlleleList();
+    }
+
+    @Test
+    public void testFindHaplotype() {
+        when(getItemResult.getItem()).thenReturn(haplotypeItem);
+        super.testFindHaplotype();
+    }
+
+    @Test
+    public void testFindGenotype() {
+        when(getItemResult.getItem()).thenReturn(genotypeItem);
+        super.testFindGenotype();
+    }
+
+    @Test
+    public void testFindGenotypeList() {
+        when(getItemResult.getItem()).thenReturn(genotypeListItem);
+        super.testFindGenotypeList();
+    }
+
+    @Test
+    public void testFindMultilocusUnphasedGenotype() {
+        when(getItemResult.getItem()).thenReturn(multilocusUnphasedGenotypeItem);
+        super.testFindMultilocusUnphasedGenotype();
     }
 }
