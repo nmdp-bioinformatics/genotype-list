@@ -117,6 +117,7 @@ public final class DynamoIdResolver implements IdResolver {
                         new Object[] { id, (after - before), getItemResult.getConsumedCapacityUnits() });
 
             // todo:  if cache miss, will getItem() return null?  will get("glResource") return null?  or an exception be thrown?
+            //    https://forums.aws.amazon.com/thread.jspa?threadID=104609
             ByteBuffer byteBuffer = getItemResult.getItem().get("glResource").getB();
             byte[] bytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(bytes);

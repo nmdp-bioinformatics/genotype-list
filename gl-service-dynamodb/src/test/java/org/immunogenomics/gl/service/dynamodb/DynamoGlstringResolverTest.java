@@ -76,7 +76,6 @@ public final class DynamoGlstringResolverTest extends AbstractGlstringResolverTe
         item = ImmutableMap.of("id", attributeValue);
         when(getItemResult.getItem()).thenReturn(item);
         when(getItemResult.getConsumedCapacityUnits()).thenReturn(consumedCapacityUnits);
-
         return new DynamoGlstringResolver(idSupplier, dynamo);
     }
 
