@@ -63,6 +63,7 @@ final class JdbcIdResolver implements IdResolver {
     private static final String GENOTYPE_LIST_SQL = "select genotype_list from genotype_list where id = ?";
     private static final String MULTILOCUS_UNPHASED_GENOTYPE_SQL = "select multilocus_unphased_genotype from multilocus_unphased_genotype where id = ?";
 
+
     @Inject
     JdbcIdResolver(final DataSource dataSource) {
         checkNotNull(dataSource);
@@ -160,6 +161,10 @@ final class JdbcIdResolver implements IdResolver {
     static class LocusHandler implements ResultSetHandler<Locus> {
         @Override
         public Locus handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize locus, bytes were null");
@@ -177,6 +182,10 @@ final class JdbcIdResolver implements IdResolver {
     static class AlleleHandler implements ResultSetHandler<Allele> {
         @Override
         public Allele handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize allele, bytes were null");
@@ -194,6 +203,10 @@ final class JdbcIdResolver implements IdResolver {
     static class AlleleListHandler implements ResultSetHandler<AlleleList> {
         @Override
         public AlleleList handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize allele list, bytes were null");
@@ -211,6 +224,10 @@ final class JdbcIdResolver implements IdResolver {
     static class HaplotypeHandler implements ResultSetHandler<Haplotype> {
         @Override
         public Haplotype handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize haplotype, bytes were null");
@@ -228,6 +245,10 @@ final class JdbcIdResolver implements IdResolver {
     static class GenotypeHandler implements ResultSetHandler<Genotype> {
         @Override
         public Genotype handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize genotype, bytes were null");
@@ -245,6 +266,10 @@ final class JdbcIdResolver implements IdResolver {
     static class GenotypeListHandler implements ResultSetHandler<GenotypeList> {
         @Override
         public GenotypeList handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize genotype list, bytes were null");
@@ -262,6 +287,10 @@ final class JdbcIdResolver implements IdResolver {
     static class MultilocusUnphasedGenotypeHandler implements ResultSetHandler<MultilocusUnphasedGenotype> {
         @Override
         public MultilocusUnphasedGenotype handle(final ResultSet resultSet) throws SQLException {
+            if (!resultSet.first())
+            {
+                return null;
+            }
             byte[] bytes = resultSet.getBytes(1);
             if (bytes == null) {
                 logger.warn("could not deserialize multilocus unphased genotype, bytes were null");

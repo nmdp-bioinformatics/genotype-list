@@ -25,6 +25,7 @@ package org.immunogenomics.gl.service.jdbc;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.immunogenomics.gl.service.jdbc.JdbcUtils.hash;
 
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -49,13 +50,14 @@ final class JdbcGlstringResolver implements GlstringResolver {
     private final IdSupplier idSupplier;
     private final DataSource dataSource;
     private final Logger logger = LoggerFactory.getLogger(JdbcGlstringResolver.class);
-    private static final String LOCUS_ID_SQL = "select id from locus_id where glstring = ?";
-    private static final String ALLELE_ID_SQL = "select id from allele_id where glstring = ?";
-    private static final String ALLELE_LIST_ID_SQL = "select id from allele_list_id where glstring = ?";
-    private static final String HAPLOTYPE_ID_SQL = "select id from haplotype_id where glstring = ?";
-    private static final String GENOTYPE_ID_SQL = "select id from genotype_id where glstring = ?";
-    private static final String GENOTYPE_LIST_ID_SQL = "select id from genotype_list_id where glstring = ?";
-    private static final String MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL = "select id from multilocus_unphased_genotype_id where glstring = ?";
+    private static final String LOCUS_ID_SQL = "select id from locus_id where glstring_hash = ?";
+    private static final String ALLELE_ID_SQL = "select id from allele_id where glstring_hash = ?";
+    private static final String ALLELE_LIST_ID_SQL = "select id from allele_list_id where glstring_hash = ?";
+    private static final String HAPLOTYPE_ID_SQL = "select id from haplotype_id where glstring_hash = ?";
+    private static final String GENOTYPE_ID_SQL = "select id from genotype_id where glstring_hash = ?";
+    private static final String GENOTYPE_LIST_ID_SQL = "select id from genotype_list_id where glstring_hash = ?";
+    private static final String MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL = "select id from multilocus_unphased_genotype_id where glstring_hash = ?";
+
 
     @Inject
     JdbcGlstringResolver(final IdSupplier idSupplier, final DataSource dataSource) {
@@ -72,13 +74,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(LOCUS_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(LOCUS_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for locus with glstring " + glstring, e);
+            logger.warn("could not resolve id for locus with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createLocusId();
     }
@@ -89,13 +91,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(ALLELE_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(ALLELE_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for allele with glstring " + glstring, e);
+            logger.warn("could not resolve id for allele with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createAlleleId();
     }
@@ -106,13 +108,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(ALLELE_LIST_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(ALLELE_LIST_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for allele list with glstring " + glstring, e);
+            logger.warn("could not resolve id for allele list with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createAlleleListId();
     }
@@ -123,13 +125,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(HAPLOTYPE_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(HAPLOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for haplotype with glstring " + glstring, e);
+            logger.warn("could not resolve id for haplotype with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createHaplotypeId();
     }
@@ -140,13 +142,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(GENOTYPE_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(GENOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for genotype with glstring " + glstring, e);
+            logger.warn("could not resolve id for genotype with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createGenotypeId();
     }
@@ -157,13 +159,13 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(GENOTYPE_LIST_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(GENOTYPE_LIST_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for genotype list with glstring " + glstring, e);
+            logger.warn("could not resolve id for genotype list with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createGenotypeListId();
     }
@@ -174,14 +176,21 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, new ScalarHandler());
+            String id = (String) queryRunner.query(MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
             if (id != null) {
                 return id;
             }
         }
         catch (SQLException e) {
-            logger.warn("could not resolve id for multilocus unphased genotype with glstring " + glstring, e);
+            logger.warn("could not resolve id for multilocus unphased genotype with glstring " + abbrev(glstring), e);
         }
         return idSupplier.createMultilocusUnphasedGenotypeId();
+    }
+
+    private static String abbrev(final String glstring) {
+        if (glstring.length() < 64) {
+            return glstring;
+        }
+        return glstring.substring(0, 61) + "...";
     }
 }

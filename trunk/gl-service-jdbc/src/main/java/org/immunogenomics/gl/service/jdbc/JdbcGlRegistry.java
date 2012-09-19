@@ -24,6 +24,7 @@
 package org.immunogenomics.gl.service.jdbc;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.immunogenomics.gl.service.jdbc.JdbcUtils.hash;
 
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -52,25 +53,27 @@ final class JdbcGlRegistry implements GlRegistry {
     private final DataSource dataSource;
     private final Logger logger = LoggerFactory.getLogger(JdbcGlRegistry.class);
     private static final String INSERT_LOCUS_SQL = "insert into locus (id, locus) values (?, ?)";
-    private static final String INSERT_LOCUS_ID_SQL = "insert into locus_id (glstring, id) values (?, ?)";
+    private static final String INSERT_LOCUS_ID_SQL = "insert into locus_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_ALLELE_SQL = "insert into allele (id, allele) values (?, ?)";
-    private static final String INSERT_ALLELE_ID_SQL = "insert into allele_id (glstring, id) values (?, ?)";
+    private static final String INSERT_ALLELE_ID_SQL = "insert into allele_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_ALLELE_LIST_SQL = "insert into allele_list (id, allele_list) values (?, ?)";
-    private static final String INSERT_ALLELE_LIST_ID_SQL = "insert into allele_list_id (glstring, id) values (?, ?)";
+    private static final String INSERT_ALLELE_LIST_ID_SQL = "insert into allele_list_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_HAPLOTYPE_SQL = "insert into haplotype (id, haplotype) values (?, ?)";
-    private static final String INSERT_HAPLOTYPE_ID_SQL = "insert into haplotype_id (glstring, id) values (?, ?)";
+    private static final String INSERT_HAPLOTYPE_ID_SQL = "insert into haplotype_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_GENOTYPE_SQL = "insert into genotype (id, genotype) values (?, ?)";
-    private static final String INSERT_GENOTYPE_ID_SQL = "insert into genotype_id (glstring, id) values (?, ?)";
+    private static final String INSERT_GENOTYPE_ID_SQL = "insert into genotype_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_GENOTYPE_LIST_SQL = "insert into genotype_list (id, genotype_list) values (?, ?)";
-    private static final String INSERT_GENOTYPE_LIST_ID_SQL = "insert into genotype_list_id (glstring, id) values (?, ?)";
+    private static final String INSERT_GENOTYPE_LIST_ID_SQL = "insert into genotype_list_id (glstring, glstring_hash, id) values (?, ?, ?)";
     private static final String INSERT_MULTILOCUS_UNPHASED_GENOTYPE_SQL = "insert into multilocus_unphased_genotype (id, multilocus_unphased_genotype) values (?, ?)";
-    private static final String INSERT_MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL = "insert into multilocus_unphased_genotype_id (glstring, id) values (?, ?)";
+    private static final String INSERT_MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL = "insert into multilocus_unphased_genotype_id (glstring, glstring_hash, id) values (?, ?, ?)";
+
 
     @Inject
     JdbcGlRegistry(final DataSource dataSource) {
         checkNotNull(dataSource);
         this.dataSource = dataSource;
     }
+
 
     @Override
     public void registerLocus(final Locus locus) {
@@ -79,7 +82,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_LOCUS_SQL, locus.getId(), locus);
-            queryRunner.update(INSERT_LOCUS_ID_SQL, locus.getGlstring(), locus.getId());
+            queryRunner.update(INSERT_LOCUS_ID_SQL, locus.getGlstring(), hash(locus.getGlstring()), locus.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register locus " + locus.getId(), e);
@@ -92,7 +95,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_ALLELE_SQL, allele.getId(), allele);
-            queryRunner.update(INSERT_ALLELE_ID_SQL, allele.getGlstring(), allele.getId());
+            queryRunner.update(INSERT_ALLELE_ID_SQL, allele.getGlstring(), hash(allele.getGlstring()), allele.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register allele " + allele.getId(), e);
@@ -105,7 +108,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_ALLELE_LIST_SQL, alleleList.getId(), alleleList);
-            queryRunner.update(INSERT_ALLELE_LIST_ID_SQL, alleleList.getGlstring(), alleleList.getId());
+            queryRunner.update(INSERT_ALLELE_LIST_ID_SQL, alleleList.getGlstring(), hash(alleleList.getGlstring()), alleleList.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register allele list " + alleleList.getId(), e);
@@ -118,7 +121,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_HAPLOTYPE_SQL, haplotype.getId(), haplotype);
-            queryRunner.update(INSERT_HAPLOTYPE_ID_SQL, haplotype.getGlstring(), haplotype.getId());
+            queryRunner.update(INSERT_HAPLOTYPE_ID_SQL, haplotype.getGlstring(), hash(haplotype.getGlstring()), haplotype.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register haplotype " + haplotype.getId(), e);
@@ -131,7 +134,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_GENOTYPE_SQL, genotype.getId(), genotype);
-            queryRunner.update(INSERT_GENOTYPE_ID_SQL, genotype.getGlstring(), genotype.getId());
+            queryRunner.update(INSERT_GENOTYPE_ID_SQL, genotype.getGlstring(), hash(genotype.getGlstring()), genotype.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register genotype " + genotype.getId(), e);
@@ -144,7 +147,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_GENOTYPE_LIST_SQL, genotypeList.getId(), genotypeList);
-            queryRunner.update(INSERT_GENOTYPE_LIST_ID_SQL, genotypeList.getGlstring(), genotypeList.getId());
+            queryRunner.update(INSERT_GENOTYPE_LIST_ID_SQL, genotypeList.getGlstring(), hash(genotypeList.getGlstring()), genotypeList.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register genotype list " + genotypeList.getId(), e);
@@ -157,7 +160,7 @@ final class JdbcGlRegistry implements GlRegistry {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(INSERT_MULTILOCUS_UNPHASED_GENOTYPE_SQL, multilocusUnphasedGenotype.getId(), multilocusUnphasedGenotype);
-            queryRunner.update(INSERT_MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, multilocusUnphasedGenotype.getGlstring(), multilocusUnphasedGenotype.getId());
+            queryRunner.update(INSERT_MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, multilocusUnphasedGenotype.getGlstring(), hash(multilocusUnphasedGenotype.getGlstring()), multilocusUnphasedGenotype.getId());
         }
         catch (SQLException e) {
             logger.warn("could not register multilocus unphased genotype " + multilocusUnphasedGenotype.getId(), e);
