@@ -112,6 +112,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindLocus() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(locus));
         }
         catch (SQLException e) {
@@ -123,6 +124,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindAllele() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(allele));
         }
         catch (SQLException e) {
@@ -134,6 +136,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindAlleleList() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(alleleList0));
         }
         catch (SQLException e) {
@@ -145,6 +148,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindHaplotype() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(haplotype));
         }
         catch (SQLException e) {
@@ -156,6 +160,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindGenotype() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(genotype));
         }
         catch (SQLException e) {
@@ -167,6 +172,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindGenotypeList() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(genotypeList0));
         }
         catch (SQLException e) {
@@ -178,6 +184,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Override
     public void testFindMultilocusUnphasedGenotype() {
         try {
+            when(resultSet.first()).thenReturn(true);
             when(resultSet.getBytes(1)).thenReturn(serialize(multilocusUnphasedGenotype));
         }
         catch (SQLException e) {

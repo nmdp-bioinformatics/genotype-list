@@ -23,6 +23,10 @@
 */
 package org.immunogenomics.gl.service.jdbc;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.immunogenomics.gl.service.GlRegistry;
@@ -31,6 +35,11 @@ import org.immunogenomics.gl.service.IdResolver;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
+
+import com.jolbox.bonecp.BoneCPDataSource;
 
 /**
  * JDBC module.
@@ -39,14 +48,51 @@ public final class JdbcModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        Names.bindProperties(binder(), loadProperties());
+
         bind(IdResolver.class).to(JdbcIdResolver.class);
         bind(GlstringResolver.class).to(JdbcGlstringResolver.class);
         bind(GlRegistry.class).to(JdbcGlRegistry.class);
     }
 
-    @Provides
-    DataSource createDataSource() {
-        return null;
+    @Provides @Singleton
+    DataSource createDataSource(@Named("jdbcDriver") final String driver,
+                                @Named("jdbcUrl") final String url,
+                                @Named("jdbcUsername") final String username,
+                                @Named("jdbcPassword") final String password) {
+
+        try {
+            Class.forName(driver);
+        }
+        catch (ClassNotFoundException e) {
+            // ignore
+        }
+        BoneCPDataSource dataSource = new BoneCPDataSource();
+        dataSource.setJdbcUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        // todo: configure pool
+        return dataSource;
     }
-    // configure and create connection/connection pool
+
+    private Properties loadProperties() {
+        Properties properties = new Properties();
+        InputStream inputStream = null;
+        try {
+            inputStream = getClass().getResourceAsStream("/gl-service.properties");
+            properties.load(inputStream);
+        }
+        catch (IOException e) {
+            // ignore
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
+        }
+        return properties;
+    }
 }

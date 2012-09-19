@@ -31,6 +31,8 @@ import java.io.ObjectOutputStream;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,10 @@ import org.slf4j.LoggerFactory;
 @Immutable
 final class JdbcUtils {
     private static final Logger logger = LoggerFactory.getLogger(JdbcUtils.class);
+
+    static final byte[] hash(final String value) {
+        return DigestUtils.sha256(value);
+    }
 
     static final byte[] serialize(final Object value) {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
