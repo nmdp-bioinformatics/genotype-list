@@ -1,43 +1,64 @@
 create or alter table locus_id (
- glstring varchar2(4000 byte) not null,
+ locus_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (locus_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table allele_id (
- glstring varchar2(4000 byte) not null,
+ allele_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (allele_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table allele_list_id (
- glstring varchar2(4000 byte) not null,
+ allele_list_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (allele_list_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table haplotype_id (
- glstring varchar2(4000 byte) not null,
+ haplotype_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (haplotype_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table genotype_id (
- glstring varchar2(4000 byte) not null,
+ genotype_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (genotype_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table genotype_list_id (
- glstring varchar2(4000 byte) not null,
+ genotype_list_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (genotype_list_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table multilocus_unphased_genotype_id (
- glstring varchar2(4000 byte) not null,
+ multilocus_unphased_genotype_id_pk biginteger not null,
+ glstring blob not null,
+ glstring_hash varbinary(64) not null,
  id varchar2(512) not null,
- primary key (glstring)
+ primary key (multilocus_unphased_genotype_id_pk)
+ key (glstring_hash)
 );
 
 create or alter table locus (
@@ -81,3 +102,73 @@ create or alter table multilocus_unphased_genotype (
  multilocus_unphased_genotype blob not null,
  primary key (id)
 );
+
+create sequence locus_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger locus_id_insert
+before insert on locus_id
+for each row
+begin
+    select locus_id_pk_seq.nextval into :new.locus_id_pk from dual;
+end;
+/
+
+create sequence allele_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger allele_id_insert
+before insert on allele_id
+for each row
+begin
+    select allele_id_pk_seq.nextval into :new.allele_id_pk from dual;
+end;
+/
+
+create sequence allele_list_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger allele_list_id_insert
+before insert on allele_list_id
+for each row
+begin
+    select allele_list_id_pk_seq.nextval into :new.allele_list_id_pk from dual;
+end;
+/
+
+create sequence haplotype_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger haplotype_id_insert
+before insert on haplotype_id
+for each row
+begin
+    select haplotype_id_pk_seq.nextval into :new.haplotype_id_pk from dual;
+end;
+/
+
+create sequence genotype_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger genotype_id_insert
+before insert on genotype_id
+for each row
+begin
+    select genotype_id_pk_seq.nextval into :new.genotype_id_pk from dual;
+end;
+/
+
+create sequence genotype_list_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger genotype_list_id_insert
+before insert on genotype_list_id
+for each row
+begin
+    select genotype_list_id_pk_seq.nextval into :new.genotype_list_id_pk from dual;
+end;
+/
+
+create sequence multilocus_unphased_genotype_id_pk_seq start with 1 increment by 1;
+
+create or replace trigger multilocus_unphased_genotype_id_insert
+before insert on multilocus_unphased_genotype_id
+for each row
+begin
+    select multilocus_unphased_genotype_id_pk_seq.nextval into :new.multilocus_unphased_genotype_id_pk from dual;
+end;
+/

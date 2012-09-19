@@ -1,3 +1,17 @@
+drop trigger multilocus_unphased_genotype_id_insert;
+drop trigger genotype_list_id_insert;
+drop trigger genotype_id_insert;
+drop trigger haplotype_id_insert;
+drop trigger allele_list_id_insert;
+drop trigger allele_id_insert;
+drop trigger locus_id_insert;
+drop sequence multilocus_unphased_genotype_id_pk_seq;
+drop sequence genotype_list_id_pk_seq;
+drop sequence genotype_id_pk_seq;
+drop sequence haplotype_id_pk_seq;
+drop sequence allele_list_id_pk_seq;
+drop sequence allele_id_pk_seq;
+drop sequence locus_id_pk_seq;
 drop table multilocus_unphased_genotype;
 drop table genotype_list;
 drop table genotype;
