@@ -43,6 +43,75 @@
   <properties>
     <immunogenomics.componentId>gl.tools</immunogenomics.componentId>
   </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.3</version>
+        <configuration>
+          <repositoryLayout>flat</repositoryLayout>
+          <repositoryName>lib</repositoryName>
+          <installArtifacts>false</installArtifacts>
+          <programs>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterAlleleLists</mainClass>
+              <name>gl-register-allele-lists</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterAlleles</mainClass>
+              <name>gl-register-alleles</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterGenotypeLists</mainClass>
+              <name>gl-register-genotype-lists</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterGenotypes</mainClass>
+              <name>gl-register-genotypes</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterHaplotypes</mainClass>
+              <name>gl-register-allele-haplotypes</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterLoci</mainClass>
+              <name>gl-register-loci</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.RegisterMultilocusUnphasedGenotypes</mainClass>
+              <name>gl-register-multilocus-unphased-genotypes</name>
+            </program>
+          </programs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assembly</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <dependencyManagement>
     <dependencies>
       <dependency>
