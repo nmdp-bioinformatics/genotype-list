@@ -70,6 +70,7 @@
 -->
     <module>gl-client</module>
     <module>gl-client-functional-tests</module>
+    <module>gl-tools</module>
   </modules>
 
   <build>
