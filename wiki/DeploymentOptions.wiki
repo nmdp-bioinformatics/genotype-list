@@ -5,6 +5,20 @@
 <wiki:toc max_depth="2" />
 
 <br/>
+In all cases, the genotype list service (gl.war and explorer.war, specifically) can be configured and deployed to a servlet engine (Jetty, Tomcat, etc.) running on e.g. an Amazon Elastic Compute Cloud (Amazon EC2) instance.
+
+http://aws.amazon.com/ec2/
+
+Pricing
+
+http://aws.amazon.com/ec2/pricing/
+
+<br/>
+It may also be advantageous to put an Apache or Nginx ahead of the servlet engine as a proxy and consider using Amazon Elastic Load Balancing
+
+http://aws.amazon.com/elasticloadbalancing/
+
+<br/>
 == Cache ==
 
 The simplest deployment option is to use the RAM-only cache implementation provided by the gl-service module.  This option does not provide any persistence.
