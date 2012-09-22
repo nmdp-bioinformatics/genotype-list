@@ -14,7 +14,7 @@ Pricing
 http://aws.amazon.com/ec2/pricing/
 
 <br/>
-It may also be advantageous to put an Apache or Nginx ahead of the servlet engine as a proxy and consider using Amazon Elastic Load Balancing
+It may also be advantageous to put an Apache or Nginx ahead of the servlet engine as a proxy and to consider using Amazon Elastic Load Balancing.
 
 http://aws.amazon.com/elasticloadbalancing/
 
