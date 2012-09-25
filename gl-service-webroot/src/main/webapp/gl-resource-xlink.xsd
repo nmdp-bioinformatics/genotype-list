@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:glx="http://gl.immunogenomics.org/gl-resource-xlink"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  targetNamespace="http://gl.immunogenomics.org/gl-resource-xlink"
+  elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"></xs:import>
+  <xs:complexType name="GlResource">
+    <xs:annotation>
+      <xs:documentation>Abstract class for all resources representable in GL String format.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="id" type="xs:string"></xs:element>
+      <xs:element minOccurs="1" maxOccurs="1" name="glstring" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Locus">
+    <xs:annotation>
+      <xs:documentation>A locus identifies a genomic location at which alleles may be defined.  The locus representation in GL String format must not contain any of the following characters: '*', '/', '~', '+', '|', '^'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence></xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Allele">
+    <xs:annotation>
+      <xs:documentation>An allele describes variation at a particular locus.  The allele representation in GL String format must not contain any of the following characters: '/', '~', '+', '|', '^'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="accession" type="xs:string"></xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="locus">
+            <xs:complexType>
+              <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+              <xs:attribute ref="xlink:role" fixed="hasLocus"></xs:attribute>
+              <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AlleleList">
+    <xs:annotation>
+      <xs:documentation>An allele list is an unordered collection of one or more alleles representing alleleic ambiguity separated in GL String format by the character '/'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="allele">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasAllele"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Haplotype">
+    <xs:annotation>
+      <xs:documentation>A haplotype is an unordered collection of one or more allele lists in phase separated in GL String format by the character '~'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="alleleLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="alleleList">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasAlleleList"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Genotype">
+    <xs:annotation>
+      <xs:documentation>A genotype is an unordered collection of one or more haplotypes separated in GL String format by the character '+'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="haplotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="haplotype">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasHaplotype"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GenotypeList">
+    <xs:annotation>
+      <xs:documentation>A genotype list is an unordered collection of one or more genotypes representing genotypic ambiguity separated in GL String format by the character '|'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="genotype">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasGenotype"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MultilocusUnphasedGenotype">
+    <xs:annotation>
+      <xs:documentation>A multilocus unphased genotype is an unordered collection of one or more genotype lists separated in GL String format by the character '^'.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="glx:GlResource">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="genotypeLists">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="genotypeList">
+                  <xs:complexType>
+                    <xs:attribute ref="xlink:type" fixed="locator"></xs:attribute>
+                    <xs:attribute ref="xlink:role" fixed="hasGenotypeList"></xs:attribute>
+                    <xs:attribute ref="xlink:href" use="required"></xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
