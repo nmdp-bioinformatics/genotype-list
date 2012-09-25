@@ -4,14 +4,14 @@
     <title>${multilocusUnphasedGenotype.Id}</title>
   </head>
   <body>
-    <div class="type"><p><a class="type" href="http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype">http://immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype</a></p></div>
+    <div class="type"><p><a class="type" href="http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype">http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype</a></p></div>
     <div class="title"><p>${multilocusUnphasedGenotype.Id}</p></div>
     <div class="identifier"><p>${multilocusUnphasedGenotype.Id}</p></div>
     <div class="label"><p>${multilocusUnphasedGenotype.Id}</p></div>
     <div class="comment"><p>A multilocus unphased genotype with ${multilocusUnphasedGenotype.GenotypeLists.size()} genotype list#if (${multilocusUnphasedGenotype.GenotypeLists.size()} != 1)s#end represented by glstring ${multilocusUnphasedGenotype.Glstring}</p></div>
     <div class="hasGlstring"><p>${multilocusUnphasedGenotype.Glstring}</p></div>
 #foreach ($gl in ${multilocusUnphasedGenotype.GenotypeLists})
-    <div class="hasGenotypeList"><p><a class="type" href="http://immunogenomics.org/gl-ontology/GenotypeList">http://immunogenomics.org/gl-ontology/GenotypeList</a> <a class="ref" href="${gl.Id}.html">${gl.Id}</a></p></div>
+    <div class="hasGenotypeList"><p><a class="type" href="http://gl.immunogenomics.org/gl-ontology/GenotypeList">http://gl.immunogenomics.org/gl-ontology/GenotypeList</a> <a class="ref" href="${gl.Id}.html">${gl.Id}</a></p></div>
 #end
   </body>
 </html>

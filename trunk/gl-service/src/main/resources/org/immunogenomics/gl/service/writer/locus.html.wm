@@ -4,7 +4,7 @@
     <title>${locus.Id}</title>
   </head>
   <body>
-    <p class="type"><a href="http://immunogenomics.org/gl-ontology/Locus">http://immunogenomics.org/gl-ontology/Locus</a></p>
+    <p class="type"><a href="http://gl.immunogenomics.org/gl-ontology/Locus">http://gl.immunogenomics.org/gl-ontology/Locus</a></p>
     <p class="title">${locus.Id}</p>
     <p class="identifier">${locus.Id}</p>
     <p class="label">${locus.Id}</p>

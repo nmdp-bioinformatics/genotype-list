@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<glx:Locus xmlns:glx="http://immunogenomics.org/gl-resource-xlink.xsd">
+<glx:Locus xmlns:glx="http://gl.immunogenomics.org/gl-resource-xlink.xsd">
   <glx:id>${locus.Id}</glx:id>
   <glx:glstring>${locus.Glstring}</glx:glstring>
 </glx:Locus>
