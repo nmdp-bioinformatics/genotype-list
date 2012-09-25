@@ -4,14 +4,14 @@
     <title>${alleleList.Id}</title>
   </head>
   <body>
-    <p class="type"><a href="http://immunogenomics.org/gl-ontology/AlleleList">http://immunogenomics.org/gl-ontology/AlleleList</a></p>
+    <p class="type"><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></p>
     <p class="title">${alleleList.Id}</p>
     <p class="identifier">${alleleList.Id}</p>
     <p class="label">${alleleList.Id}</p>
     <p class="comment">An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}</p>
     <p class="hasGlstring">${alleleList.Glstring}</p>
 #foreach ($a in ${alleleList.Alleles})
-    <p class="hasAllele"><a href="http://immunogenomics.org/gl-ontology/Allele">http://immunogenomics.org/gl-ontology/Allele</a> <a href="${a.Id}.html">${a.Id}</a></p>
+    <p class="hasAllele"><a href="http://gl.immunogenomics.org/gl-ontology/Allele">http://gl.immunogenomics.org/gl-ontology/Allele</a> <a href="${a.Id}.html">${a.Id}</a></p>
 #end
   </body>
 </html>

@@ -4,14 +4,14 @@
     <title>${genotypeList.Id}</title>
   </head>
   <body>
-    <p class="type"><a href="http://immunogenomics.org/gl-ontology/GenotypeList">http://immunogenomics.org/gl-ontology/GenotypeList</a></p>
+    <p class="type"><a href="http://gl.immunogenomics.org/gl-ontology/GenotypeList">http://gl.immunogenomics.org/gl-ontology/GenotypeList</a></p>
     <p class="title">${genotypeList.Id}</p>
     <p class="identifier">${genotypeList.Id}</p>
     <p class="label">${genotypeList.Id}</p>
     <p class="comment">A genotype list with ${genotypeList.Genotypes.size()} genotype#if (${genotypeList.Genotypes.size()} != 1)s#end represented by glstring ${genotypeList.Glstring}</a>
     <p class="hasGlstring">${genotypeList.Glstring}</p>
 #foreach ($g in ${genotypeList.Genotypes})
-    <p class="hasGenotype"><a href="http://immunogenomics.org/gl-ontology/Genotype">http://immunogenomics.org/gl-ontology/Genotype</a> <a href="${g.Id}.html">${g.Id}</a></p>
+    <p class="hasGenotype"><a href="http://gl.immunogenomics.org/gl-ontology/Genotype">http://gl.immunogenomics.org/gl-ontology/Genotype</a> <a href="${g.Id}.html">${g.Id}</a></p>
 #end
   </body>
 </html>
