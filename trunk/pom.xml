@@ -63,11 +63,9 @@
     <module>gl-service-spark</module>
     <module>gl-service-explorer</module>
     <module>gl-service-webapp</module>
+    <module>gl-service-webroot</module>
     <module>gl-service-functional-tests</module>
     <module>gl-service-performance-tests</module>
-<!--
-    <module>gl-service-webroot</module>
--->
     <module>gl-client</module>
     <module>gl-client-functional-tests</module>
     <module>gl-tools</module>
