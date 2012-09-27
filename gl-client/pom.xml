@@ -103,4 +103,48 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <!-- todo:  move pluginManagement section to parent pom -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-xjc-plugin</artifactId>
+          <version>2.3.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-xjc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>xsdtojava</goal>
+              <goal>xsdtojava-tests</goal>
+            </goals>
+            <configuration>
+              <xsdOptions>
+                <xsdOption>
+                  <xsd>src/main/xsd/gl-resource.xsd</xsd>
+                  <bindingFile>src/main/xsd/gl-resource.xjb</bindingFile>
+                  <packagename>org.immunogenomics.gl.client.xml.jaxb</packagename>
+                  <extension>true</extension>
+                </xsdOption>
+                <xsdOption>
+                  <xsd>src/main/xsd/gl-resource-xlink.xsd</xsd>
+                  <bindingFile>src/main/xsd/gl-resource-xlink.xjb</bindingFile>
+                  <packagename>org.immunogenomics.gl.client.xmlxlink.jaxb</packagename>
+                  <extension>true</extension>
+                </xsdOption>
+              </xsdOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
