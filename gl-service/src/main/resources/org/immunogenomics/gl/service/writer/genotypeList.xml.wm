@@ -24,10 +24,8 @@
                   <gl:accession>${allele.Accession}</gl:accession>
                   <gl:glstring>${allele.Glstring}</gl:glstring>
                   <gl:locus>
-                    <gl:Locus>
-                      <gl:id>${allele.Locus.Id}</gl:id>
-                      <gl:glstring>${allele.Locus.Glstring}</gl:glstring>
-                    </gl:Locus>
+                    <gl:id>${allele.Locus.Id}</gl:id>
+                    <gl:glstring>${allele.Locus.Glstring}</gl:glstring>
                   </gl:locus>
                 </gl:Allele>
 #end
