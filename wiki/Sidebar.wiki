@@ -1,14 +1,13 @@
 #summary Default sidebar for all pages.
-*Getting Started
- * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
-   * [HLAUseCase HLA Use Case]
-   * [KIRUseCase KIR Use Case]
-   * [VCFUseCase VCF Use Case]
- * [IssueWorkflow Using the Issue Tracker]
- * [SequenceDiagrams Sequence Diagrams]
- * [Delimiters GL String Delimiters]
-
-* Implementation Details
+  *Getting Started
+    * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
+      * [HLAUseCase HLA Use Case]
+      * [KIRUseCase KIR Use Case]
+      * [VCFUseCase VCF Use Case]
+    * [IssueWorkflow Using the Issue Tracker]
+    * [SequenceDiagrams Sequence Diagrams]
+    * [Delimiters GL String Delimiters]
+  * Implementation Details
  * [SparkGlService Spark RESTful Web Service]
    * [SparkGlService#Components Components]
    * [SparkGlService#How_it_Works How it Works]
