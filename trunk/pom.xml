@@ -59,6 +59,7 @@
     <module>gl-service</module>
     <module>gl-service-jdbc</module>
     <module>gl-service-redis</module>
+    <module>gl-service-dynamodb</module>
     <module>gl-service-voldemort</module>
     <module>gl-service-spark</module>
     <module>gl-service-explorer</module>
