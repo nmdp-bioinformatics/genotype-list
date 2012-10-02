@@ -1,6 +1,22 @@
 #summary Third party dependencies.
 
 = Third party dependencies =
+== Listing dependencies ==
+You can view a project's dependencies using the [http://maven.apache.org/plugins/maven-dependency-plugin/ Maven Dependency Plugin].
+{{{
+$ mvn dependency:tree
+}}}
+
+
+== Not in Maven Central ==
+  * *voldemort-0.90.1.jar* - used by gl-service [http://www.project-voldemort.com/voldemort/ Voldemort]
+  * *spark:spark:jar:0.9.9.3-SNAPSHOT* - used by gl-service-spark and in a [http://sparkjava.com Spark] repository
+
+== Repository Management ==
+Companies should have there own local repository, but individuals may add missing jars locally.  See
+http://maven.apache.org/repository-management.html
+
+= Manually adding missing dependencies to local repository =
 
 Two third party dependencies are currently not available in the Maven Central repository.  As such, the build may fail:
 
