@@ -5,11 +5,11 @@ Contents:
 
 =Introduction=
 
-JDBC is one of the 4 storage possibilities currently being evaluated for use in the GL Service.
+JDBC is one of the storage possibilities currently being evaluated for use in the GL Service.
 
 The others include:
  * [Cache Cache]
- * [Redis-Jedis Redis-Jedis]
+ * [RedisJedis Redis-Jedis]
  * [Voldemort Voldemort]
 
 The core function of the GL Service is to store, retrive, and persist GL Strings; looking up GLResources by IDs and IDs by GL Strings. 
