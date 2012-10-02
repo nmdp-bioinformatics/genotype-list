@@ -2,7 +2,7 @@
 
 === Load HLA nomenclature ===
 
-To load loci and alleles from the IMGT HLA nomenclature database version 2.4.0, either
+To load loci and alleles from the IMGT HLA nomenclature database version 3.9.0, either
 
 {{{
 $ curl -X post http://localhost:8080/gl/load-imgt-alleles
