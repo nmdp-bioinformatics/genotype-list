@@ -1,5 +1,5 @@
 #summary Default sidebar for all pages.
-  *Getting Started
+  * Getting Started
     * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
       * [HLAUseCase HLA Use Case]
       * [KIRUseCase KIR Use Case]
@@ -8,12 +8,12 @@
     * [SequenceDiagrams Sequence Diagrams]
     * [Delimiters GL String Delimiters]
   * Implementation Details
- * [SparkGlService Spark RESTful Web Service]
-   * [SparkGlService#Components Components]
-   * [SparkGlService#How_it_Works How it Works]
- * [GLReader GL Reader]
-   * [GLReader#Components Components]
-   * [GLReader#How_it_Works How it Works]
+    * [SparkGlService Spark RESTful Web Service]
+      * [SparkGlService#Components Components]
+      * [SparkGlService#How_it_Works How it Works]
+    * [GLReader GL Reader]
+      * [GLReader#Components Components]
+      * [GLReader#How_it_Works How it Works]
  * [Resolvers Resolvers]
    * [GlStringResolver GL String Resolver]
    * [IdResolver ID Resolver]
