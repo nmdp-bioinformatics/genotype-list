@@ -23,6 +23,7 @@
 */
 package org.immunogenomics.gl.service.dynamodb;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -58,8 +59,21 @@ public final class DynamoGlstringResolverTest extends AbstractGlstringResolverTe
     @Mock
     private GetItemResult getItemResult;
 
-    private AttributeValue attributeValue;
-    private Map<String, AttributeValue> item;
+    private String locusId = "http://immunogenomics.org/locus/0";
+    private String alleleId = "http://immunogenomics.org/allele/0";
+    private String alleleListId = "http://immunogenomics.org/allele-list/0";
+    private String haplotypeId = "http://immunogenomics.org/haplotype/0";
+    private String genotypeId = "http://immunogenomics.org/genotype/0";
+    private String genotypeListId = "http://immunogenomics.org/genotype-list/0";
+    private String multilocusUnphasedGenotypeId = "http://immunogenomics.org/multilocus-unphased-genotype/0";
+
+    private Map<String, AttributeValue> locusItem;
+    private Map<String, AttributeValue> alleleItem;
+    private Map<String, AttributeValue> alleleListItem;
+    private Map<String, AttributeValue> haplotypeItem;
+    private Map<String, AttributeValue> genotypeItem;
+    private Map<String, AttributeValue> genotypeListItem;
+    private Map<String, AttributeValue> multilocusUnphasedGenotypeItem;
     private Double consumedCapacityUnits = Double.valueOf(1.0d);
 
     @Override
@@ -72,9 +86,13 @@ public final class DynamoGlstringResolverTest extends AbstractGlstringResolverTe
         catch (Exception e) {
             fail(e.getMessage());
         }
-        attributeValue = new AttributeValue().withS("http://immunogenomics.org/locus/0");
-        item = ImmutableMap.of("id", attributeValue);
-        when(getItemResult.getItem()).thenReturn(item);
+        locusItem = ImmutableMap.of("id", new AttributeValue().withS(locusId));
+        alleleItem = ImmutableMap.of("id", new AttributeValue().withS(alleleId));
+        alleleListItem = ImmutableMap.of("id", new AttributeValue().withS(alleleListId));
+        haplotypeItem = ImmutableMap.of("id", new AttributeValue().withS(haplotypeId));
+        genotypeItem = ImmutableMap.of("id", new AttributeValue().withS(genotypeId));
+        genotypeListItem = ImmutableMap.of("id", new AttributeValue().withS(genotypeListId));
+        multilocusUnphasedGenotypeItem = ImmutableMap.of("id", new AttributeValue().withS(multilocusUnphasedGenotypeId));
         when(getItemResult.getConsumedCapacityUnits()).thenReturn(consumedCapacityUnits);
         return new DynamoGlstringResolver(idSupplier, dynamo);
     }
@@ -87,5 +105,96 @@ public final class DynamoGlstringResolverTest extends AbstractGlstringResolverTe
     @Test(expected=NullPointerException.class)
     public void testConstructorNullIdSupplier() {
         new DynamoGlstringResolver(null, dynamo);
+    }
+
+    @Test
+    public void testResolveLocusNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createLocusId()).thenReturn("http://immunogenomics.org/locus/1");
+        assertEquals("http://immunogenomics.org/locus/1", glstringResolver.resolveLocus("HLA-Z"));
+    }
+
+    @Test
+    public void testResolveAlleleNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createAlleleId()).thenReturn("http://immunogenomics.org/allele/1");
+        assertEquals("http://immunogenomics.org/allele/1", glstringResolver.resolveAllele("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveAlleleListNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createAlleleListId()).thenReturn("http://immunogenomics.org/allele-list/1");
+        assertEquals("http://immunogenomics.org/allele-list/1", glstringResolver.resolveAlleleList("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveHaplotypeNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createHaplotypeId()).thenReturn("http://immunogenomics.org/haplotype/1");
+        assertEquals("http://immunogenomics.org/haplotype/1", glstringResolver.resolveHaplotype("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveGenotypeNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createGenotypeId()).thenReturn("http://immunogenomics.org/genotype/1");
+        assertEquals("http://immunogenomics.org/genotype/1", glstringResolver.resolveGenotype("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveGenotypeListNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createGenotypeListId()).thenReturn("http://immunogenomics.org/genotype-list/1");
+        assertEquals("http://immunogenomics.org/genotype-list/1", glstringResolver.resolveGenotypeList("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveMultilocusUnphasedGenotypeNotFoundInDynamoDB() {
+        when(getItemResult.getItem()).thenReturn(null);
+        when(idSupplier.createMultilocusUnphasedGenotypeId()).thenReturn("http://immunogenomics.org/multilocus-unphased-genotype/1");
+        assertEquals("http://immunogenomics.org/multilocus-unphased-genotype/1", glstringResolver.resolveMultilocusUnphasedGenotype("HLA-Z*01:01:01:01"));
+    }
+
+    @Test
+    public void testResolveLocus() {
+        when(getItemResult.getItem()).thenReturn(locusItem);
+        super.testResolveLocus();
+    }
+
+    @Test
+    public void testResolveAllele() {
+        when(getItemResult.getItem()).thenReturn(alleleItem);
+        super.testResolveAllele();
+    }
+
+    @Test
+    public void testResolveAlleleList() {
+        when(getItemResult.getItem()).thenReturn(alleleListItem);
+        super.testResolveAlleleList();
+    }
+
+    @Test
+    public void testResolveHaplotype() {
+        when(getItemResult.getItem()).thenReturn(haplotypeItem);
+        super.testResolveHaplotype();
+    }
+
+    @Test
+    public void testResolveGenotype() {
+        when(getItemResult.getItem()).thenReturn(genotypeItem);
+        super.testResolveGenotype();
+    }
+
+    @Test
+    public void testResolveGenotypeList() {
+        when(getItemResult.getItem()).thenReturn(genotypeListItem);
+        super.testResolveGenotypeList();
+    }
+
+    @Test
+    public void testResolveMultilocusUnphasedGenotype() {
+        when(getItemResult.getItem()).thenReturn(multilocusUnphasedGenotypeItem);
+        super.testResolveMultilocusUnphasedGenotype();
     }
 }

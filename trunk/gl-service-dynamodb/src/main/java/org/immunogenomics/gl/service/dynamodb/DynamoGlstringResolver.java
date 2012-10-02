@@ -148,7 +148,7 @@ public final class DynamoGlstringResolver implements GlstringResolver {
         ByteBuffer glstringByteBuffer = ByteBuffer.wrap(glstringBytes);
 
         Key key = new Key().withHashKeyElement(new AttributeValue().withB(glstringByteBuffer));
-        GetItemRequest getItemRequest = new GetItemRequest().withKey(key);
+        GetItemRequest getItemRequest = new GetItemRequest().withTableName("identifiers").withKey(key);
         Future<GetItemResult> future = dynamo.getItemAsync(getItemRequest);
 
         long before = System.nanoTime();
@@ -158,8 +158,9 @@ public final class DynamoGlstringResolver implements GlstringResolver {
             logger.info("get identifier took {} ns and consumed {} capacity units",
                         new Object[] { (after - before), getItemResult.getConsumedCapacityUnits() });
 
-            // todo:  if cache miss, will getItem() return null?  will get("id") return null?  or an exception be thrown?
-            return getItemResult.getItem().get("id").getS();
+            if (getItemResult.getItem() != null) {
+                return getItemResult.getItem().get("id").getS();
+            }
         }
         catch (InterruptedException e) {
             logger.warn("get identifier was interrupted", e);

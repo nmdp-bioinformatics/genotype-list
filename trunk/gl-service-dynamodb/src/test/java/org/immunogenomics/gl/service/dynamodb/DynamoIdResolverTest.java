@@ -116,9 +116,21 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
     }
 
     @Test
+    public void testFindLocusDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindLocusDoesNotExist();
+    }
+
+    @Test
     public void testFindAllele() {
         when(getItemResult.getItem()).thenReturn(alleleItem);
         super.testFindAllele();
+    }
+
+    @Test
+    public void testFindAlleleDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindAlleleDoesNotExist();
     }
 
     @Test
@@ -128,9 +140,21 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
     }
 
     @Test
+    public void testFindAlleleListDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindAlleleListDoesNotExist();
+    }
+
+    @Test
     public void testFindHaplotype() {
         when(getItemResult.getItem()).thenReturn(haplotypeItem);
         super.testFindHaplotype();
+    }
+
+    @Test
+    public void testFindHaplotypeDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindHaplotypeDoesNotExist();
     }
 
     @Test
@@ -140,14 +164,32 @@ public final class DynamoIdResolverTest extends AbstractIdResolverTest {
     }
 
     @Test
+    public void testFindGenotypeDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindGenotypeDoesNotExist();
+    }
+
+    @Test
     public void testFindGenotypeList() {
         when(getItemResult.getItem()).thenReturn(genotypeListItem);
         super.testFindGenotypeList();
     }
 
     @Test
+    public void testFindGenotypeListDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindGenotypeListDoesNotExist();
+    }
+
+    @Test
     public void testFindMultilocusUnphasedGenotype() {
         when(getItemResult.getItem()).thenReturn(multilocusUnphasedGenotypeItem);
         super.testFindMultilocusUnphasedGenotype();
+    }
+
+    @Test
+    public void testFindMultilocusUnphasedGenotypeDoesNotExist() {
+        when(getItemResult.getItem()).thenReturn(null);
+        super.testFindMultilocusUnphasedGenotypeDoesNotExist();
     }
 }
