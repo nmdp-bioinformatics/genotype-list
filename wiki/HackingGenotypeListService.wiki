@@ -9,7 +9,10 @@ Install
 
 <br/>
 = Build =
+== Prepare Repository ==
+Currently, there are a couple of dependencies not in the Maven Central repository.  See ThirdPartyDependencies for ways to resolve those dependencies.
 
+== Maven Build ==
 To build
 {{{
 $ mvn install
