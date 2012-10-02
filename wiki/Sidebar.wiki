@@ -28,8 +28,14 @@
    * [GLRegistry#Components Components]
    * [GLRegistry#How_it_Works How it Works]
  * [GlWriter GL Writer]
-   * [GlWriter#Components Components]
-   * [GlWriter#How_it_Works How it Works]
+  * [GlWriter#Components Components]
+  * [GlWriter#How_it_Works How it Works]
+ * Storage Options
+  * [Cache]
+  * [JDBC]
+  * [RedisJedis Redis-Jedis]
+  * [Voldemort]
+
 
 ==Other Need-To-Know Information==
  * [ThirdPartyDependencies Third Party Dependencies]
