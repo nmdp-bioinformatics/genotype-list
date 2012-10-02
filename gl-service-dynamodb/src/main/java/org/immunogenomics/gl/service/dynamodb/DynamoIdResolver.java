@@ -106,7 +106,7 @@ public final class DynamoIdResolver implements IdResolver {
     private Object getGlResource(final String id) {
         // note: max key length is 2048 bytes
         Key key = new Key().withHashKeyElement(new AttributeValue().withS(id));
-        GetItemRequest getItemRequest = new GetItemRequest().withKey(key);
+        GetItemRequest getItemRequest = new GetItemRequest().withTableName("glResources").withKey(key);
         Future<GetItemResult> future = dynamo.getItemAsync(getItemRequest);
 
         long before = System.nanoTime();
@@ -116,12 +116,12 @@ public final class DynamoIdResolver implements IdResolver {
             logger.info("get gl resource {} took {} ns and consumed {} capacity units",
                         new Object[] { id, (after - before), getItemResult.getConsumedCapacityUnits() });
 
-            // todo:  if cache miss, will getItem() return null?  will get("glResource") return null?  or an exception be thrown?
-            //    https://forums.aws.amazon.com/thread.jspa?threadID=104609
-            ByteBuffer byteBuffer = getItemResult.getItem().get("glResource").getB();
-            byte[] bytes = new byte[byteBuffer.remaining()];
-            byteBuffer.get(bytes);
-            return deserialize(bytes);
+            if (getItemResult.getItem() != null) {
+                ByteBuffer byteBuffer = getItemResult.getItem().get("glResource").getB();
+                byte[] bytes = new byte[byteBuffer.remaining()];
+                byteBuffer.get(bytes);
+                return deserialize(bytes);
+            }
         }
         catch (InterruptedException e) {
             logger.warn("get gl resource " + id + " was interrupted", e);
