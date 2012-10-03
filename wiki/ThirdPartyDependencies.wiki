@@ -17,11 +17,11 @@ Companies should have there own local repository, but individuals may add missin
 http://maven.apache.org/repository-management.html
 
 = Workaround for installing missing dependencies =
-Change to the dependency-pull directory and execute the following to install the missing jars in your local maven repository. 
+Change to the *dependency-pull* directory and execute the following to install the missing jars in your local maven repository. 
 {{{
 % mvn package
 }}}
-The [https://code.google.com/p/genotype-list/source/browse/trunk/dependency-pull/pom.xml pom.xml]] is configured to download the proper files and install them.
+The [https://code.google.com/p/genotype-list/source/browse/trunk/dependency-pull/pom.xml pom.xml] is configured to download the proper files and install them.
 
 = Manually adding missing dependencies to local repository =
 
