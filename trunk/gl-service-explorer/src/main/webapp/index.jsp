@@ -119,7 +119,7 @@
       <div class="sixteen columns">
         <h2>Response</h2>
 
-        <table id="postHeaders" width="40%">
+        <table id="postHeaders" width="90%">
           <tbody>
             <tr>
               <td><strong>Content-Type</strong></td>
