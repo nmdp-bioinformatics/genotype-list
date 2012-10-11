@@ -37,11 +37,20 @@
   <name>gl</name>
   <description>Multimodule build for the gl project.</description>
   <url>http://code.google.com/p/genotype-list</url>
+  <inceptionYear>2012</inceptionYear>
 
   <organization>
     <name>Immunogenomics data analysis working group (IDAWG)</name>
     <url>http://immunogenomics.org</url>
   </organization>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL)</name>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <scm>
     <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/</connection>
@@ -248,6 +257,21 @@
         </executions>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>COPYING</include>
+          <include>COPYING.LESSER</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
   <dependencyManagement>
     <dependencies>
