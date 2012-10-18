@@ -35,12 +35,6 @@ public class ClientConnectionStateTest {
         }
         long time = System.currentTimeMillis();
         assertTrue("not delayed", startTime + 2 > time);
-        boolean blocked = connectionState.isBlocked(startTime);
-        assertFalse("throttled should not be blocked", blocked);
-        time = System.currentTimeMillis();
-        long delta = time - startTime;
-        assertTrue("delayed " + delta, delta >= config.getThrottleDelay());
-
     }
 
     @Test
@@ -73,7 +67,7 @@ public class ClientConnectionStateTest {
         testThrottle();
         long requestTime = startTime;
         config.setThrottleDelay(1);  // Shorten throttle delay to speed JUnit test
-        for (int i = 2; i < config.getAnonymousHitsPerMinute(); ++i) {
+        for (int i = 1; i < config.getAnonymousHitsPerMinute(); ++i) {
             if (connectionState.isBlocked(requestTime)) {
                 fail("throttled should not be blocked " + i);
             }
