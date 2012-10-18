@@ -39,13 +39,15 @@ public class ClientConnectionStateTest {
 
     @Test
     public void testThrottle() {
+        int throttleDelayInMs = 20;
+        config.setThrottleDelay(throttleDelayInMs + 1);
         testFreeHits();
         connectionState.isBlocked(startTime);
         boolean blocked = connectionState.isBlocked(startTime);
         assertFalse("throttled should not be blocked", blocked);
         long time = System.currentTimeMillis();
         long delta = time - startTime;
-        assertTrue("delayed", delta >= config.getThrottleDelay());
+        assertTrue("delayed", delta >= throttleDelayInMs);
     }
     
     @Test
