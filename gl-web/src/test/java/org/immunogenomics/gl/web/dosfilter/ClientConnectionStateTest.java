@@ -40,6 +40,7 @@ public class ClientConnectionStateTest {
     @Test
     public void testThrottle() {
         testFreeHits();
+        connectionState.isBlocked(startTime);
         boolean blocked = connectionState.isBlocked(startTime);
         assertFalse("throttled should not be blocked", blocked);
         long time = System.currentTimeMillis();
@@ -67,16 +68,23 @@ public class ClientConnectionStateTest {
         testThrottle();
         long requestTime = startTime;
         config.setThrottleDelay(1);  // Shorten throttle delay to speed JUnit test
-        for (int i = 1; i < config.getAnonymousHitsPerMinute(); ++i) {
+        int hitCount = config.getAnonymousHitsPerMinute() * 3 / 2;
+        int blockedCount = 0;
+        int throttleCount = 0;
+        for (int i = 1; i < hitCount; ++i) {
             if (connectionState.isBlocked(requestTime)) {
-                fail("throttled should not be blocked " + i);
+                blockedCount += 1;
+                if (throttleCount == 0) {
+                    fail("throttled should not be blocked " + i);
+                }
+            } else {
+                throttleCount += 1;
+                if (blockedCount > 0) {
+                    fail("Shouldn't go from blocked to throttled state");
+                }
             }
         }
-        for (int i = 1; i < 10; ++i) {
-            if (! connectionState.isBlocked(requestTime)) {
-                fail("connection should not be blocked " + i);
-            }
-        }
+        assertTrue("blocked hit", blockedCount > 0);
     }
 
 }
