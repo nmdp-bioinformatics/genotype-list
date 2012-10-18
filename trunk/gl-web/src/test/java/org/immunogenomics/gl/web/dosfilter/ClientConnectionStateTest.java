@@ -34,7 +34,8 @@ public class ClientConnectionStateTest {
             assertFalse("freeHit " + i, blocked);
         }
         long time = System.currentTimeMillis();
-        assertTrue("not delayed", startTime + 2 > time);
+        long delta = time - startTime;
+        assertTrue("not delayed", delta < config.getThrottleDelay());
     }
 
     @Test
