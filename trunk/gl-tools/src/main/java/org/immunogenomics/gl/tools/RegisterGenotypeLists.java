@@ -89,8 +89,8 @@ public final class RegisterGenotypeLists extends AbstractRegisterTask {
         {
             Switch help = new Switch("h", "help", "display help message");
             StringArgument namespace = new StringArgument("s", "namespace", "namespace", true);
-            FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring file", false);
-            FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier file", false);
+            FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring input file", false);
+            FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier output file", false);
 
             arguments = new ArgumentList(help, namespace, glstringFile, identifierFile);
             commandLine = new CommandLine(args);
