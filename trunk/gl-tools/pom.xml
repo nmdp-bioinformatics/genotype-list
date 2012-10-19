@@ -54,6 +54,10 @@
           <installArtifacts>false</installArtifacts>
           <programs>
             <program>
+              <mainClass>org.immunogenomics.gl.tools.AccessionSort</mainClass>
+              <name>accession-sort</name>
+            </program>
+            <program>
               <mainClass>org.immunogenomics.gl.tools.RegisterAlleleLists</mainClass>
               <name>gl-register-allele-lists</name>
             </program>
@@ -80,6 +84,10 @@
             <program>
               <mainClass>org.immunogenomics.gl.tools.RegisterMultilocusUnphasedGenotypes</mainClass>
               <name>gl-register-multilocus-unphased-genotypes</name>
+            </program>
+            <program>
+              <mainClass>org.immunogenomics.gl.tools.SmartSort</mainClass>
+              <name>smart-sort</name>
             </program>
           </programs>
         </configuration>
