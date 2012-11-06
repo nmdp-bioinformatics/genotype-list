@@ -224,6 +224,7 @@ public final class SparkGlService implements SparkApplication {
                 public Object handle(final Request request, final Response response) {
                     try {
                         loadImgtAlleles();
+                        loadImgtGGroups();
                         response.status(307);
                         response.redirect(".");
                         return "Redirect";
@@ -410,6 +411,34 @@ public final class SparkGlService implements SparkApplication {
                     String accession = tokens[0];
                     String glstring = nonHlaLoci.contains(tokens[1].substring(0, 4)) ? tokens[1] : "HLA-" + tokens[1];
                     Allele allele = glReader.readAllele(glstring, accession);
+                    logger.trace("Loaded IMGT allele {} {}", allele.getId(), allele.getGlstring());
+                }
+            }
+        }
+        catch (IOException e) {
+            throw e;
+        }
+        finally {
+            try {
+                reader.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
+    private void loadImgtGGroups() throws IOException {
+        // extract G groups from http://hla.alleles.org/alleles/g_groups.html to src/main/resources/org/immunogenomics/gl/service/GGroups.txt
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(SparkGlService.class.getResourceAsStream("GGroups.txt")));
+            while (reader.ready()) {
+                String line = reader.readLine();
+                if (line != null) {
+                    String name = line.trim();
+                    String glstring = nonHlaLoci.contains(name.substring(0, 4)) ? name : "HLA-" + name;
+                    Allele allele = glReader.readAllele(glstring, "");
                     logger.trace("Loaded IMGT allele {} {}", allele.getId(), allele.getGlstring());
                 }
             }
