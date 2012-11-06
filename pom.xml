@@ -64,6 +64,7 @@
   </issueManagement>
 
   <modules>
+    <module>gl-config</module>
     <module>gl-core</module>
     <module>gl-service</module>
     <module>gl-service-jdbc</module>
@@ -329,6 +330,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>3.1</version>
+      </dependency>
+      <dependency>
+	<groupId>org.99soft.guice</groupId>
+	<artifactId>rocoto</artifactId>
+	<version>6.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.velocity</groupId>

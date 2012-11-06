@@ -62,12 +62,6 @@ final class SparkModule extends AbstractModule {
         bind(SparkApplication.class).to(SparkGlService.class);
     }
 
-    @Provides @Singleton @Namespace
-    String readNamespace() {
-        NamespaceConfig config = new NamespaceConfig();
-        return config.readNamespace();
-    }
-
     @Provides @Singleton
     JsonFactory createJsonFactory() {
         return new JsonFactory();

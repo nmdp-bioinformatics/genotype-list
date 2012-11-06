@@ -62,7 +62,7 @@ public final class GlstringGlReaderTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        reader = new GlstringGlReader(glstringResolver, idResolver, glRegistry);
+        reader = new GlstringGlReader(true, true, glstringResolver, idResolver, glRegistry);
     }
 
     @Test
@@ -72,17 +72,17 @@ public final class GlstringGlReaderTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullGlstringResolver() {
-        new GlstringGlReader(null, idResolver, glRegistry);
+        new GlstringGlReader(true, true, null, idResolver, glRegistry);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullIdResolver() {
-        new GlstringGlReader(glstringResolver, null, glRegistry);
+        new GlstringGlReader(true, true, glstringResolver, null, glRegistry);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullGlRegisterer() {
-        new GlstringGlReader(glstringResolver, idResolver, null);
+        new GlstringGlReader(true, true, glstringResolver, idResolver, null);
     }
 
     // locus
@@ -104,6 +104,11 @@ public final class GlstringGlReaderTest {
     @Test(expected=IOException.class)
     public void testReadLocusInvalidGlstring() throws IOException {
         reader.readLocus("invalid glstring");
+    }
+
+    @Test(expected=IOException.class)
+    public void testReadLocusNewLociNotAllowed() throws IOException {
+        new GlstringGlReader(false, true, glstringResolver, idResolver, glRegistry).readLocus("HLA-Z");
     }
 
     // allele
@@ -135,6 +140,20 @@ public final class GlstringGlReaderTest {
     @Test(expected=IOException.class)
     public void testReadAlleleInvalidGlstring() throws IOException {
         reader.readAllele("invalid glstring", "Z01234");
+    }
+
+    @Test(expected=IOException.class)
+    public void testReadAlleleNewAllelesNotAllowed() throws IOException {
+        when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
+        GlstringGlReader newAllelesNotAllowed = new GlstringGlReader(true, false, glstringResolver, idResolver, glRegistry);
+        Locus locus = newAllelesNotAllowed.readLocus("HLA-Z");
+        assertNotNull(locus);
+        newAllelesNotAllowed.readAllele("HLA-Z*01:01:01:01", "Z01234");
+    }
+
+    @Test(expected=IOException.class)
+    public void testReadAlleleNewLociNewAllelesNotAllowed() throws IOException {
+        new GlstringGlReader(false, false, glstringResolver, idResolver, glRegistry).readAllele("HLA-Z*01:01:01:01", "Z01234");
     }
 
     // allele list
@@ -197,6 +216,20 @@ public final class GlstringGlReaderTest {
     @Test(expected=IOException.class)
     public void testReadAlleleListInvalidGlstring() throws IOException {
         reader.readAlleleList("invalid glstring");
+    }
+
+    @Test(expected=IOException.class)
+    public void testReadAlleleListNewAllelesNotAllowed() throws IOException {
+        when(glstringResolver.resolveLocus(anyString())).thenReturn("locus/id");
+        GlstringGlReader newAllelesNotAllowed = new GlstringGlReader(true, false, glstringResolver, idResolver, glRegistry);
+        Locus locus = newAllelesNotAllowed.readLocus("HLA-Z");
+        assertNotNull(locus);
+        newAllelesNotAllowed.readAlleleList("HLA-Z*01:01:01:01");
+    }
+
+    @Test(expected=IOException.class)
+    public void testReadAlleleListNewLociNewAllelesNotAllowed() throws IOException {
+        new GlstringGlReader(false, false, glstringResolver, idResolver, glRegistry).readAlleleList("HLA-Z*01:01:01:01");
     }
 
     // haplotype

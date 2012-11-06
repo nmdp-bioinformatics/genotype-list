@@ -38,7 +38,8 @@ public final class SparkVoldemortGlServiceApplication implements SparkApplicatio
 
     @Override
     public void init() {
-        Injector injector = Guice.createInjector(new SparkModule(), new VoldemortModule(), new IdModule());
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new VoldemortModule(), new IdModule());
         SparkApplication application = injector.getInstance(SparkApplication.class);
         application.init();
     }
