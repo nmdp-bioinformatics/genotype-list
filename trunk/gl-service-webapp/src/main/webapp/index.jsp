@@ -54,7 +54,7 @@
     <hr />
 
     <div class="two-thirds column">
-      <p>Load IMGT version 3.9.0 alleles:</p>
+      <p>Load IMGT version 3.10.0 alleles:</p>
       <form action="load-imgt-alleles" method="post">
         <input id="submit" type="submit" value="Load IMGT alleles">
       </form>
