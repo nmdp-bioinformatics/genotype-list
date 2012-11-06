@@ -3,7 +3,7 @@
 = Third party dependencies =
 
 == Not in Maven Central ==
-  * *voldemort-0.90.1.jar* - used by gl-service [http://www.project-voldemort.com/voldemort/ Voldemort]
+  * *voldemort-0.96.jar* - used by gl-service [http://www.project-voldemort.com/voldemort/ Voldemort]
   * *spark:spark:jar:0.9.9.3-SNAPSHOT* - used by gl-service-spark and in a [http://sparkjava.com Spark] repository
 
 == Listing dependencies ==
@@ -53,7 +53,7 @@ $ mvn install
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal on project gl-service-voldemort:
 Could not resolve dependencies for project org.immunogenomics.gl:gl-service-voldemort:jar:1.0-SNAPSHOT:
-Could not find artifact org.immunogenomics.gl.voldemort:voldemort:jar:0.90.1
+Could not find artifact org.immunogenomics.gl.voldemort:voldemort:jar:0.96
 in central (http://repo.maven.apache.org/maven2) -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
@@ -68,22 +68,22 @@ in central (http://repo.maven.apache.org/maven2) -> [Help 1]
 
 
 <br/>
-Download voldemort-0.90.1 from
+Download voldemort-0.96 from
 
-https://github.com/downloads/voldemort/voldemort/voldemort-0.90.1.tar.gz
+https://github.com/downloads/voldemort/voldemort/voldemort-0.96.tar.gz
 
 
 <br/>
-Extract voldemort-0.90.1.jar and install to the local repository with
+Extract voldemort-0.96.jar and install to the local repository with
 
 {{{
-$ tar xvfz voldemort-0.90.1.tar.gz
+$ tar xvfz voldemort-0.96.tar.gz
 $ mvn install:install-file \
       -DgroupId=org.immunogenomics.gl.voldemort \
       -DartifactId=voldemort \
-      -Dversion=0.90.1 \
+      -Dversion=0.96 \
       -Dpackaging=jar \
-      -Dfile=voldemort-0.90.1/dist/voldemort-0.90.1.jar 
+      -Dfile=voldemort-0.96/dist/voldemort-0.96.jar 
 [INFO] Scanning for projects...
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
@@ -91,10 +91,10 @@ $ mvn install:install-file \
 [INFO] ------------------------------------------------------------------------
 [INFO] 
 [INFO] --- maven-install-plugin:2.3:install-file (default-cli) @ standalone-pom ---
-[INFO] Installing /home/xxx/Downloads/voldemort-0.90.1/dist/voldemort-0.90.1.jar to
-/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.90.1/voldemort-0.90.1.jar
+[INFO] Installing /home/xxx/Downloads/voldemort-0.96/dist/voldemort-0.96.jar to
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.96/voldemort-0.96.jar
 [INFO] Installing /tmp/mvninstall2332719942582336652.pom to
-/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.90.1/voldemort-0.90.1.pom
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.96/voldemort-0.96.pom
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
