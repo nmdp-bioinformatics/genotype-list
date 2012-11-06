@@ -63,8 +63,8 @@
             <configuration>
               <systemProperties>
                 <property>
-                  <name>servlet.port</name>
-                  <value>${servlet.port}</value>
+                  <name>org.immunogenomics.gl.service.Namespace</name>
+                  <value>http://localhost:${servlet.port}/gl/</value>
                 </property>
               </systemProperties>
             </configuration>

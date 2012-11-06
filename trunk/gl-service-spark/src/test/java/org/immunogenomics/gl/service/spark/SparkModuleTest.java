@@ -28,9 +28,13 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.immunogenomics.gl.service.AllowNewAlleles;
+import org.immunogenomics.gl.service.AllowNewLoci;
+import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.cache.CacheModule;
 import org.immunogenomics.gl.service.id.IdModule;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -52,7 +56,19 @@ public class SparkModuleTest {
 
     @Test
     public void testSparkModule() {
-        Injector injector = Guice.createInjector(new IdModule(), new CacheModule(), sparkModule);
+        Injector injector = Guice.createInjector(new ConfigurationModule(), new IdModule(), new CacheModule(), sparkModule);
         assertNotNull(injector);
+    }
+
+    /**
+     * Configuration module.
+     */
+    private static class ConfigurationModule extends AbstractModule {
+
+        protected void configure() {
+            bind(String.class).annotatedWith(Namespace.class).toInstance("namespace");
+            bind(Boolean.class).annotatedWith(AllowNewAlleles.class).toInstance(Boolean.TRUE);
+            bind(Boolean.class).annotatedWith(AllowNewLoci.class).toInstance(Boolean.TRUE);
+        }
     }
 }

@@ -38,7 +38,8 @@ public final class SparkJdbcGlServiceApplication implements SparkApplication {
 
     @Override
     public void init() {
-        Injector injector = Guice.createInjector(new SparkModule(), new JdbcModule(), new IdModule());
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new JdbcModule(), new IdModule());
         SparkApplication application = injector.getInstance(SparkApplication.class);
         application.init();
     }

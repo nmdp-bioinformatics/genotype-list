@@ -38,7 +38,8 @@ public final class SparkJedisGlServiceApplication implements SparkApplication {
 
     @Override
     public void init() {
-        Injector injector = Guice.createInjector(new SparkModule(), new JedisModule(), new IdModule());
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new JedisModule(), new IdModule());
         SparkApplication application = injector.getInstance(SparkApplication.class);
         application.init();
     }

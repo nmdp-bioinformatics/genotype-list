@@ -1,6 +1,6 @@
 /*
 
-    gl-service-spark  Implementation of a URI-based RESTful service for the gl project using Spark.
+    gl-config  Property and environment variable configuration module.
     Copyright (c) 2012 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,26 +21,8 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.service.spark;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import org.immunogenomics.gl.service.cache.CacheModule;
-import org.immunogenomics.gl.service.id.IdModule;
-
-import spark.servlet.SparkApplication;
 
 /**
- * Wrapper for SparkGlService to allow Guice injection before initialization.
+ * Property and environment variable configuration module.
  */
-public final class SparkGlServiceApplication implements SparkApplication {
-
-    @Override
-    public void init() {
-        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
-                                                 new CacheModule(), new IdModule());
-        SparkApplication application = injector.getInstance(SparkApplication.class);
-        application.init();
-    }
-}
+package org.immunogenomics.gl.config;

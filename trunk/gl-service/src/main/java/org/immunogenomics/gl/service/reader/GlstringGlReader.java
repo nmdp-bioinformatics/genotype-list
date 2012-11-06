@@ -38,6 +38,8 @@ import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
+import org.immunogenomics.gl.service.AllowNewAlleles;
+import org.immunogenomics.gl.service.AllowNewLoci;
 import org.immunogenomics.gl.service.GlReader;
 import org.immunogenomics.gl.service.GlRegistry;
 import org.immunogenomics.gl.service.GlstringResolver;
@@ -52,15 +54,23 @@ public final class GlstringGlReader implements GlReader {
     private static final Pattern LOCUS_PATTERN = Pattern.compile("^[a-zA-Z0-9-_]+$");
     private static final Pattern ALLELE_PATTERN = Pattern.compile("^([a-zA-Z0-9-_]+)\\*([a-zA-Z0-9:]+)$");
 
+    private final boolean allowNewLoci;
+    private final boolean allowNewAlleles;
     private final GlstringResolver glstringResolver;
     private final IdResolver idResolver;
     private final GlRegistry glRegistry;
 
     @Inject
-    public GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry) {
+    public GlstringGlReader(@AllowNewLoci final boolean allowNewLoci,
+                            @AllowNewAlleles final boolean allowNewAlleles,
+                            final GlstringResolver glstringResolver,
+                            final IdResolver idResolver,
+                            final GlRegistry glRegistry) {
         checkNotNull(glstringResolver);
         checkNotNull(idResolver);
         checkNotNull(glRegistry);
+        this.allowNewLoci = allowNewLoci;
+        this.allowNewAlleles = allowNewAlleles;
         this.glstringResolver = glstringResolver;
         this.idResolver = idResolver;
         this.glRegistry = glRegistry;
@@ -71,7 +81,9 @@ public final class GlstringGlReader implements GlReader {
         final String id = glstringResolver.resolveLocus(glstring);
         Locus locus = idResolver.findLocus(id);
         if (locus == null) {
-            // todo:  might want to be able to turn this mode off, to prevent creating loci that aren't part of nomenclature
+            if (!allowNewLoci) {
+                throw new IOException("locus \"" + glstring + "\" not a valid locus");
+            }
             Matcher m = LOCUS_PATTERN.matcher(glstring);
             if (m.matches()) {
                 locus = new Locus(id, glstring);
@@ -90,7 +102,9 @@ public final class GlstringGlReader implements GlReader {
         final String id = glstringResolver.resolveAllele(glstring);
         Allele allele = idResolver.findAllele(id);
         if (allele == null) {
-            // todo:  might want to be able to turn this mode off, to prevent creating alleles that aren't part of nomenclature
+            if (!allowNewAlleles) {
+                throw new IOException("allele \"" + glstring + "\" not a valid allele");
+            }
             Matcher m = ALLELE_PATTERN.matcher(glstring);
             if (m.matches()) {
                 String locusPart = m.group(1);
