@@ -174,7 +174,7 @@ function updateApiData() {
 
 var googleURL = "http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=";
 function handleQRCode() {
-    var glURL =  serverURL + apiData.methodSelected + "/" + apiData.getArgs + "." + apiData.contentExtension;
+    var glURL =  serverURL + apiData.methodSelected + "/" + apiData.getArgs;
     var qrURL = googleURL +  encodeURIComponent(glURL);
     $("#serverResponse").html("");
     $("#serverResponse").append('<img src="' + qrURL + '"/>');
