@@ -36,18 +36,18 @@ import org.immunogenomics.gl.service.Nomenclature;
 public final class DefaultNomenclature implements Nomenclature {
 
     @Override
-    public String name() {
+    public String getName() {
         return "Default";
     }
 
     @Override
-    public String version() {
-        return "1.0.0";
+    public String getVersion() {
+        return "0.0.0";
     }
 
     @Override
-    public String description() {
-        return "The default nomenclature";
+    public String getURL() {
+        return "";
     }
 
     @Override
