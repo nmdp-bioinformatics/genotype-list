@@ -42,17 +42,17 @@ public final class ImgtHla3_10_0 extends ClasspathNomenclature {
     }
 
     @Override
-    public String name() {
-        return "IMGT HLA";
+    public String getName() {
+        return "IMGT/HLA Database";
     }
 
     @Override
-    public String version() {
+    public String getVersion() {
         return "3.10.0";
     }
 
     @Override
-    public String description() {
-        return "";
+    public String getURL() {
+        return "http://www.ebi.ac.uk/ipd/imgt/hla/";
     }
 }

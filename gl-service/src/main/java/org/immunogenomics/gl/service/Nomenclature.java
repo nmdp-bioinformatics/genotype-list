@@ -38,21 +38,21 @@ public interface Nomenclature {
      *
      * @return the name of this nomenclature
      */
-    String name();
+    String getName();
 
     /**
      * Return the version of this nomenclature.
      *
      * @return the version of this nomenclature
      */
-    String version();
+    String getVersion();
 
     /**
-     * Return a description of this nomenclature.
+     * Return the URL for this nomenclature.
      *
-     * @return a description of this nomenclature
+     * @return the URL for this nomenclature
      */
-    String description();
+    String getURL();
 
     /**
      * Load and register all the loci and alleles defined in this nomenclature.
