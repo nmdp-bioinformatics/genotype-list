@@ -33,6 +33,8 @@ import org.apache.velocity.runtime.log.LogChute;
 import org.immunogenomics.gl.service.GlReader;
 import org.immunogenomics.gl.service.GlWriter;
 import org.immunogenomics.gl.service.Namespace;
+import org.immunogenomics.gl.service.Nomenclature;
+import org.immunogenomics.gl.service.nomenclature.ImgtHla3_10_0;
 import org.immunogenomics.gl.service.reader.GlstringGlReader;
 import org.immunogenomics.gl.service.writer.GlstringGlWriter;
 import org.immunogenomics.gl.service.writer.HtmlGlWriter;
@@ -59,6 +61,7 @@ final class SparkModule extends AbstractModule {
     @Override 
     protected void configure() {
         bind(GlReader.class).to(GlstringGlReader.class);
+        bind(Nomenclature.class).to(ImgtHla3_10_0.class);
         bind(SparkApplication.class).to(SparkGlService.class);
     }
 
