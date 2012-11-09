@@ -52,6 +52,7 @@ import org.immunogenomics.gl.service.GlReader;
 import org.immunogenomics.gl.service.GlWriter;
 import org.immunogenomics.gl.service.IdResolver;
 import org.immunogenomics.gl.service.Namespace;
+import org.immunogenomics.gl.service.Nomenclature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,14 +72,16 @@ public final class SparkGlService implements SparkApplication {
     private final String ns;
     private final GlReader glReader;
     private final IdResolver idResolver;
+    private final Nomenclature nomenclature;
     private final Map<String, GlWriter> glWriters;
     private final Logger logger = LoggerFactory.getLogger(SparkGlService.class);
 
     @Inject
-    public SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Map<String, GlWriter> glWriters) {
+    public SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Nomenclature nomenclature, final Map<String, GlWriter> glWriters) {
         this.ns = ns;
         this.glReader = glReader;
         this.idResolver = idResolver;
+        this.nomenclature = nomenclature;
         this.glWriters = glWriters;
     }
 
@@ -218,41 +221,22 @@ public final class SparkGlService implements SparkApplication {
             }
         });
 
-        // todo:  replace with proper IMGT load mechanism
-        post(new Route("/load-imgt-alleles") {
+        post(new Route("/load") {
                 @Override
                 public Object handle(final Request request, final Response response) {
                     try {
-                        loadImgtAlleles();
-                        loadImgtGGroups();
-                        response.status(307);
-                        response.redirect(".");
-                        return "Redirect";
+                        List<Allele> alleles = nomenclature.load();
+                        response.status(200);
+                        response.type("text/html");
+                        logger.trace("OK (200) loaded {} alleles", alleles.size());
+                        // todo:  might want to generate text/plain instead, for e.g. wget -X post
+                        return generateLoadReport(alleles);
                     }
                     catch (IOException e) {
                         response.status(400);
                         response.type("text/plain");
-                        logger.warn("Failed to load IMGT alleles, caught {}", e.getMessage());
-                        return "Failed to load IMGT alleles";
-                    }
-                }
-            });
-
-        // todo:  copy and paste of load-imgt-alleles post handler
-        post(new Route("/load-kir-alleles") {
-                @Override
-                public Object handle(final Request request, final Response response) {
-                    try {
-                        loadKirAlleles();
-                        response.status(307);
-                        response.redirect(".");
-                        return "Redirect";
-                    }
-                    catch (IOException e) {
-                        response.status(400);
-                        response.type("text/plain");
-                        logger.warn("Failed to load KIR alleles, caught {}", e.getMessage());
-                        return "Failed to load KIR alleles";
+                        logger.warn("Failed to load nomenclature, caught {}", e.getMessage());
+                        return "Failed to load nomenclature";
                     }
                 }
             });
@@ -396,93 +380,27 @@ public final class SparkGlService implements SparkApplication {
         return "";
     }
 
-    // todo:  replace with proper IMGT load mechanism
-    private static final List<String> nonHlaLoci = ImmutableList.of("MICA", "MICB", "MICC", "MICD", "MICE", "PSMB9", "PSMB8", "TAP1", "TAP2");
-
-    private void loadImgtAlleles() throws IOException {
-        // save ftp://ftp.ebi.ac.uk/pub/databases/imgt/mhc/hla/Allelelist.txt to src/main/resources/org/immunogenomics/gl/service/Allelelist.txt
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(SparkGlService.class.getResourceAsStream("Allelelist.txt")));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                if (line != null) {
-                    String[] tokens = line.split(" ");
-                    String accession = tokens[0];
-                    String glstring = nonHlaLoci.contains(tokens[1].substring(0, 4)) ? tokens[1] : "HLA-" + tokens[1];
-                    Allele allele = glReader.readAllele(glstring, accession);
-                    logger.trace("Loaded IMGT allele {} {}", allele.getId(), allele.getGlstring());
-                }
-            }
+    // todo:  replace with JSP or template
+    private String generateLoadReport(final List<Allele> alleles) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(HEADER);
+        sb.append(ns);
+        sb.append("</h5><hr/><div class=\"two-thirds column\"><p>");
+        sb.append(nomenclature.getName());
+        sb.append(" ");
+        sb.append(nomenclature.getVersion());
+        sb.append("<br/><a href=\"" + nomenclature.getURL() + "\">" + nomenclature.getURL() + "</a>");
+        sb.append("</p><p>Loaded ");
+        sb.append(alleles.size());
+        sb.append(" alleles:</p><p>");
+        for (Allele allele : alleles) {
+            sb.append(allele.getGlstring());
+            sb.append(" &nbsp;");
+            sb.append("<a href=\"" + allele.getId() + "\">" + allele.getId() + "</a><br/>");
         }
-        catch (IOException e) {
-            throw e;
-        }
-        finally {
-            try {
-                reader.close();
-            }
-            catch (Exception e) {
-                // ignore
-            }
-        }
+        sb.append("</p></div></div></body></html>");
+        return sb.toString();
     }
 
-    private void loadImgtGGroups() throws IOException {
-        // extract G groups from http://hla.alleles.org/alleles/g_groups.html to src/main/resources/org/immunogenomics/gl/service/GGroups.txt
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(SparkGlService.class.getResourceAsStream("GGroups.txt")));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                if (line != null) {
-                    String name = line.trim();
-                    String glstring = nonHlaLoci.contains(name.substring(0, 4)) ? name : "HLA-" + name;
-                    Allele allele = glReader.readAllele(glstring, "");
-                    logger.trace("Loaded IMGT allele {} {}", allele.getId(), allele.getGlstring());
-                }
-            }
-        }
-        catch (IOException e) {
-            throw e;
-        }
-        finally {
-            try {
-                reader.close();
-            }
-            catch (Exception e) {
-                // ignore
-            }
-        }
-    }
-
-    // todo:  copy and paste of loadImgtAlleles()
-    private void loadKirAlleles() throws IOException {
-        // save ftp://ftp.ebi.ac.uk/pub/databases/ipd/kir/Allelelist.240.txt to src/main/resources/org/immunogenomics/gl/service/KirAllelelist.txt
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(SparkGlService.class.getResourceAsStream("KirAllelelist.txt")));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                if (line != null) {
-                    String[] tokens = line.split(" ");
-                    String accession = tokens[0];
-                    String glstring = tokens[1].startsWith("Mamu-KIR") ? tokens[1] : "KIR" + tokens[1];
-                    Allele allele = glReader.readAllele(glstring, accession);
-                    logger.trace("Loaded KIR allele {} {}", allele.getId(), allele.getGlstring());
-                }
-            }
-        }
-        catch (IOException e) {
-            throw e;
-        }
-        finally {
-            try {
-                reader.close();
-            }
-            catch (Exception e) {
-                // ignore
-            }
-        }
-    }
+    private static final String HEADER = "<html lang=\"en\"><head><meta charset=\"utf-8\"><title>Genotype List service</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"><link rel=\"stylesheet\" href=\"style/base.css\"><link rel=\"stylesheet\" href=\"style/skeleton.css\"><link rel=\"stylesheet\" href=\"style/layout.css\"><link rel=\"stylesheet\" href=\"style/gl-service.css\"><link rel=\"shortcut icon\" href=\"ico/favicon.ico\"></head><body><div class=\"container\"><h1 class=\"remove-bottom\" style=\"margin-top: 40px\">Genotype List service</h1><h5>Version 1.0-SNAPSHOT, Namespace ";
 }

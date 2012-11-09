@@ -54,16 +54,9 @@
     <hr />
 
     <div class="two-thirds column">
-      <p>Load IMGT version 3.10.0 alleles:</p>
-      <form action="load-imgt-alleles" method="post">
-        <input id="submit" type="submit" value="Load IMGT alleles">
-      </form>
-    </div>
-
-    <div class="two-thirds column">
-      <p>Load KIR version 2.4.0 alleles:</p>
-      <form action="load-kir-alleles" method="post">
-        <input id="submit" type="submit" value="Load KIR alleles">
+      <p>Load IMGT/HLA Database version 3.10.0 alleles</p>
+      <form action="load" method="post">
+        <input id="submit" type="submit" value="Load IMGT/HLA Database version 3.10.0 alleles">
       </form>
     </div>
   </div>
