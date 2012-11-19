@@ -1,0 +1,3 @@
+id=john,realm=toy,duration=3600,scope=read
+id=adam,realm=toy,duration=3600,scope=write read admin POST
+id=eve,realm=toy,duration=3600,scope=none
