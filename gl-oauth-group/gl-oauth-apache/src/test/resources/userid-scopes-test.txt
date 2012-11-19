@@ -1,0 +1,3 @@
+id=adam,realm=toy,scope=write read admin
+id=eve,realm=toy,scope=none
+id=john,realm=toy,scope=read
