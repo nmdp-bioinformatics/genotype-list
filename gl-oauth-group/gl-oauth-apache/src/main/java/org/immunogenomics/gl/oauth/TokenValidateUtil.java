@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import java.io.IOException;
@@ -30,72 +30,76 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Utility methods to support OAuth 2.0 implementations.
+ * 
  * @author mgeorge
- *
+ * 
  */
 public final class TokenValidateUtil {
-	
-	/** OAuth 2.0 authenticate request header. */
-	public static final String AUTHENTICATE = "Authenticate";
-	/** OAuth 2.0 authenticate response header. */
-	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
-	
-	/** Parameter name for passing the access token. */
-	private static final String TOKEN_PARAM = "token";
 
-	/**
-	 * Returns the token attached to the request by the toPost method.
-	 * @param request
-	 * @return
-	 */
-	public static String extractToken(HttpServletRequest request) {
-		return request.getParameter(TOKEN_PARAM);
-	}
-	
+    /** OAuth 2.0 authenticate request header. */
+    public static final String AUTHENTICATE = "Authenticate";
+    /** OAuth 2.0 authenticate response header. */
+    public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
 
+    /** Parameter name for passing the access token. */
+    private static final String TOKEN_PARAM = "token";
 
-	/**
-	 * Returns text/plain content to be returned containing information about the token.
-	 * @param request
-	 * @param validator
-	 * @return
-	 */
-	public static String generateResponse(HttpServletRequest request, TokenValidator validator) {
-		String token = TokenValidateUtil.extractToken(request);
-		AccessTokenDetails response = validator.validate(token);
-		return response.toString();
-	}
+    /**
+     * Returns the token attached to the request by the toPost method.
+     * 
+     * @param request
+     * @return
+     */
+    public static String extractToken(HttpServletRequest request) {
+        return request.getParameter(TOKEN_PARAM);
+    }
 
-	
-	/**
-	 * Send an error on the response based on the specified RequestScope and AuthorizationException.
-	 * @param response
-	 * @param scope
-	 * @param details
-	 * @throws IOException
-	 */
-	public static void sendOAuthError(HttpServletResponse response, RequestScope scope, AuthorizationException details) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Bearer");
-		sb.append(" realm=\"").append(scope.getRealm()).append('"');
-		if (scope.getScope() != null) {
-			sb.append(", scope=\"").append(scope.getScope()).append('"');
-		}
-		OAuthErrorCode error = details.getError();
-		if (error != null) {
-			sb.append(", error=\"").append(error.getError()).append('"');
-		}
-		if (details.getErrorDescription() != null) {
-			sb.append(", error_description=\"").append(details.getErrorDescription()).append('"');
-		}
-		response.setHeader(WWW_AUTHENTICATE, sb.toString());
-		response.sendError(error.getStatusCode(), error.getStatusMessage());
-	}
+    /**
+     * Returns text/plain content to be returned containing information about
+     * the token.
+     * 
+     * @param request
+     * @param validator
+     * @return
+     */
+    public static String generateResponse(HttpServletRequest request, TokenValidator validator) {
+        String token = TokenValidateUtil.extractToken(request);
+        AccessTokenDetails response = validator.validate(token);
+        return response.toString();
+    }
 
+    /**
+     * Send an error on the response based on the specified RequestScope and
+     * AuthorizationException.
+     * 
+     * @param response
+     * @param scope
+     * @param details
+     * @throws IOException
+     */
+    public static void sendOAuthError(HttpServletResponse response, RequestScope scope, AuthorizationException details)
+            throws IOException
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bearer");
+        sb.append(" realm=\"").append(scope.getRealm()).append('"');
+        if (scope.getScopeList() != null) {
+            sb.append(", scope=\"").append(scope.getScope()).append('"');
+        }
+        OAuthErrorCode error = details.getError();
+        if (error != null) {
+            sb.append(", error=\"").append(error.getError()).append('"');
+        }
+        if (details.getErrorDescription() != null) {
+            sb.append(", error_description=\"").append(details.getErrorDescription()).append('"');
+        }
+        response.setHeader(WWW_AUTHENTICATE, sb.toString());
+        response.sendError(error.getStatusCode(), error.getStatusMessage());
+    }
 
-	/** Returns the url used to validate a token. */
-	public static String encodeValidateTokenUrl(String validateUrl, String token) {
-		return validateUrl + "?" + TokenValidateUtil.TOKEN_PARAM + "="+ token;
-	}
+    /** Returns the url used to validate a token. */
+    public static String encodeValidateTokenUrl(String validateUrl, String token) {
+        return validateUrl + "?" + TokenValidateUtil.TOKEN_PARAM + "=" + token;
+    }
 
 }

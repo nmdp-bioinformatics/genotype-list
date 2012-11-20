@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import static org.junit.Assert.*;
@@ -30,26 +30,26 @@ import org.junit.Test;
 
 public class SyntaxCheckTest {
 
-	private SyntaxCheck check;
-	
-	@Before
-	public void setUp() {
-		check = new SyntaxCheck();
-	}
-	
-	@Test
-	public void testBase64() {
-		check.base64("asbsdf=");
-		expectInvalid(check);
-	}
+    private SyntaxCheck check;
 
-	private void expectInvalid(SyntaxCheck check) {
-		try {
-			check.base64("!@#$^!@$%=");
-			fail("invalid");
-		} catch (IllegalArgumentException ex) {
-			// expected
-		}
-	}
+    @Before
+    public void setUp() {
+        check = new SyntaxCheck();
+    }
+
+    @Test
+    public void testBase64() {
+        check.base64("asbsdf=");
+        expectInvalid(check);
+    }
+
+    private void expectInvalid(SyntaxCheck check) {
+        try {
+            check.base64("!@#$^!@$%=");
+            fail("invalid");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+    }
 
 }

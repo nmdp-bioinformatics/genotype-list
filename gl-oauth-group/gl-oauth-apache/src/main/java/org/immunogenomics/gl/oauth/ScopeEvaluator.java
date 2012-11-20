@@ -20,20 +20,20 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * Business logic for determining scope.
+ * 
  * @author mgeorge
- *
+ * 
  */
 public interface ScopeEvaluator {
 
-	/**  Returns the RequestScope based on analyzing the request. */
-	RequestScope analyzeRequest(HttpServletRequest request);
-	
+    /** Returns the RequestScope based on analyzing the request. */
+    RequestScope analyzeRequest(HttpServletRequest request);
+
 }

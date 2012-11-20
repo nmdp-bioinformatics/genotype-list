@@ -20,8 +20,8 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
-package org.immunogenomics.gl.oauth.ldap.portal;
+ */
+package org.immunogenomics.gl.oauth.toy.portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,48 +38,47 @@ import org.immunogenomics.gl.oauth.OAuthProvider;
 
 public class LdapAuthorizationProvider implements OAuthProvider {
 
-	private DirContext dirContext;
-	
-	public LdapAuthorizationProvider(DirContext dirContext) {
-		this.dirContext = dirContext;
-	}
+    private DirContext dirContext;
 
-	public AuthorizationDetails getAuthorization(String userid, String realm) {
-		AuthorizationDetails details = new AuthorizationDetails();
-		try {
-			String[] scopes = findScopes("userid=" + userid + ",ou=Users,dc=example,dc=com");
-			details.setScopes(scopes);
-			if (scopes.length > 0) {
-				details.setId(userid);
-				details.setRealm(realm);
-				details.setDuration(3600);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return details;
-	}
-	
-	private String[] findScopes(String uniqueMember) throws NamingException {
-		List<String> scopes = new ArrayList<String>();
-		BasicAttributes matchingAttrs = new BasicAttributes();
-		matchingAttrs.put("uniqueMember", uniqueMember);
-		NamingEnumeration<SearchResult> results = dirContext.search("ou=Groups",
-				matchingAttrs);
-		while (results.hasMore()) {
-			SearchResult sr = results.next();
-			Attributes attrs = sr.getAttributes();
-			String name = attrs.get("cn").get().toString();
-			if (name.endsWith("Scope")) {
-				String scope = name.substring(0, name.length() - 5).toLowerCase();
-				scopes.add(scope);
-			}
-		}
-		return scopes.toArray(new String[scopes.size()]);
-	}
+    public LdapAuthorizationProvider(DirContext dirContext) {
+        this.dirContext = dirContext;
+    }
 
-	public void dispose() {
-		dirContext = null;
-	}
+    public AuthorizationDetails getAuthorization(String userid, String realm) {
+        AuthorizationDetails details = new AuthorizationDetails();
+        try {
+            String[] scopes = findScopes("userid=" + userid + ",ou=Users,dc=example,dc=com");
+            details.setScopes(scopes);
+            if (scopes.length > 0) {
+                details.setId(userid);
+                details.setRealm(realm);
+                details.setDuration(3600);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return details;
+    }
+
+    private String[] findScopes(String uniqueMember) throws NamingException {
+        List<String> scopes = new ArrayList<String>();
+        BasicAttributes matchingAttrs = new BasicAttributes();
+        matchingAttrs.put("uniqueMember", uniqueMember);
+        NamingEnumeration<SearchResult> results = dirContext.search("ou=Groups", matchingAttrs);
+        while (results.hasMore()) {
+            SearchResult sr = results.next();
+            Attributes attrs = sr.getAttributes();
+            String name = attrs.get("cn").get().toString();
+            if (name.endsWith("Scope")) {
+                String scope = name.substring(0, name.length() - 5).toLowerCase();
+                scopes.add(scope);
+            }
+        }
+        return scopes.toArray(new String[scopes.size()]);
+    }
+
+    public void dispose() {
+        dirContext = null;
+    }
 
 }

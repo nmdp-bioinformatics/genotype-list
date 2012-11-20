@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import java.util.regex.Matcher;
@@ -28,11 +28,11 @@ import java.util.regex.Pattern;
 
 public class SyntaxCheck {
 
-	public void base64(String arg) {
-		Pattern pattern = Pattern.compile("[A-Za-z0-9\\+\\-]+=*");
-		Matcher matcher = pattern.matcher(arg);
-		if (! matcher.matches()) {
-			throw new IllegalArgumentException(arg);
-		}
-	}
+    public void base64(String arg) {
+        Pattern pattern = Pattern.compile("[A-Za-z0-9\\+\\-]+=*");
+        Matcher matcher = pattern.matcher(arg);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(arg);
+        }
+    }
 }

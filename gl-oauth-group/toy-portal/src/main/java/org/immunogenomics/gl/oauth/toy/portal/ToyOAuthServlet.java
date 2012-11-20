@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth.toy.portal;
 
 import javax.servlet.ServletConfig;
@@ -32,28 +32,27 @@ import org.immunogenomics.gl.oauth.TokenValidator;
 
 /**
  * Validates tokens using a static algorithm.
- *  during testing and development.
+ * during testing and development.
  */
 public class ToyOAuthServlet extends AbstractOAuthServlet {
 
-	private static final long serialVersionUID = 1L;
-	private TokenValidator tokenValidator;
+    private static final long serialVersionUID = 1L;
+    private TokenValidator tokenValidator;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		tokenValidator = new ToyTokenValidator();
-	}
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        tokenValidator = new ToyTokenValidator();
+    }
 
-	@Override
-	protected String validateToken(String token) {
-		return tokenValidator.validate(token).toString();
-	}
+    @Override
+    protected String validateToken(String token) {
+        return tokenValidator.validate(token).toString();
+    }
 
-	@Override
-	public AuthorizationManager getAuthorizationManager() {
-		throw new UnsupportedOperationException("getAuthorizationManager not supported by " + getClass());
-	}
+    @Override
+    public AuthorizationManager getAuthorizationManager() {
+        throw new UnsupportedOperationException("getAuthorizationManager not supported by " + getClass());
+    }
 
-	
 }

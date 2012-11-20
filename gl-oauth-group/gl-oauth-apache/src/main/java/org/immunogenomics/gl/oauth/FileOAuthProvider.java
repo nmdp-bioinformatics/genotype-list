@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import java.io.IOException;
@@ -30,64 +30,67 @@ import java.io.LineNumberReader;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 public class FileOAuthProvider implements OAuthProvider {
 
-	private ConcurrentHashMap<String, AuthorizationDetails> userAndRealmToDetails = new ConcurrentHashMap<String, AuthorizationDetails>();
-	
-	public FileOAuthProvider(String resourceName) {
-		InputStream inputStream = getClass().getResourceAsStream(resourceName);
-		LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
-		readAndClose(lineNumberReader);
-	}
-	
-	public AuthorizationDetails getAuthorization(String userid, String realm) {
-		AuthorizationDetails details = userAndRealmToDetails.get(toKey(userid, realm));
-		return details;
-	}
+    private ConcurrentHashMap<String, AuthorizationDetails> userAndRealmToDetails =
+            new ConcurrentHashMap<String, AuthorizationDetails>();
 
-	private void readAndClose(LineNumberReader lineNumberReader) {
-		String line;
-		try {
-			while (null != (line = lineNumberReader.readLine())) {
-				add(new AuthorizationDetails(line));
-			}
-			lineNumberReader.close();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public FileOAuthProvider(String resourceName) {
+        InputStream inputStream = getClass().getResourceAsStream(resourceName);
+        LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
+        readAndClose(lineNumberReader);
+    }
 
-	public void add(AuthorizationDetails details) {
-		String userid = details.getId();
-		String realm = details.getRealm();
-		add(userid, realm, details);
-	}
+    public AuthorizationDetails getAuthorization(String userid, String realm) {
+        AuthorizationDetails details = userAndRealmToDetails.get(toKey(userid, realm));
+        return details;
+    }
 
-	private void add(String userid, String realm, AuthorizationDetails details) {
-		checkArg("userid", userid);
-		checkArg("realm", realm);
-		String key = toKey(userid, realm);
-		userAndRealmToDetails.put(key, details);
-	}
+    private void readAndClose(LineNumberReader lineNumberReader) {
+        String line;
+        try {
+            while (null != (line = lineNumberReader.readLine())) {
+                line = line.trim();
+                if (line.length() > 0) {
+                    add(new AuthorizationDetails(line));
+                }
+            }
+            lineNumberReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private String toKey(String userid, String realm) {
-		return userid + "\t" + realm;
-	}
+    public void add(AuthorizationDetails details) {
+        String userid = details.getId();
+        String realm = details.getRealm();
+        add(userid, realm, details);
+    }
 
-	private void checkArg(String name, String arg) {
-		if (arg == null || arg.contains("\t")) {
-			throw new IllegalArgumentException(name + " is invalid: " + arg);
-		}
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		Collection<AuthorizationDetails> values = userAndRealmToDetails.values();
-		for (AuthorizationDetails authorizationDetails : values) {
-			sb.append(authorizationDetails).append("\n");
-		}
-		return sb.toString();
-	}
+    private void add(String userid, String realm, AuthorizationDetails details) {
+        checkArg("userid", userid);
+        checkArg("realm", realm);
+        String key = toKey(userid, realm);
+        userAndRealmToDetails.put(key, details);
+    }
+
+    private String toKey(String userid, String realm) {
+        return userid + "\t" + realm;
+    }
+
+    private void checkArg(String name, String arg) {
+        if (arg == null || arg.contains("\t")) {
+            throw new IllegalArgumentException(name + " is invalid: " + arg);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Collection<AuthorizationDetails> values = userAndRealmToDetails.values();
+        for (AuthorizationDetails authorizationDetails : values) {
+            sb.append(authorizationDetails).append("\n");
+        }
+        return sb.toString();
+    }
 }

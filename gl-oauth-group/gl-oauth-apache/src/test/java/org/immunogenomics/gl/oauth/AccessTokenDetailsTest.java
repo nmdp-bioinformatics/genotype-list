@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import static org.junit.Assert.*;
@@ -29,31 +29,30 @@ import org.junit.Test;
 
 public class AccessTokenDetailsTest {
 
-	@Test
-	public void testTokenValidateResponse() {
-		AccessTokenDetails response = new AccessTokenDetails();
-		checkToAndFromString(response);
-		response.setExpiresIn(12345);
-		checkToAndFromString(response);
-		response.setId("Fred");
-		checkToAndFromString(response);
-		response.setRealm("JUnit");
-		checkToAndFromString(response);
-		String[] scope = {"one", "two"};
-		response.setScopes(scope );
-		checkToAndFromString(response);
-		
-	}
+    @Test
+    public void testTokenValidateResponse() {
+        AccessTokenDetails response = new AccessTokenDetails();
+        checkToAndFromString(response);
+        response.setExpiresIn(12345);
+        checkToAndFromString(response);
+        response.setId("Fred");
+        checkToAndFromString(response);
+        response.setRealm("JUnit");
+        checkToAndFromString(response);
+        String[] scope = { "one", "two" };
+        response.setScopes(scope);
+        checkToAndFromString(response);
 
-	private void checkToAndFromString(AccessTokenDetails response) {
-		String content = response.toString();
-		AccessTokenDetails parsedResponse = new AccessTokenDetails(content);
-		assertEquals(response.getExpiresIn(), parsedResponse.getExpiresIn());
-		assertEquals(response.getId(), parsedResponse.getId());
-		assertEquals(response.getRealm(), parsedResponse.getRealm());
-		assertArrayEquals("scope array", response.getScopes(), parsedResponse.getScopes());
-		
-	}
+    }
 
+    private void checkToAndFromString(AccessTokenDetails response) {
+        String content = response.toString();
+        AccessTokenDetails parsedResponse = new AccessTokenDetails(content);
+        assertEquals(response.getExpiresIn(), parsedResponse.getExpiresIn());
+        assertEquals(response.getId(), parsedResponse.getId());
+        assertEquals(response.getRealm(), parsedResponse.getRealm());
+        assertArrayEquals("scope array", response.getScopes(), parsedResponse.getScopes());
+
+    }
 
 }

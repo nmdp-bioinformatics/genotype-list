@@ -20,34 +20,31 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
-
 
 public class AuthorizationCache implements TokenValidator {
 
-	private final TokenValidator delegate;
-	private final TokenStore tokenStore;
+    private final TokenValidator delegate;
+    private final TokenStore tokenStore;
 
-	public AuthorizationCache(TokenValidator delegate, TokenStore tokenStore) {
-		this.delegate = delegate;
-		this.tokenStore = tokenStore;
-	}
-	
-	public AccessTokenDetails validate(String token) {
-		AccessTokenDetails authorization = tokenStore.get(token);
-		if (authorization == null) {
-			authorization = delegate.validate(token);
-			tokenStore.put(token, authorization);
-		}
-		return authorization;
-	}
+    public AuthorizationCache(TokenValidator delegate, TokenStore tokenStore) {
+        this.delegate = delegate;
+        this.tokenStore = tokenStore;
+    }
 
-	
+    public AccessTokenDetails validate(String token) {
+        AccessTokenDetails authorization = tokenStore.get(token);
+        if (authorization == null) {
+            authorization = delegate.validate(token);
+            tokenStore.put(token, authorization);
+        }
+        return authorization;
+    }
 
-	public void close() {
-		delegate.close();
-		tokenStore.dispose();
-	}
-	
+    public void close() {
+        delegate.close();
+        tokenStore.dispose();
+    }
+
 }

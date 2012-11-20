@@ -20,8 +20,8 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
-package org.immunogenomics.gl.oauth.ldap.portal;
+ */
+package org.immunogenomics.gl.oauth.toy.portal;
 
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
@@ -32,40 +32,39 @@ import org.immunogenomics.gl.oauth.AbstractOAuthServlet;
 import org.immunogenomics.gl.oauth.AuthorizationManager;
 import org.immunogenomics.gl.oauth.MemoryTokenStore;
 
-public class OAuthDispatcherServlet extends AbstractOAuthServlet {
+public class LdapOAuthServlet extends AbstractOAuthServlet {
 
-	private static final long serialVersionUID = 1L;
-	private AuthorizationManager authorizationService;
-	private DirContext directoryContext;
-	
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		LdapAuthorizationProvider authorizationProvider;
-		try {
-			directoryContext = LdapSample.getDirectoryContext();
-			authorizationProvider = new LdapAuthorizationProvider(directoryContext);
-		} catch (NamingException e) {
-			throw new ServletException(e);
-		}
-		authorizationService = new AuthorizationManager(authorizationProvider, new MemoryTokenStore());
-	}
+    private static final long serialVersionUID = 1L;
+    private AuthorizationManager authorizationManager;
+    private DirContext directoryContext;
 
-	@Override
-	public void destroy() {
-		authorizationService.close();
-		try {
-			directoryContext.close();
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		super.destroy();
-	}
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        LdapAuthorizationProvider authorizationProvider;
+        try {
+            directoryContext = LdapSample.getDirectoryContext();
+            authorizationProvider = new LdapAuthorizationProvider(directoryContext);
+        } catch (NamingException e) {
+            throw new ServletException(e);
+        }
+        authorizationManager = new AuthorizationManager(authorizationProvider, new MemoryTokenStore());
+    }
 
-	@Override
-	public AuthorizationManager getAuthorizationManager() {
-		return authorizationService;
-	}
+    @Override
+    public void destroy() {
+        authorizationManager.close();
+        try {
+            directoryContext.close();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+        super.destroy();
+    }
 
-	
+    @Override
+    public AuthorizationManager getAuthorizationManager() {
+        return authorizationManager;
+    }
+
 }

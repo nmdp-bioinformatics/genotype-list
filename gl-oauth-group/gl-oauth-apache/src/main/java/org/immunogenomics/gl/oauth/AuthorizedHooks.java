@@ -20,28 +20,32 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
- * Hooks that allow an application to attach authorization information to the thread or the request.
+ * Hooks that allow an application to attach authorization information to the
+ * thread or the request.
+ * 
  * @author mgeorge
- *
+ * 
  */
 public interface AuthorizedHooks {
-	
-	/** Called prior to performing normal operations.
-	 * Implementations are expected to attach necessary authorization information to the thread or the request.
-	 * @param request
-	 * @param authorization
-	 */
-	void beginAuthorized(HttpServletRequest request, AccessTokenDetails authorization);
 
-	/**
-	 * Remove any authorization information from the thread.
-	 */
-	void endAuthorized();
+    /**
+     * Called prior to performing normal operations.
+     * Implementations are expected to attach necessary authorization
+     * information to the thread or the request.
+     * 
+     * @param request
+     * @param authorization
+     */
+    void beginAuthorized(HttpServletRequest request, AccessTokenDetails authorization);
+
+    /**
+     * Remove any authorization information from the thread.
+     */
+    void endAuthorized();
 }

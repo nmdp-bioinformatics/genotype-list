@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth.toy.portal;
 
 import javax.servlet.ServletConfig;
@@ -33,25 +33,25 @@ import org.immunogenomics.gl.oauth.MemoryTokenStore;
 
 /**
  * OAuthServlet backed by a static FileOAuthProvider.
- *
+ * 
  */
 public class FileOAuthServlet extends AbstractOAuthServlet {
 
-	private static final long serialVersionUID = 1L;
-	private static AuthorizationManager authorizationManager;
+    private static final long serialVersionUID = 1L;
+    private static AuthorizationManager authorizationManager;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		if (authorizationManager == null) {
-			FileOAuthProvider fileOAuthProvider = new FileOAuthProvider("/userid-scopes.txt");
-			authorizationManager = new AuthorizationManager(fileOAuthProvider, new MemoryTokenStore());
-		}
-	}
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        if (authorizationManager == null) {
+            FileOAuthProvider fileOAuthProvider = new FileOAuthProvider("/userid-scopes.txt");
+            authorizationManager = new AuthorizationManager(fileOAuthProvider, new MemoryTokenStore());
+        }
+    }
 
-	@Override
-	public AuthorizationManager getAuthorizationManager() {
-		return authorizationManager;
-	}
+    @Override
+    public AuthorizationManager getAuthorizationManager() {
+        return authorizationManager;
+    }
 
 }

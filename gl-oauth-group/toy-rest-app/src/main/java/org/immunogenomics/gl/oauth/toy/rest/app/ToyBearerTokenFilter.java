@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth.toy.rest.app;
 
 import java.io.IOException;
@@ -48,66 +48,61 @@ import org.immunogenomics.gl.oauth.apache.RemoteTokenValidator;
 
 public class ToyBearerTokenFilter extends DefaultAuthorizer implements Filter, ScopeEvaluator, AuthorizedHooks {
 
-	private String realm;
-	private TokenValidator tokenValidator;
-	private BearerTokenFilterHelper filterHelper;
+    private String realm;
+    private TokenValidator tokenValidator;
+    private BearerTokenFilterHelper filterHelper;
 
-	public void init(FilterConfig config) throws ServletException {
-		realm = config.getInitParameter("realm");
-		String validateUrl = config.getInitParameter("validateUrl");
-		tokenValidator = new RemoteTokenValidator(validateUrl);
-		tokenValidator = new AuthorizationCache(tokenValidator, new MemoryTokenStore());
-		filterHelper = new BearerTokenFilterHelper(tokenValidator, this, this);
-	}
-	
-	
-	public void destroy() {
-		tokenValidator.close();
-	}
+    public void init(FilterConfig config) throws ServletException {
+        realm = config.getInitParameter("realm");
+        String validateUrl = config.getInitParameter("validateUrl");
+        tokenValidator = new RemoteTokenValidator(validateUrl);
+        tokenValidator = new AuthorizationCache(tokenValidator, new MemoryTokenStore());
+        filterHelper = new BearerTokenFilterHelper(tokenValidator, this, this);
+    }
 
-	/* ScopeEvaluator */
-	public RequestScope analyzeRequest(HttpServletRequest request) {
-		String method = request.getMethod();
-		String scope = method;
-		String path = request.getServletPath();
-		if (path == null) {
-		} else if (path.startsWith("/locus")) {
-			scope = "locus";
-		} else if (path.startsWith("/allele")) {
-			scope = "allele";
-		}
-		RequestScope scopeDetails = new RequestScope(method, realm, scope);
-		return scopeDetails;
-	}
-	
-	public class ToyAuthorizer extends DefaultAuthorizer {
-		@Override
-		public void checkAuthorized(RequestScope requestScope,
-				AccessTokenDetails authorization) throws AuthorizationException {
-			if ("GET".equals(requestScope.getMethod())) {
-				// Unprotected
-				return;
-			}
-			// POST and other methods require Authorization
-			super.checkAuthorized(requestScope, authorization);
-		}
-	}
+    public void destroy() {
+        tokenValidator.close();
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain filterChain) throws IOException, ServletException {
-		filterHelper.doFilter((HttpServletRequest)request, (HttpServletResponse)response, filterChain);
-	}
+    /* ScopeEvaluator */
+    public RequestScope analyzeRequest(HttpServletRequest request) {
+        String method = request.getMethod();
+        String scope = method;
+        String path = request.getServletPath();
+        if (path == null) {} else if (path.startsWith("/locus")) {
+            scope = "locus";
+        } else if (path.startsWith("/allele")) {
+            scope = "allele";
+        }
+        RequestScope scopeDetails = new RequestScope(method, realm, scope);
+        return scopeDetails;
+    }
 
+    @Override
+    public void checkAuthorized(RequestScope requestScope, AccessTokenDetails authorization)
+            throws AuthorizationException
+    {
+        if ("GET".equals(requestScope.getMethod())) {
+            // Unprotected
+            return;
+        }
+        // POST and other methods require Authorization
+        super.checkAuthorized(requestScope, authorization);
+    }
 
-	public void beginAuthorized(HttpServletRequest request,
-			AccessTokenDetails authorization) {
-		request.setAttribute("authorizationId", authorization.getId());
-		request.setAttribute("authorizationScopes", authorization.getScopes());
-	}
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,
+            ServletException
+    {
+        filterHelper.doFilter((HttpServletRequest) request, (HttpServletResponse) response, filterChain);
+    }
 
+    public void beginAuthorized(HttpServletRequest request, AccessTokenDetails authorization) {
+        request.setAttribute("authorizationId", authorization.getId());
+        request.setAttribute("authorizationScopes", authorization.getScopes());
+    }
 
-	public void endAuthorized() {
-		// not needed since authorization info is attached to request.
-	}
+    public void endAuthorized() {
+        // not needed since authorization info is attached to request.
+    }
 
 }

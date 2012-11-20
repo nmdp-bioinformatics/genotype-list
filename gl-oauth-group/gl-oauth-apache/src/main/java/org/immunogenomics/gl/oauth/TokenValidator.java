@@ -20,20 +20,20 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 /**
  * Responsible for determining the AccessTokenDetails for a token.
- *
+ * 
  */
 public interface TokenValidator {
 
-	AccessTokenDetails validate(String accessToken);
+    AccessTokenDetails validate(String accessToken);
 
-	/**
-	 * Release or close any open resources.
-	 */
-	void close();
+    /**
+     * Release or close any open resources.
+     */
+    void close();
 
 }

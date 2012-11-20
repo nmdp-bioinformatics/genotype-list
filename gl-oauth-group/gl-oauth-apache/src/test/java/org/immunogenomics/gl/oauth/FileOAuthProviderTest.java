@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import static org.junit.Assert.*;
@@ -29,22 +29,22 @@ import org.junit.Test;
 
 public class FileOAuthProviderTest {
 
-	@Test
-	public void test() {
-		String userid = "testuser";
-		String realm = "junit";
+    @Test
+    public void test() {
+        String userid = "testuser";
+        String realm = "junit";
 
-		FileOAuthProvider provider = new FileOAuthProvider("/userid-scopes-test.txt");
-		AuthorizationDetails details = new AuthorizationDetails();
-		details.setId(userid);
-		details.setRealm(realm);
-		details.setDuration(100);
-		details.setScopes(new String[]{"write", "read", "junit"});
-		provider.add(details );
-		System.out.println(provider);
-		
-		AuthorizationDetails authorization = provider.getAuthorization(userid , realm);
-		assertEquals(userid, authorization.getId());
-	}
+        FileOAuthProvider provider = new FileOAuthProvider("/userid-scopes-test.txt");
+        AuthorizationDetails details = new AuthorizationDetails();
+        details.setId(userid);
+        details.setRealm(realm);
+        details.setDuration(100);
+        details.setScopes(new String[] { "write", "read", "junit" });
+        provider.add(details);
+        System.out.println(provider);
+
+        AuthorizationDetails authorization = provider.getAuthorization(userid, realm);
+        assertEquals(userid, authorization.getId());
+    }
 
 }

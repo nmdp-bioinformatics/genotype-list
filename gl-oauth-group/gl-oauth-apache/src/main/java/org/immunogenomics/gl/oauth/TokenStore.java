@@ -20,26 +20,29 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
-/** 
- * Responsible for holding the AuthorizationDetails associated with an access token.
+/**
+ * Responsible for holding the AuthorizationDetails associated with an access
+ * token.
  */
 public interface TokenStore {
 
-	AccessTokenDetails get(String token);
-	
-	/**
-	 * Add the authorization to the store and return an token that may be used to 
-	 * retrieve it.
-	 * @param authorization
-	 * @return token
-	 */
-	String add(AccessTokenDetails authorization);
+    AccessTokenDetails get(String token);
 
-	void put(String token, AccessTokenDetails authorization);
+    /**
+     * Add the authorization to the store and return an token that may be used
+     * to
+     * retrieve it.
+     * 
+     * @param authorization
+     * @return token
+     */
+    String add(AccessTokenDetails authorization);
 
-	void dispose();
-	
+    void put(String token, AccessTokenDetails authorization);
+
+    void dispose();
+
 }
