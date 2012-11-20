@@ -59,15 +59,16 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
     public void init(FilterConfig config) throws ServletException {
         realm = config.getInitParameter("realm");
         String validateUrl = config.getInitParameter("validateUrl");
+        validateUrl = System.getProperty("oauth.validate.url", validateUrl);
         tokenValidator = new RemoteTokenValidator(validateUrl);
         tokenValidator = new AuthorizationCache(tokenValidator, new MemoryTokenStore());
         filterHelper = new BearerTokenFilterHelper(tokenValidator, this, this);
-        logger.debug(getClass().getSimpleName() + " initialized.");
+        logger.info("initialized realm={} with {}", realm, validateUrl);
     }
 
     public void destroy() {
         tokenValidator.close();
-        logger.debug(getClass().getSimpleName() + " destroyed.");
+        logger.debug("destroyed.");
     }
 
     /* ScopeEvaluator */
