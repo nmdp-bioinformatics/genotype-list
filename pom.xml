@@ -80,6 +80,10 @@
     <module>gl-client</module>
     <module>gl-client-functional-tests</module>
     <module>gl-tools</module>
+    <module>gl-web</module>
+    <module>gl-oauth-group</module>
+    <module>gl-service-webapp-custom/glsw-oauth</module>
+    <module>gl-jetty</module>
   </modules>
 
   <build>
