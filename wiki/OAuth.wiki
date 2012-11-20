@@ -1,4 +1,4 @@
-#OAuth support
+#summary OAuth 2.0 support
 
 = Introduction =
 
