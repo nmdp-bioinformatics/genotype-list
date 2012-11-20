@@ -20,52 +20,53 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
-/** 
+/**
  * Manages authorization using an AuthorizationProvider and a TokenStore.
+ * 
  * @author mgeorge
- *
+ * 
  */
 public class AuthorizationManager implements TokenValidator {
 
-	private OAuthProvider authorizationProvider;
-	private TokenStore tokenStore;
+    private OAuthProvider authorizationProvider;
+    private TokenStore tokenStore;
 
-	public AuthorizationManager(OAuthProvider authorizationProvider, TokenStore tokenStore) {
-		this.authorizationProvider = authorizationProvider;
-		this.tokenStore = tokenStore;
-	}
+    public AuthorizationManager(OAuthProvider authorizationProvider, TokenStore tokenStore) {
+        this.authorizationProvider = authorizationProvider;
+        this.tokenStore = tokenStore;
+    }
 
-	public AccessTokenDetails validate(String token) {
-		return tokenStore.get(token);
-	}
+    public AccessTokenDetails validate(String token) {
+        return tokenStore.get(token);
+    }
 
-	/**
-	 * Return an access token for the specified userid and realm.
-	 * @param userid
-	 * @param realm
-	 * @return
-	 */
-	public String getAuthorization(String userid, String realm) {
-		AuthorizationDetails authorization = authorizationProvider.getAuthorization(userid, realm);
-		if (authorization == null) {
-		    //TODO: Consider better ways to handle this.
-		    return "NO_AUTHORIZATION";
-		}
-		AccessTokenDetails accessTokenDetails = new AccessTokenDetails();
-		accessTokenDetails.setId("TrackingId");
-		accessTokenDetails.setAuthorization(authorization);
-		accessTokenDetails.setExpiresIn(authorization.getDuration());
-		String token = tokenStore.add(accessTokenDetails);
-		return token;
-	}
+    /**
+     * Return an access token for the specified userid and realm.
+     * 
+     * @param userid
+     * @param realm
+     * @return
+     */
+    public String getAuthorization(String userid, String realm) {
+        AuthorizationDetails authorization = authorizationProvider.getAuthorization(userid, realm);
+        if (authorization == null) {
+            // TODO: Consider better ways to handle this.
+            return "NO_AUTHORIZATION";
+        }
+        AccessTokenDetails accessTokenDetails = new AccessTokenDetails();
+        accessTokenDetails.setId("TrackingId");
+        accessTokenDetails.setAuthorization(authorization);
+        accessTokenDetails.setExpiresIn(authorization.getDuration());
+        String token = tokenStore.add(accessTokenDetails);
+        return token;
+    }
 
-	
-	public void close() {
-		authorizationProvider = null;
-		tokenStore = null;
-	}
-	
+    public void close() {
+        authorizationProvider = null;
+        tokenStore = null;
+    }
+
 }

@@ -20,55 +20,65 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
+import java.util.Arrays;
+import java.util.List;
 
 public class DefaultAuthorizer implements Authorizer {
 
-	/**
-	 * Verifies the authorization is valid for the
-	 * @param requestScope
-	 * @param authorization
-	 * @throws AuthorizationException if authorization is not valid.
-	 */
-	public void checkAuthorized(RequestScope requestScope, AccessTokenDetails authorization) throws AuthorizationException {
-		if (authorization == null) {
-			throw new AuthorizationException(OAuthErrorCode.INVALID_REQUEST, "authorization is required");
-		}
-		if (!requestScope.hasRealm(authorization.getRealm())) {
-			throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "token does not have realm " + requestScope.getRealm());
-		}
-		checkExpiration(authorization.getExpiresIn());
-		checkScope(requestScope.getScope(), authorization.getScopes());
-	}	
+    /**
+     * Verifies the authorization is valid for the
+     * 
+     * @param requestScope
+     * @param authorization
+     * @throws AuthorizationException
+     *             if authorization is not valid.
+     */
+    public void checkAuthorized(RequestScope requestScope, AccessTokenDetails authorization)
+            throws AuthorizationException
+    {
+        if (authorization == null) {
+            throw new AuthorizationException(OAuthErrorCode.INVALID_REQUEST, "authorization is required");
+        }
+        if (!requestScope.hasRealm(authorization.getRealm())) {
+            throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "token does not have realm "
+                    + requestScope.getRealm());
+        }
+        checkExpiration(authorization.getExpiresIn());
+        checkScope(requestScope.getScopeList(), authorization.getScopes());
+    }
 
-	/**
-	 * Check if the expiresIn has passed.
-	 * @param expiresIn
-	 * @throws AuthorizationException
-	 */
-	protected void checkExpiration(long expiresIn) throws AuthorizationException {
-		if (expiresIn <= 0) {
-			throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "token has expired");
-		}
-	}
+    /**
+     * Check if the expiresIn has passed.
+     * 
+     * @param expiresIn
+     * @throws AuthorizationException
+     */
+    protected void checkExpiration(long expiresIn) throws AuthorizationException {
+        if (expiresIn <= 0) {
+            throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "token has expired");
+        }
+    }
 
-	/**
-	 * Make sure that no scope has been requested or the desiredScope is in the allowedScopes.
-	 * @param desiredScope
-	 * @param allowedScopes
-	 * @throws AuthorizationException 
-	 */
-	protected void checkScope(String desiredScope, String[] allowedScopes) throws AuthorizationException {
-		if (desiredScope == null) return;
-		for (String scope : allowedScopes) {
-			if (desiredScope.equals(scope)){
-				// Matching scope found.
-				return;
-			}
-		}
-		throw new AuthorizationException(OAuthErrorCode.INSUFFICIENT_SCOPE, "requires additional scope");
-	}
+    /**
+     * Make sure that no scope has been requested or the desiredScope is in the
+     * allowedScopes.
+     * 
+     * @param desiredScopes
+     * @param allowedScopes
+     * @throws AuthorizationException
+     */
+    protected void checkScope(List<String> desiredScopes, String[] allowedScopes) throws AuthorizationException {
+        if (desiredScopes == null)
+            return;
+        List<String> allowedList = Arrays.asList(allowedScopes);
+        for (String desiredScope : desiredScopes) {
+            if (!allowedList.contains(desiredScope)) {
+                throw new AuthorizationException(OAuthErrorCode.INSUFFICIENT_SCOPE, "requires additional scope " + desiredScope);
+            }
+        }
+    }
 
 }

@@ -20,49 +20,50 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 /**
  * Exceptions that may occur attempting to access a resource.
  */
 public final class AuthorizationException extends Exception {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private final OAuthErrorCode errorCode;
 
-	/**
-	 * 
-	 * @see org.immunogenomics.gl.oauth.ReponseErrorCode
-	 * @param errorCode value from ReponseErrorCode
-	 * @param errorDescription
-	 */
-	public AuthorizationException(OAuthErrorCode errorCode, String errorDescription) {
-		super(errorDescription);
-		this.errorCode = errorCode;
-	}
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 * @param errorCode
-	 * @param e
-	 */
-	public AuthorizationException(OAuthErrorCode errorCode, Exception e) {
-		super(e);
-		this.errorCode = errorCode;
-	}
+    private final OAuthErrorCode errorCode;
 
-	public OAuthErrorCode getError() {
-		return errorCode;
-	}
+    /**
+     * 
+     * @see org.immunogenomics.gl.oauth.ReponseErrorCode
+     * @param errorCode
+     *            value from ReponseErrorCode
+     * @param errorDescription
+     */
+    public AuthorizationException(OAuthErrorCode errorCode, String errorDescription) {
+        super(errorDescription);
+        this.errorCode = errorCode;
+    }
 
-	@Override
-	public String toString() {
-		return errorCode + ":" + getErrorDescription();
-	}
+    /**
+     * 
+     * @param errorCode
+     * @param e
+     */
+    public AuthorizationException(OAuthErrorCode errorCode, Exception e) {
+        super(e);
+        this.errorCode = errorCode;
+    }
 
-	public Object getErrorDescription() {
-		return getMessage();
-	}
+    public OAuthErrorCode getError() {
+        return errorCode;
+    }
+
+    @Override
+    public String toString() {
+        return errorCode + ":" + getErrorDescription();
+    }
+
+    public Object getErrorDescription() {
+        return getMessage();
+    }
 }

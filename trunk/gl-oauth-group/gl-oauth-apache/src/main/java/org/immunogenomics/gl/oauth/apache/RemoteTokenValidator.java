@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth.apache;
 
 import java.io.IOException;
@@ -37,55 +37,55 @@ import org.immunogenomics.gl.oauth.TokenValidator;
 
 /**
  * Validates a token against a remote authorization server.
- *
+ * 
  */
-public class RemoteTokenValidator implements TokenValidator{
+public class RemoteTokenValidator implements TokenValidator {
 
-	private final String validateUrl;
-	private final DefaultHttpClient httpClient = new DefaultHttpClient();
+    private final String validateUrl;
+    private final DefaultHttpClient httpClient = new DefaultHttpClient();
 
-	public RemoteTokenValidator(String validateUrl) {
-		this.validateUrl = validateUrl;
-	}
-	
-	public AccessTokenDetails validate(String token) {
-		String url = TokenValidateUtil.encodeValidateTokenUrl(validateUrl, token);
-    	HttpPost httpPost = new HttpPost(url);
-    	ResponseHandler<String> responseHandler = new BasicResponseHandler();
-		try {
-			String content = httpClient.execute(httpPost, responseHandler);
-			return new AccessTokenDetails(content);
-		} catch (ClientProtocolException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-		    httpPost.releaseConnection();
-		}	
-	}
-	
-	public void close() {
-		httpClient.getConnectionManager().shutdown();
-	}
+    public RemoteTokenValidator(String validateUrl) {
+        this.validateUrl = validateUrl;
+    }
 
-	/** Testing main method. */
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			args = new String[]{"http://localhost:9090/toy-portal/oauth/validate",
-					"Xinvalid", "Xexpired", "Xvalid",
-					"Xadmin", "Xhigh"};
-		}
-		String url = args[0];
-		RemoteTokenValidator validator = new RemoteTokenValidator(url);
-		for (int i = 1; i < args.length; ++i) {
-			String token = args[i];
-			try {
-				AccessTokenDetails details = validator.validate(token);
-				System.out.println(token + "\t" + details);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+    public AccessTokenDetails validate(String token) {
+        String url = TokenValidateUtil.encodeValidateTokenUrl(validateUrl, token);
+        HttpPost httpPost = new HttpPost(url);
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        try {
+            String content = httpClient.execute(httpPost, responseHandler);
+            return new AccessTokenDetails(content);
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            httpPost.releaseConnection();
+        }
+    }
+
+    public void close() {
+        httpClient.getConnectionManager().shutdown();
+    }
+
+    /** Testing main method. */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            args =
+                    new String[] { "http://localhost:9090/toy-portal/oauth/validate", "Xinvalid", "Xexpired", "Xvalid",
+                            "Xadmin", "Xhigh" };
+        }
+        String url = args[0];
+        RemoteTokenValidator validator = new RemoteTokenValidator(url);
+        for (int i = 1; i < args.length; ++i) {
+            String token = args[i];
+            try {
+                AccessTokenDetails details = validator.validate(token);
+                System.out.println(token + "\t" + details);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 }

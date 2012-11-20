@@ -20,17 +20,18 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
-
 
 public interface Authorizer {
 
-	/**
-	 * Verifies the authorization is valid or throws an AuthorizationException.
-	 * @param requestScope
-	 * @param authorization
-	 * @throws AuthorizationException if authorization is not valid.
-	 */
-	void checkAuthorized(RequestScope requestScope, AccessTokenDetails authorization) throws AuthorizationException;
+    /**
+     * Verifies the authorization is valid or throws an AuthorizationException.
+     * 
+     * @param requestScope
+     * @param authorization
+     * @throws AuthorizationException
+     *             if authorization is not valid.
+     */
+    void checkAuthorized(RequestScope requestScope, AccessTokenDetails authorization) throws AuthorizationException;
 }

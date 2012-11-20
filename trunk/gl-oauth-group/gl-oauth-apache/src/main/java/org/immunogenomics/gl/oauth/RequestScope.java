@@ -20,36 +20,64 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public final class RequestScope {
 
-	
-	private String realm;
-	private String scope;
-	private String method;
+    private String realm;
+    private List<String> scopeList = new LinkedList<String>();
+    private String method;
 
-	public RequestScope(String method, String realm, String scope) {
-		super();
-		this.method = method;
-		this.realm = realm;
-		this.scope = scope;
-	}
+    public RequestScope(String method, String realm, String scope) {
+        super();
+        this.method = method;
+        this.realm = realm;
+        addScope(scope);
+    }
 
-	public String getMethod() {
-		return method;
-	}
-	public String getRealm() {
-		return realm;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	public String getScope() {
-		return scope;
-	}
+    public String getRealm() {
+        return realm;
+    }
 
-	public boolean hasRealm(String realm2) {
-		return (realm != null) && realm.equals(realm2);
-	}
+    public List<String> getScopeList() {
+        return scopeList;
+    }
 
+    public void addScope(String scope) {
+        if (scope == null) return;
+        for (String s : scope.split(" ")) {
+            if (!scopeList.contains(scope)) {
+                scopeList.add(s);
+            }
+        }
+    }
+
+    public boolean hasRealm(String realm2) {
+        return (realm != null) && realm.equals(realm2);
+    }
+
+    @Override
+    public String toString() {
+        return "RequestScope [realm=" + realm + ", scope=" + getScope() + ", method=" + method + "]";
+    }
+
+    /**
+     * @return a blank delimited String of scopes. 
+     */
+    public String getScope() {
+        StringBuilder sb = new StringBuilder();
+        for (String scope : scopeList) {
+            sb.append(sb.length() == 0 ? "" : " ").append(scope);
+        }
+        return sb.toString();
+    }
+    
 }

@@ -20,17 +20,17 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
-
 
 /**
  * Responsible for determining the AuthorizationDetails for a userid.
+ * 
  * @author mgeorge
- *
+ * 
  */
 public interface OAuthProvider {
 
-	AuthorizationDetails getAuthorization(String userid, String realm);
+    AuthorizationDetails getAuthorization(String userid, String realm);
 
 }

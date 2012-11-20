@@ -20,7 +20,7 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+ */
 package org.immunogenomics.gl.oauth;
 
 import static org.junit.Assert.*;
@@ -30,40 +30,40 @@ import org.junit.Test;
 
 public class MemoryTokenStoreTest {
 
-	private MemoryTokenStore tokenStore;
-	private AccessTokenDetails authorization;
+    private MemoryTokenStore tokenStore;
+    private AccessTokenDetails authorization;
 
-	@Before
-	public void setupTest() {
-		tokenStore = new MemoryTokenStore();
-		authorization = new AccessTokenDetails();
-		authorization.setRealm("junit");
-		authorization.setScopes(new String[]{"scope1", "scope2"});
-	}
+    @Before
+    public void setupTest() {
+        tokenStore = new MemoryTokenStore();
+        authorization = new AccessTokenDetails();
+        authorization.setRealm("junit");
+        authorization.setScopes(new String[] { "scope1", "scope2" });
+    }
 
-	@Test
-	public void testGet() {
-		AccessTokenDetails details = tokenStore.get(null);
-		assertNull(details);
-	}
+    @Test
+    public void testGet() {
+        AccessTokenDetails details = tokenStore.get(null);
+        assertNull(details);
+    }
 
-	@Test
-	public void testAdd() {
-		String token = tokenStore.add(authorization);
-		AccessTokenDetails authorizationDetails = tokenStore.get(token);
-		assertEquals(authorization.getRealm(), authorizationDetails.getRealm());
-	}
+    @Test
+    public void testAdd() {
+        String token = tokenStore.add(authorization);
+        AccessTokenDetails authorizationDetails = tokenStore.get(token);
+        assertEquals(authorization.getRealm(), authorizationDetails.getRealm());
+    }
 
-	@Test
-	public void testPut() {
-		tokenStore.put("Test", authorization);
-		AccessTokenDetails authorizationDetails = tokenStore.get("Test");
-		assertEquals(authorization.getRealm(), authorizationDetails.getRealm());
-	}
+    @Test
+    public void testPut() {
+        tokenStore.put("Test", authorization);
+        AccessTokenDetails authorizationDetails = tokenStore.get("Test");
+        assertEquals(authorization.getRealm(), authorizationDetails.getRealm());
+    }
 
-	@Test
-	public void testDispose() {
-		tokenStore.dispose();
-	}
+    @Test
+    public void testDispose() {
+        tokenStore.dispose();
+    }
 
 }
