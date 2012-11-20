@@ -8,6 +8,14 @@ Basic functionality has been implemented for [http://tools.ietf.org/html/rfc6750
   * more documenation
   * more hardening
   * more tests
+= GL OAuth Resource Server Diagram =
+http://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GL-OAuth-Resource-Server.png
+gl-oauth-apache components are in green.
+|| ServletFilter || an application specific Filter that is responsible for initializing and configuring the OAuth components. ||
+|| ScopeEvaluator || responsible for determining the RequestScope ||
+|| TokenValidator || responsible for providing the AccessTokenDetails like the scope and the realm ||
+|| Authorizer || responsible for determining if the AccessTokenDetails have the rights to perform the RequestScope ||
+|| AuthorizedHooks || hooks that allow an application to update the ServletRequest or Thread with authorization information ||
 
 = Details =
 The *toy-portal* webapp acts as the authorization server, but it has no authentication support.  The users and scopes are configured in the userid-scopes.txt file like
