@@ -23,7 +23,7 @@
 
     <filter>
         <filter-name>DenialOfServiceFilter</filter-name>
-        <filter-class>org.immunogenomics.gl.service.webapp.DenialOfServiceFilter</filter-class>
+        <filter-class>org.immunogenomics.gl.web.dosfilter.DenialOfServiceFilter</filter-class>
         <init-param>
             <param-name>cleanInterval</param-name>
             <param-value>5</param-value>
