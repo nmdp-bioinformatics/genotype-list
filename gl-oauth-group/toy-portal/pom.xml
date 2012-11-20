@@ -9,7 +9,7 @@
   <groupId>org.immunogenomics.gl.oauth.toy</groupId>
   <artifactId>toy-portal</artifactId>
   <packaging>war</packaging>
-  <name>Toy Portal</name>
+  <name>toy-portal</name>
   <description>Sample Portal used as Oauth 2.0 provider</description>
   <properties>
   </properties>
@@ -36,35 +36,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>tomcat-maven-plugin</artifactId>
-        <version>1.1</version>
-        <executions>
-          <execution>
-            <id>start-tomcat</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <fork>true</fork>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>tomcat-maven-plugin</artifactId>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.0</version>
           <configuration>
             <port>9090</port>
-            <addContextWarDependencies>true</addContextWarDependencies>
           </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
+      </plugin>
+    </plugins>
   </build>
 </project>
