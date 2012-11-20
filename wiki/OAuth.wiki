@@ -1,0 +1,45 @@
+#OAuth support
+
+= Introduction =
+
+Basic functionality has been implemented for [http://tools.ietf.org/html/rfc6750 OAuth 2.0 Bearer Tokens]. 
+(see [https://code.google.com/p/genotype-list/issues/detail?id=25 Issue:25])
+==TODO==
+  * more documenation
+  * more hardening
+  * more tests
+
+= Details =
+The *toy-portal* webapp acts as the authorization server, but it has no authentication support.  The users and scopes are configured in the userid-scopes.txt file like
+
+{{{
+id=john,realm=immunogenomics,duration=3600,scope=locus
+id=adam,realm=immunogenomics,duration=3600,scope=load allele admin
+id=eve,realm=immunogenomics,duration=3600,scope=other
+id=john,realm=toy,duration=3600,scope=read
+id=adam,realm=toy,duration=3600,scope=write read admin POST
+id=eve,realm=toy,duration=3600,scope=none
+}}}
+
+= Testing =
+To build and launch wars
+{{{
+## at truck
+mvn install 
+cd gl-jetty
+mvn jetty:run
+}}
+
+Perform POST operations to interact with authorization server.
+{{{
+$ curl -d "" "http://localhost:8080/toy-portal/oauth/get_token?userid=adam&realm=immunogenomics ;echo
+-jf9aqvkt9o6x
+$ curl -d "" "http://localhost:8080/toy-portal/oauth/validate?token=-jf9aqvkt9o6x ;echo
+expires_in=3522,id=adam,duration=3600,realm=immunogenomics,scope=load allele admin
+}}}
+
+
+Use Bearer token for secured operations
+{{{
+$ curl -v -d "" -H "Authenticate: Bearer -jf9aqvkt9o6x" "http://localhost:8080/gl/load-imgt-alleles ;echo
+}}}
