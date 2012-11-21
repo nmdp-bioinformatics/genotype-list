@@ -4,6 +4,7 @@
 
 Basic functionality has been implemented for [http://tools.ietf.org/html/rfc6750 OAuth 2.0 Bearer Tokens]. 
 (see [https://code.google.com/p/genotype-list/issues/detail?id=25 Issue:25])
+
 ==TODO==
   * more documenation
   * more hardening
@@ -32,22 +33,22 @@ id=eve,realm=toy,duration=3600,scope=none
 = Testing =
 To build and launch wars
 {{{
-## at truck
+## at trunk
 mvn install 
 cd gl-jetty
 mvn jetty:run
-}}
+}}}
 
 Perform POST operations to interact with authorization server.
 {{{
-$ curl -d "" "http://localhost:8080/toy-portal/oauth/get_token?userid=adam&realm=immunogenomics ;echo
+$ curl -d "" "http://localhost:8080/toy-portal/oauth/get_token?userid=adam&realm=immunogenomics" ;echo
 -jf9aqvkt9o6x
-$ curl -d "" "http://localhost:8080/toy-portal/oauth/validate?token=-jf9aqvkt9o6x ;echo
+$ curl -d "" "http://localhost:8080/toy-portal/oauth/validate?token=-jf9aqvkt9o6x" ;echo
 expires_in=3522,id=adam,duration=3600,realm=immunogenomics,scope=load allele admin
 }}}
 
 
 Use Bearer token for secured operations
 {{{
-$ curl -v -d "" -H "Authenticate: Bearer -jf9aqvkt9o6x" "http://localhost:8080/gl/load-imgt-alleles ;echo
+$ curl -v -d "" -H "Authenticate: Bearer -jf9aqvkt9o6x" "http://localhost:8080/gl/load-imgt-alleles" ;echo
 }}}
