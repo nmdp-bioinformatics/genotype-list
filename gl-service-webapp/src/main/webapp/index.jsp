@@ -27,7 +27,7 @@
   Properties properties = new Properties();
   ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   properties.load(classLoader.getResourceAsStream("/gl-service.properties"));
-  String serverURL = properties.getProperty("org.immunogenomics.gl.service.spark.namespace");
+  String serverURL = properties.getProperty("org.immunogenomics.gl.service.Namespace");
 %>
 <html lang="en">
   <head>
