@@ -1,6 +1,6 @@
 package org.immunogenomics.gl.web.dosfilter;
 
-public interface DenialOfServiceConfigMBean {
+public interface DenialOfServiceConfigMXBean {
 
     String toString();
 
@@ -31,8 +31,9 @@ public interface DenialOfServiceConfigMBean {
 
     void updateThrottleDelay(String msString);
     
-    /** Returns the name of a request parameter that is required for authorized access. 
-     * If present, the client is considered authorized.  A separate SecurityFilter should actually test authentication and authorization. */
-    String getAuthorizationParamName();
+    /** Returns the name of a request attribute that is required for authorized access. 
+     * If present, the client is considered authorized.  
+     * A separate SecurityFilter should actually test authorization and set the attribute. */
+    String getAuthorizationAttribName();
 
 }

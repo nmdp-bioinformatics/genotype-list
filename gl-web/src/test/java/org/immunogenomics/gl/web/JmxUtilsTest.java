@@ -8,20 +8,20 @@ import javax.management.MalformedObjectNameException;
 
 import org.immunogenomics.gl.web.JmxUtils;
 import org.immunogenomics.gl.web.dosfilter.DenialOfServiceConfig;
-import org.immunogenomics.gl.web.dosfilter.DenialOfServiceConfigMBean;
+import org.immunogenomics.gl.web.dosfilter.DenialOfServiceConfigMXBean;
 import org.junit.Test;
 
 public class JmxUtilsTest {
 
     @Test
     public void test() throws MalformedObjectNameException {
-        DenialOfServiceConfigMBean mbean = JmxUtils.getMBean("one", DenialOfServiceConfigMBean.class);
+        DenialOfServiceConfigMXBean mbean = JmxUtils.getMXBean("one", DenialOfServiceConfigMXBean.class);
         assertNull("registered mbean one", mbean);
         DenialOfServiceConfig denialOfServiceConfig = new DenialOfServiceConfig();
-        JmxUtils.registerMBean("one", denialOfServiceConfig);
+        JmxUtils.registerMXBean("one", denialOfServiceConfig);
         DenialOfServiceConfig denialOfServiceConfig2 = new DenialOfServiceConfig();
-        JmxUtils.registerMBean("two", denialOfServiceConfig2);
-        mbean = JmxUtils.getMBean("one", DenialOfServiceConfigMBean.class);
+        JmxUtils.registerMXBean("two", denialOfServiceConfig2);
+        mbean = JmxUtils.getMXBean("one", DenialOfServiceConfigMXBean.class);
         assertNotNull("No registered mbean one", mbean);
         assertEquals(denialOfServiceConfig.getCleanInterval(), mbean.getCleanInterval());
         mbean.updateCleanIntervalInMinutes("1");

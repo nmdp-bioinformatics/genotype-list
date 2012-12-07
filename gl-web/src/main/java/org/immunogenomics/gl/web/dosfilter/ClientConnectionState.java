@@ -4,10 +4,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ClientConnectionState {
 
-    private final DenialOfServiceConfigMBean config;
+    private final DenialOfServiceConfigMXBean config;
     protected State state;
 
-    private ClientConnectionState(DenialOfServiceConfigMBean config) {
+    private ClientConnectionState(DenialOfServiceConfigMXBean config) {
         this.config = config;
         state = new FreeHitState();
     }
@@ -22,13 +22,13 @@ public class ClientConnectionState {
         return state.isBlocked();
     }
 
-    public static ClientConnectionState create(DenialOfServiceConfigMBean config) {
+    public static ClientConnectionState create(DenialOfServiceConfigMXBean config) {
         return new ClientConnectionState(config);
     }
     
     private static abstract class State {
         protected long lastAccessTime;
-        public abstract State nextState(long requestTime, DenialOfServiceConfigMBean config);
+        public abstract State nextState(long requestTime, DenialOfServiceConfigMXBean config);
         
         public String toString() {
             return getClass().getSimpleName();
@@ -46,7 +46,7 @@ public class ClientConnectionState {
     private static class FreeHitState extends State {
         private int hits = 0;
         @Override
-        public State nextState(long requestTime, DenialOfServiceConfigMBean config) {
+        public State nextState(long requestTime, DenialOfServiceConfigMXBean config) {
             ++hits;
             if (hits > config.getFreeHitCount()) {
                 return new ThrottledState(requestTime);
@@ -65,7 +65,7 @@ public class ClientConnectionState {
         }
         
         @Override
-        public State nextState(long requestTime, DenialOfServiceConfigMBean config) {
+        public State nextState(long requestTime, DenialOfServiceConfigMXBean config) {
             ++hits;
             if (requestTime > endThrottleTime) {
                 return new FreeHitState();
@@ -86,7 +86,7 @@ public class ClientConnectionState {
     private static class BlockedState extends State {
 
         @Override
-        public State nextState(long requestTime, DenialOfServiceConfigMBean config) {
+        public State nextState(long requestTime, DenialOfServiceConfigMXBean config) {
             return this;
         }
 

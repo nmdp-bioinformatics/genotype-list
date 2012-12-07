@@ -32,9 +32,9 @@
             <description>the delay in milliseconds to wait before providing a response</description>
         </init-param>
         <init-param>
-            <param-name>authorizedParamName</param-name>
-            <param-value>signature</param-value>
-            <description>the name of a request parameter that is required for authorized access</description>
+            <param-name>authorizationAttribName</param-name>
+            <param-value>authorizedFlag</param-value>
+            <description>the name of a request attribute that is required for authorized access</description>
         </init-param>
     </filter>
     <xsl:copy-of select="."></xsl:copy-of>

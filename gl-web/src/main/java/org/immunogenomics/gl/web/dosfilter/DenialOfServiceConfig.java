@@ -3,13 +3,13 @@ package org.immunogenomics.gl.web.dosfilter;
 import java.util.concurrent.TimeUnit;
 
 /** Configuration for Denial of Service */
-public class DenialOfServiceConfig implements DenialOfServiceConfigMBean {
+public class DenialOfServiceConfig implements DenialOfServiceConfigMXBean {
 
     private int freeHitCount = 100;
     private long cleanInterval = TimeUnit.MINUTES.toMillis(5);
     private int anonymousHitsPerMinute = 100;
     private long throttleDelay = 100;
-    private String authorizationParamName = "signature";
+    private String authorizationAttribName = "signature";
 
     /* (non-Javadoc)
      * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#toString()
@@ -19,7 +19,7 @@ public class DenialOfServiceConfig implements DenialOfServiceConfigMBean {
         return "DenialOfServiceConfig [freeHitCount=" + freeHitCount 
                 + ", anonymousHitsPerMinute=" + anonymousHitsPerMinute
                 + ", throttleDelay=" + throttleDelay
-                + ", authorizationParamName=" + authorizationParamName
+                + ", authorizationAttribName=" + authorizationAttribName
                 + ", cleanInterval(min)=" + TimeUnit.MILLISECONDS.toMinutes(cleanInterval) + "]";
     }
 
@@ -126,12 +126,12 @@ public class DenialOfServiceConfig implements DenialOfServiceConfigMBean {
         throttleDelay = (int) parseLong(msString, throttleDelay);
     }
 
-    public void setAuthorizationParamName(String paramName) {
-        this.authorizationParamName = paramName;
+    public void setAuthorizationAttribName(String attributeName) {
+        this.authorizationAttribName = attributeName;
     }
 
     @Override
-    public String getAuthorizationParamName() {
-        return this.authorizationParamName;
+    public String getAuthorizationAttribName() {
+        return this.authorizationAttribName;
     }
 }

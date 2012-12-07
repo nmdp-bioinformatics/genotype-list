@@ -40,7 +40,7 @@ public interface AuthorizedHooks {
      * information to the thread or the request.
      * 
      * @param request
-     * @param authorization
+     * @param authorization may be null if no authorization was required.
      */
     void beginAuthorized(HttpServletRequest request, AccessTokenDetails authorization);
 
