@@ -43,15 +43,23 @@ mvn jetty:run
 Perform POST operations to interact with authorization server.
 {{{
 $ curl -d "" "http://localhost:8080/toy-portal/oauth/get_token?userid=adam&realm=immunogenomics" ;echo
--jf9aqvkt9o6x
-$ curl -d "" "http://localhost:8080/toy-portal/oauth/validate?token=-jf9aqvkt9o6x" ;echo
+mgwed5jdy6h8
+$ curl -d "" "http://localhost:8080/toy-portal/oauth/validate?token=mgwed5jdy6h8" ;echo
 expires_in=3522,id=adam,duration=3600,realm=immunogenomics,scope=load allele admin
 }}}
 
 
+Make sure reference data loaded (POST method is required)
+{{{
+$ curl -d "" "http://localhost:8080/gl/load" ;echo
+}}}
+
 Use Bearer token for secured operations
 {{{
-$ curl -v -d "" -H "Authenticate: Bearer -jf9aqvkt9o6x" "http://localhost:8080/gl/load" ;echo
+$ curl -v --header "content-type: text/plain" \
+  --header "Authenticate: Bearer mgwed5jdy6h8" \
+  --data "HLA-DRB1*08:30:02~HLA-DRB3*02:02:01:01" \
+  -X POST http://localhost:8080/gl/haplotype && echo
 }}}
 
 = Implementing a Authorization Server =
