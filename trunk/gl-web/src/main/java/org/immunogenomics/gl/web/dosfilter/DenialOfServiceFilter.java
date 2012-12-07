@@ -13,6 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.immunogenomics.gl.web.JmxUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet filter to prevent denial of service attacks.
@@ -55,17 +57,18 @@ public class DenialOfServiceFilter implements Filter {
 
     private static ConcurrentHashMap<String, ClientConnectionState> ipToInfo = new ConcurrentHashMap<String, ClientConnectionState>();
     private static long nextCleanTime = 0;
-    private DenialOfServiceConfigMBean config = null;
+    private DenialOfServiceConfigMXBean config = null;
+    private static Logger logger = LoggerFactory.getLogger(DenialOfServiceFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         ServletContext servletContext = filterConfig.getServletContext();
         try {
             String filterName = filterConfig.getFilterName();
-            config = JmxUtils.getMBean(filterName, DenialOfServiceConfigMBean.class);
+            config = JmxUtils.getMXBean(filterName, DenialOfServiceConfigMXBean.class);
             if (config == null) {
                 config = createConfig(filterConfig);
-                JmxUtils.registerMBean(filterName, config);
+                JmxUtils.registerMXBean(filterName, config);
             }
         } catch (Exception ex) {
             servletContext.log("Unable to configure MBeans", ex);
@@ -75,14 +78,14 @@ public class DenialOfServiceFilter implements Filter {
 
     }
 
-    private DenialOfServiceConfigMBean createConfig(FilterConfig filterConfig) {
+    private DenialOfServiceConfigMXBean createConfig(FilterConfig filterConfig) {
         DenialOfServiceConfig newConfig = new DenialOfServiceConfig();
         try {
             newConfig.updateCleanIntervalInMinutes(filterConfig.getInitParameter("cleanInterval"));
             newConfig.updateFreeHitCount(filterConfig.getInitParameter("freeHitCount"));
             newConfig.updateAnonymousHitsPerMinute(filterConfig.getInitParameter("anonymousHitsPerMinute"));
             newConfig.updateThrottleDelay(filterConfig.getInitParameter("throttleDelay"));
-            newConfig.setAuthorizationParamName(filterConfig.getInitParameter("authorizationParamName"));
+            newConfig.setAuthorizationAttribName(filterConfig.getInitParameter("authorizationAttribName"));
         } catch (RuntimeException ex) {
             filterConfig.getServletContext().log("Unable to configure " + getClass().getName(), ex);
         }
@@ -110,7 +113,10 @@ public class DenialOfServiceFilter implements Filter {
     }
     
     private boolean isAuthorized(ServletRequest request) {
-        return request.getParameter(config.getAuthorizationParamName()) != null;
+        String authorizationAttribName = config.getAuthorizationAttribName();
+        Object attribute = request.getAttribute(authorizationAttribName);
+        logger.debug("isAuthorized {} = {}", authorizationAttribName, attribute);
+        return attribute != null;
     }
 
     private boolean isBlocked(ServletRequest request) {

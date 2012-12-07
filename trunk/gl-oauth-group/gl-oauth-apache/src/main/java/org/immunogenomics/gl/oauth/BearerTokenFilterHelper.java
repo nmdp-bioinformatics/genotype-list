@@ -60,7 +60,6 @@ public class BearerTokenFilterHelper {
         try {
             AccessTokenDetails details = checkAuthorization(request);
             authorizer.checkAuthorized(scope, details);
-
             authorizedHooks.beginAuthorized(request, details);
             filterChain.doFilter(request, response);
         } catch (AuthorizationException ae) {

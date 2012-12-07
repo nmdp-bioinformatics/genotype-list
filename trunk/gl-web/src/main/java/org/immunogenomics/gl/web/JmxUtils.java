@@ -14,17 +14,17 @@ public class JmxUtils {
 
     private static Logger logger = LoggerFactory.getLogger(JmxUtils.class);
 
-    public static  <T> T getMBean(String name, Class<T> mbeanClass) throws MalformedObjectNameException {
+    public static  <T> T getMXBean(String name, Class<T> mbeanClass) throws MalformedObjectNameException {
         T mbeanProxy = null;
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         ObjectName mbeanName = toObjectName(name, mbeanClass);
         if (mBeanServer.isRegistered(mbeanName)) {
-            mbeanProxy = JMX.newMBeanProxy(mBeanServer, mbeanName, mbeanClass, true);
+            mbeanProxy = JMX.newMXBeanProxy(mBeanServer, mbeanName, mbeanClass, true);
         }
         return  mbeanProxy;
     }
 
-    public static void registerMBean(String name, Object mbean) {
+    public static void registerMXBean(String name, Object mbean) {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         
         try {
@@ -32,7 +32,7 @@ public class JmxUtils {
             Class<?>[] interfaces = objClass.getInterfaces();
             Class<?> mbeanClass = objClass;
             for (Class<?> class1 : interfaces) {
-                if (class1.getSimpleName().endsWith("MBean")) {
+                if (class1.getSimpleName().endsWith("MXBean")) {
                     mbeanClass = class1;
                 }
             }

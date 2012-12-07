@@ -7,7 +7,7 @@
  <xsl:preserve-space elements="filter"/>
 
 	<xsl:template match="filter[1]">
-  <xsl:comment>filter inserted by update-web-xml.xsl</xsl:comment>
+  <xsl:comment>filter inserted by update-web-xml.xsl from glsw-oauth project</xsl:comment>
     <filter>
       <filter-name>BearerTokenFilter</filter-name>
       <filter-class>org.immunogenomics.glsw.oauth.GlBearerTokenFilter</filter-class>
@@ -17,7 +17,8 @@
       </init-param>
       <init-param>
         <param-name>validateUrl</param-name>
-        <param-value>http://localhost:9090/toy-portal/oauth/validate</param-value>
+        <param-value>blue</param-value>
+        <description>URL used to validate the token</description>
       </init-param>
     </filter>
 
@@ -26,17 +27,17 @@
         <filter-class>org.immunogenomics.gl.web.dosfilter.DenialOfServiceFilter</filter-class>
         <init-param>
             <param-name>cleanInterval</param-name>
-            <param-value>5</param-value>
+            <param-value>20</param-value>
             <description>Minimum minutes before a clean occurs</description>
         </init-param>
         <init-param>
             <param-name>freeHitCount</param-name>
-            <param-value>5</param-value>
+            <param-value>100</param-value>
             <description>the number of hits that are not restricted</description>
         </init-param>
         <init-param>
             <param-name>anonymousHitsPerMinute</param-name>
-            <param-value>5</param-value>
+            <param-value>30</param-value>
             <description>maximum number of hits per minute for anonymous access</description>
         </init-param>
         <init-param>
@@ -45,9 +46,9 @@
             <description>the delay in milliseconds to wait before providing a response</description>
         </init-param>
         <init-param>
-            <param-name>authorizedParamName</param-name>
-            <param-value>signature</param-value>
-            <description>the name of a request parameter that is required for authorized access</description>
+            <param-name>authorizationAttribName</param-name>
+            <param-value>authorizationScopes</param-value>
+            <description>the name of a request attribute that is required for authorized access</description>
         </init-param>
     </filter>
     <xsl:copy-of select="."></xsl:copy-of>

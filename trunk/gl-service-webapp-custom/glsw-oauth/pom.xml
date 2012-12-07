@@ -108,6 +108,12 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>8.1.5.v20120716</version>
         <configuration>
+          <systemProperties>
+            <systemProperty>
+               <name>oauth.validate.url</name>
+               <value>http://localhost:8080/login/immunogenomics/validate</value>
+             </systemProperty>
+          </systemProperties>
           <connectors>
             <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
               <port>9090</port>
@@ -117,12 +123,6 @@
           <webApp>
              <contextPath>/gl</contextPath>
           </webApp>
-          <systemProperties>
-            <systemProperty>
-               <name>oauth.authorize.url</name>
-               <value>http://localhost:8080/login/immunogenomics/validate</value>
-             </systemProperty>
-          </systemProperties>
         </configuration>
       </plugin>
     </plugins>

@@ -75,8 +75,9 @@
              <contextPath>/</contextPath>
           </webApp>
           <systemProperties>
+            <force>true</force>
             <systemProperty>
-               <name>oauth.authorize.url</name>
+               <name>oauth.validate.url</name>
                <value>http://localhost:8080/toy-portal/oauth/validate</value>
              </systemProperty>
           </systemProperties>

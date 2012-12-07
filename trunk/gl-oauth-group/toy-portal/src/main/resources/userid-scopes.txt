@@ -1,6 +1,6 @@
 
-id=john,realm=immunogenomics,duration=3600,scope=locus
-id=adam,realm=immunogenomics,duration=3600,scope=load allele admin
+id=john,realm=immunogenomics,duration=3600,scope=write
+id=adam,realm=immunogenomics,duration=3600,scope=allele write
 id=eve,realm=immunogenomics,duration=3600,scope=other
 
 id=john,realm=toy,duration=3600,scope=read

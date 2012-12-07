@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 
 public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, ScopeEvaluator, AuthorizedHooks {
 
+    private static final String UNPROTECTED_SCOPE = "unprotected-scope";
     private String realm;
     private TokenValidator tokenValidator;
     private BearerTokenFilterHelper filterHelper;
@@ -63,6 +64,7 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
         tokenValidator = new RemoteTokenValidator(validateUrl);
         tokenValidator = new AuthorizationCache(tokenValidator, new MemoryTokenStore());
         filterHelper = new BearerTokenFilterHelper(tokenValidator, this, this);
+        filterHelper.setAuthorizedHooks(this);
         logger.info("initialized realm={} with {}", realm, validateUrl);
     }
 
@@ -74,18 +76,14 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
     /* ScopeEvaluator */
     public RequestScope analyzeRequest(HttpServletRequest request) {
         String method = request.getMethod();
-        String scope;
         String path = request.getServletPath();
+        String scope = "write";
         if (path == null) {
             scope = null;
-        } else if (path.startsWith("/load")) {
-            scope = "load";
-        } else if (path.startsWith("/locus")) {
-            scope = "locus";
-        } else if (path.startsWith("/allele")) {
-            scope = "allele";
-        } else {
-            scope = "level1";
+        } else if (path.equals("/load")) {
+            scope = UNPROTECTED_SCOPE;
+        } else if (path.equals("/allele")) {
+            scope = "write allele";
         }
         RequestScope scopeDetails = new RequestScope(method, realm, scope);
         logger.debug("Path: {} \t {}", path, scopeDetails);
@@ -100,6 +98,10 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
             // Unprotected
             return;
         }
+        if (UNPROTECTED_SCOPE.equals(requestScope.getScope())) {
+            // Some operations like "/load" don't require authorization
+            return;
+        }
         // POST and other methods require Authorization
         super.checkAuthorized(requestScope, authorization);
     }
@@ -111,8 +113,10 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
     }
 
     public void beginAuthorized(HttpServletRequest request, AccessTokenDetails authorization) {
+        if (authorization == null) return;
         request.setAttribute("authorizationId", authorization.getId());
         request.setAttribute("authorizationScopes", authorization.getScopes());
+        logger.debug("authorizationScopes  {}", authorization.getScopes());
     }
 
     public void endAuthorized() {
