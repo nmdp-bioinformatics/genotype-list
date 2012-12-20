@@ -55,7 +55,7 @@
           <programs>
             <program>
               <mainClass>org.immunogenomics.gl.tools.AccessionSort</mainClass>
-              <name>accession-sort</name>
+              <name>gl-accession-sort</name>
             </program>
             <program>
               <mainClass>org.immunogenomics.gl.tools.RegisterAlleleLists</mainClass>
@@ -75,7 +75,7 @@
             </program>
             <program>
               <mainClass>org.immunogenomics.gl.tools.RegisterHaplotypes</mainClass>
-              <name>gl-register-allele-haplotypes</name>
+              <name>gl-register-haplotypes</name>
             </program>
             <program>
               <mainClass>org.immunogenomics.gl.tools.RegisterLoci</mainClass>
@@ -87,7 +87,7 @@
             </program>
             <program>
               <mainClass>org.immunogenomics.gl.tools.SmartSort</mainClass>
-              <name>smart-sort</name>
+              <name>gl-smart-sort</name>
             </program>
           </programs>
         </configuration>
