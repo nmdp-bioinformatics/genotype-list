@@ -44,7 +44,7 @@ public final class GlstringBuilder {
      *
      * @param glstring locus in GL String format, must not be null
      * @return this GL String builder configured with the specified locus
-     * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
+     * @throws IllegalStateException if successive calls to any operator methods ({@link #allelicAmbiguity()},
      *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
@@ -66,13 +66,13 @@ public final class GlstringBuilder {
 
     /**
      * Return this GL String builder configured with the specified allele.  Calls to this method must
-     * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
+     * be interspersed by calls to operator methods ({@link #allelicAmbiguity()}, {@link #inPhase()},
      * {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
      *
      * @param glstring allele in GL String format, must not be null
      * @return this GL String builder configured with the specified allele
      * @throws IllegalStateException if successive calls to this method are made without an interspersed
-     *    call to an operator method ({@link #allicAmbiguity()}, {@link #inPhase()}, {@link #plus()},
+     *    call to an operator method ({@link #allelicAmbiguity()}, {@link #inPhase()}, {@link #plus()},
      *    {@link #genotypicAmbiguity()}, and {@link #locus(String)})
      */
     public GlstringBuilder allele(final String glstring) {
@@ -106,7 +106,7 @@ public final class GlstringBuilder {
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @return this GL String builder configured with an allelic ambiguity operator ('<code>/</code>' character)
-     * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
+     * @throws IllegalStateException if successive calls to any operator methods ({@link #allelicAmbiguity()},
      *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
@@ -131,7 +131,7 @@ public final class GlstringBuilder {
      * <p>As an operator, calls to this method must be interspersed by calls to {@link #allele(String)}.</p>
      *
      * @return this GL String builder configured with an in phase operator ('<code>~</code>' character)
-     * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
+     * @throws IllegalStateException if successive calls to any operator methods ({@link #allelicAmbiguity()},
      *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
@@ -157,7 +157,7 @@ public final class GlstringBuilder {
      *
      * @return this GL String builder configured with an plus operator ('<code>+</code>' character)
      * @throws IllegalStateException if this operator method is called before a call to {@link #allele(String)}
-     * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
+     * @throws IllegalStateException if successive calls to any operator methods ({@link #allelicAmbiguity()},
      *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
@@ -183,7 +183,7 @@ public final class GlstringBuilder {
      *
      * @return this GL String builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
      * @throws IllegalStateException if this operator method is called before a call to {@link #allele(String)}
-     * @throws IllegalStateException if successive calls to any operator methods ({@link #allicAmbiguity()},
+     * @throws IllegalStateException if successive calls to any operator methods ({@link #allelicAmbiguity()},
      *    {@link #inPhase()}, {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}) are
      *    made without an interspersed call to {@link #allele(String)}
      */
@@ -216,7 +216,7 @@ public final class GlstringBuilder {
      *
      * @return a new GL String configured from the properties of this GL String builder
      * @throws IllegalStateException if {@link #locus(String)} or {@link #allele(String)} has not been called at least once
-     * @throws IllegalStateException if the last call was an operator ({@link #allicAmbiguity()}, {@link #inPhase()},
+     * @throws IllegalStateException if the last call was an operator ({@link #allelicAmbiguity()}, {@link #inPhase()},
      *    {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)})
      */
     public String build() {
