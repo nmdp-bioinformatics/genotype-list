@@ -87,7 +87,7 @@
               <groupId>org.immunogenomics.gl.voldemort</groupId>
               <artifactId>voldemort</artifactId>
               <version>0.96</version>
-              <packaging>tar.gz</packaging>
+              <packaging>jar</packaging>
               <downloadUrl>http://cloud.github.com/downloads/voldemort/voldemort/voldemort-0.96.tar.gz</downloadUrl>
               <extractFile>voldemort-0.96/dist/voldemort-0.96.jar</extractFile>
             </artifactItem>
