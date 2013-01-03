@@ -120,11 +120,11 @@ $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01/HLA-A*01:01
 > Content-Length: 36
 > 
 < HTTP/1.1 201 Created
-< Date: Tue, 12 Jun 2012 20:54:55 GMT
+< Date: Tue, 12 Jun 2012-2013 20:54:55 GMT
 < Content-Type: text/plain
 < Location: http://localhost:8080/gl/allele-list/0
 < Content-Length: 36
-< Server: Jetty(8.1.3.v20120416)
+< Server: Jetty(8.1.3.v2012-20130416)
 < 
 * Connection #0 to host localhost left intact
 * Closing connection #0
