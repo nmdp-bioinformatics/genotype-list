@@ -29,11 +29,24 @@ import org.junit.Test;
 
 public class AccessTokenDetailsTest {
 
+    @Test 
+    public void testExpireProps() {
+        AccessTokenDetails details = new AccessTokenDetails();
+        details.setExpiresIn(60); // 1 min
+        long expiresInSeconds = details.getExpiresIn();
+        assertTrue("expiresInSeconds " + expiresInSeconds, expiresInSeconds > 56 && expiresInSeconds <= 60); 
+        long expiresAt = details.getExpiresAt();
+        assertEquals(expiresAt, details.getExpiresAt());
+        expiresAt++;
+        details.setExpiresAt(expiresAt);
+        assertEquals("expiresAt", expiresAt, details.getExpiresAt());
+    }
+    
     @Test
     public void testTokenValidateResponse() {
         AccessTokenDetails response = new AccessTokenDetails();
         checkToAndFromString(response);
-        response.setExpiresIn(12345);
+        response.setExpiresIn(123);
         checkToAndFromString(response);
         response.setId("Fred");
         checkToAndFromString(response);
@@ -48,11 +61,13 @@ public class AccessTokenDetailsTest {
     private void checkToAndFromString(AccessTokenDetails response) {
         String content = response.toString();
         AccessTokenDetails parsedResponse = new AccessTokenDetails(content);
-        assertEquals(response.getExpiresIn(), parsedResponse.getExpiresIn());
+        long delta = Math.abs(response.getExpiresIn() - parsedResponse.getExpiresIn());
+        assertFalse("expiresIn delta is > 1 second: " + delta, delta > 1);
+        long deltaMs = Math.abs(response.getExpiresAt() - parsedResponse.getExpiresAt());
+        assertFalse("expiresAt time delta > 500 ms: " + deltaMs, deltaMs > 500);
         assertEquals(response.getId(), parsedResponse.getId());
         assertEquals(response.getRealm(), parsedResponse.getRealm());
         assertArrayEquals("scope array", response.getScopes(), parsedResponse.getScopes());
-
     }
 
 }
