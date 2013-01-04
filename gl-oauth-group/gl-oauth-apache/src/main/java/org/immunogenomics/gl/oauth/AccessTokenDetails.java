@@ -25,13 +25,18 @@ package org.immunogenomics.gl.oauth;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Details for an Access Token including a dynamic expiresIn property.
+ * Currently, this result is obtained from an HTTP POST to the
+ * AuthorizationServer with the bearer token as the "token" query parameter.
+ */
 public class AccessTokenDetails {
 
     private static final String TOKEN_ID = "tid";
     private static final String EXPIRES_IN = "expires_in";
 
     private String tokenId; // user or sytem id for tracking purposes.
-    private long expiresAt;
+    private long expiresAt = 0;
     private AuthorizationDetails authorization = new AuthorizationDetails();
 
     public String getId() {
@@ -87,6 +92,7 @@ public class AccessTokenDetails {
     }
 
     /**
+     * Returns remaining seconds dynamically calculated based on the current time and the expiresAt property.
      * @return number of seconds the token will be valid.
      */
     public long getExpiresIn() {

@@ -24,9 +24,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
 package org.immunogenomics.gl.oauth;
 
 /**
- * Currently, this result is obtained from an HTTP POST to the
- * AuthorizationServer with the bearer token as the "token" query parameter.
- * 
+ * Authorization properties.
  */
 public class AuthorizationDetails {
     private static final String SCOPE = "scope";
