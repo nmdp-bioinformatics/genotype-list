@@ -10,11 +10,19 @@ Install
  * Genotype list command line tools, http://code.google.com/p/genotype-list/downloads/list
 
 <br/>
+Add the gl-tools bin directory to your path
+
+{{{
+$ export GL_TOOLS_HOME=...installation directory
+$ export PATH=$PATH:$GL_TOOLS_HOME/bin
+}}}
+
+<br/>
 == Usage ==
 
 <p>Accession sort.</p>
 {{{
-$ ./gl-accession-sort --help
+$ gl-accession-sort --help
 usage:
 accession-sort [-i identifiers.txt] [-o sorted-glstrings.txt]
 
@@ -35,7 +43,7 @@ arguments:
 <br/>
 <p>Register allele lists.</p>
 {{{
-$ ./gl-register-allele-lists --help
+$ gl-register-allele-lists --help
 usage:
 gl-register-allele-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -52,7 +60,7 @@ arguments:
 <br/>
 <p>Register alleles.</p>
 {{{
-$ ./gl-register-alleles --help
+$ gl-register-alleles --help
 usage:
 gl-register-alleles --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -69,7 +77,7 @@ arguments:
 <br/>
 <p>Register genotype lists.</p>
 {{{
-$ ./gl-register-genotype-lists --help
+$ gl-register-genotype-lists --help
 usage:
 gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -86,7 +94,7 @@ arguments:
 <br/>
 <p>Register genotypes.</p>
 {{{
-$ ./gl-register-genotypes --help
+$ gl-register-genotypes --help
 usage:
 gl-register-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -103,7 +111,7 @@ arguments:
 <br/>
 <p>Register haplotypes.</p>
 {{{
-$ ./gl-register-haplotypes --help
+$ gl-register-haplotypes --help
 usage:
 gl-register-haplotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -120,7 +128,7 @@ arguments:
 <br/>
 <p>Register loci.</p>
 {{{
-$ ./gl-register-loci --help
+$ gl-register-loci --help
 usage:
 gl-register-loci --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -137,7 +145,7 @@ arguments:
 <br/>
 <p>Register multilocus unphased genotypes.</p>
 {{{
-$ ./gl-register-multilocus-unphased-genotypes --help
+$ gl-register-multilocus-unphased-genotypes --help
 usage:
 gl-register-multilocus-unphased-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
 
@@ -154,7 +162,7 @@ arguments:
 <br/>
 <p>Smart sort.</p>
 {{{
-$ ./gl-smart-sort --help
+$ gl-smart-sort --help
 usage:
 smart-sort [-i identifiers.txt] [-o sorted-glstrings.txt]
 
