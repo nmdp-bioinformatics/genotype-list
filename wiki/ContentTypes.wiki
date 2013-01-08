@@ -22,7 +22,7 @@ Method: allele
 
 Content type: VARIES; see [ContentTypes#Response below].
 
-GET: {{{http://localhost:8080/gl/allele/5672}}}
+GET: {{{http://localhost:10080/gl/allele/5672}}}
 
 <a href="http://genotype-list.googlecode.com/svn/wiki/images/GlServiceContentTypesSampleInput.png"><img src="http://genotype-list.googlecode.com/svn/wiki/images/GlServiceContentTypesSampleInput.png"/></a>
 
@@ -30,7 +30,7 @@ GET: {{{http://localhost:8080/gl/allele/5672}}}
 
 ==GL String==
 
-{{{http://localhost:8080/gl/allele/5672.glstring}}}
+{{{http://localhost:10080/gl/allele/5672.glstring}}}
 
 {{{
 HLA-C*15:54
@@ -38,24 +38,24 @@ HLA-C*15:54
 
 ==HTML==
 
-{{{http://localhost:8080/gl/allele/5672.html}}}
+{{{http://localhost:10080/gl/allele/5672.html}}}
 
 {{{
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>http://localhost:8080/gl/allele/5672</title>
+    <title>http://localhost:10080/gl/allele/5672</title>
   </head>
   <body>
     <p class="type">http://nmdp.org/gl-ontology/Allele</p>
-    <p class="title">http://localhost:8080/gl/allele/5672</p>
+    <p class="title">http://localhost:10080/gl/allele/5672</p>
 <!--
-    <p class="identifier">http://localhost:8080/gl/allele/5672</p>
-    <p class="label">http://localhost:8080/gl/allele/5672</p>
+    <p class="identifier">http://localhost:10080/gl/allele/5672</p>
+    <p class="label">http://localhost:10080/gl/allele/5672</p>
 -->
     <p class="accession"></p>
     <p class="comment">HLA-C*15:54</p>
-    <p class="reference">http://nmdp.org/gl-ontology/Locus <a href="http://localhost:8080/gl/locus/4377.html">http://localhost:8080/gl/locus/4377</a></p>
+    <p class="reference">http://nmdp.org/gl-ontology/Locus <a href="http://localhost:10080/gl/locus/4377.html">http://localhost:10080/gl/locus/4377</a></p>
   </body>
 </html> 
 }}}
@@ -63,7 +63,7 @@ HLA-C*15:54
 ==HML==
 
 Should be:
-{{{http://localhost:8080/gl/allele/5672.hml}}}
+{{{http://localhost:10080/gl/allele/5672.hml}}}
 
 {{{
 no response (?)
@@ -71,34 +71,34 @@ no response (?)
 
 ==JSON==
 
-{{{http://localhost:8080/gl/allele/5672.json}}}
+{{{http://localhost:10080/gl/allele/5672.json}}}
 
 {{{
-{"id":"http://localhost:8080/gl/allele/5672","accession":"","glstring":"HLA-C*15:54","locus":"http://localhost:8080/gl/locus/4377"}
+{"id":"http://localhost:10080/gl/allele/5672","accession":"","glstring":"HLA-C*15:54","locus":"http://localhost:10080/gl/locus/4377"}
 }}}
 
 ==RDF==
 
-{{{http://localhost:8080/gl/allele/5672.rdf}}}
+{{{http://localhost:10080/gl/allele/5672.rdf}}}
 
  {{{
 <rdf:RDF>
-  <rdf:Description rdf:about="http://localhost:8080/gl/allele/5672">
+  <rdf:Description rdf:about="http://localhost:10080/gl/allele/5672">
     <rdf:type rdf:resource="http://nmdp.org/gl-ontology/Allele"/>
-    <dc:title>http://localhost:8080/gl/allele/5672</dc:title>
-    <dc:identifier>http://localhost:8080/gl/allele/5672</dc:identifier>
-    <rdfs:label>http://localhost:8080/gl/allele/5672</rdfs:label>
+    <dc:title>http://localhost:10080/gl/allele/5672</dc:title>
+    <dc:identifier>http://localhost:10080/gl/allele/5672</dc:identifier>
+    <rdfs:label>http://localhost:10080/gl/allele/5672</rdfs:label>
     <rdfs:comment>HLA-C*15:54</rdfs:comment>
     <gl:hasAccession/>
     <gl:hasGlstring>HLA-C*15:54</gl:hasGlstring>
-    <gl:hasLocus rdf:Resource="http://localhost:8080/gl/locus/4377"/>
+    <gl:hasLocus rdf:Resource="http://localhost:10080/gl/locus/4377"/>
   </rdf:Description>
 </rdf:RDF>
 }}}
 
 ==N3==
 
-{{{http://localhost:8080/gl/allele/5672.n3}}}
+{{{http://localhost:10080/gl/allele/5672.n3}}}
 
 {{{
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -107,11 +107,11 @@ no response (?)
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://localhost:8080/gl/allele/5672> a <http://nmdp.org/gl-ontology/Allele> ;
-  dc:title "http://localhost:8080/gl/allele/5672" ;
-  dc:identifier "http://localhost:8080/gl/allele/5672" ;
-  rdfs:label "http://localhost:8080/gl/allele/5672" ;
+<http://localhost:10080/gl/allele/5672> a <http://nmdp.org/gl-ontology/Allele> ;
+  dc:title "http://localhost:10080/gl/allele/5672" ;
+  dc:identifier "http://localhost:10080/gl/allele/5672" ;
+  rdfs:label "http://localhost:10080/gl/allele/5672" ;
   rdfs:comment "HLA-C*15:54" ;
   gl:hasAccession "" ;
-  gl:hasLocus <http://localhost:8080/gl/locus/4377> ; 
+  gl:hasLocus <http://localhost:10080/gl/locus/4377> ; 
 }}}
