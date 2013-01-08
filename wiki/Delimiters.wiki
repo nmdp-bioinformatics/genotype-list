@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Add reference to the GL String publication soon.
+Add reference to the GL String publication.
 
 
 = Details =
