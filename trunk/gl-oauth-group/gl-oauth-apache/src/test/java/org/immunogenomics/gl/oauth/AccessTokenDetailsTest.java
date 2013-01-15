@@ -65,7 +65,7 @@ public class AccessTokenDetailsTest {
         long delta = Math.abs(response.getExpiresIn() - parsedResponse.getExpiresIn());
         assertFalse("expiresIn delta is > 1 second: " + delta, delta > 1);
         long deltaMs = Math.abs(response.getExpiresAt() - parsedResponse.getExpiresAt());
-        assertFalse("expiresAt time delta > 500 ms: " + deltaMs, deltaMs > 500);
+        assertFalse("expiresAt time delta > 1010 ms: " + deltaMs, deltaMs > 1010);
         assertEquals(response.getId(), parsedResponse.getId());
         assertEquals(response.getRealm(), parsedResponse.getRealm());
         assertArrayEquals("scope array", response.getScopes(), parsedResponse.getScopes());
