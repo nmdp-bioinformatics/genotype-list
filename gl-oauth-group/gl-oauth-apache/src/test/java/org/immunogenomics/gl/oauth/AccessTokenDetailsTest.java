@@ -45,6 +45,7 @@ public class AccessTokenDetailsTest {
     @Test
     public void testTokenValidateResponse() {
         AccessTokenDetails response = new AccessTokenDetails();
+        response.setExpiresAt(System.currentTimeMillis() - 2);
         checkToAndFromString(response);
         response.setExpiresIn(123);
         checkToAndFromString(response);
