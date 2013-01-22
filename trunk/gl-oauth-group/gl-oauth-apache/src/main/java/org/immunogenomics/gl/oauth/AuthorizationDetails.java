@@ -23,17 +23,24 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
  */
 package org.immunogenomics.gl.oauth;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Authorization properties.
  */
-public class AuthorizationDetails {
+public class AuthorizationDetails implements Comparable<AuthorizationDetails>{
+    
+    public static final String ADMIN_SCOPE = "admin";
+    public static final String[] ADMIN_SCOPES = {"admin"};
+    
     private static final String SCOPE = "scope";
     private static final String REALM = "realm";
     private static final String ID = "id";
     private static final String DURATION = "duration";
-    private String id; // user or sytem id for tracking purposes.
+    private String id; // user or system id for tracking purposes.
     private String realm;
-    private String[] scopes;
+    private Set<String> scopes = new TreeSet<String>();
     private int duration;
 
     public AuthorizationDetails() {}
@@ -76,14 +83,14 @@ public class AuthorizationDetails {
     }
 
     public String[] getScopes() {
-        return scopes;
+        return scopes.toArray(new String[scopes.size()]);
     }
 
     public void setScopes(String[] scope) {
+        this.scopes.clear();
         for (String name : scope) {
-            checkArg(name);
+            addScope(name);
         }
-        this.scopes = scope;
     }
 
     @Override
@@ -92,18 +99,14 @@ public class AuthorizationDetails {
         append(sb, ID, id);
         append(sb, DURATION, Long.toString(getDuration()));
         append(sb, REALM, realm);
-        append(sb, SCOPE, scopes);
+        appendScopes(sb);
         return sb.toString();
     }
-
-    private void append(StringBuilder sb, String name, String[] array) {
-        if (array == null || array.length == 0)
-            return;
-        if (sb.length() > 0)
-            sb.append(',');
-        sb.append(name).append('=').append(array[0]);
-        for (int i = 1; i < array.length; i++) {
-            sb.append(' ').append(array[i]);
+    
+    private void appendScopes(StringBuilder sb) {
+        append(sb, SCOPE, "");
+        for (String scope : scopes) {
+            sb.append(scope).append(" ");
         }
     }
 
@@ -135,4 +138,28 @@ public class AuthorizationDetails {
         }
     }
 
+    public boolean hasScope(String scope) {
+        return scopes.contains(scope);
+    }
+
+    @Override
+    public int compareTo(AuthorizationDetails o) {
+        return this.id.compareTo(o.id);
+    }
+
+    public boolean addScope(String scopeName) {
+        if (scopeName == null || scopeName.length() == 0) {
+            return false;
+        }
+        checkArg(scopeName);
+        return scopes.add(scopeName);
+    }
+    
+    public boolean removeScope(String scopeName) {
+        if (scopeName == null || scopeName.length() == 0) {
+            return false;
+        }
+        checkArg(scopeName);
+        return scopes.remove(scopeName);
+    }
 }
