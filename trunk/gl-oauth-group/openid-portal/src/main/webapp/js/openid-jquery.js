@@ -13,7 +13,9 @@ var providers_large = {
     yahoo: {
         name: 'Yahoo',      
         url: 'https://me.yahoo.com/'
-    },    
+    }
+};
+var providers_large_unused = {
     aol: {
         name: 'AOL',     
         label: 'Enter your AOL screenname.',
@@ -31,6 +33,8 @@ var providers_large = {
     }
 };
 var providers_small = {
+};
+var providers_small_unused = {
     myopenid: {
         name: 'MyOpenID',
         label: 'Enter your MyOpenID username.',
