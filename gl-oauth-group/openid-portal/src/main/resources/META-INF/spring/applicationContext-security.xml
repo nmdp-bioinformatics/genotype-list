@@ -9,6 +9,7 @@
     <http pattern="/images/*" security="none" />
     <http pattern="/css/*" security="none" />
     <http pattern="/js/*" security="none" />
+    <http pattern="/oauth/*" security="none" />
         
     <!-- HTTP security configurations -->
     <http auto-config="true" use-expressions="true">
