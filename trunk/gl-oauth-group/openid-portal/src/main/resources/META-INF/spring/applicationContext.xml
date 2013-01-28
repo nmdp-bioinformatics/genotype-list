@@ -61,4 +61,9 @@
     </bean>
     <bean id="immunogenomicsAuthorizationDao" class="org.immunogenomics.gl.oauth.openid.portal.admin.ImmunogenomicsAuthorizationDao"/>
 
+    <!-- Support for JMX access to TokenValidator -->
+    <bean class="org.immunogenomics.gl.oauth.openid.portal.OAuthInitializer">
+        <constructor-arg ref="tokenAuthorizationService"/>
+    </bean>
+
 </beans>
