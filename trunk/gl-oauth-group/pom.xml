@@ -38,6 +38,7 @@
 
   <modules>
     <module>gl-oauth-apache</module>
+    <module>openid-portal</module>
     <module>toy-portal</module>
     <module>toy-rest-app</module>
   </modules>
