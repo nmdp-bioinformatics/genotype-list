@@ -44,9 +44,13 @@ public class OauthController {
     public String validate(@RequestParam String token) {
         AccessTokenDetails tokenDetails = authorizationManager.validate(token);
         if (tokenDetails == null) {
+            SecurityLogger.recordInvalidToken(token);
             return "INVALID_TOKEN";
+        } else {
+            String result = tokenDetails.toString();
+            SecurityLogger.recordValidated(result);
+            return result;
         }
-        return tokenDetails.toString();
     }
 
 }

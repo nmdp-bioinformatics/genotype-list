@@ -55,7 +55,7 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         }
     }
     
-    private static class MyUserDetails implements UserDetails {
+    static class MyUserDetails implements UserDetails {
         private static final long serialVersionUID = 1L;
 
         private ImmunogenomicsAuthorization authorization;
@@ -161,8 +161,9 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         if (email == null) {
             user = authorizationDetailsDao.findByOpenid(id);
         } else {
+            user = authorizationDetailsDao.findOrCreate(id, email);
         }
-        user = authorizationDetailsDao.findOrCreate(id, email);
+        SecurityLogger.recordLogin(email, user);
 
         return new MyUserDetails(user);
     }
