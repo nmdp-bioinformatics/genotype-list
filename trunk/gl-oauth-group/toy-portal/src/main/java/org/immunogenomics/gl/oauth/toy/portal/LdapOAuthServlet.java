@@ -30,6 +30,7 @@ import javax.servlet.ServletException;
 
 import org.immunogenomics.gl.oauth.AbstractOAuthServlet;
 import org.immunogenomics.gl.oauth.AuthorizationManager;
+import org.immunogenomics.gl.oauth.JmxTokenValidator;
 import org.immunogenomics.gl.oauth.MemoryTokenStore;
 
 public class LdapOAuthServlet extends AbstractOAuthServlet {
@@ -49,6 +50,7 @@ public class LdapOAuthServlet extends AbstractOAuthServlet {
             throw new ServletException(e);
         }
         authorizationManager = new AuthorizationManager(authorizationProvider, new MemoryTokenStore());
+        JmxTokenValidator.registerJmxTokenValidator(authorizationManager);
     }
 
     @Override
