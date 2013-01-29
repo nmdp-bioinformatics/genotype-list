@@ -51,7 +51,7 @@ public final class VoldemortModule extends AbstractModule {
     @Provides @Singleton
     protected ClientConfig createClientConfig() {
         // todo:  read config from property file
-        return new ClientConfig().setBootstrapUrls("tcp://mn4s31062:6666");
+        return new ClientConfig().setBootstrapUrls("tcp://localhost:6666");
     }
 
     @Provides @Singleton
