@@ -46,6 +46,8 @@ import org.immunogenomics.gl.service.IdResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.cache.Cache;
+
 import com.google.inject.Inject;
 
 /**
@@ -54,6 +56,8 @@ import com.google.inject.Inject;
 @Immutable
 final class JdbcIdResolver implements IdResolver {
     private final DataSource dataSource;
+    private final Cache<String, Locus> loci;
+    private final Cache<String, Allele> alleles;
     private static final Logger logger = LoggerFactory.getLogger(JdbcIdResolver.class);
     private static final String LOCUS_SQL = "select locus from locus where id = ?";
     private static final String ALLELE_SQL = "select allele from allele where id = ?";
@@ -65,17 +69,29 @@ final class JdbcIdResolver implements IdResolver {
 
 
     @Inject
-    JdbcIdResolver(final DataSource dataSource) {
+    JdbcIdResolver(final DataSource dataSource, final Cache<String, Locus> loci, final Cache<String, Allele> alleles) {
         checkNotNull(dataSource);
+        checkNotNull(loci);
+        checkNotNull(alleles);
         this.dataSource = dataSource;
+        this.loci = loci;
+        this.alleles = alleles;
     }
 
 
     @Override
     public Locus findLocus(final String id) {
+        Locus locus = loci.getIfPresent(id);
+        if (locus != null) {
+            return locus;
+        }
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            return queryRunner.query(LOCUS_SQL, new LocusHandler(), id);
+            locus = queryRunner.query(LOCUS_SQL, new LocusHandler(), id);
+            if (locus != null) {
+                loci.put(id, locus);
+            }
+            return locus;
         }
         catch (SQLException e) {
             logger.warn("could not find locus for id " + id, e);
@@ -85,9 +101,17 @@ final class JdbcIdResolver implements IdResolver {
 
     @Override
     public Allele findAllele(final String id) {
+        Allele allele = alleles.getIfPresent(id);
+        if (allele != null) {
+            return allele;
+        }
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            return queryRunner.query(ALLELE_SQL, new AlleleHandler(), id);
+            allele = queryRunner.query(ALLELE_SQL, new AlleleHandler(), id);
+            if (allele != null) {
+                alleles.put(id, allele);
+            }
+            return allele;
         }
         catch (SQLException e) {
             logger.warn("could not find allele for id " + id, e);

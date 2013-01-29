@@ -49,6 +49,8 @@ import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 import org.immunogenomics.gl.service.AbstractIdResolverTest;
 import org.immunogenomics.gl.service.IdResolver;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -65,6 +67,9 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     private GenotypeList genotypeList1;
     private MultilocusUnphasedGenotype multilocusUnphasedGenotype;
 
+    private Cache<String, Locus> loci;
+    private Cache<String, Allele> alleles;
+
     @Mock
     private Connection connection;
     @Mock
@@ -79,6 +84,9 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        loci = CacheBuilder.newBuilder().build();
+        alleles = CacheBuilder.newBuilder().build();
 
         locus = new Locus(validLocusId, "HLA-A");
         allele = new Allele(validAlleleId, "A01234", "HLA-A*01:01:01:01", locus);
@@ -106,7 +114,7 @@ public final class JdbcIdResolverTest extends AbstractIdResolverTest {
 
     @Override
     protected IdResolver createIdResolver() {
-        return new JdbcIdResolver(dataSource);
+        return new JdbcIdResolver(dataSource, loci, alleles);
     }
 
     @Override

@@ -28,6 +28,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.immunogenomics.gl.service.jdbc.JdbcUtils.hash;
 
 import java.sql.SQLException;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
 import javax.sql.DataSource;
 
 import javax.annotation.concurrent.Immutable;
@@ -40,6 +44,8 @@ import org.immunogenomics.gl.service.IdSupplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.cache.Cache;
+
 import com.google.inject.Inject;
 
 /**
@@ -49,6 +55,8 @@ import com.google.inject.Inject;
 final class JdbcGlstringResolver implements GlstringResolver {
     private final IdSupplier idSupplier;
     private final DataSource dataSource;
+    private final Cache<String, String> locusIds;
+    private final Cache<String, String> alleleIds;
     private final Logger logger = LoggerFactory.getLogger(JdbcGlstringResolver.class);
     private static final String LOCUS_ID_SQL = "select id from locus_id where glstring_hash = ?";
     private static final String ALLELE_ID_SQL = "select id from allele_id where glstring_hash = ?";
@@ -60,11 +68,19 @@ final class JdbcGlstringResolver implements GlstringResolver {
 
 
     @Inject
-    JdbcGlstringResolver(final IdSupplier idSupplier, final DataSource dataSource) {
+    JdbcGlstringResolver(final IdSupplier idSupplier,
+                         final DataSource dataSource,
+                         final Cache<String, String> locusIds,
+                         final Cache<String, String> alleleIds) {
+
         checkNotNull(idSupplier);
         checkNotNull(dataSource);
+        checkNotNull(locusIds);
+        checkNotNull(alleleIds);
         this.idSupplier = idSupplier;
         this.dataSource = dataSource;
+        this.locusIds = locusIds;
+        this.alleleIds = alleleIds;
     }
 
 
@@ -72,34 +88,58 @@ final class JdbcGlstringResolver implements GlstringResolver {
     public String resolveLocus(final String glstring) {
         checkNotNull(glstring);
         checkArgument(!glstring.isEmpty());
-        QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(LOCUS_ID_SQL, hash(glstring), new ScalarHandler());
-            if (id != null) {
-                return id;
-            }
+            return locusIds.get(glstring, new Callable<String>()
+                {
+                    @Override
+                    public String call() {
+                        QueryRunner queryRunner = new QueryRunner(dataSource);
+                        try {
+                            String id = (String) queryRunner.query(LOCUS_ID_SQL, hash(glstring), new ScalarHandler());
+                            if (id != null) {
+                                return id;
+                            }
+                        }
+                        catch (SQLException e) {
+                            logger.warn("could not resolve id for locus with glstring " + abbrev(glstring), e);
+                        }
+                        return idSupplier.createLocusId();
+                    }
+                });
         }
-        catch (SQLException e) {
+        catch (ExecutionException e) {
             logger.warn("could not resolve id for locus with glstring " + abbrev(glstring), e);
+            return idSupplier.createLocusId();
         }
-        return idSupplier.createLocusId();
     }
 
     @Override
     public String resolveAllele(final String glstring) {
         checkNotNull(glstring);
         checkArgument(!glstring.isEmpty());
-        QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(ALLELE_ID_SQL, hash(glstring), new ScalarHandler());
-            if (id != null) {
-                return id;
-            }
+            return alleleIds.get(glstring, new Callable<String>()
+                {
+                    @Override
+                    public String call() {
+                        QueryRunner queryRunner = new QueryRunner(dataSource);
+                        try {
+                            String id = (String) queryRunner.query(ALLELE_ID_SQL, hash(glstring), new ScalarHandler());
+                            if (id != null) {
+                                return id;
+                            }
+                        }
+                        catch (SQLException e) {
+                            logger.warn("could not resolve id for allele with glstring " + abbrev(glstring), e);
+                        }
+                        return idSupplier.createAlleleId();
+                    }
+                });
         }
-        catch (SQLException e) {
+        catch (ExecutionException e) {
             logger.warn("could not resolve id for allele with glstring " + abbrev(glstring), e);
+            return idSupplier.createLocusId();
         }
-        return idSupplier.createAlleleId();
     }
 
     @Override

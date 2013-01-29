@@ -29,9 +29,15 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
+
 import org.immunogenomics.gl.service.GlRegistry;
 import org.immunogenomics.gl.service.GlstringResolver;
 import org.immunogenomics.gl.service.IdResolver;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -53,6 +59,21 @@ public final class JdbcModule extends AbstractModule {
         bind(IdResolver.class).to(JdbcIdResolver.class);
         bind(GlstringResolver.class).to(JdbcGlstringResolver.class);
         bind(GlRegistry.class).to(JdbcGlRegistry.class);
+    }
+
+    @Provides
+    Cache<String, String> createIdCache() {
+        return CacheBuilder.newBuilder().maximumSize(10000).build();
+    }
+
+    @Provides
+    Cache<String, Locus> createLociCache() {
+        return CacheBuilder.newBuilder().maximumSize(1000).build();
+    }
+
+    @Provides
+    Cache<String, Allele> createAlleleCache() {
+        return CacheBuilder.newBuilder().maximumSize(10000).build();
     }
 
     @Provides @Singleton

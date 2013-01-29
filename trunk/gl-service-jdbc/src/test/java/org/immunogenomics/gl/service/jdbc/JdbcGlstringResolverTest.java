@@ -34,6 +34,9 @@ import org.immunogenomics.gl.service.AbstractGlstringResolverTest;
 import org.immunogenomics.gl.service.GlstringResolver;
 import org.immunogenomics.gl.service.IdSupplier;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 /**
  * Unit test for JdbcGlstringResolver.
  */
@@ -43,10 +46,15 @@ public final class JdbcGlstringResolverTest extends AbstractGlstringResolverTest
     @Mock
     private DataSource dataSource;
 
+    private Cache<String, String> locusIds;
+    private Cache<String, String> alleleIds;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        locusIds = CacheBuilder.newBuilder().build();
+        alleleIds = CacheBuilder.newBuilder().build();
         when(idSupplier.createLocusId()).thenReturn("http://immunogenomics.org/locus/0");
         when(idSupplier.createAlleleId()).thenReturn("http://immunogenomics.org/allele/0");
         when(idSupplier.createAlleleListId()).thenReturn("http://immunogenomics.org/allele-list/0");
@@ -59,6 +67,6 @@ public final class JdbcGlstringResolverTest extends AbstractGlstringResolverTest
 
     @Override
     protected GlstringResolver createGlstringResolver() {
-        return new JdbcGlstringResolver(idSupplier, dataSource);
+        return new JdbcGlstringResolver(idSupplier, dataSource, locusIds, alleleIds);
     }
 }
