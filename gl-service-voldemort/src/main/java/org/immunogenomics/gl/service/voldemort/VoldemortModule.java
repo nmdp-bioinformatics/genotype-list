@@ -31,6 +31,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
+import voldemort.client.CachingStoreClientFactory;
 import voldemort.client.ClientConfig;
 import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClientFactory;
@@ -50,11 +51,11 @@ public final class VoldemortModule extends AbstractModule {
     @Provides @Singleton
     protected ClientConfig createClientConfig() {
         // todo:  read config from property file
-        return new ClientConfig().setBootstrapUrls("tcp://localhost:6666");
+        return new ClientConfig().setBootstrapUrls("tcp://mn4s31062:6666");
     }
 
     @Provides @Singleton
     protected StoreClientFactory createStoreClientFactory(final ClientConfig clientConfig) {
-        return new SocketStoreClientFactory(clientConfig);
+        return new CachingStoreClientFactory(new SocketStoreClientFactory(clientConfig));
     }
 }
