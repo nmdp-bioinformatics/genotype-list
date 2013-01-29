@@ -4,7 +4,7 @@
 <html>
 <body>
 
-<h1>OpenID Sample Home Page</h1>
+<h1>OpenID Page</h1>
 
 <sec:authentication property='principal.newUser' var='isNew' />
 <p>
@@ -17,10 +17,12 @@ by the application and will be recognized if you return.
 </p>
 </c:if>
 
+<%--  
 <h3>Technical Information</h3>
 <p>
 Your principal object is....: <%= request.getUserPrincipal() %>
 </p>
+--%>
 <p><a href="j_spring_security_logout">Logout</a>
 </body>
 </html>
