@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 
 import org.immunogenomics.gl.oauth.AbstractOAuthServlet;
 import org.immunogenomics.gl.oauth.AuthorizationManager;
+import org.immunogenomics.gl.oauth.JmxTokenValidator;
 import org.immunogenomics.gl.oauth.TokenValidator;
 
 /**
@@ -43,6 +44,7 @@ public class ToyOAuthServlet extends AbstractOAuthServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         tokenValidator = new ToyTokenValidator();
+        JmxTokenValidator.registerJmxTokenValidator(tokenValidator);
     }
 
     @Override
