@@ -34,6 +34,10 @@
 
   <name>gl-jetty</name>
   <description>Jetty test server.</description>
+  
+  <properties>
+    <portal>toy</portal>
+  </properties>
 
   <scm>
     <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-jetty</connection>
@@ -84,7 +88,7 @@
               <contextPath>/gl</contextPath>
             </contextHandler>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
-              <war>${project.build.directory}/dependency/openid-portal.war</war>
+              <war>${project.build.directory}/dependency/${portal}-portal.war</war>
               <contextPath>/portal</contextPath>
             </contextHandler>
           </contextHandlers> 
@@ -109,7 +113,7 @@
     </dependency>
     <dependency>
       <groupId>org.immunogenomics.gl.oauth</groupId>
-      <artifactId>openid-portal</artifactId>
+      <artifactId>${portal}-portal</artifactId>
       <version>${project.version}</version>
       <type>war</type>
       <scope>runtime</scope>
