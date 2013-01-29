@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>OpenID Login</title>
+    <title>Immunogenomics OpenID Login</title>
 
     <!-- Simple OpenID Selector -->
     <link rel="stylesheet" href="<c:url value='/css/openid.css'/>" />
@@ -23,11 +23,40 @@
         body {
             font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
         }
+        
+#header {
+    background: #648C1D;
+    text-align: center;
+    padding: 5px;
+    margin-bottom:5px;
+}
+
+#header a {
+    color: #fff;
+    font-size: 20px;
+    font-family: Helvetica, sans-serif;
+}
+
+#openid_form fieldset {
+    background: #e0e7d3;
+    padding: 8px;
+    padding-bottom: 22px;
+    border: 2;
+    width: 560px;
+}
+
+
+#policy {
+    font-size: smaller;
+}
+        
     </style>
 </head>
 
 <body>
-
+<div id="header">
+    <a href="/">Immunogenomics Portal</a>
+</div>
 <c:if test="${not empty param.login_error}">
   <font color="red">
     Your login attempt was not successful, try again.<br/><br/>
@@ -39,8 +68,8 @@
 <form action="<c:url value='j_spring_openid_security_check'/>" method="post" id="openid_form">
     <input type="hidden" name="action" value="verify" />
 
-    <fieldset>
-            <legend>Sign-in or Create New Account</legend>
+    <fieldset id="openid_fieldset">
+            <legend>Sign-in with your Yahoo or Google Account</legend>
 
             <div id="openid_choice">
                 <p>Please click your account provider:</p>
@@ -56,6 +85,7 @@
             <p>OpenID is a service that allows you to log-on to many different websites using a single identity.
             Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
             </noscript>
+            <div id="policy">Your email address will be used for authorization and to notify you of significant changes to the services.</div>
     </fieldset>
 </form>
 <!-- /Simple OpenID Selector -->
