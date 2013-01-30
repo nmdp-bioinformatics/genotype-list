@@ -17,8 +17,8 @@
       </init-param>
       <init-param>
         <param-name>validateUrl</param-name>
-        <param-value>blue</param-value>
-        <description>URL used to validate the token</description>
+        <param-value>JMX</param-value>
+        <description>URL used to validate the token. "JMX" to use JMXBean</description>
       </init-param>
     </filter>
 
