@@ -41,6 +41,7 @@ import org.immunogenomics.gl.oauth.AuthorizationException;
 import org.immunogenomics.gl.oauth.AuthorizedHooks;
 import org.immunogenomics.gl.oauth.BearerTokenFilterHelper;
 import org.immunogenomics.gl.oauth.DefaultAuthorizer;
+import org.immunogenomics.gl.oauth.JmxTokenValidator;
 import org.immunogenomics.gl.oauth.MemoryTokenStore;
 import org.immunogenomics.gl.oauth.RequestScope;
 import org.immunogenomics.gl.oauth.ScopeEvaluator;
@@ -61,7 +62,11 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
         realm = config.getInitParameter("realm");
         String validateUrl = config.getInitParameter("validateUrl");
         validateUrl = System.getProperty("oauth.validate.url", validateUrl);
-        tokenValidator = new RemoteTokenValidator(validateUrl);
+        if ("JMX".equalsIgnoreCase(validateUrl)) {
+            tokenValidator = new JmxTokenValidator();
+        } else {
+            tokenValidator = new RemoteTokenValidator(validateUrl);
+        }
         tokenValidator = new AuthorizationCache(tokenValidator, new MemoryTokenStore());
         filterHelper = new BearerTokenFilterHelper(tokenValidator, this, this);
         filterHelper.setAuthorizedHooks(this);
