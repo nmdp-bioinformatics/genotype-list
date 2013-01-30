@@ -52,6 +52,57 @@ final class PerformanceTestUtils {
     }
 
     /**
+     * Return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     * specified list of allele glstrings.
+     *
+     * @param alleleGlstrings list of allele glstrings, must not be null
+     * @return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     *    specified list of allele glstrings
+     */
+    static ListMultimap<String, String> readAlleleGlstrings(final List<String> alleleGlstrings) {
+        checkNotNull(alleleGlstrings);
+        ListMultimap<String, String> alleles = ArrayListMultimap.create(100, alleleGlstrings.size());
+        for (String alleleGlstring : alleleGlstrings) {
+            String lociGlstring = alleleGlstring.substring(0, alleleGlstring.indexOf("*"));
+            alleles.put(lociGlstring, alleleGlstring);
+        }
+        return alleles;        
+    }
+
+    /**
+     * Return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     * specified file of allele glstrings.
+     *
+     * @param file file of allele glstrings, must not be null
+     * @return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     *    specified file of allele glstrings
+     * @throws IOException if an I/O error occurs
+     */
+    static ListMultimap<String, String> readAlleleGlstrings(final File file) throws IOException {
+        checkNotNull(file);
+        return readAlleleGlstrings(Files.readLines(file, Charset.forName("UTF-8")));
+    }
+
+    /**
+     * Return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     * specified input stream of allele glstrings.
+     *
+     * @param inputStream input stream of allele glstrings, must not be null
+     * @return a multimap of alleles in glstring format keyed by locus in glstring format for the
+     *    specified input stream of allele glstrings
+     * @throws IOException if an I/O error occurs
+     */
+    static ListMultimap<String, String> readAlleleGlstrings(final InputStream inputStream) throws IOException {
+        checkNotNull(inputStream);
+        return readAlleleGlstrings(CharStreams.readLines(new InputSupplier<InputStreamReader>() {
+                    @Override
+                    public InputStreamReader getInput() {
+                        return new InputStreamReader(inputStream);
+                    }
+                }));
+    }
+
+    /**
      * Return a multimap of alleles in glstring format keyed by locus in glstring format for the specified
      * list of allele URIs.
      *
