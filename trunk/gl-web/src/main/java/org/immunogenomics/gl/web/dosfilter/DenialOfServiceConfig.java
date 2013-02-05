@@ -1,8 +1,33 @@
+/*
+
+    gl-web  Reusable web components.
+    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*/
 package org.immunogenomics.gl.web.dosfilter;
 
 import java.util.concurrent.TimeUnit;
 
-/** Configuration for Denial of Service */
+/**
+ * Configuration for denial of service filter.
+ */
 public class DenialOfServiceConfig implements DenialOfServiceConfigMXBean {
 
     private int freeHitCount = 100;
@@ -11,9 +36,6 @@ public class DenialOfServiceConfig implements DenialOfServiceConfigMXBean {
     private long throttleDelay = 100;
     private String authorizationAttribName = "signature";
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#toString()
-     */
     @Override
     public String toString() {
         return "DenialOfServiceConfig [freeHitCount=" + freeHitCount 
@@ -23,110 +45,74 @@ public class DenialOfServiceConfig implements DenialOfServiceConfigMXBean {
                 + ", cleanInterval(min)=" + TimeUnit.MILLISECONDS.toMinutes(cleanInterval) + "]";
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#getFreeHitCount()
-     */
     @Override
     public int getFreeHitCount() {
         return freeHitCount;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#setFreeHitCount(int)
-     */
     @Override
-    public void setFreeHitCount(int freeHitCount) {
+    public void setFreeHitCount(final int freeHitCount) {
         this.freeHitCount = freeHitCount;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#getAnonymousHitsPerMinute()
-     */
     @Override
     public int getAnonymousHitsPerMinute() {
         return anonymousHitsPerMinute;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#setAnonymousHitsPerMinute(int)
-     */
     @Override
-    public void setAnonymousHitsPerMinute(int anonymousHitsPerMinute) {
+    public void setAnonymousHitsPerMinute(final int anonymousHitsPerMinute) {
         this.anonymousHitsPerMinute = anonymousHitsPerMinute;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#getCleanInterval()
-     */
     @Override
     public long getCleanInterval() {
         return cleanInterval;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#setCleanInterval(long)
-     */
     @Override
-    public void setCleanInterval(long cleanInterval) {
+    public void setCleanInterval(final long cleanInterval) {
         this.cleanInterval = cleanInterval;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#updateCleanInterval(java.lang.String)
-     */
     @Override
-    public void updateCleanIntervalInMinutes(String cleanIntervalStr) throws NumberFormatException {
+    public void updateCleanIntervalInMinutes(final String cleanIntervalStr) throws NumberFormatException {
         cleanInterval = TimeUnit.MINUTES.toMillis(parseLong(cleanIntervalStr, cleanInterval));
     }
 
-    private long parseLong(String longStr, long defaultValue) throws NumberFormatException {
+    private long parseLong(final String longStr, final long defaultValue) throws NumberFormatException {
         if (longStr != null) {
             return Long.parseLong(longStr);
         }
         return defaultValue;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#updateFreeHitCount(java.lang.String)
-     */
     @Override
-    public void updateFreeHitCount(String hitCountStr) {
+    public void updateFreeHitCount(final String hitCountStr) {
         freeHitCount = (int) parseLong(hitCountStr, freeHitCount);
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#updateAnonymousHitsPerMinute(java.lang.String)
-     */
     @Override
-    public void updateAnonymousHitsPerMinute(String hitCountStr) {
+    public void updateAnonymousHitsPerMinute(final String hitCountStr) {
         anonymousHitsPerMinute = (int) parseLong(hitCountStr, anonymousHitsPerMinute);
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#getThrottleDelay()
-     */
     @Override
     public long getThrottleDelay() {
         return throttleDelay;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#setThrottleDelay(long)
-     */
     @Override
-    public void setThrottleDelay(long throttleDelay) {
+    public void setThrottleDelay(final long throttleDelay) {
         this.throttleDelay = throttleDelay;
     }
 
-    /* (non-Javadoc)
-     * @see org.immunogenomics.gl.service.webapp.DenialOfServiceMBean#updateThrottleDelay(java.lang.String)
-     */
     @Override
-    public void updateThrottleDelay(String msString) {
+    public void updateThrottleDelay(final String msString) {
         throttleDelay = (int) parseLong(msString, throttleDelay);
     }
 
-    public void setAuthorizationAttribName(String attributeName) {
+    public void setAuthorizationAttribName(final String attributeName) {
         this.authorizationAttribName = attributeName;
     }
 

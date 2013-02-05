@@ -1,3 +1,26 @@
+/*
+
+    gl-web  Reusable web components.
+    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*/
 package org.immunogenomics.gl.web;
 
 import java.lang.management.ManagementFactory;
@@ -10,23 +33,25 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JmxUtils {
+/**
+ * JMX utils.
+ */
+public final class JmxUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JmxUtils.class);
 
-    private static Logger logger = LoggerFactory.getLogger(JmxUtils.class);
-
-    public static  <T> T getMXBean(String name, Class<T> mbeanClass) throws MalformedObjectNameException {
+    public static <T> T getMXBean(final String name, final Class<T> mbeanClass) throws MalformedObjectNameException {
         T mbeanProxy = null;
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         ObjectName mbeanName = toObjectName(name, mbeanClass);
         if (mBeanServer.isRegistered(mbeanName)) {
             mbeanProxy = JMX.newMXBeanProxy(mBeanServer, mbeanName, mbeanClass, true);
         }
-        return  mbeanProxy;
+        return mbeanProxy;
     }
 
-    public static void registerMXBean(String name, Object mbean) {
+    public static void registerMXBean(final String name, final Object mbean) {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        
+
         try {
             Class<?> objClass = mbean.getClass();
             Class<?>[] interfaces = objClass.getInterfaces();
@@ -38,13 +63,14 @@ public class JmxUtils {
             }
             ObjectName mbeanName = toObjectName(name, mbeanClass);
             mBeanServer.registerMBean(mbean, mbeanName);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.warn("Failed registering MBean: " + name, e);
         }
     }
 
-    private static ObjectName toObjectName(String name, Class<?> mbeanClass)
-            throws MalformedObjectNameException
+    private static ObjectName toObjectName(final String name, final Class<?> mbeanClass)
+        throws MalformedObjectNameException
     {
         String packageName = mbeanClass.getPackage().getName();
         String className = mbeanClass.getSimpleName();
@@ -58,5 +84,4 @@ public class JmxUtils {
         ObjectName mbeanName = new ObjectName(fullName);
         return mbeanName;
     }
-
 }
