@@ -79,7 +79,7 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.html && echo
   </head>
   <body>
     <p class="type">
-<a href="http://immunogenomics.org/gl-ontology/Locus">http://immunogenomics.org/gl-ontology/Locus</a>
+<a href="http://gl.immunogenomics.org/gl-ontology/Locus">http://gl.immunogenomics.org/gl-ontology/Locus</a>
     </p>
     <p class="title">http://localhost:10080/gl/locus/0</p>
     <p class="identifier">http://localhost:10080/gl/locus/0</p>
@@ -96,13 +96,13 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.rdf && echo
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF
   xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:gl="http://immunogenomics.org/gl-ontology/1.0"
+  xmlns:gl="http://gl.immunogenomics.org/gl-ontology/1.0"
   xmlns:owl="http://www.w3.org/2002/07/owl#"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 >
   <rdf:Description rdf:about="http://localhost:10080/gl/locus/0">
-    <rdf:type rdf:resource="http://immunogenomics.org/gl-ontology/Locus"/>
+    <rdf:type rdf:resource="http://gl.immunogenomics.org/gl-ontology/Locus"/>
     <dc:title>http://localhost:10080/gl/locus/0</dc:title>
     <dc:identifier>http://localhost:10080/gl/locus/0</dc:identifier>
     <rdfs:label>http://localhost:10080/gl/locus/0</rdfs:label>
@@ -116,12 +116,12 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.rdf && echo
 {{{
 $ wget -q -O - http://localhost:10080/gl/locus/0.n3 && echo
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix gl: <http://immunogenomics.org/gl-ontology/1.0/> .
+@prefix gl: <http://gl.immunogenomics.org/gl-ontology/1.0/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://localhost:10080/gl/locus/0> a <http://immunogenomics.org/gl-ontology/Locus> ;
+<http://localhost:10080/gl/locus/0> a <http://gl.immunogenomics.org/gl-ontology/Locus> ;
   dc:title "http://localhost:10080/gl/locus/0" ;
   dc:identifier "http://localhost:10080/gl/locus/0" ;
   rdfs:label "http://localhost:10080/gl/locus/0" ;
