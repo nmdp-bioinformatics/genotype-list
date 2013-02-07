@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
       <groupId>org.immunogenomics.gl</groupId>
+      <relativePath>../../pom.xml</relativePath>
       <artifactId>gl</artifactId>
       <version>1.0-SNAPSHOT</version>
     </parent>
