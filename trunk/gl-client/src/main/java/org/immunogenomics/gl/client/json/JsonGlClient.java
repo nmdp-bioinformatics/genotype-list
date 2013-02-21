@@ -502,7 +502,6 @@ public final class JsonGlClient extends CacheGlClient {
         if (logger.isTraceEnabled()) {
             logger.trace("HTTP GET {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
         }
-        // todo:  check status code
         return response.body().asInputStream();
     }
 
@@ -513,7 +512,6 @@ public final class JsonGlClient extends CacheGlClient {
         if (logger.isTraceEnabled()) {
             logger.trace("HTTP POST {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
         }
-        // todo:  check status code
-        return response.getHeader("Location");
+        return response.header("Location");
     }
 }
