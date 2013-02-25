@@ -38,7 +38,7 @@ public final class ImgtHla3_11_0 extends ClasspathNomenclature {
     public ImgtHla3_11_0(final GlstringResolver glstringResolver,
                          final IdResolver idResolver,
                          final GlRegistry glRegistry) {
-        super("imgt-hla-3.110.0.txt", glstringResolver, idResolver, glRegistry);
+        super("imgt-hla-3.11.0.txt", glstringResolver, idResolver, glRegistry);
     }
 
     @Override
