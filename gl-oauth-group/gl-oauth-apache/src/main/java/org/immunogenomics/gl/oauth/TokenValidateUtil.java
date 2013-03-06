@@ -24,6 +24,8 @@
 package org.immunogenomics.gl.oauth;
 
 import java.io.IOException;
+import java.io.UTFDataFormatException;
+import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +44,7 @@ public final class TokenValidateUtil {
     public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
 
     /** Parameter name for passing the access token. */
-    private static final String TOKEN_PARAM = "token";
+    public static final String TOKEN_PARAM = "token";
 
     /**
      * Returns the token attached to the request by the toPost method.
@@ -101,5 +103,6 @@ public final class TokenValidateUtil {
     public static String encodeValidateTokenUrl(String validateUrl, String token) {
         return validateUrl + "?" + TokenValidateUtil.TOKEN_PARAM + "=" + token;
     }
+    
 
 }

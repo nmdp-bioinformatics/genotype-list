@@ -24,6 +24,7 @@
 package org.immunogenomics.gl.oauth;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -38,6 +39,7 @@ public class BearerTokenFilterHelper {
 
     /** OAuth 2.0 authenticate request header. */
     public static final String AUTHENTICATE = "Authenticate";
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     private TokenValidator tokenValidator;
     private ScopeEvaluator scopeEvaluator;
@@ -85,6 +87,7 @@ public class BearerTokenFilterHelper {
                 }
             }
         } catch (Exception e) {
+            logger.throwing(getClass().getName(), "checkAuthorization", e);
             throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "See log");
         }
         return null;
