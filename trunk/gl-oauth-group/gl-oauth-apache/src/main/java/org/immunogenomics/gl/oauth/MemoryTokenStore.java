@@ -23,13 +23,12 @@
  */
 package org.immunogenomics.gl.oauth;
 
-import java.security.SecureRandom;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class MemoryTokenStore implements TokenStore {
 
-    private SecureRandom secureRandom = new SecureRandom();
+    private BearerTokenUtil randomToken = new BearerTokenUtil();
 
     private ConcurrentHashMap<String, AccessTokenDetails> tokenToAuthorization =
             new ConcurrentHashMap<String, AccessTokenDetails>();
@@ -62,15 +61,10 @@ public class MemoryTokenStore implements TokenStore {
     }
 
     String createToken() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 2; ++i) {
-            int num = secureRandom.nextInt();
-            sb.append(Integer.toString(num, Character.MAX_RADIX));
-        }
-        String token = sb.toString();
+        String token = randomToken.randomToken();
+        // Extra check to make sure a duplicate is never returned.
         while (tokenToAuthorization.get(token) != null) {
-            sb.append(Integer.toString(secureRandom.nextInt(), Character.MAX_RADIX));
-            token = sb.toString();
+            token = randomToken.randomToken();
         }
         return token;
     }
