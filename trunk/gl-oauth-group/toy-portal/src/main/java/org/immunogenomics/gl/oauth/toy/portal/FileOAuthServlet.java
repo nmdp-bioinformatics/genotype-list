@@ -29,6 +29,7 @@ import javax.servlet.ServletException;
 import org.immunogenomics.gl.oauth.AbstractOAuthServlet;
 import org.immunogenomics.gl.oauth.AuthorizationManager;
 import org.immunogenomics.gl.oauth.FileOAuthProvider;
+import org.immunogenomics.gl.oauth.JmxDemoAuth;
 import org.immunogenomics.gl.oauth.JmxTokenValidator;
 import org.immunogenomics.gl.oauth.MemoryTokenStore;
 
@@ -48,6 +49,7 @@ public class FileOAuthServlet extends AbstractOAuthServlet {
             FileOAuthProvider fileOAuthProvider = new FileOAuthProvider("/userid-scopes.txt");
             authorizationManager = new AuthorizationManager(fileOAuthProvider, new MemoryTokenStore());
             JmxTokenValidator.registerJmxTokenValidator(authorizationManager);
+            JmxDemoAuth.registerJmxBean(authorizationManager);
         }
     }
 
