@@ -31,9 +31,10 @@ import org.immunogenomics.gl.oauth.AuthorizationDetails;
 
 public class ImmunogenomicsAuthorization {
     private static final String WRITE_SCOPE = "write";
+    private static final String ALLELE_SCOPE = "allele";
     private static final String SILVER_SCOPE = "silver";
     public static final String REALM = "immunogenomics";
-    public static final List<String> SCOPES = Arrays.asList(new String[]{AuthorizationDetails.ADMIN_SCOPE, WRITE_SCOPE, SILVER_SCOPE});
+    public static final List<String> SCOPES = Arrays.asList(new String[]{AuthorizationDetails.ADMIN_SCOPE, WRITE_SCOPE, SILVER_SCOPE, ALLELE_SCOPE});
 
     private AuthorizationDetails details;
     private String id = null;
@@ -83,6 +84,14 @@ public class ImmunogenomicsAuthorization {
         setScope(writeScope, WRITE_SCOPE);
     }
 
+    public boolean getAlleleScope() {
+        return getDetails().hasScope(ALLELE_SCOPE);
+    }
+    
+    public void setAlleleScope(boolean alleleScope) {
+        setScope(alleleScope, ALLELE_SCOPE);
+    }
+    
     public boolean getSilverScope() {
         return getDetails().hasScope(SILVER_SCOPE);
     }
