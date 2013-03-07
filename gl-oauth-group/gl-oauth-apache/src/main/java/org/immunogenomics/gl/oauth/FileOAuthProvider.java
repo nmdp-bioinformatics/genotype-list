@@ -88,15 +88,28 @@ public class FileOAuthProvider implements AuthorizationDetailsDao {
 
     public synchronized AuthorizationDetails getAuthorization(String userid, String realm) {
         AuthorizationDetails details = forRealm(realm).get(userid);
-        if (!realmsWithAdminSet.contains(realm)) {
-            // no user has admin.  So first users gets admin privileges.
+        if (DemoAuthMXBean.DEMO_USER_ID.equals(userid)) {
+            // special handling for demo user.
             if (details == null) {
+                // First access by demo userid.
                 details = new AuthorizationDetails();
                 details.setRealm(realm);
                 details.setId(userid);
+                addOrUpdate(details);
+                return details;
             }
-            details.addScope(AuthorizationDetails.ADMIN_SCOPE);
-            addOrUpdate(details);
+        } else {
+            // normal users
+            if (!realmsWithAdminSet.contains(realm)) {
+                // no user has admin.  So first users gets admin privileges.
+                if (details == null) {
+                    details = new AuthorizationDetails();
+                    details.setRealm(realm);
+                    details.setId(userid);
+                }
+                details.addScope(AuthorizationDetails.ADMIN_SCOPE);
+                addOrUpdate(details);
+            }
         }
         return details;
     }
