@@ -31,6 +31,12 @@ package org.immunogenomics.gl.oauth;
  */
 public interface OAuthProvider {
 
+    /**
+     * Returns the authorization for the userid within the specified realm.
+     * @param userid
+     * @param realm
+     * @return null or a populated AuthorizationDetails.
+     */
     AuthorizationDetails getAuthorization(String userid, String realm);
 
 }
