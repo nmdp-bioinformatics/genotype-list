@@ -85,19 +85,19 @@ public class DenialOfServiceFilter implements Filter {
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
         ServletContext servletContext = filterConfig.getServletContext();
+        String contextPath = servletContext.getContextPath();
         try {
-            String filterName = filterConfig.getFilterName();
+            String filterName = filterConfig.getFilterName() + contextPath;
             config = JmxUtils.getMXBean(filterName, DenialOfServiceConfigMXBean.class);
             if (config == null) {
                 config = createConfig(filterConfig);
                 JmxUtils.registerMXBean(filterName, config);
             }
-        }
-        catch (Exception ex) {
+            servletContext.log("DenialOfServiceFilter initialized.");
+        } catch (Exception ex) {
             servletContext.log("Unable to configure MBeans", ex);
             config = createConfig(filterConfig);
         }
-        servletContext.log(config.toString());
     }
 
     private DenialOfServiceConfigMXBean createConfig(final FilterConfig filterConfig) {
