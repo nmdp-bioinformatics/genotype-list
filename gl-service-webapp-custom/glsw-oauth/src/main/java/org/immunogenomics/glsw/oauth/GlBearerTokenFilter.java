@@ -87,7 +87,7 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
             scope = null;
         } else if (path.equals("/load")) {
             scope = UNPROTECTED_SCOPE;
-        } else if (path.equals("/allele")) {
+        } else if (path.equals("/allele") || path.equals("/locus")) {
             scope = "write allele";
         }
         RequestScope scopeDetails = new RequestScope(method, realm, scope);

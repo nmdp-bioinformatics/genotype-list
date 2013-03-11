@@ -24,10 +24,7 @@
 -->
 <%@page import="java.util.Properties" %>
 <%
-  Properties properties = new Properties();
-  ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-  properties.load(classLoader.getResourceAsStream("/gl-service.properties"));
-  String serverURL = properties.getProperty("org.immunogenomics.gl.service.Namespace");
+  String namespace = String.valueOf(request.getAttribute("Namespace"));
 %>
 <html lang="en">
   <head>
@@ -50,7 +47,7 @@
 <body>
   <div class="container">
     <h1 class="remove-bottom" style="margin-top: 40px">Genotype List service</h1>
-    <h5>Version 1.0-SNAPSHOT, Namespace <%=serverURL%></h5>
+    <h5>Version 1.0-SNAPSHOT, Namespace <%=namespace%></h5>
     <hr />
 
     <div class="two-thirds column">

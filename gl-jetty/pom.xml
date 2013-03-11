@@ -36,7 +36,10 @@
   <description>Jetty test server.</description>
   
   <properties>
+    <gl.port>10080</gl.port>
     <portal>toy</portal>
+    <!-- Override with -Dportal=openid on mvn command line -->
+    <!-- <portal>openid</portal> -->
   </properties>
 
   <scm>
@@ -69,9 +72,15 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>8.1.8.v20121106</version>
         <configuration>
+          <systemProperties>
+            <systemProperty>
+              <name>BaseURI</name>
+              <value>http://localhost:${gl.port}</value>
+            </systemProperty>
+          </systemProperties>
           <connectors>
             <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-              <port>8080</port>
+              <port>${gl.port}</port>
               <maxIdleTime>60000</maxIdleTime>
             </connector>
           </connectors>
@@ -81,11 +90,11 @@
           <contextHandlers>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/gl-service-explorer.war</war>
-              <contextPath>/explorer</contextPath>
+              <contextPath>/gl-demo-explorer</contextPath>
             </contextHandler>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/glsw-oauth.war</war>
-              <contextPath>/gl</contextPath>
+              <contextPath>/gl-demo</contextPath>
             </contextHandler>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/${portal}-portal.war</war>

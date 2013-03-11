@@ -24,7 +24,7 @@
     </layout>
   </appender>
   <category name="org.immunogenomics.gl.oauth.openid.portal.SecurityLogger" additivity="true">
-    <appender-ref ref="access"/>
+    <priority value ="info" />
   </category>
   <category name="org.openid4java">
     <priority value="warn" />
@@ -32,6 +32,5 @@
   <root>
     <priority value ="info" />
     <appender-ref ref="STDOUT" />
-    <appender-ref ref="rolling" />
   </root>
 </log4j:configuration>
