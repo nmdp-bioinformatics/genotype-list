@@ -108,6 +108,10 @@ function postData() {
         url: serverURL + apiData.methodSelected,
         type: 'POST',
         contentType: apiData.contentType,
+        beforeSend: function (request)
+        {
+            request.setRequestHeader("Authenticate", "Bearer " + bearerToken);
+        },
         data: apiData.postArgs,
         cache: false,
         processData: false,

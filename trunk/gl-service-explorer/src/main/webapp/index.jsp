@@ -24,10 +24,8 @@
 -->
 <%@page import="java.util.Properties" %>
 <%
-  Properties properties = new Properties();
-  ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-  properties.load(classLoader.getResourceAsStream("/gl-service.properties"));
-  String serverURL = properties.getProperty("org.immunogenomics.gl.service.Namespace");
+  String serverURL = org.immunogenomics.gl.explorer.JspSupport.getServerUrl(request);
+  String bearerToken = org.immunogenomics.gl.explorer.JspSupport.getAccessToken();
 %>
 <html lang="en">
   <head>
@@ -50,6 +48,8 @@
 
     <script type="text/javascript">
         var serverURL = "<%=serverURL%>";
+        <%// WARNING: This exposes bearerToken in JSP.  This is not too risky since it is only for unauthenticated users. %>
+        var bearerToken = "<%=bearerToken%>";
     </script>
     <!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script> -->
     <script src="js/jquery.min.js" type="text/javascript"></script>
@@ -136,7 +136,7 @@
 
 	<p style="margin-top:20px;margin-bottom:0px"><strong>Content</strong><pre><code id="serverResponse"></code></pre></p>
       </div>
+      </form>
     </div>
-  </form>
 </body>
 </html>

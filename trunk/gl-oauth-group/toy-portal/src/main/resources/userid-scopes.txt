@@ -2,6 +2,7 @@
 id=john,realm=immunogenomics,duration=3600,scope=write
 id=adam,realm=immunogenomics,duration=3600,scope=allele write
 id=eve,realm=immunogenomics,duration=3600,scope=other
+id=demo@localhost,realm=immunogenomics,duration=3600,scope=allele write
 
 id=john,realm=toy,duration=3600,scope=read
 id=adam,realm=toy,duration=3600,scope=write read admin POST
