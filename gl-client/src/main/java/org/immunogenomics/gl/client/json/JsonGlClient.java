@@ -25,33 +25,29 @@ package org.immunogenomics.gl.client.json;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.InputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.AlleleList;
+import org.immunogenomics.gl.Genotype;
+import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Haplotype;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.MultilocusUnphasedGenotype;
+import org.immunogenomics.gl.client.GlClientHttpException;
+import org.immunogenomics.gl.client.HttpGetOrPost;
+import org.immunogenomics.gl.client.RestAssuredHttpGetOrPost;
+import org.immunogenomics.gl.client.cache.CacheGlClient;
+import org.immunogenomics.gl.service.Namespace;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
-
-import org.immunogenomics.gl.Allele;
-import org.immunogenomics.gl.AlleleList;
-import org.immunogenomics.gl.Haplotype;
-import org.immunogenomics.gl.Genotype;
-import org.immunogenomics.gl.GenotypeList;
-import org.immunogenomics.gl.Locus;
-import org.immunogenomics.gl.MultilocusUnphasedGenotype;
-
-import org.immunogenomics.gl.client.cache.CacheGlClient;
-
-import org.immunogenomics.gl.service.Namespace;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of GlClient that uses the JSON representation and RestAssured as the HTTP client.
@@ -59,7 +55,9 @@ import org.slf4j.LoggerFactory;
 public final class JsonGlClient extends CacheGlClient {
     private final String namespace;
     private final JsonFactory jsonFactory;
+    HttpGetOrPost http = new RestAssuredHttpGetOrPost();
     private final Logger logger = LoggerFactory.getLogger(JsonGlClient.class);
+    private String bearerToken;
 
 
     /**
@@ -72,7 +70,13 @@ public final class JsonGlClient extends CacheGlClient {
     public JsonGlClient(@Namespace final String namespace, final JsonFactory jsonFactory) {
         checkNotNull(namespace);
         checkNotNull(jsonFactory);
-        this.namespace = namespace;
+        if (namespace.endsWith("/")) {
+            // namespace is valid
+            this.namespace = namespace;
+        } else {
+            // add required trailing slash
+            this.namespace = namespace + "/";
+        }
         this.jsonFactory = jsonFactory;
     }
 
@@ -496,22 +500,15 @@ public final class JsonGlClient extends CacheGlClient {
     }
 
     private InputStream get(final String url) {
-        long start = System.nanoTime();
-        Response response = RestAssured.get(url);
-        long elapsed = System.nanoTime() - start;
-        if (logger.isTraceEnabled()) {
-            logger.trace("HTTP GET {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
-        }
-        return response.body().asInputStream();
+        return http.get(url, bearerToken);
     }
 
     private String post(final String url, final String body) {
-        long start = System.nanoTime();
-        Response response = RestAssured.with().body(body).contentType("text/plain").post(url);
-        long elapsed = System.nanoTime() - start;
-        if (logger.isTraceEnabled()) {
-            logger.trace("HTTP POST {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
-        }
-        return response.header("Location");
+        return http.post(url, body, bearerToken);
+    }
+
+
+    public void setBearerToken(String bearerToken) {
+        this.bearerToken = bearerToken;
     }
 }

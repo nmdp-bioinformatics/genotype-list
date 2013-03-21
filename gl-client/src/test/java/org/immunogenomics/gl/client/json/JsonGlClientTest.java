@@ -23,13 +23,24 @@
 */
 package org.immunogenomics.gl.client.json;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import com.fasterxml.jackson.core.JsonFactory;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.apache.http.HttpStatus;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.immunogenomics.gl.client.AbstractGlClientTest;
 import org.immunogenomics.gl.client.GlClient;
+import org.immunogenomics.gl.client.GlClientHttpException;
+import org.immunogenomics.gl.client.HttpGetOrPost;
 
 /**
  * Unit test for JsonGlClient.
@@ -58,4 +69,37 @@ public final class JsonGlClientTest extends AbstractGlClientTest {
     public void testConstructorNullJsonFactory() {
         new JsonGlClient("http://localhost:8080/gl", null);
     }
+    
+    @Test
+    public void testBadRequest() {
+        JsonGlClient jsonGlClient = createBadRequestClient(HttpStatus.SC_BAD_REQUEST, "bad request");
+        try {
+            jsonGlClient.getLocus("http://localhost:8080/gl/bad");
+            fail("Should throw exception");
+        } catch (GlClientHttpException ex) {
+            assertEquals(HttpStatus.SC_BAD_REQUEST, ex.getStatusCode());
+        }
+        try {
+            jsonGlClient.registerLocus("HLA-BAD");
+            fail("Should throw exception");
+        } catch (GlClientHttpException ex) {
+            assertEquals(HttpStatus.SC_BAD_REQUEST, ex.getStatusCode());
+        }
+    }
+
+    private JsonGlClient createBadRequestClient(final int statusCode, final String msgPrefix) {
+        JsonGlClient jsonGlClient = new JsonGlClient("http://localhost:8080/gl", jsonFactory);
+        jsonGlClient.http = new HttpGetOrPost() {
+            @Override
+            public InputStream get(String url, String bearerToken) throws GlClientHttpException {
+                throw new GlClientHttpException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
+            }
+            @Override
+            public String post(String url, String body, String bearerToken) throws GlClientHttpException {
+                throw new GlClientHttpException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
+            }
+        };
+        return jsonGlClient;
+    }
+    
 }
