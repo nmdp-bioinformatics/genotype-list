@@ -26,8 +26,6 @@ package org.immunogenomics.gl.client.xml;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.InputStream;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,26 +33,21 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
-
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
-import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Genotype;
 import org.immunogenomics.gl.GenotypeList;
+import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
-
+import org.immunogenomics.gl.client.HttpGetOrPost;
+import org.immunogenomics.gl.client.RestAssuredHttpGetOrPost;
 import org.immunogenomics.gl.client.cache.CacheGlClient;
-
 import org.immunogenomics.gl.service.Namespace;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +58,9 @@ public final class XmlGlClient extends CacheGlClient {
     private final String namespace;
     private final JAXBContext jaxbContext;
     private final XMLInputFactory xmlInputFactory;
+    final HttpGetOrPost http = new RestAssuredHttpGetOrPost();
     private final Logger logger = LoggerFactory.getLogger(XmlGlClient.class);
+    private String bearerToken;
 
 
     /**
@@ -76,7 +71,14 @@ public final class XmlGlClient extends CacheGlClient {
     //@Inject
     public XmlGlClient(@Namespace final String namespace) {
         checkNotNull(namespace);
-        this.namespace = namespace;
+        if (namespace.endsWith("/")) {
+            // namespace is valid
+            this.namespace = namespace;
+        } else {
+            // add required trailing slash
+            this.namespace = namespace + "/";
+        }
+        
         try {
             jaxbContext = JAXBContext.newInstance("org.immunogenomics.gl.client.xml.jaxb");
         }
@@ -447,25 +449,16 @@ public final class XmlGlClient extends CacheGlClient {
     }
 
     private InputStream get(final String url) {
-        long start = System.nanoTime();
-        Response response = RestAssured.get(url);
-        long elapsed = System.nanoTime() - start;
-        if (logger.isTraceEnabled()) {
-            logger.trace("HTTP GET {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
-        }
-        // todo:  check status code
-        return response.body().asInputStream();
+        return http.get(url, bearerToken);
     }
 
     private String post(final String url, final String body) {
-        long start = System.nanoTime();
-        Response response = RestAssured.with().body(body).contentType("text/plain").post(url);
-        long elapsed = System.nanoTime() - start;
-        if (logger.isTraceEnabled()) {
-            logger.trace("HTTP POST {} status code {} took {} ns", new Object[] { url, response.statusCode(), elapsed });
-        }
-        // todo:  check status code
-        return response.getHeader("Location");
+        return http.post(url, body, bearerToken);
+    }
+
+
+    public void setBearerToken(String bearerToken) {
+        this.bearerToken = bearerToken;
     }
 
 

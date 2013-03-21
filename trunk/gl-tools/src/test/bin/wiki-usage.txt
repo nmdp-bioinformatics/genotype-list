@@ -1,0 +1,162 @@
+<br/>
+== Usage ==
+
+<p>Accession sort.</p>
+{{{
+$ gl-accession-sort --help
+usage:
+accession-sort [-i identifiers.txt] [-o sorted-glstrings.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -i, --identifiers [class java.io.File]  identifier input file [optional]
+
+   -o, --glstrings [class java.io.File]  sorted glstring output file [optional]
+
+   -d, --output-identifiers  include identifiers in output [optional]
+
+   -g, --output-glstrings  include original glstrings in output [optional]
+
+   -s, --output-sorted-glstrings  include sorted glstrings in output [optional]
+}}}
+
+<br/>
+<p>Register allele lists.</p>
+{{{
+$ gl-register-allele-lists --help
+usage:
+gl-register-allele-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register alleles.</p>
+{{{
+$ gl-register-alleles --help
+usage:
+gl-register-alleles --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register genotype lists.</p>
+{{{
+$ gl-register-genotype-lists --help
+usage:
+gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register genotypes.</p>
+{{{
+$ gl-register-genotypes --help
+usage:
+gl-register-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register haplotypes.</p>
+{{{
+$ gl-register-haplotypes --help
+usage:
+gl-register-haplotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register loci.</p>
+{{{
+$ gl-register-loci --help
+usage:
+gl-register-loci --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Register multilocus unphased genotypes.</p>
+{{{
+$ gl-register-multilocus-unphased-genotypes --help
+usage:
+gl-register-multilocus-unphased-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -s, --namespace [class java.lang.String]  namespace [required]
+
+   -g, --glstrings [class java.io.File]  glstring input file [optional]
+
+   -i, --identifiers [class java.io.File]  identifier output file [optional]
+}}}
+
+<br/>
+<p>Smart sort.</p>
+{{{
+$ gl-smart-sort --help
+usage:
+smart-sort [-i identifiers.txt] [-o sorted-glstrings.txt]
+
+arguments:
+   -h, --help  display help message [optional]
+
+   -i, --identifiers [class java.io.File]  identifier input file [optional]
+
+   -o, --glstrings [class java.io.File]  sorted glstring output file [optional]
+
+   -d, --output-identifiers  include identifiers in output [optional]
+
+   -g, --output-glstrings  include original glstrings in output [optional]
+
+   -s, --output-sorted-glstrings  include sorted glstrings in output [optional]
+}}}

@@ -23,57 +23,17 @@
 */
 package org.immunogenomics.gl.tools;
 
-import java.io.File;
-
-import com.fasterxml.jackson.core.JsonFactory;
-
-import org.dishevelled.commandline.ArgumentList;
-import org.dishevelled.commandline.CommandLine;
-import org.dishevelled.commandline.CommandLineParseException;
-import org.dishevelled.commandline.CommandLineParser;
-import org.dishevelled.commandline.Switch;
-import org.dishevelled.commandline.Usage;
-import org.dishevelled.commandline.argument.FileArgument;
-import org.dishevelled.commandline.argument.StringArgument;
-
 import org.immunogenomics.gl.client.GlClient;
-import org.immunogenomics.gl.client.json.JsonGlClient;
+import org.immunogenomics.gl.tools.BasicRegisterTask.RegisterCallback;
 
 /**
  * Register genotype lists task.
  */
-public final class RegisterGenotypeLists extends AbstractRegisterTask {
-    private final GlClient client;
-    private static final String USAGE = "gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt]";
-
-
-    /**
-     * Create a new register genotype lists task.
-     *
-     * @param client gl client, must not be null
-     */
-    public RegisterGenotypeLists(final GlClient client) {
-        this(client, null, null);
-    }
-
-    /**
-     * Create a new register genotype lists task.
-     *
-     * @param client gl client, must not be null
-     * @param glstringFile glstring file
-     * @param identifierFile identifier file
-     */
-    public RegisterGenotypeLists(final GlClient client, final File glstringFile, final File identifierFile) {
-        super(glstringFile, identifierFile);
-        if (client == null) {
-            throw new IllegalArgumentException("client must not be null");
-        }
-        this.client = client;
-    }
+public final class RegisterGenotypeLists implements RegisterCallback {
 
 
     @Override
-    protected String register(final String glstring) {
+    public String register(GlClient client, final String glstring) {
         return client.registerGenotypeList(glstring);
     }
 
@@ -83,36 +43,7 @@ public final class RegisterGenotypeLists extends AbstractRegisterTask {
      * @param args command line arguments
      */
     public static final void main(final String[] args) {
-        CommandLine commandLine = null;
-        ArgumentList arguments = null;
-        try
-        {
-            Switch help = new Switch("h", "help", "display help message");
-            StringArgument namespace = new StringArgument("s", "namespace", "namespace", true);
-            FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring input file", false);
-            FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier output file", false);
-
-            arguments = new ArgumentList(help, namespace, glstringFile, identifierFile);
-            commandLine = new CommandLine(args);
-            CommandLineParser.parse(commandLine, arguments);
-
-            if (help.wasFound()) {
-                Usage.usage(USAGE, null, commandLine, arguments, System.out);
-            }
-            else {
-                GlClient client = new JsonGlClient(namespace.getValue(), new JsonFactory());
-                new RegisterGenotypeLists(client, glstringFile.getValue(), identifierFile.getValue()).run();
-            }
-        }
-        catch (CommandLineParseException e) {
-            Usage.usage(USAGE, e, commandLine, arguments, System.err);
-        }
-        catch (IllegalArgumentException e) {
-            Usage.usage(USAGE, e, commandLine, arguments, System.err);
-        }
-        catch (RuntimeException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        BasicRegisterTask.register("gl-register-genotype-lists", args, new RegisterGenotypeLists());
     }
+    
 }
