@@ -1,4 +1,4 @@
-package org.immunogenomics.gl.client;
+package org.immunogenomics.gl.client.http;
 
 /**
  * RuntimeException used to report HTTP failures.

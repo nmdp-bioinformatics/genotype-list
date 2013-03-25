@@ -37,8 +37,8 @@ import org.junit.Test;
 
 import org.immunogenomics.gl.client.AbstractGlClientTest;
 import org.immunogenomics.gl.client.GlClient;
-import org.immunogenomics.gl.client.GlClientHttpException;
-import org.immunogenomics.gl.client.HttpGetOrPost;
+import org.immunogenomics.gl.client.http.GlClientHttpException;
+import org.immunogenomics.gl.client.http.HttpGetOrPost;
 
 /**
  * Unit test for JsonGlClient.
