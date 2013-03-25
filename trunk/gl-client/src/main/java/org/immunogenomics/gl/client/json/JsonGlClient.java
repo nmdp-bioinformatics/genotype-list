@@ -37,7 +37,6 @@ import org.immunogenomics.gl.GenotypeList;
 import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
-import org.immunogenomics.gl.client.GlClientHttpException;
 import org.immunogenomics.gl.client.HttpGetOrPost;
 import org.immunogenomics.gl.client.RestAssuredHttpGetOrPost;
 import org.immunogenomics.gl.client.cache.CacheGlClient;
@@ -70,13 +69,7 @@ public final class JsonGlClient extends CacheGlClient {
     public JsonGlClient(@Namespace final String namespace, final JsonFactory jsonFactory) {
         checkNotNull(namespace);
         checkNotNull(jsonFactory);
-        if (namespace.endsWith("/")) {
-            // namespace is valid
-            this.namespace = namespace;
-        } else {
-            // add required trailing slash
-            this.namespace = namespace + "/";
-        }
+        this.namespace = namespace;
         this.jsonFactory = jsonFactory;
     }
 

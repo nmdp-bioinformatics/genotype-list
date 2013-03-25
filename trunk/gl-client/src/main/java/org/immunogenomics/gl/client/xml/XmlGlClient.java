@@ -71,20 +71,14 @@ public final class XmlGlClient extends CacheGlClient {
     //@Inject
     public XmlGlClient(@Namespace final String namespace) {
         checkNotNull(namespace);
-        if (namespace.endsWith("/")) {
-            // namespace is valid
-            this.namespace = namespace;
-        } else {
-            // add required trailing slash
-            this.namespace = namespace + "/";
-        }
-        
+        this.namespace = namespace;
         try {
             jaxbContext = JAXBContext.newInstance("org.immunogenomics.gl.client.xml.jaxb");
         }
         catch (JAXBException e) {
             throw new RuntimeException(e);
         }
+        
         xmlInputFactory = XMLInputFactory.newFactory();
     }
 
