@@ -29,8 +29,6 @@ import static org.junit.Assert.fail;
 import com.fasterxml.jackson.core.JsonFactory;
 
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.apache.http.HttpStatus;
 
