@@ -65,7 +65,7 @@ public final class JsonGlClientTest extends AbstractGlClientTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullJsonFactory() {
-        new JsonGlClient("http://localhost:8080/gl", null);
+        new JsonGlClient("http://localhost:8080/gl/", null);
     }
     
     @Test
@@ -86,7 +86,7 @@ public final class JsonGlClientTest extends AbstractGlClientTest {
     }
 
     private JsonGlClient createBadRequestClient(final int statusCode, final String msgPrefix) {
-        JsonGlClient jsonGlClient = new JsonGlClient("http://localhost:8080/gl", jsonFactory);
+        JsonGlClient jsonGlClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory);
         jsonGlClient.http = new HttpGetOrPost() {
             @Override
             public InputStream get(String url, String bearerToken) throws GlClientHttpException {
@@ -99,5 +99,4 @@ public final class JsonGlClientTest extends AbstractGlClientTest {
         };
         return jsonGlClient;
     }
-    
 }
