@@ -41,7 +41,7 @@ public interface HttpGetOrPost {
     InputStream get(String url, String bearerToken) throws GlClientHttpException;
 
     /**
-     * Returns the "Location" header as a string.
+     * Return the "Location" header as a string.
      *
      * @param url location to get
      * @param body "text/plain" content sent to the server
