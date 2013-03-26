@@ -26,19 +26,29 @@ package org.immunogenomics.gl.client.ft;
 
 import org.junit.BeforeClass;
 
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.GlClient;
 
+import org.immunogenomics.gl.client.http.HttpClient;
 import org.immunogenomics.gl.client.xml.XmlGlClient;
+
+import com.google.common.cache.Cache;
 
 /**
  * Functional test for XmlGlClient.
  */
 public final class XmlGlClientFT  extends AbstractGlClientFT {
+    private static HttpClient httpClient;
+    private static Cache<String, Locus> loci;
+    private static Cache<String, String> locusIds;
+    private static Cache<String, Allele> alleles;
+    private static Cache<String, String> alleleIds;
     private static XmlGlClient xmlClient;
 
     @BeforeClass
     public static void staticSetUp() {
-        xmlClient = new XmlGlClient("http://localhost:10080/gl/");
+        xmlClient = new XmlGlClient("http://localhost:10080/gl/", httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Override
