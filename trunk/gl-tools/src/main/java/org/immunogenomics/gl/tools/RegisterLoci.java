@@ -23,17 +23,32 @@
 */
 package org.immunogenomics.gl.tools;
 
+import java.io.File;
+
 import org.immunogenomics.gl.client.GlClient;
-import org.immunogenomics.gl.tools.BasicRegisterTask.RegisterCallback;
+import org.immunogenomics.gl.client.GlClientException;
+
+import com.google.inject.Injector;
+import com.google.inject.Key;
 
 /**
  * Register loci task.
  */
-public final class RegisterLoci implements RegisterCallback {
+public final class RegisterLoci extends AbstractRegisterTask {
 
+    /**
+     * Create a new register loci task.
+     *
+     * @param glstringFile glstring file
+     * @param identifierFile identifier file
+     * @param client gl client, must not be null
+     */
+    public RegisterLoci(final File glstringFile, final File identifierFile, final GlClient client) {
+        super(glstringFile, identifierFile, client);
+    }
 
     @Override
-    public String register(GlClient client, final String glstring) {
+    protected String register(String glstring) throws GlClientException {
         return client.registerLocus(glstring);
     }
 
@@ -43,6 +58,11 @@ public final class RegisterLoci implements RegisterCallback {
      * @param args command line arguments
      */
     public static final void main(final String[] args) {
-        BasicRegisterTask.register("gl-register-loci", args, new RegisterLoci());
+        Injector injector = init("gl-register-loci", args);
+        File glstringFile = injector.getInstance(Key.get(File.class, GlstringFile.class));
+        File identifierFile = injector.getInstance(Key.get(File.class, IdentifierFile.class));
+        GlClient client = injector.getInstance(GlClient.class);
+
+        new RegisterLoci(glstringFile, identifierFile, client).run();
     }
 }

@@ -23,17 +23,32 @@
 */
 package org.immunogenomics.gl.tools;
 
+import java.io.File;
+
 import org.immunogenomics.gl.client.GlClient;
-import org.immunogenomics.gl.tools.BasicRegisterTask.RegisterCallback;
+import org.immunogenomics.gl.client.GlClientException;
+
+import com.google.inject.Injector;
+import com.google.inject.Key;
 
 /**
  * Register allele lists task.
  */
-public final class RegisterAlleleLists implements RegisterCallback {
+public final class RegisterAlleleLists extends AbstractRegisterTask {
 
+    /**
+     * Create a new register allele lists task.
+     *
+     * @param glstringFile glstring file
+     * @param identifierFile identifier file
+     * @param client gl client, must not be null
+     */
+    public RegisterAlleleLists(final File glstringFile, final File identifierFile, final GlClient client) {
+        super(glstringFile, identifierFile, client);
+    }
 
     @Override
-    public String register(GlClient client, final String glstring) {
+    protected String register(String glstring) throws GlClientException {
         return client.registerAlleleList(glstring);
     }
 
@@ -43,7 +58,11 @@ public final class RegisterAlleleLists implements RegisterCallback {
      * @param args command line arguments
      */
     public static final void main(final String[] args) {
-        BasicRegisterTask.register("gl-register-allele-lists", args, new RegisterAlleleLists());
-    }
+        Injector injector = init("gl-register-allele-lists", args);
+        File glstringFile = injector.getInstance(Key.get(File.class, GlstringFile.class));
+        File identifierFile = injector.getInstance(Key.get(File.class, IdentifierFile.class));
+        GlClient client = injector.getInstance(GlClient.class);
 
+        new RegisterAlleleLists(glstringFile, identifierFile, client).run();
+    }
 }
