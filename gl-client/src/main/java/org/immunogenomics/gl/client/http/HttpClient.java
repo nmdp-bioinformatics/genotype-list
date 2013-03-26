@@ -21,8 +21,30 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.client.http;
+
+import java.io.InputStream;
 
 /**
- * HTTP support for gl client implementations.
+ * Interface to decouple GlClient from HTTP communication.
  */
-package org.immunogenomics.gl.client.http;
+public interface HttpClient {
+
+    /**
+     * Return the content body as an InputStream.
+     *
+     * @param url location to get
+     * @return InputStream for content body which should be closed
+     */
+    InputStream get(String url);
+
+    /**
+     * Return the "Location" header as a string.
+     *
+     * @param url location to get
+     * @param body "text/plain" content sent to the server
+     * @return the "Location" header
+     * @throws HttpClientException when status code is not OK
+     */
+    String post(String url, String body) throws HttpClientException;
+}

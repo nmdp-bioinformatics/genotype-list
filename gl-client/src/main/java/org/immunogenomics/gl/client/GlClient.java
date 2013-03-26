@@ -41,8 +41,9 @@ public interface GlClient {
      *
      * @param glstring locus in GL String format, must not be null
      * @return a locus described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    Locus createLocus(final String glstring);
+    Locus createLocus(String glstring) throws GlClientException;
 
     /**
      * Return the locus identified by <code>identifier</code> or null if no such locus exists.
@@ -50,23 +51,25 @@ public interface GlClient {
      * @param identifier locus identifier, must not be null
      * @return the locus identified by <code>identifier</code> or null if no such locus exists
      */
-    Locus getLocus(final String identifier);
+    Locus getLocus(String identifier);
 
     /**
      * Register a locus described by the specified GL String and return its identifier.
      *
      * @param glstring locus in GL String format
      * @return the identifier of the locus described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerLocus(final String glstring);
+    String registerLocus(String glstring) throws GlClientException;
 
     /**
      * Create and register an allele described by the specified GL String.
      *
      * @param glstring allele in GL String format, must not be null
      * @return an allele described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    Allele createAllele(final String glstring);
+    Allele createAllele(String glstring) throws GlClientException;
 
     /**
      * Create and register an allele described by the specified GL String.
@@ -74,8 +77,9 @@ public interface GlClient {
      * @param locus locus, must not be null
      * @param glstring allele in GL String format, must not be null
      * @return an allele described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    Allele createAllele(final Locus locus, final String glstring);
+    Allele createAllele(Locus locus, String glstring) throws GlClientException;
 
     /**
      * Return the allele identified by <code>identifier</code> or null if no such allele exists.
@@ -83,39 +87,43 @@ public interface GlClient {
      * @param identifier allele identifier, must not be null
      * @return the allele identified by <code>identifier</code> or null if no such allele exists
      */
-    Allele getAllele(final String identifier);
+    Allele getAllele(String identifier);
 
     /**
      * Register an allele described by the specified GL String and return its identifier.
      *
      * @param glstring allele in GL String format
      * @return the identifier of the allele described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerAllele(final String glstring);
+    String registerAllele(String glstring) throws GlClientException;
 
     /**
      * Create and register an allele list described by the specified GL String.
      *
      * @param glstring allele list in GL String format, must not be null
      * @return an allele list described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    AlleleList createAlleleList(final String glstring);
+    AlleleList createAlleleList(String glstring) throws GlClientException;
 
     /**
      * Create and register an allele list containing the specified alleles.
      *
      * @param alleles variable number of alleles, must not be null
      * @return an allele list containing the specified alleles
+     * @throws GlClientException if an error occurs
      */
-    AlleleList createAlleleList(final Allele... alleles);
+    AlleleList createAlleleList(Allele... alleles) throws GlClientException;
 
     /**
      * Create and register an allele list containing the specified alleles.
      *
      * @param alleles alleles, must not be null
      * @return an allele list containing the specified alleles
+     * @throws GlClientException if an error occurs
      */
-    AlleleList createAlleleList(final Iterable<Allele> alleles);
+    AlleleList createAlleleList(Iterable<Allele> alleles) throws GlClientException;
 
     /**
      * Return the allele list identified by <code>identifier</code> or null if no such allele list exists.
@@ -123,39 +131,43 @@ public interface GlClient {
      * @param identifier allele list identifier, must not be null
      * @return the allele list identified by <code>identifier</code> or null if no such allele list exists
      */
-    AlleleList getAlleleList(final String identifier);
+    AlleleList getAlleleList(String identifier);
 
     /**
      * Register an allele list described by the specified GL String and return its identifier.
      *
      * @param glstring allele list in GL String format
      * @return the identifier of the allele list described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerAlleleList(final String glstring);
+    String registerAlleleList(String glstring) throws GlClientException;
 
     /**
      * Create and register a haplotype described by the specified GL String.
      *
      * @param glstring haplotype in GL String format, must not be null
      * @return a haplotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    Haplotype createHaplotype(final String glstring);
+    Haplotype createHaplotype(String glstring) throws GlClientException;
 
     /**
      * Create and register a haplotype containing the specified allele lists.
      *
      * @param alleleLists variable number of allele lists, must not be null
      * @return a haplotype containing the specified allele lists
+     * @throws GlClientException if an error occurs
      */
-    Haplotype createHaplotype(final AlleleList... alleleLists);
+    Haplotype createHaplotype(AlleleList... alleleLists) throws GlClientException;
 
     /**
      * Create and register a haplotype containing the specified allele lists.
      *
      * @param alleleLists allele lists, must not be null
      * @return a haplotype containing the specified allele lists
+     * @throws GlClientException if an error occurs
      */
-    Haplotype createHaplotype(final Iterable<AlleleList> alleleLists);
+    Haplotype createHaplotype(Iterable<AlleleList> alleleLists) throws GlClientException;
 
     /**
      * Return the haplotype identified by <code>identifier</code> or null if no such haplotype exists.
@@ -163,39 +175,43 @@ public interface GlClient {
      * @param identifier haplotype identifier, must not be null
      * @return the haplotype identified by <code>identifier</code> or null if no such haplotype exists
      */
-    Haplotype getHaplotype(final String identifier);
+    Haplotype getHaplotype(String identifier);
 
     /**
      * Register a haplotype described by the specified GL String and return its identifier.
      *
      * @param glstring haplotype in GL String format
      * @return the identifier of the haplotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerHaplotype(final String glstring);
+    String registerHaplotype(String glstring) throws GlClientException;
 
     /**
      * Create and register a genotype described by the specified GL String.
      *
      * @param glstring genotype in GL String format, must not be null
      * @return a genotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    Genotype createGenotype(final String glstring);
+    Genotype createGenotype(String glstring) throws GlClientException;
 
     /**
      * Create and register a genotype containing the specified haplotypes.
      *
      * @param haplotypes variable number of haplotypes, must not be null
      * @return a genotype containing the specified haplotypes
+     * @throws GlClientException if an error occurs
      */
-    Genotype createGenotype(final Haplotype... haplotypes);
+    Genotype createGenotype(Haplotype... haplotypes) throws GlClientException;
 
     /**
      * Create and register a genotype containing the specified haplotypes.
      *
      * @param haplotypes haplotypes, must not be null
      * @return a genotype containing the specified haplotypes
+     * @throws GlClientException if an error occurs
      */
-    Genotype createGenotype(final Iterable<Haplotype> haplotypes);
+    Genotype createGenotype(Iterable<Haplotype> haplotypes) throws GlClientException;
 
     /**
      * Return the genotype identified by <code>identifier</code> or null if no such genotype exists.
@@ -203,39 +219,43 @@ public interface GlClient {
      * @param identifier genotype identifier, must not be null
      * @return the genotype identified by <code>identifier</code> or null if no such genotype exists
      */
-    Genotype getGenotype(final String identifier);
+    Genotype getGenotype(String identifier);
    
     /**
      * Register a genotype described by the specified GL String and return its identifier.
      *
      * @param glstring genotype in GL String format
      * @return the identifier of the genotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerGenotype(final String glstring);
+    String registerGenotype(String glstring) throws GlClientException;
 
     /**
      * Create and register a genotype list described by the specified GL String.
      *
      * @param glstring genotype list in GL String format, must not be null
      * @return a genotype list described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    GenotypeList createGenotypeList(final String glstring);
+    GenotypeList createGenotypeList(String glstring) throws GlClientException;
 
     /**
      * Create and register a genotype list containing the specified genotypes.
      *
      * @param genotypes variable number of genotypes, must not be null
      * @return a genotype list containing the specified genotypes
+     * @throws GlClientException if an error occurs
      */
-    GenotypeList createGenotypeList(final Genotype... genotypes);
+    GenotypeList createGenotypeList(Genotype... genotypes) throws GlClientException;
 
     /**
      * Create and register a genotype list containing the specified genotypes.
      *
      * @param genotypes genotypes, must not be null
      * @return a genotype list containing the specified genotypes
+     * @throws GlClientException if an error occurs
      */
-    GenotypeList createGenotypeList(final Iterable<Genotype> genotypes);
+    GenotypeList createGenotypeList(Iterable<Genotype> genotypes) throws GlClientException;
 
     /**
      * Return the genotype list identified by <code>identifier</code> or null if no such genotype list exists.
@@ -243,39 +263,43 @@ public interface GlClient {
      * @param identifier genotype list identifier, must not be null
      * @return the genotype list identified by <code>identifier</code> or null if no such genotype list exists
      */
-    GenotypeList getGenotypeList(final String identifier);
+    GenotypeList getGenotypeList(String identifier);
 
     /**
      * Register a genotype list described by the specified GL String and return its identifier.
      *
      * @param glstring genotype list in GL String format
      * @return the identifier of the genotype list described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerGenotypeList(final String glstring);
+    String registerGenotypeList(String glstring) throws GlClientException;
 
     /**
      * Create and register a multilocus unphased genotype described by the specified GL String.
      *
      * @param glstring multilocus unphased genotype in GL String format, must not be null
      * @return a multilocus unphased genotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final String glstring);
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(String glstring) throws GlClientException;
 
     /**
      * Create and register a multilocus unphased genotype containing the specified genotype lists.
      *
      * @param genotypeLists variable number of genotype lists, must not be null
      * @return a multilocus unphased genotype containing the specified genotype lists
+     * @throws GlClientException if an error occurs
      */
-    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists);
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(GenotypeList... genotypeLists) throws GlClientException;
 
     /**
      * Create and register a multilocus unphased genotype containing the specified genotype lists.
      *
      * @param genotypeLists genotype lists, must not be null
      * @return a multilocus unphased genotype containing the specified genotype lists
+     * @throws GlClientException if an error occurs
      */
-    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists);
+    MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(Iterable<GenotypeList> genotypeLists) throws GlClientException;
 
     /**
      * Return the multilocus unphased genotype identified by <code>identifier</code> or null if no such multilocus unphased genotype exists.
@@ -283,13 +307,14 @@ public interface GlClient {
      * @param identifier multilocus unphased genotype identifier, must not be null
      * @return the multilocus unphased genotype identified by <code>identifier</code> or null if no such multilocus unphased genotype exists
      */
-    MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(final String identifier);
+    MultilocusUnphasedGenotype getMultilocusUnphasedGenotype(String identifier);
 
     /**
      * Register a multilocus unphased genotype described by the specified GL String and return its identifier.
      *
      * @param glstring multilocus unphased genotype in GL String format
      * @return the identifier of the multilocus unphased genotype described by the specified GL String
+     * @throws GlClientException if an error occurs
      */
-    String registerMultilocusUnphasedGenotype(final String glstring);
+    String registerMultilocusUnphasedGenotype(String glstring) throws GlClientException;
 }

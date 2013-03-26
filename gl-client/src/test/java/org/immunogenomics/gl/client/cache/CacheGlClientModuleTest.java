@@ -21,8 +21,35 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.client.cache;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
- * HTTP support for gl client implementations.
+ * Unit test for CacheGlClientModule.
  */
-package org.immunogenomics.gl.client.http;
+public class CacheGlClientModuleTest {
+    private CacheGlClientModule cacheGlClientModule;
+
+    @Before
+    public void setUp() {
+        cacheGlClientModule = new CacheGlClientModule();
+    }
+
+    @Test
+    public void testConstructor() {
+        assertNotNull(cacheGlClientModule);
+    }
+
+    @Test
+    public void testCacheModule() {
+        Injector injector = Guice.createInjector(cacheGlClientModule);
+        assertNotNull(injector);
+    }
+}

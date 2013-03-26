@@ -38,8 +38,11 @@ import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 import org.immunogenomics.gl.client.cache.CacheGlClient;
-import org.immunogenomics.gl.client.http.HttpGetOrPost;
-import org.immunogenomics.gl.client.http.RestAssuredHttpGetOrPost;
+import org.immunogenomics.gl.client.cache.GlClientAlleleCache;
+import org.immunogenomics.gl.client.cache.GlClientAlleleIdCache;
+import org.immunogenomics.gl.client.cache.GlClientLocusCache;
+import org.immunogenomics.gl.client.cache.GlClientLocusIdCache;
+import org.immunogenomics.gl.client.http.HttpClient;
 import org.immunogenomics.gl.service.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +50,8 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.google.common.cache.Cache;
+import com.google.inject.Inject;
 
 /**
  * Implementation of GlClient that uses the JSON representation and RestAssured as the HTTP client.
@@ -54,9 +59,8 @@ import com.fasterxml.jackson.core.JsonToken;
 public final class JsonGlClient extends CacheGlClient {
     private final String namespace;
     private final JsonFactory jsonFactory;
-    HttpGetOrPost http = new RestAssuredHttpGetOrPost();
+    private final HttpClient httpClient;
     private final Logger logger = LoggerFactory.getLogger(JsonGlClient.class);
-    private String bearerToken;
 
 
     /**
@@ -64,13 +68,27 @@ public final class JsonGlClient extends CacheGlClient {
      *
      * @param namespace namespace for this JSON gl client, must not be null
      * @param jsonFactory JSON factory for this JSON gl client, must not be null
+     * @param httpClient HTTP client for this JSON gl client, must not be null
+     * @param loci locus cache, must not be null
+     * @param locusIds locus id cache, must not be null
+     * @param alleles allele cache, must not be null
+     * @param alleleIds allele id cache, must not be null
      */
-    //@Inject
-    public JsonGlClient(@Namespace final String namespace, final JsonFactory jsonFactory) {
+    @Inject
+    public JsonGlClient(@Namespace final String namespace,
+            final JsonFactory jsonFactory,
+            final HttpClient httpClient,
+            @GlClientLocusCache final Cache<String, Locus> loci,
+            @GlClientLocusIdCache final Cache<String, String> locusIds,
+            @GlClientAlleleCache final Cache<String, Allele> alleles,
+            @GlClientAlleleIdCache final Cache<String, String> alleleIds) {
+        super(loci, locusIds, alleles, alleleIds);
         checkNotNull(namespace);
         checkNotNull(jsonFactory);
+        checkNotNull(httpClient);
         this.namespace = namespace;
         this.jsonFactory = jsonFactory;
+        this.httpClient = httpClient;
     }
 
 
@@ -493,15 +511,10 @@ public final class JsonGlClient extends CacheGlClient {
     }
 
     private InputStream get(final String url) {
-        return http.get(url, bearerToken);
+        return httpClient.get(url);
     }
 
     private String post(final String url, final String body) {
-        return http.post(url, body, bearerToken);
-    }
-
-
-    public void setBearerToken(String bearerToken) {
-        this.bearerToken = bearerToken;
+        return httpClient.post(url, body);
     }
 }

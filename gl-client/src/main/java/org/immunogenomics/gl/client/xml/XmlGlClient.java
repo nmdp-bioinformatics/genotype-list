@@ -45,40 +45,57 @@ import org.immunogenomics.gl.Haplotype;
 import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 import org.immunogenomics.gl.client.cache.CacheGlClient;
-import org.immunogenomics.gl.client.http.HttpGetOrPost;
-import org.immunogenomics.gl.client.http.RestAssuredHttpGetOrPost;
+import org.immunogenomics.gl.client.cache.GlClientAlleleCache;
+import org.immunogenomics.gl.client.cache.GlClientAlleleIdCache;
+import org.immunogenomics.gl.client.cache.GlClientLocusCache;
+import org.immunogenomics.gl.client.cache.GlClientLocusIdCache;
+import org.immunogenomics.gl.client.http.HttpClient;
 import org.immunogenomics.gl.service.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.cache.Cache;
+import com.google.inject.Inject;
 
 /**
  * Implementation of GlClient that uses the XML representation and RestAssured as the HTTP client.
  */
 public final class XmlGlClient extends CacheGlClient {
     private final String namespace;
+    private final HttpClient httpClient;
     private final JAXBContext jaxbContext;
     private final XMLInputFactory xmlInputFactory;
-    final HttpGetOrPost http = new RestAssuredHttpGetOrPost();
     private final Logger logger = LoggerFactory.getLogger(XmlGlClient.class);
-    private String bearerToken;
 
 
     /**
-     * Create a new XML gl client with the specified namespace.
+     * Create a new XML gl client with the specified parameters.
      *
      * @param namespace namespace for this XML gl client, must not be null
+     * @param httpClient HTTP client for this XML gl client, must not be null
+     * @param loci locus cache, must not be null
+     * @param locusIds locus id cache, must not be null
+     * @param alleles allele cache, must not be null
+     * @param alleleIds allele id cache, must not be null
      */
-    //@Inject
-    public XmlGlClient(@Namespace final String namespace) {
+    @Inject
+    public XmlGlClient(@Namespace final String namespace,
+            final HttpClient httpClient,
+            @GlClientLocusCache final Cache<String, Locus> loci,
+            @GlClientLocusIdCache final Cache<String, String> locusIds,
+            @GlClientAlleleCache final Cache<String, Allele> alleles,
+            @GlClientAlleleIdCache final Cache<String, String> alleleIds) {
+        super(loci, locusIds, alleles, alleleIds);
         checkNotNull(namespace);
+        checkNotNull(httpClient);
         this.namespace = namespace;
+        this.httpClient = httpClient;
         try {
             jaxbContext = JAXBContext.newInstance("org.immunogenomics.gl.client.xml.jaxb");
         }
         catch (JAXBException e) {
             throw new RuntimeException(e);
         }
-        
         xmlInputFactory = XMLInputFactory.newFactory();
     }
 
@@ -443,18 +460,12 @@ public final class XmlGlClient extends CacheGlClient {
     }
 
     private InputStream get(final String url) {
-        return http.get(url, bearerToken);
+        return httpClient.get(url);
     }
 
     private String post(final String url, final String body) {
-        return http.post(url, body, bearerToken);
+        return httpClient.post(url, body);
     }
-
-
-    public void setBearerToken(String bearerToken) {
-        this.bearerToken = bearerToken;
-    }
-
 
     // copy from jaxb resources --> core resources
 
