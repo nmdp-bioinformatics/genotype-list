@@ -23,24 +23,29 @@
 */
 package org.immunogenomics.gl.client.http;
 
-import static org.immunogenomics.gl.client.http.RestAssuredHttpGetOrPost.isError;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.apache.http.HttpStatus;
-import org.junit.Test;
-
 /**
- * Unit test for RestAssuredHttpGetOrPost.
+ * Checked exception thrown in the event of a HTTP client error.
  */
-public class RestAssuredHttpGetOrPostTest {
+public final class HttpClientException extends RuntimeException {
+    private final int statusCode;
 
-    @Test
-    public void testIsError() {
-        assertTrue(isError(HttpStatus.SC_BAD_REQUEST));
-        assertTrue(isError(HttpStatus.SC_UNAUTHORIZED));
-        assertTrue(isError(HttpStatus.SC_INTERNAL_SERVER_ERROR));
-        assertFalse(isError(HttpStatus.SC_OK));
-        assertFalse(isError(HttpStatus.SC_CREATED));
+    /**
+     * Create a new HTTP client exception with the specified HTTP status code and message.
+     *
+     * @param statusCode HTTP status code
+     * @param message message
+     */
+    public HttpClientException(final int statusCode, final String message) {
+        super(message);
+        this.statusCode = statusCode;
+    }
+
+    /**
+     * Return the HTTP status code for this HTTP client exception.
+     *
+     * @return the HTTP status code for this HTTP client exception
+     */
+    public int getStatusCode() {
+        return statusCode;
     }
 }

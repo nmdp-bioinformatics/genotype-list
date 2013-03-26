@@ -21,8 +21,21 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.client.http;
 
 /**
- * HTTP support for gl client implementations.
+ * Utility methods for implementing HTTP clients.
  */
-package org.immunogenomics.gl.client.http;
+public final class HttpClientUtils {
+
+    /**
+     * Return true if the specified HTTP status code is an error status code,
+     * <code>400 &lt;= statusCode &lt; 600</code> specifically.
+     *
+     * @param statusCode HTTP status code
+     * @return true if <code>400 &lt;= statusCode &lt; 600</code>
+     */
+    public static boolean isError(final int statusCode) {
+        return (statusCode >= 400 && statusCode < 600);
+    }
+}

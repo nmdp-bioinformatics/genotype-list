@@ -23,21 +23,37 @@
 */
 package org.immunogenomics.gl.client.xml;
 
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.client.AbstractGlClientTest;
+import org.immunogenomics.gl.client.GlClient;
+import org.immunogenomics.gl.client.http.HttpClient;
+import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.immunogenomics.gl.client.AbstractGlClientTest;
-import org.immunogenomics.gl.client.GlClient;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 /**
  * Unit test for XmlGlClient.
  */
 public final class XmlGlClientTest extends AbstractGlClientTest {
+    private static HttpClient httpClient;
+    private static Cache<String, Locus> loci;
+    private static Cache<String, String> locusIds;
+    private static Cache<String, Allele> alleles;
+    private static Cache<String, String> alleleIds;
     private static XmlGlClient xmlClient;
 
     @BeforeClass
     public static void staticSetUp() {
-        xmlClient = new XmlGlClient("http://localhost:8080/gl/");
+        httpClient = new RestAssuredHttpClient();
+        loci = CacheBuilder.newBuilder().initialCapacity(10).build();
+        locusIds = CacheBuilder.newBuilder().initialCapacity(10).build();
+        alleles = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        alleleIds = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        xmlClient = new XmlGlClient("http://localhost:8080/gl/", httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Override
@@ -47,6 +63,31 @@ public final class XmlGlClientTest extends AbstractGlClientTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullNamespace() {
-        new XmlGlClient(null);
+        new XmlGlClient(null, httpClient, loci, locusIds, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullHttpClient() {
+        new XmlGlClient("http://localhost:8080/gl/", null, loci, locusIds, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullLoci() {
+        new XmlGlClient("http://localhost:8080/gl/", httpClient, null, locusIds, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullLocusIds() {
+        new XmlGlClient("http://localhost:8080/gl/", httpClient, loci, null, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleles() {
+        new XmlGlClient("http://localhost:8080/gl/", httpClient, loci, locusIds, null, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleleIds() {
+        new XmlGlClient("http://localhost:8080/gl/", httpClient, loci, locusIds, alleles, null);
     }
 }

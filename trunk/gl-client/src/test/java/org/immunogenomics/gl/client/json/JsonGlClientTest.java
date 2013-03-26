@@ -26,31 +26,44 @@ package org.immunogenomics.gl.client.json;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import com.fasterxml.jackson.core.JsonFactory;
-
 import java.io.InputStream;
 
 import org.apache.http.HttpStatus;
-
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
+import org.immunogenomics.gl.client.AbstractGlClientTest;
+import org.immunogenomics.gl.client.GlClient;
+import org.immunogenomics.gl.client.http.HttpClient;
+import org.immunogenomics.gl.client.http.HttpClientException;
+import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.immunogenomics.gl.client.AbstractGlClientTest;
-import org.immunogenomics.gl.client.GlClient;
-import org.immunogenomics.gl.client.http.GlClientHttpException;
-import org.immunogenomics.gl.client.http.HttpGetOrPost;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 /**
  * Unit test for JsonGlClient.
  */
 public final class JsonGlClientTest extends AbstractGlClientTest {
     private static JsonFactory jsonFactory;
+    private static HttpClient httpClient;
+    private static Cache<String, Locus> loci;
+    private static Cache<String, String> locusIds;
+    private static Cache<String, Allele> alleles;
+    private static Cache<String, String> alleleIds;
     private static JsonGlClient jsonClient;
 
     @BeforeClass
     public static void staticSetUp() {
         jsonFactory = new JsonFactory();
-        jsonClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory);
+        httpClient = new RestAssuredHttpClient();
+        loci = CacheBuilder.newBuilder().initialCapacity(10).build();
+        locusIds = CacheBuilder.newBuilder().initialCapacity(10).build();
+        alleles = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        alleleIds = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        jsonClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Override
@@ -60,43 +73,68 @@ public final class JsonGlClientTest extends AbstractGlClientTest {
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullNamespace() {
-        new JsonGlClient(null, jsonFactory);
+        new JsonGlClient(null, jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullJsonFactory() {
-        new JsonGlClient("http://localhost:8080/gl/", null);
+        new JsonGlClient("http://localhost:8080/gl/", null, httpClient, loci, locusIds, alleles, alleleIds);
     }
-    
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullHttpClient() {
+        new JsonGlClient("http://localhost:8080/gl/", jsonFactory, null, loci, locusIds, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullLoci() {
+        new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, null, locusIds, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullLocusIds() {
+        new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, null, alleles, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleles() {
+        new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, locusIds, null, alleleIds);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleleIds() {
+        new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, locusIds, alleles, null);
+    }
+
     @Test
     public void testBadRequest() {
         JsonGlClient jsonGlClient = createBadRequestClient(HttpStatus.SC_BAD_REQUEST, "bad request");
         try {
             jsonGlClient.getLocus("http://localhost:8080/gl/bad");
             fail("Should throw exception");
-        } catch (GlClientHttpException ex) {
+        } catch (HttpClientException ex) {
             assertEquals(HttpStatus.SC_BAD_REQUEST, ex.getStatusCode());
         }
         try {
             jsonGlClient.registerLocus("HLA-BAD");
             fail("Should throw exception");
-        } catch (GlClientHttpException ex) {
+        } catch (HttpClientException ex) {
             assertEquals(HttpStatus.SC_BAD_REQUEST, ex.getStatusCode());
         }
     }
 
     private JsonGlClient createBadRequestClient(final int statusCode, final String msgPrefix) {
-        JsonGlClient jsonGlClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory);
-        jsonGlClient.http = new HttpGetOrPost() {
+        HttpClient badRequestClient = new HttpClient() {
             @Override
-            public InputStream get(String url, String bearerToken) throws GlClientHttpException {
-                throw new GlClientHttpException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
+            public String post(String url, String body) throws HttpClientException {
+                throw new HttpClientException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
             }
+            
             @Override
-            public String post(String url, String body, String bearerToken) throws GlClientHttpException {
-                throw new GlClientHttpException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
+            public InputStream get(String url) {
+                throw new HttpClientException(HttpStatus.SC_BAD_REQUEST, msgPrefix + url);
             }
         };
-        return jsonGlClient;
+        return new JsonGlClient("http://localhost:8080/gl/", jsonFactory, badRequestClient, loci, locusIds, alleles, alleleIds);
     }
 }

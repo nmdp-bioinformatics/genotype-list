@@ -23,32 +23,38 @@
 */
 package org.immunogenomics.gl.client.cache;
 
-import static com.google.common.cache.CacheBuilder.newBuilder;
-
-import com.google.common.cache.Cache;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.Locus;
-
 import org.immunogenomics.gl.client.AbstractGlClient;
+
+import com.google.common.cache.Cache;
+import com.google.inject.Inject;
 
 /**
  * Abstract gl client that provides caching of loci and alleles.
  */
 public abstract class CacheGlClient extends AbstractGlClient {
-    // todo:  inject these
     private Cache<String, Locus> loci;
     private Cache<String, String> locusIds;
     private Cache<String, Allele> alleles;
     private Cache<String, String> alleleIds;
 
 
-    //@Inject
-    protected CacheGlClient() {
-        loci = newBuilder().initialCapacity(1000).build();
-        locusIds = newBuilder().initialCapacity(1000).build();
-        alleles = newBuilder().initialCapacity(10000).build();
-        alleleIds = newBuilder().initialCapacity(10000).build();
+    @Inject
+    protected CacheGlClient(@GlClientLocusCache final Cache<String, Locus> loci,
+            @GlClientLocusIdCache final Cache<String, String> locusIds,
+            @GlClientAlleleCache final Cache<String, Allele> alleles,
+            @GlClientAlleleIdCache final Cache<String, String> alleleIds) {
+        checkNotNull(loci);
+        checkNotNull(locusIds);
+        checkNotNull(alleles);
+        checkNotNull(alleleIds);
+        this.loci = loci;
+        this.locusIds = locusIds;
+        this.alleles = alleles;
+        this.alleleIds = alleleIds;
     }
 
 

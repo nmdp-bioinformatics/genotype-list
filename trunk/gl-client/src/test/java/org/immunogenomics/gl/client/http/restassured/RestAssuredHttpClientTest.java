@@ -21,8 +21,19 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.client.http.restassured;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
 
 /**
- * HTTP support for gl client implementations.
+ * Unit test for RestAssuredHttpClient.
  */
-package org.immunogenomics.gl.client.http;
+public class RestAssuredHttpClientTest {
+
+    @Test
+    public void testConstructor() {
+        assertNotNull(new RestAssuredHttpClient());
+    }
+}

@@ -21,8 +21,25 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-
-/**
- * HTTP support for gl client implementations.
- */
 package org.immunogenomics.gl.client.http;
+
+import static org.immunogenomics.gl.client.http.HttpClientUtils.isError;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.apache.http.HttpStatus;
+
+import org.junit.Test;
+
+public class HttpClientUtilsTest {
+
+    @Test
+    public void testIsError() {
+        assertTrue(isError(HttpStatus.SC_BAD_REQUEST));
+        assertTrue(isError(HttpStatus.SC_UNAUTHORIZED));
+        assertTrue(isError(HttpStatus.SC_INTERNAL_SERVER_ERROR));
+        assertFalse(isError(HttpStatus.SC_OK));
+        assertFalse(isError(HttpStatus.SC_CREATED));
+    }
+}

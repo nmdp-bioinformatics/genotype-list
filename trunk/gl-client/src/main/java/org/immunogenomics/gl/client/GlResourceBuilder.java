@@ -72,8 +72,9 @@ public final class GlResourceBuilder {
      *
      * @param glstring locus in GL String format, must not be null
      * @return this gl resource builder configured with the specified locus
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder locus(final String glstring) {
+    public GlResourceBuilder locus(final String glstring) throws GlClientException {
         alleles.clear();
         alleleLists.clear();
         haplotypes.clear();
@@ -90,8 +91,9 @@ public final class GlResourceBuilder {
      *
      * @param glstring allele in GL String format, must not be null
      * @return this gl resource builder configured with the specified allele
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder allele(final String glstring) {
+    public GlResourceBuilder allele(final String glstring) throws GlClientException {
         allele = client.createAllele(glstring);
         locus = allele.getLocus();
         return this;
@@ -102,8 +104,9 @@ public final class GlResourceBuilder {
      * The allelic ambiguity operator combines two or more alleles into an allele list.
      *
      * @return this gl resource builder configured with an allelic ambiguity operator ('<code>/</code>' character)
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder allelicAmbiguity() {
+    public GlResourceBuilder allelicAmbiguity() throws GlClientException {
         alleles.add(allele);
         alleleList = client.createAlleleList(alleles);
         return this;
@@ -114,8 +117,9 @@ public final class GlResourceBuilder {
      * The in phase operator combines two or more allele lists into a haplotype.
      *
      * @return this gl resource builder configured with an in phase operator ('<code>~</code>' character)
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder inPhase() {
+    public GlResourceBuilder inPhase() throws GlClientException {
         alleles.clear();
         alleleLists.add(alleleList);
         haplotype = client.createHaplotype(alleleLists);
@@ -127,8 +131,9 @@ public final class GlResourceBuilder {
      * plus operator combines two ore more haplotypes into a genotype.
      *
      * @return this gl resource builder configured with an plus operator ('<code>+</code>' character)
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder plus() {
+    public GlResourceBuilder plus() throws GlClientException {
         alleles.clear();
         alleleLists.clear();
         haplotypes.add(haplotype);
@@ -141,8 +146,9 @@ public final class GlResourceBuilder {
      * The genotypic ambiguity operator combines two or more genotypes into a genotype list.
      *
      * @return this gl resource builder configured with a genotypic ambiguity operator ('<code>|</code>' character)
+     * @throws GlClientException if an error occurs
      */
-    public GlResourceBuilder genotypicAmbiguity() {
+    public GlResourceBuilder genotypicAmbiguity() throws GlClientException {
         alleles.clear();
         alleleLists.clear();
         haplotypes.clear();
@@ -188,7 +194,7 @@ public final class GlResourceBuilder {
      *
      * @return a new allele configured from the properties of this gl resource builder
      */
-    public Allele buildAllele() {
+    public Allele buildAllele() throws GlClientException {
         if (allele == null) {
             throw new IllegalStateException("must call allele(String) at least once");
         }
@@ -200,8 +206,9 @@ public final class GlResourceBuilder {
      * Build and return a new allele list configured from the properties of this gl resource builder.
      *
      * @return a new allele list configured from the properties of this gl resource builder
+     * @throws GlClientException if an error occurs
      */
-    public AlleleList buildAlleleList() {
+    public AlleleList buildAlleleList() throws GlClientException {
         return client.createAlleleList(alleles);
     }
 
@@ -209,8 +216,9 @@ public final class GlResourceBuilder {
      * Build and return a new haplotype configured from the properties of this gl resource builder.
      *
      * @return a new haplotype configured from the properties of this gl resource builder
+     * @throws GlClientException if an error occurs
      */
-    public Haplotype buildHaplotype() {
+    public Haplotype buildHaplotype() throws GlClientException {
         return client.createHaplotype(alleleLists);
     }
 
@@ -218,8 +226,9 @@ public final class GlResourceBuilder {
      * Build and return a new genotype configured from the properties of this gl resource builder.
      *
      * @return a new genotype configured from the properties of this gl resource builder
+     * @throws GlClientException if an error occurs
      */
-    public Genotype buildGenotype() {
+    public Genotype buildGenotype() throws GlClientException {
         return client.createGenotype(haplotypes);
     }
 
@@ -227,8 +236,9 @@ public final class GlResourceBuilder {
      * Build and return a new genotype list configured from the properties of this gl resource builder.
      *
      * @return a new genotype list configured from the properties of this gl resource builder
+     * @throws GlClientException if an error occurs
      */
-    public GenotypeList buildGenotypeList() {
+    public GenotypeList buildGenotypeList() throws GlClientException {
         return client.createGenotypeList(genotypes);
     }
 
@@ -236,8 +246,9 @@ public final class GlResourceBuilder {
      * Build and return a new multilocus unphased genotype configured from the properties of this gl resource builder.
      *
      * @return a new multilocus unphased genotype configured from the properties of this gl resource builder
+     * @throws GlClientException if an error occurs
      */
-    public MultilocusUnphasedGenotype buildMultilocusUnphasedGenotype() {
+    public MultilocusUnphasedGenotype buildMultilocusUnphasedGenotype() throws GlClientException {
         return client.createMultilocusUnphasedGenotype(genotypeLists);
     }
 }

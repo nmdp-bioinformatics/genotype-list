@@ -41,17 +41,17 @@ import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 public abstract class AbstractGlClient implements GlClient {
 
     @Override
-    public final Locus createLocus(final String glstring) {
+    public final Locus createLocus(final String glstring) throws GlClientException {
         return getLocus(registerLocus(glstring));
     }
 
     @Override
-    public final Allele createAllele(final String glstring) {
+    public final Allele createAllele(final String glstring) throws GlClientException {
         return getAllele(registerAllele(glstring));
     }
 
     @Override
-    public final Allele createAllele(final Locus locus, final String glstring) {
+    public final Allele createAllele(final Locus locus, final String glstring) throws GlClientException {
         checkNotNull(locus);
         checkNotNull(glstring);
         if (!glstring.startsWith(locus.getGlstring())) {
@@ -61,77 +61,77 @@ public abstract class AbstractGlClient implements GlClient {
     }
 
     @Override
-    public final AlleleList createAlleleList(final String glstring) {
+    public final AlleleList createAlleleList(final String glstring) throws GlClientException {
         return getAlleleList(registerAlleleList(glstring));
     }
 
     @Override
-    public final AlleleList createAlleleList(final Allele... alleles) {
+    public final AlleleList createAlleleList(final Allele... alleles) throws GlClientException {
         return createAlleleList(Joiner.on("/").join(alleles));
     }
 
     @Override
-    public final AlleleList createAlleleList(final Iterable<Allele> alleles) {
+    public final AlleleList createAlleleList(final Iterable<Allele> alleles) throws GlClientException {
         return createAlleleList(Joiner.on("/").join(alleles));
     }
 
     @Override
-    public final Haplotype createHaplotype(final String glstring) {
+    public final Haplotype createHaplotype(final String glstring) throws GlClientException {
         return getHaplotype(registerHaplotype(glstring));
     }
 
     @Override
-    public final Haplotype createHaplotype(final AlleleList... alleleLists) {
+    public final Haplotype createHaplotype(final AlleleList... alleleLists) throws GlClientException {
         return createHaplotype(Joiner.on("~").join(alleleLists));
     }
 
     @Override
-    public final Haplotype createHaplotype(final Iterable<AlleleList> alleleLists) {
+    public final Haplotype createHaplotype(final Iterable<AlleleList> alleleLists) throws GlClientException {
         return createHaplotype(Joiner.on("~").join(alleleLists));
     }
 
     @Override
-    public final Genotype createGenotype(final String glstring) {
+    public final Genotype createGenotype(final String glstring) throws GlClientException {
         return getGenotype(registerGenotype(glstring));
     }
 
     @Override
-    public final Genotype createGenotype(final Haplotype... haplotypes) {
+    public final Genotype createGenotype(final Haplotype... haplotypes) throws GlClientException {
         return createGenotype(Joiner.on("+").join(haplotypes));
     }
 
     @Override
-    public final Genotype createGenotype(final Iterable<Haplotype> haplotypes) {
+    public final Genotype createGenotype(final Iterable<Haplotype> haplotypes) throws GlClientException {
         return createGenotype(Joiner.on("+").join(haplotypes));
     }
 
     @Override
-    public final GenotypeList createGenotypeList(final String glstring) {
+    public final GenotypeList createGenotypeList(final String glstring) throws GlClientException {
         return getGenotypeList(registerGenotypeList(glstring));
     }
 
     @Override
-    public final GenotypeList createGenotypeList(final Genotype... genotypes) {
+    public final GenotypeList createGenotypeList(final Genotype... genotypes) throws GlClientException {
         return createGenotypeList(Joiner.on("|").join(genotypes));
     }
 
     @Override
-    public final GenotypeList createGenotypeList(final Iterable<Genotype> genotypes) {
+    public final GenotypeList createGenotypeList(final Iterable<Genotype> genotypes) throws GlClientException {
         return createGenotypeList(Joiner.on("|").join(genotypes));
     }
 
     @Override
-    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final String glstring) {
+    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final String glstring) throws GlClientException {
         return getMultilocusUnphasedGenotype(registerMultilocusUnphasedGenotype(glstring));
     }
 
     @Override
-    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists) {
+    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final GenotypeList... genotypeLists) throws GlClientException {
         return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
     }
 
     @Override
-    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists) {
+    public final MultilocusUnphasedGenotype createMultilocusUnphasedGenotype(final Iterable<GenotypeList> genotypeLists) throws GlClientException {
         return createMultilocusUnphasedGenotype(Joiner.on("^").join(genotypeLists));
     }
 }
