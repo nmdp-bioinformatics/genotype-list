@@ -39,6 +39,7 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.MultilocusUnphasedGenotype;
 
 import org.immunogenomics.gl.client.GlClient;
+import org.immunogenomics.gl.client.GlClientException;
 
 /**
  * Abstract functional test for implementations of GlClient.
@@ -59,7 +60,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateLocus() {
+    public final void testCreateLocus() throws GlClientException {
         Locus locus = client.createLocus("HLA-A");
 
         assertNotNull(locus);
@@ -68,7 +69,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateAllele() {
+    public final void testCreateAllele() throws GlClientException {
         Locus locus = client.createLocus("HLA-A");
         Allele allele = client.createAllele(locus, "HLA-A*01:01:01:01");
 
@@ -80,7 +81,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateAlleleGlstring() {
+    public final void testCreateAlleleGlstring() throws GlClientException {
         Allele allele = client.createAllele("HLA-A*01:01:01:01");
 
         assertNotNull(allele);
@@ -90,7 +91,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateAlleleList() {
+    public final void testCreateAlleleList() throws GlClientException {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -107,7 +108,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateAlleleListGlstring() {
+    public final void testCreateAlleleListGlstring() throws GlClientException {
         AlleleList alleleList = client.createAlleleList("HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
 
         assertNotNull(alleleList);
@@ -119,7 +120,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateHaplotype() {
+    public final void testCreateHaplotype() throws GlClientException {
         Locus a = client.createLocus("HLA-A");
         Locus b = client.createLocus("HLA-B");
         Allele a01 = client.createAllele(a, "HLA-A*01:01:01:01");
@@ -139,7 +140,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateHaplotypeGlstring() {
+    public final void testCreateHaplotypeGlstring() throws GlClientException {
         Haplotype haplotype = client.createHaplotype("HLA-A*01:01:01:01~HLA-B*02:07:01");
 
         assertNotNull(haplotype);
@@ -151,7 +152,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateGenotype() {
+    public final void testCreateGenotype() throws GlClientException {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -172,7 +173,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateGenotypeGlstring() {
+    public final void testCreateGenotypeGlstring() throws GlClientException {
         Genotype genotype = client.createGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N");
 
         assertNotNull(genotype);
@@ -184,7 +185,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateGenotypeList() {
+    public final void testCreateGenotypeList() throws GlClientException {
         Locus locus = client.createLocus("HLA-A");
         Allele a01 = client.createAllele(locus, "HLA-A*01:01:01:01");
         Allele a02n = client.createAllele(locus, "HLA-A*01:01:01:02N");
@@ -210,7 +211,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateGenotypeListGlstring() {
+    public final void testCreateGenotypeListGlstring() throws GlClientException {
         GenotypeList genotypeList = client.createGenotypeList("HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-A*01:01:01:01+HLA-A*02:01:01:01");
 
         assertNotNull(genotypeList);
@@ -222,7 +223,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateMultilocusUnphasedGenotype() {
+    public final void testCreateMultilocusUnphasedGenotype() throws GlClientException {
         Locus a = client.createLocus("HLA-A");
         Locus b = client.createLocus("HLA-B");
         Allele a01 = client.createAllele(a, "HLA-A*01:01:01:01");
@@ -254,7 +255,7 @@ public abstract class AbstractGlClientFT { //extends AbstractGlClientTest {
     }
 
     @Test
-    public final void testCreateMultilocusUnphasedGenotypeGlstring() {
+    public final void testCreateMultilocusUnphasedGenotypeGlstring() throws GlClientException {
         MultilocusUnphasedGenotype multilocusUnphasedGenotype = client.createMultilocusUnphasedGenotype("HLA-A*01:01:01:01+HLA-A*01:01:01:02N^HLA-B*02:07:01+HLA-B*02:07:02");
 
         assertNotNull(multilocusUnphasedGenotype);

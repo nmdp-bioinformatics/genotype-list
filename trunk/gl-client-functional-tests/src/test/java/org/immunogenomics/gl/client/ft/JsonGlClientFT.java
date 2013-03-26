@@ -25,11 +25,17 @@
 package org.immunogenomics.gl.client.ft;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import org.junit.BeforeClass;
 
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.GlClient;
 
+import org.immunogenomics.gl.client.http.HttpClient;
+import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
 import org.immunogenomics.gl.client.json.JsonGlClient;
 
 /**
@@ -37,12 +43,22 @@ import org.immunogenomics.gl.client.json.JsonGlClient;
  */
 public final class JsonGlClientFT extends AbstractGlClientFT {
     private static JsonFactory jsonFactory;
+    private static HttpClient httpClient;
+    private static Cache<String, Locus> loci;
+    private static Cache<String, String> locusIds;
+    private static Cache<String, Allele> alleles;
+    private static Cache<String, String> alleleIds;
     private static JsonGlClient jsonClient;
 
     @BeforeClass
     public static void staticSetUp() {
         jsonFactory = new JsonFactory();
-        jsonClient = new JsonGlClient("http://localhost:10080/gl/", jsonFactory);
+        httpClient = new RestAssuredHttpClient();
+        loci = CacheBuilder.newBuilder().initialCapacity(10).build();
+        locusIds = CacheBuilder.newBuilder().initialCapacity(10).build();
+        alleles = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        alleleIds = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        jsonClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Override
