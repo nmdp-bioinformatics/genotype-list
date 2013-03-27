@@ -51,9 +51,9 @@
     <hr />
 
     <div class="two-thirds column">
-      <p>Load IMGT/HLA Database version 3.10.0 alleles</p>
+      <p>Load IMGT/HLA Database version 3.11.0 alleles</p>
       <form action="load" method="post">
-        <input id="submit" type="submit" value="Load IMGT/HLA Database version 3.10.0 alleles">
+        <input id="submit" type="submit" value="Load IMGT/HLA Database version 3.11.0 alleles">
       </form>
     </div>
   </div>
