@@ -24,7 +24,7 @@ $ export PATH=$PATH:$GL_TOOLS_HOME/bin
 {{{
 $ gl-register-loci --help
 usage:
-gl-register-loci --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-loci --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -35,7 +35,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -44,7 +46,7 @@ arguments:
 {{{
 $ gl-register-alleles --help
 usage:
-gl-register-alleles --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-alleles --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -55,7 +57,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -64,7 +68,7 @@ arguments:
 {{{
 $ gl-register-allele-lists --help
 usage:
-gl-register-allele-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-allele-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -75,7 +79,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -84,7 +90,7 @@ arguments:
 {{{
 $ gl-register-genotypes --help
 usage:
-gl-register-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -95,7 +101,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -104,7 +112,7 @@ arguments:
 {{{
 $ gl-register-genotype-lists --help
 usage:
-gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -115,7 +123,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -124,7 +134,7 @@ arguments:
 {{{
 $ gl-register-haplotypes --help
 usage:
-gl-register-haplotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-haplotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -135,7 +145,9 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
 
@@ -144,7 +156,7 @@ arguments:
 {{{
 $ gl-register-multilocus-unphased-genotypes --help
 usage:
-gl-register-multilocus-unphased-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]
+gl-register-multilocus-unphased-genotype --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -155,6 +167,8 @@ arguments:
 
    -i, --identifiers [class java.io.File]  identifier output file [optional]
 
-   -t, --token [class java.lang.String]  bearer token [optional]
+   -t, --bearer-token [class java.lang.String]  OAuth 2.0 bearer token [optional]
+
+   -c, --client [class java.lang.String]  client implementation, json or xml, default json [optional]
 
 }}}
