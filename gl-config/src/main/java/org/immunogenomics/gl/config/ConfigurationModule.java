@@ -72,6 +72,7 @@ public abstract class ConfigurationModule
      * @param annotationClassName annotation class name
      * @return an instance of an annotation with the specified class name
      */
+    @SuppressWarnings("unchecked")
     protected static final <A extends Annotation> Class<A> annotation(final String annotationClassName) {
         try {
             return (Class<A>) Class.forName(annotationClassName);
