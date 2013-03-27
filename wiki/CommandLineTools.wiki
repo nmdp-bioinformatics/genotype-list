@@ -24,7 +24,7 @@ $ export PATH=$PATH:$GL_TOOLS_HOME/bin
 {{{
 $ gl-register-loci --help
 usage:
-gl-register-loci --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-loci --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -46,7 +46,7 @@ arguments:
 {{{
 $ gl-register-alleles --help
 usage:
-gl-register-alleles --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-alleles --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -68,7 +68,7 @@ arguments:
 {{{
 $ gl-register-allele-lists --help
 usage:
-gl-register-allele-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-allele-lists --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -90,7 +90,7 @@ arguments:
 {{{
 $ gl-register-genotypes --help
 usage:
-gl-register-genotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-genotypes --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -112,7 +112,7 @@ arguments:
 {{{
 $ gl-register-genotype-lists --help
 usage:
-gl-register-genotype-lists --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-genotype-lists --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -134,7 +134,7 @@ arguments:
 {{{
 $ gl-register-haplotypes --help
 usage:
-gl-register-haplotypes --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-haplotypes --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
@@ -156,7 +156,7 @@ arguments:
 {{{
 $ gl-register-multilocus-unphased-genotypes --help
 usage:
-gl-register-multilocus-unphased-genotype --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
+gl-register-multilocus-unphased-genotype --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]
 
 arguments:
    -h, --help  display help message [optional]
