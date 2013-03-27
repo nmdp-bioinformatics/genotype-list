@@ -25,11 +25,18 @@ package org.immunogenomics.gl.client.cache;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Before;
-import org.junit.Test;
+import com.google.common.cache.Cache;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit test for CacheGlClientModule.
@@ -51,5 +58,9 @@ public class CacheGlClientModuleTest {
     public void testCacheModule() {
         Injector injector = Guice.createInjector(cacheGlClientModule);
         assertNotNull(injector);
+        assertNotNull(injector.getInstance(Key.get(new TypeLiteral<Cache<String, Locus>>() {;}, GlClientLocusCache.class)));
+        assertNotNull(injector.getInstance(Key.get(new TypeLiteral<Cache<String, String>>() {;}, GlClientLocusIdCache.class)));
+        assertNotNull(injector.getInstance(Key.get(new TypeLiteral<Cache<String, Allele>>() {;}, GlClientAlleleCache.class)));
+        assertNotNull(injector.getInstance(Key.get(new TypeLiteral<Cache<String, String>>() {;}, GlClientAlleleIdCache.class)));
     }
 }
