@@ -23,6 +23,7 @@
 */
 package org.immunogenomics.gl.client.cache;
 
+import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.Locus;
 
 import com.google.common.cache.Cache;
@@ -46,17 +47,17 @@ public final class CacheGlClientModule extends AbstractModule {
     }
 
     @Provides @GlClientLocusIdCache
-    protected Cache<String, Locus> createLocusIdCache() {
+    protected Cache<String, String> createLocusIdCache() {
         return CacheBuilder.newBuilder().initialCapacity(1000).build();
     }
 
     @Provides @GlClientAlleleCache
-    protected Cache<String, Locus> createAlleleCache() {
+    protected Cache<String, Allele> createAlleleCache() {
         return CacheBuilder.newBuilder().initialCapacity(10000).build();
     }
 
     @Provides @GlClientAlleleIdCache
-    protected Cache<String, Locus> createAlleleIdCache() {
+    protected Cache<String, String> createAlleleIdCache() {
         return CacheBuilder.newBuilder().initialCapacity(10000).build();
     }
 }
