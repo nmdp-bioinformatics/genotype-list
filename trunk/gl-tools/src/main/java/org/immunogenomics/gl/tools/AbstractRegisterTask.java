@@ -64,7 +64,7 @@ abstract class AbstractRegisterTask implements Runnable {
     private final File glstringFile;
     private final File identifierFile;
     protected final GlClient client;
-    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]";
+    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]";
 
 
     /**
