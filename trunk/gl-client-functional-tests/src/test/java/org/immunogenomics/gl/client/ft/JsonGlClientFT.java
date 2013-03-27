@@ -58,7 +58,7 @@ public final class JsonGlClientFT extends AbstractGlClientFT {
         locusIds = CacheBuilder.newBuilder().initialCapacity(10).build();
         alleles = CacheBuilder.newBuilder().initialCapacity(1000).build();
         alleleIds = CacheBuilder.newBuilder().initialCapacity(1000).build();
-        jsonClient = new JsonGlClient("http://localhost:8080/gl/", jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
+        jsonClient = new JsonGlClient("http://localhost:10080/gl/", jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
     }
 
     @Override
