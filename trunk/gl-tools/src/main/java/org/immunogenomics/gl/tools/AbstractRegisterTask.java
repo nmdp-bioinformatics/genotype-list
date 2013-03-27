@@ -55,6 +55,7 @@ import org.immunogenomics.gl.service.Namespace;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.util.Providers;
 
 /**
  * Abstract register gl resources task.
@@ -63,9 +64,7 @@ abstract class AbstractRegisterTask implements Runnable {
     private final File glstringFile;
     private final File identifierFile;
     protected final GlClient client;
-    // todo:  consider using an optional binding
-    private static final File STREAM = new File("._");
-    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token]";
+    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]";
 
 
     /**
@@ -96,8 +95,8 @@ abstract class AbstractRegisterTask implements Runnable {
         BufferedReader reader = null;
         PrintWriter writer = null;
         try {
-            reader = new BufferedReader((glstringFile == STREAM) ? new InputStreamReader(System.in) : new FileReader(glstringFile));
-            writer = new PrintWriter(new BufferedWriter(identifierFile == STREAM ? new OutputStreamWriter(System.out) : new FileWriter(identifierFile)), true);
+            reader = new BufferedReader((glstringFile == null) ? new InputStreamReader(System.in) : new FileReader(glstringFile));
+            writer = new PrintWriter(new BufferedWriter((identifierFile == null) ? new OutputStreamWriter(System.out) : new FileWriter(identifierFile)), true);
 
             while (reader.ready()) {
                 String line = reader.readLine();
@@ -147,7 +146,7 @@ abstract class AbstractRegisterTask implements Runnable {
         final StringArgument namespace = new StringArgument("s", "namespace", "namespace", true);
         final FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring input file", false);
         final FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier output file", false);
-        final StringArgument bearerToken = new StringArgument("t", "token", "bearer token", false);
+        final StringArgument bearerToken = new StringArgument("t", "bearer-token", "OAuth 2.0 bearer token", false);
         final StringArgument client = new StringArgument("c", "client", "client implementation, json or xml, default json", false);
 
         ArgumentList arguments = new ArgumentList(help, namespace, glstringFile, identifierFile, bearerToken, client);
@@ -162,14 +161,27 @@ abstract class AbstractRegisterTask implements Runnable {
         }
         catch (CommandLineParseException e) {
             Usage.usage(usage, e, commandLine, arguments, System.err);
+            System.exit(-1);
         }
 
         return Guice.createInjector(new CacheGlClientModule(), new AbstractModule() {
             @Override
             protected void configure() {
                 bind(String.class).annotatedWith(Namespace.class).toInstance(namespace.getValue());
-                bind(File.class).annotatedWith(GlstringFile.class).toInstance(glstringFile.getValue(STREAM));
-                bind(File.class).annotatedWith(IdentifierFile.class).toInstance(identifierFile.getValue(STREAM));
+
+                if (glstringFile.wasFound()) {
+                    bind(File.class).annotatedWith(GlstringFile.class).toInstance(glstringFile.getValue());
+                }
+                else {
+                    bind(File.class).annotatedWith(GlstringFile.class).toProvider(Providers.of((File) null));
+                }
+
+                if (identifierFile.wasFound()) {
+                    bind(File.class).annotatedWith(IdentifierFile.class).toInstance(identifierFile.getValue());
+                }
+                else {
+                    bind(File.class).annotatedWith(IdentifierFile.class).toProvider(Providers.of((File) null));
+                }
 
                 if (bearerToken.wasFound()) {
                     bind(String.class).annotatedWith(BearerToken.class).toInstance(bearerToken.getValue());
