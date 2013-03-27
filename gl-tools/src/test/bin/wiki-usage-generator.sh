@@ -16,7 +16,6 @@ ShowHelp() {
     echo "<br/>"
 } #sub end
 
-ShowHelp gl-accession-sort "Accession sort"
 ShowHelp gl-register-loci "Register loci"
 ShowHelp gl-register-alleles "Register alleles"
 ShowHelp gl-register-allele-lists "Register allele lists"
@@ -24,5 +23,4 @@ ShowHelp gl-register-genotypes "Register genotypes"
 ShowHelp gl-register-genotype-lists "Register genotype lists"
 ShowHelp gl-register-haplotypes "Register haplotypes"
 ShowHelp gl-register-multilocus-unphased-genotypes "Register multilocus unphased genotypes"
-ShowHelp gl-smart-sort "Smart sort"
 
