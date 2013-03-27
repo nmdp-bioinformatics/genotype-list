@@ -24,6 +24,9 @@
 */
 package org.immunogenomics.gl.client.ft;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 import org.junit.BeforeClass;
 
 import org.immunogenomics.gl.Allele;
@@ -31,9 +34,8 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.GlClient;
 
 import org.immunogenomics.gl.client.http.HttpClient;
+import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
 import org.immunogenomics.gl.client.xml.XmlGlClient;
-
-import com.google.common.cache.Cache;
 
 /**
  * Functional test for XmlGlClient.
@@ -48,6 +50,11 @@ public final class XmlGlClientFT  extends AbstractGlClientFT {
 
     @BeforeClass
     public static void staticSetUp() {
+        httpClient = new RestAssuredHttpClient();
+        loci = CacheBuilder.newBuilder().initialCapacity(10).build();
+        locusIds = CacheBuilder.newBuilder().initialCapacity(10).build();
+        alleles = CacheBuilder.newBuilder().initialCapacity(1000).build();
+        alleleIds = CacheBuilder.newBuilder().initialCapacity(1000).build();
         xmlClient = new XmlGlClient("http://localhost:10080/gl/", httpClient, loci, locusIds, alleles, alleleIds);
     }
 
