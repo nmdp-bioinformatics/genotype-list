@@ -27,9 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class MemoryTokenStore implements TokenStore {
-
-    private BearerTokenUtil randomToken = new BearerTokenUtil();
-
     private ConcurrentHashMap<String, AccessTokenDetails> tokenToAuthorization =
             new ConcurrentHashMap<String, AccessTokenDetails>();
     private int cleanAfterCount = 100;
@@ -61,10 +58,10 @@ public class MemoryTokenStore implements TokenStore {
     }
 
     String createToken() {
-        String token = randomToken.randomToken();
+        String token = BearerTokenUtil.randomToken();
         // Extra check to make sure a duplicate is never returned.
         while (tokenToAuthorization.get(token) != null) {
-            token = randomToken.randomToken();
+            token = BearerTokenUtil.randomToken();
         }
         return token;
     }

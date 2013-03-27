@@ -24,8 +24,6 @@
 package org.immunogenomics.gl.oauth;
 
 import java.io.IOException;
-import java.io.UTFDataFormatException;
-import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

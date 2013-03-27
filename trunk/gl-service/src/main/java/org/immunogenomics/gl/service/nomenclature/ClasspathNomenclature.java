@@ -30,16 +30,12 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.immunogenomics.gl.Allele;
-import org.immunogenomics.gl.Locus;
 
 import org.immunogenomics.gl.service.GlRegistry;
 import org.immunogenomics.gl.service.GlstringResolver;
 import org.immunogenomics.gl.service.IdResolver;
-import org.immunogenomics.gl.service.Nomenclature;
 
 /**
  * Classpath nomenclature.

@@ -31,7 +31,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.immunogenomics.gl.oauth.AccessTokenDetails;
-import org.immunogenomics.gl.oauth.AuthorizationDetails;
 import org.immunogenomics.gl.oauth.TokenValidateUtil;
 import org.immunogenomics.gl.oauth.TokenValidator;
 

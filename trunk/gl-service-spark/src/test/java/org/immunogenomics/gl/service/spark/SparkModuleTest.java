@@ -64,7 +64,7 @@ public class SparkModuleTest {
      * Configuration module.
      */
     private static class ConfigurationModule extends AbstractModule {
-
+        @Override
         protected void configure() {
             bind(String.class).annotatedWith(Namespace.class).toInstance("namespace");
             bind(Boolean.class).annotatedWith(AllowNewAlleles.class).toInstance(Boolean.TRUE);

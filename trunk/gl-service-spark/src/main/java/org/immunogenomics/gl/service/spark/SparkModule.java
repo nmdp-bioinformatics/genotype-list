@@ -32,7 +32,6 @@ import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogChute;
 import org.immunogenomics.gl.service.GlReader;
 import org.immunogenomics.gl.service.GlWriter;
-import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.Nomenclature;
 import org.immunogenomics.gl.service.nomenclature.ImgtHla3_10_0;
 import org.immunogenomics.gl.service.reader.GlstringGlReader;
