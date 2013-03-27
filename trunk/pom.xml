@@ -380,7 +380,7 @@
       <dependency>
         <groupId>org.immunogenomics.gl.voldemort</groupId>
         <artifactId>voldemort</artifactId>
-        <version>0.96</version>
+        <version>1.3.0</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
