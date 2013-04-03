@@ -26,6 +26,8 @@ package org.immunogenomics.gl.oauth;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 import org.junit.Before;
@@ -64,10 +66,8 @@ public class FileOAuthProviderTest {
     }
     
     @Test
-    public void testLoadAndStore() {
-        File authDetailsFile = new File("target/test/auth-details.txt");
-        authDetailsFile.mkdirs();
-        authDetailsFile.delete();  // make sure no previous file
+    public void testLoadAndStore() throws IOException {
+    	File authDetailsFile = File.createTempFile("junit-oauth-", ".txt");
         FileOAuthProvider testProvider = new FileOAuthProvider(authDetailsFile);
         AuthorizationDetails details = newDetails();
         testProvider.addOrUpdate(details);
@@ -77,10 +77,25 @@ public class FileOAuthProviderTest {
         AuthorizationDetails authorization = testProvider.getAuthorization(details.getId(), details.getRealm());
         assertNotNull("authorization", authorization);
         assertEquals(details.getId(), authorization.getId());
-
+       
+        // Dump file to console for review
+        FileReader fileReader = new FileReader(authDetailsFile);
+        int bytesRead = 0;
+        char[] cbuf = new char[1024];
+        while ((bytesRead = fileReader.read(cbuf)) > 0) {
+        	if (bytesRead == cbuf.length) {
+        		System.out.print(cbuf);
+        	} else {
+        		char[] buf = new char[bytesRead];
+        		System.arraycopy(cbuf, 0, buf, 0, bytesRead);
+        		System.out.print(buf);
+        	}
+        }
+        fileReader.close();
+        authDetailsFile.delete();
     }
 
-    @Test
+    //@Test //should only be run manually since it writes to home directory
     public void testUserHome() {
         //NOTE: The user home file will likely already exist, 
         // so we'll just try a couple small modifications to avoid potential conflicts.
