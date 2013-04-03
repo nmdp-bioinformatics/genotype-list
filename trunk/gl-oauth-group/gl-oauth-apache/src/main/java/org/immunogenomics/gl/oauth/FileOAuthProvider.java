@@ -42,6 +42,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+/** 
+ * Simple AuthorizationDetailsDao that persists the details to a single file.
+ * It is not intended to be used for sites with a large number of users.
+ * @author mgeorge
+ */
 public class FileOAuthProvider implements AuthorizationDetailsDao {
 
     private static class UserToDetailsMap extends HashMap<String, AuthorizationDetails>{
@@ -57,7 +62,7 @@ public class FileOAuthProvider implements AuthorizationDetailsDao {
     private Logger logger = Logger.getLogger(getClass().getName());
 
     /**
-     * Convenience method to store the AuthorizationDetails in the user's
+     * Convenience constructor to store the AuthorizationDetails in the user's
      * home directory.  ${user.home}/oauth-details.txt
      */
     public FileOAuthProvider() {
@@ -66,11 +71,19 @@ public class FileOAuthProvider implements AuthorizationDetailsDao {
         loadFile(persistentFile);
     }
     
+    /** 
+     * Main constructor that specifies the location of the persisted authorization details file.
+     * @param persistentFile
+     */
     public FileOAuthProvider(File persistentFile) {
         this.persistentFile = persistentFile;
         loadFile(persistentFile);
     }
 
+    /**
+     * Loads authorization details from a classpath resource.
+     * @param resourceName
+     */
     public FileOAuthProvider(String resourceName) {
         InputStream inputStream = getClass().getResourceAsStream(resourceName);
         LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
