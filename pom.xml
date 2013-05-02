@@ -231,7 +231,7 @@
                   <version>[3.0.5,)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[1.6,1.7)</version>
+                  <version>[1.7,1.8)</version>
                 </requireJavaVersion>
               </rules>    
             </configuration>
@@ -485,8 +485,8 @@
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
 
     <!-- default configuration for compiler source and target JVM -->
-    <maven.compile.source>1.6</maven.compile.source>
-    <maven.compile.target>1.6</maven.compile.target>
+    <maven.compile.source>1.7</maven.compile.source>
+    <maven.compile.target>1.7</maven.compile.target>
 
     <!-- configuration properties for the OSGi maven-bundle-plugin -->
     <immunogenomics.osgi.symbolicName>org.immunogenomics.${immunogenomics.componentId}</immunogenomics.osgi.symbolicName>
