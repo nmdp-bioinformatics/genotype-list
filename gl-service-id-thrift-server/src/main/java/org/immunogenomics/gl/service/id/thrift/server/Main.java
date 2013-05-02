@@ -23,8 +23,6 @@
 */
 package org.immunogenomics.gl.service.id.thrift.server;
 
-import static org.junit.Assert.assertNotNull;
-
 import com.facebook.swift.codec.guice.ThriftCodecModule;
 
 import com.facebook.swift.service.ThriftServer;
@@ -42,56 +40,42 @@ import com.google.inject.TypeLiteral;
 import io.airlift.configuration.ConfigurationFactory;
 import io.airlift.configuration.ConfigurationModule;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import org.immunogenomics.gl.service.IdSupplier;
 import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.id.IdModule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Unit test for ThriftIdSupplierServerModule.
+ * Main.
  */
-public final class ThriftIdSupplierServerModuleTest {
-    private ThriftIdSupplierServerModule thriftIdSupplierServerModule;
+public final class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    @Mock
-    private IdSupplier mockIdSupplier;
-
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        thriftIdSupplierServerModule = new ThriftIdSupplierServerModule();
-    }
-
-    @Test
-    public void testConstructor() {
-        assertNotNull(thriftIdSupplierServerModule);
-    }
-
-    @Test
-    public void testThriftIdSupplierServerModule() {
+    /**
+     * Main.
+     *
+     * @params args command line arguments, ignored
+     */
+    public static void main(final String[] args) {
         Injector injector = Guice.createInjector(Stage.PRODUCTION,
-                                                 new TestModule(),
+                                                 new LocalhostModule(),
                                                  new IdModule(),
                                                  new ConfigurationModule(new ConfigurationFactory(ImmutableMap.<String, String>of())),
                                                  new ThriftCodecModule(),
                                                  new ThriftServerModule(),
-                                                 thriftIdSupplierServerModule);
-        assertNotNull(injector);
+                                                 new ThriftIdSupplierServerModule());
 
         ThriftServer thriftServer = injector.getInstance(ThriftServer.class);
-        assertNotNull(thriftServer);
+        logger.info("server starting...");
+        thriftServer.start();
+        logger.info("server started");
     }
 
     /**
-     * Test module.
+     * Localhost module.
      */
-    private static class TestModule extends AbstractModule {
+    private static class LocalhostModule extends AbstractModule {
 
         @Override
         protected void configure() {
