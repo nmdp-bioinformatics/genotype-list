@@ -76,8 +76,11 @@
     <module>gl-service-webroot</module>
     <module>gl-service-functional-tests</module>
     <module>gl-service-performance-tests</module>
+    <module>gl-service-id-thrift</module>
+    <module>gl-service-id-thrift-server</module>
     <module>gl-client</module>
     <module>gl-client-functional-tests</module>
+    <module>gl-ambiguity-service</module>
     <module>gl-web</module>
     <module>gl-oauth-group</module>
     <module>gl-service-explorer</module>
