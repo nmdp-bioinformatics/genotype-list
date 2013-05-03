@@ -84,19 +84,19 @@
     <dependency>
       <groupId>com.facebook.nifty</groupId>
       <artifactId>nifty-client</artifactId>
-      <version>0.7.0-SNAPSHOT</version>
+      <version>0.6.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.facebook.swift</groupId>
       <artifactId>swift-annotations</artifactId>
-      <version>0.7.0-SNAPSHOT</version>
+      <version>0.6.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.facebook.swift</groupId>
       <artifactId>swift-codec</artifactId>
-      <version>0.7.0-SNAPSHOT</version>
+      <version>0.6.0</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>com.facebook.swift</groupId>
       <artifactId>swift-service</artifactId>
-      <version>0.7.0-SNAPSHOT</version>
+      <version>0.6.0</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
