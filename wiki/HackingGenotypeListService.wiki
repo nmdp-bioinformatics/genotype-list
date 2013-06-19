@@ -21,18 +21,7 @@ Functional tests are executed against an embedded jetty during the build.
 
 
 <br/>
-= Performance tests =
 
-To run performance tests
-{{{
-$ cd gl-service-performance-tests
-$ mvn -DdescriptorId=jar-with-dependencies assembly:assembly
-}}}
-
-and refer to gl-service-performance-tests/README.txt for further instructions.
-
-
-<br/>
 = Deploy =
 
 To deploy to an external jetty/tomcat
@@ -215,3 +204,17 @@ For other use cases, see
  * [HLAUseCase HLA Use Case]
  * [KIRUseCase KIR Use Case]
  * [VCFUseCase VCF Use Case]
+
+<br />
+= Performance tests =
+
+To run performance tests
+{{{
+$ cd gl-service-performance-tests
+$ mvn -DdescriptorId=jar-with-dependencies assembly:assembly
+}}}
+
+and refer to gl-service-performance-tests/README.txt for further instructions.
+
+
+<br/>
