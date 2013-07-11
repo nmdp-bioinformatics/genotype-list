@@ -74,6 +74,16 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
+      <groupId>com.sparkjava</groupId>
+      <artifactId>spark-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <scope>compile</scope>
@@ -102,16 +112,6 @@
       <groupId>org.immunogenomics.gl</groupId>
       <artifactId>gl-service-voldemort</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>spark</groupId>
-      <artifactId>spark</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
