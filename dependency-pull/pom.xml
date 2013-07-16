@@ -40,8 +40,8 @@
   </organization>
 
   <scm>
-    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/dependency-patch</connection>
-    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/dependency-patch</developerConnection>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/dependency-pull</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/dependency-pull</developerConnection>
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
 
@@ -54,26 +54,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
-  <dependencies>
-    <!-- spark is only available in its own snapshot repository -->
-    <!-- override transitive dependency on slf4j 1.6.1 -->
-    <dependency>
-      <groupId>spark</groupId>
-      <artifactId>spark</artifactId>
-      <version>0.9.9.3-SNAPSHOT</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
@@ -121,13 +101,6 @@
     </plugins>
   </build>
 
-  <repositories>
-    <repository>
-      <id>Spark repository</id>
-      <url>http://www.sparkjava.com/nexus/content/repositories/spark/</url>
-    </repository>
-  </repositories>
-
   <pluginRepositories>
     <pluginRepository>
       <id>ossrh</id>
@@ -136,7 +109,6 @@
       <layout>default</layout>
     </pluginRepository>
   </pluginRepositories>
-
 </project>
 
 
