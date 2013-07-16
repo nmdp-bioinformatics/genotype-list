@@ -3,8 +3,7 @@
 = Third party dependencies =
 
 == Not in Maven Central ==
-  * *voldemort-0.96.jar* - used by gl-service [http://www.project-voldemort.com/voldemort/ Voldemort]
-  * *spark:spark:jar:0.9.9.3-SNAPSHOT* - used by gl-service-spark and in a [http://sparkjava.com Spark] repository
+  * *voldemort-1.3.0.jar* - used by gl-service [http://www.project-voldemort.com/voldemort/ Voldemort]
 
 == Listing dependencies ==
 You can view a project's dependencies using the [http://maven.apache.org/plugins/maven-dependency-plugin/ Maven Dependency Plugin].
@@ -19,7 +18,7 @@ http://maven.apache.org/repository-management.html
 = Workaround for installing missing dependencies =
 Change to the *dependency-pull* directory and execute the following to install the missing jars in your local maven repository. 
 {{{
-% mvn package
+2% mvn package
 }}}
 The [https://code.google.com/p/genotype-list/source/browse/trunk/dependency-pull/pom.xml pom.xml] is configured to download the proper files and install them.
 
@@ -53,7 +52,7 @@ $ mvn install
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal on project gl-service-voldemort:
 Could not resolve dependencies for project org.immunogenomics.gl:gl-service-voldemort:jar:1.0-SNAPSHOT:
-Could not find artifact org.immunogenomics.gl.voldemort:voldemort:jar:0.96
+Could not find artifact org.immunogenomics.gl.voldemort:voldemort:jar:1.3.0
 in central (http://repo.maven.apache.org/maven2) -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
@@ -68,22 +67,22 @@ in central (http://repo.maven.apache.org/maven2) -> [Help 1]
 
 
 <br/>
-Download voldemort-0.96 from
+Download voldemort-1.3.0 from
 
-https://github.com/downloads/voldemort/voldemort/voldemort-0.96.tar.gz
+http://code.google.com/p/project-voldemort/downloads/detail?name=voldemort-1.3.0.tar.gz&can=2&q=
 
 
 <br/>
-Extract voldemort-0.96.jar and install to the local repository with
+Extract voldemort-1.3.0.jar and install to the local repository with
 
 {{{
-$ tar xvfz voldemort-0.96.tar.gz
+$ tar xvfz voldemort-1.3.0.tar.gz
 $ mvn install:install-file \
       -DgroupId=org.immunogenomics.gl.voldemort \
       -DartifactId=voldemort \
-      -Dversion=0.96 \
+      -Dversion=1.3.0 \
       -Dpackaging=jar \
-      -Dfile=voldemort-0.96/dist/voldemort-0.96.jar 
+      -Dfile=voldemort-1.3.0/dist/voldemort-1.3.0.jar 
 [INFO] Scanning for projects...
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
@@ -91,10 +90,10 @@ $ mvn install:install-file \
 [INFO] ------------------------------------------------------------------------
 [INFO] 
 [INFO] --- maven-install-plugin:2.3:install-file (default-cli) @ standalone-pom ---
-[INFO] Installing /home/xxx/Downloads/voldemort-0.96/dist/voldemort-0.96.jar to
-/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.96/voldemort-0.96.jar
+[INFO] Installing /home/xxx/Downloads/voldemort-1.3.0/dist/voldemort-1.3.0.jar to
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/1.3.0/voldemort-1.3.0.jar
 [INFO] Installing /tmp/mvninstall2332719942582336652.pom to
-/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/0.96/voldemort-0.96.pom
+/home/xxx/.m2/repository/org/immunogenomics/gl/voldemort/voldemort/1.3.0/voldemort-1.3.0.pom
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
@@ -114,63 +113,33 @@ $ mvn install -rf :gl-service-voldemort
 [INFO] Reactor Summary:
 [INFO] 
 [INFO] gl-service-voldemort .............................. SUCCESS [8.631s]
-[INFO] gl-service-spark .................................. FAILURE [4.241s]
-[INFO] gl-service-explorer ............................... SKIPPED
-[INFO] gl-service-webapp ................................. SKIPPED
-[INFO] gl-service-functional-tests ....................... SKIPPED
-[INFO] gl-service-performance-tests ...................... SKIPPED
+
+[INFO] gl-service-spark .................................. SUCCESS [1.967s]
+[INFO] gl-service-webapp ................................. SUCCESS [3.457s]
+[INFO] gl-service-webroot ................................ SUCCESS [0.384s]
+[INFO] gl-service-functional-tests ....................... SUCCESS [19.010s]
+[INFO] gl-service-performance-tests ...................... SUCCESS [0.710s]
+[INFO] gl-service-id-thrift .............................. SUCCESS [3.852s]
+[INFO] gl-service-id-thrift-server ....................... SUCCESS [2.083s]
+[INFO] gl-client ......................................... SUCCESS [2.908s]
+[INFO] gl-client-functional-tests ........................ SUCCESS [14.499s]
+[INFO] gl-ambiguity-service .............................. SUCCESS [1.211s]
+[INFO] gl-web ............................................ SUCCESS [1.114s]
+[INFO] gl-oauth-group .................................... SUCCESS [0.037s]
+[INFO] gl-oauth-apache ................................... SUCCESS [1.172s]
+[INFO] openid-portal ..................................... SUCCESS [5.587s]
+[INFO] toy-portal ........................................ SUCCESS [0.528s]
+[INFO] toy-rest-app ...................................... SUCCESS [0.382s]
+[INFO] gl-service-explorer ............................... SUCCESS [0.660s]
+[INFO] glsw-oauth ........................................ SUCCESS [6.723s]
+[INFO] gl-jetty .......................................... SUCCESS [0.291s]
+[INFO] gl-tools .......................................... SUCCESS [19.309s]
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 13.851s
+[INFO] Total time: 1:50.903s
 [INFO] Finished at: Wed Jul 25 21:11:16 CDT 2012
-[INFO] Final Memory: 18M/141M
+[INFO] Final Memory: 75M/840M
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal on project gl-service-spark: Could not resolve dependencies for project org.immunogenomics.gl:gl-service-spark:jar:1.0-SNAPSHOT: Could not find artifact spark:spark:jar:0.9.9.3-SNAPSHOT in sonatype-nexus-snapshots (https://oss.sonatype.org/content/repositories/snapshots) -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
-[ERROR] 
-[ERROR] After correcting the problems, you can resume the build with the command
-[ERROR]   mvn <goals> -rf :gl-service-spark
 }}}
 
-
-<br/>
-Spark is only available from its own Maven repository and has enough transitive dependencies to make a local install troublesome.
-
-One option is to add this patch to pom.xml
-{{{
-$ svn diff pom.xml
-Index: pom.xml
-===================================================================
---- pom.xml	(revision 88)
-+++ pom.xml	(working copy)
-@@ -70,6 +70,11 @@
- -->
-   </modules>
- 
-+  <repositories>
-+    <repository>
-+      <id>Spark repository</id>
-+      <url>http://www.sparkjava.com/nexus/content/repositories/spark/</url>
-+    </repository>
-+  </repositories>
-+
-   <build>
-    <pluginManagement>
-       <plugins>
-}}}
-
-Just *don't check it in*.
-
-
-<br/>
-Another workaround is to use Nexus, which is a Maven repository manager and proxy.
-
-http://www.sonatype.org/nexus
-
-After downloading and installing the open source version of Nexus, it may be configured to proxy the Spark repository.
