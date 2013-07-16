@@ -113,7 +113,6 @@ $ mvn install -rf :gl-service-voldemort
 [INFO] Reactor Summary:
 [INFO] 
 [INFO] gl-service-voldemort .............................. SUCCESS [8.631s]
-
 [INFO] gl-service-spark .................................. SUCCESS [1.967s]
 [INFO] gl-service-webapp ................................. SUCCESS [3.457s]
 [INFO] gl-service-webroot ................................ SUCCESS [0.384s]
