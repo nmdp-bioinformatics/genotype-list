@@ -5,12 +5,16 @@
 
 ==== New ====
 
-When creating a new issue, set Status to New and Owner to empty.
+When creating a new issue, set Status to New, Owner to empty, and add a Priority-Medium label.
 
 
 ==== New --> Accepted ====
 
-New issues should be triaged.  If an issue is acceptable, set Status to Accepted and add a Milestone label (e.g. Release1.0.0).  If an issue is not acceptable, set Status to one of Invalid, Duplicate, or !WontFix as appropriate.
+New issues should be triaged:
+
+If an issue is acceptable, set Status to Accepted, add a Milestone label (e.g. Release1.0.0), and update the Priority label if necessary.
+
+If an issue is not acceptable, set Status to one of Invalid, Duplicate, or !WontFix as appropriate.
 
 
 ==== Accepted --> Started ====
