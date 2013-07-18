@@ -1,7 +1,7 @@
 gl-service
 ---
 
-Install jdk 1.6 or later, maven 3.0.4 or later.
+Install jdk 1.7 or later, maven 3.0.5 or later.
 
 
 To build
@@ -30,17 +30,6 @@ To install to a host:port other than the default (http://localhost:10080), edit 
 
 gl-service-webapp/src/main/resources/gl-service.properties
 gl-service-explorer/src/main/resources/gl-service.properties
-
-
-To load loci and alleles from the IMGT nomenclature database version 3.9.0, either
-
-$ curl -X post http://localhost:10080/gl/load-imgt-alleles
-
-or visit
-
-http://localhost:10080/gl
-
-in a web browser and hit the Load IMGT alleles button
 
 
 To explore the gl-service API interactively, use the API explorer web interface at
