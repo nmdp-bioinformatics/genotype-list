@@ -3,7 +3,7 @@
 = Prerequisites =
 
 Install
- * JDK version 1.6 or later, http://openjdk.java.net/
+ * JDK version 1.7 or later, http://openjdk.java.net/
  * Apache Maven version 3.0.5 or later, http://maven.apache.org/
 
 
@@ -16,8 +16,6 @@ $ mvn install
 }}}
 
 Functional tests are executed against an embedded jetty during the build.
-
-||*Important:* If your build fails due to unresolved dependencies, check out the wiki page on [ThirdPartyDependencies third party dependencies].||
 
 
 <br/>
