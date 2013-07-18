@@ -41,7 +41,7 @@
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
   <build>
-    <finalName>root</finalName>
+    <finalName>ROOT</finalName>
   </build>
   <properties>
     <immunogenomics.componentId>gl.service.webroot</immunogenomics.componentId>
