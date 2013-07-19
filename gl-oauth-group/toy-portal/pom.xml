@@ -12,17 +12,13 @@
   <packaging>war</packaging>
   <name>toy-portal</name>
   <description>Sample Portal used as Oauth 2.0 provider</description>
-  <properties>
-  </properties>
   <dependencies>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.3</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -40,9 +36,9 @@
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.0</version>
-          <configuration>
-            <port>9090</port>
-          </configuration>
+        <configuration>
+          <port>9090</port>
+        </configuration>
       </plugin>
     </plugins>
   </build>

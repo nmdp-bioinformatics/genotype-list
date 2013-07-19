@@ -20,42 +20,7 @@
     <spring.version>3.2.0.RELEASE</spring.version>
     <spring-security.version>3.1.3.RELEASE</spring-security.version>
   </properties>
-  <repositories>
-    <repository>
-      <id>spring-maven-release</id>
-      <name>Spring Maven Release Repository</name>
-      <url>http://maven.springframework.org/release</url>
-    </repository>
-    <repository>
-      <id>spring-maven-milestone</id>
-      <name>Spring Maven Milestone Repository</name>
-      <url>http://maven.springframework.org/milestone</url>
-    </repository>
-    <repository>
-      <id>spring-roo-repository</id>
-      <name>Spring Roo Repository</name>
-      <url>http://spring-roo-repository.springsource.org/release</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-maven-release</id>
-      <name>Spring Maven Release Repository</name>
-      <url>http://maven.springframework.org/release</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-maven-milestone</id>
-      <name>Spring Maven Milestone Repository</name>
-      <url>http://maven.springframework.org/milestone</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-roo-repository</id>
-      <name>Spring Roo Repository</name>
-      <url>http://spring-roo-repository.springsource.org/release</url>
-    </pluginRepository>
-  </pluginRepositories>
   <dependencies>
-    <!-- General dependencies for standard applications -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -113,14 +78,12 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
-    <!-- ROO dependencies -->
     <dependency>
       <groupId>org.springframework.roo</groupId>
       <artifactId>org.springframework.roo.annotations</artifactId>
       <version>${roo.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -268,7 +231,7 @@
     <dependency>
       <groupId>org.immunogenomics.gl.oauth</groupId>
       <artifactId>gl-oauth-apache</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-logging</artifactId>
@@ -293,7 +256,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.2</version>
         <!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
       </plugin>
       <plugin>
