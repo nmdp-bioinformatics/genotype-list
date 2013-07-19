@@ -26,6 +26,6 @@ package org.immunogenomics.gl.service.ft;
 /**
  * Functional tests for the URI-based RESTful service for the gl project.
  */
-class GlServiceFunctionalTests {
+public class GlServiceFunctionalTests {
     // empty
 }
