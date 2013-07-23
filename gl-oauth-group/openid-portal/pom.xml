@@ -12,7 +12,7 @@
   <packaging>war</packaging>
   <name>openid-portal</name>
   <properties>
-    <aspectj.version>1.7.0.RC1</aspectj.version>
+    <aspectj.version>1.7.3</aspectj.version>
     <java.version>1.6</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <roo.version>1.2.2.RELEASE</roo.version>
