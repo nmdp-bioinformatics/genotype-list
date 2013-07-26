@@ -23,17 +23,24 @@
 */
 package org.immunogenomics.gl.service.spark;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import org.immunogenomics.gl.service.Namespace;
+import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.redis.JedisModule;
 
-import com.google.inject.Module;
+import spark.servlet.SparkApplication;
 
 /**
  * Wrapper for SparkGlService with Redis+jedis to allow Guice injection before initialization.
  */
 public final class SparkJedisGlServiceApplication extends SparkGlServiceApplication {
-
     @Override
-    protected Module newPersistenceModule() {
-        return new JedisModule();
+    public void init() {
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new JedisModule(), new IdModule());
+        SparkApplication application = injector.getInstance(SparkApplication.class);
+        application.init();
     }
 }

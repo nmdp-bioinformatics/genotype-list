@@ -23,18 +23,24 @@
 */
 package org.immunogenomics.gl.service.spark;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import org.immunogenomics.gl.service.Namespace;
+import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.jdbc.JdbcModule;
 
-import com.google.inject.Module;
+import spark.servlet.SparkApplication;
 
 /**
  * Wrapper for SparkGlService with JDBC to allow Guice injection before initialization.
  */
 public final class SparkJdbcGlServiceApplication extends SparkGlServiceApplication {
-
     @Override
-    protected Module newPersistenceModule() {
-        return new JdbcModule();
+    public void init() {
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new JdbcModule(), new IdModule());
+        SparkApplication application = injector.getInstance(SparkApplication.class);
+        application.init();
     }
-
 }

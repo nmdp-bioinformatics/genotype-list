@@ -25,8 +25,6 @@ package org.immunogenomics.gl.service.spark;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Module;
 
 import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.cache.CacheModule;
@@ -37,28 +35,12 @@ import spark.servlet.SparkApplication;
 /**
  * Wrapper for SparkGlService to allow Guice injection before initialization.
  */
-public class SparkGlServiceApplication implements SparkApplication {
-
-    /**
-     * The JSP also needs access to the Namespace, so the Injector is being placed on a ThreadLocal
-     * so that the GlSparkFilter can get the namespace.
-     */
-    private static ThreadLocal<Injector> namespaceThreadLocal = new ThreadLocal<Injector>();
-
+public final class SparkGlServiceApplication implements SparkApplication {
     @Override
     public void init() {
         Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
-                newPersistenceModule(), new IdModule());
-        namespaceThreadLocal.set(injector);
+                                                 new CacheModule(), new IdModule());
         SparkApplication application = injector.getInstance(SparkApplication.class);
         application.init();
-    }
-    
-    public static String getNamespace() {
-        return namespaceThreadLocal.get().getProvider(Key.get(String.class, Namespace.class)).get();
-    }
-    
-    protected Module newPersistenceModule() {
-        return new CacheModule();
     }
 }
