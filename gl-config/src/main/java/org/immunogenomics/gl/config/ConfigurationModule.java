@@ -27,7 +27,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.inject.name.Names.named;
 import static java.lang.String.format;
 
+import java.io.InputStream;
+import java.io.IOException;
+
 import java.lang.annotation.Annotation;
+
+import java.util.Map;
+import java.util.Properties;
 
 import com.google.inject.ProvisionException;
 
@@ -38,6 +44,46 @@ import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
  */
 public abstract class ConfigurationModule
     extends org.nnsoft.guice.rocoto.configuration.ConfigurationModule {
+
+    /**
+     * Bind properties from the specified classpath resource property file, overriding those values
+     * with system properties and with environment variables after replacing key underscores '_' by dots '.'.
+     *
+     * @param propertyFile classpath resource property file, must not be null
+     */
+    protected final void bindPropertiesWithOverrides(final String propertyFile) {
+        checkNotNull(propertyFile, "classpath resource property file must not be null");
+
+        Properties properties = new Properties();
+
+        // load classpath resource properties
+        InputStream inputStream = getClass().getResourceAsStream(propertyFile);
+        if (inputStream != null) {
+            try {
+                properties.load(inputStream);
+            }
+            catch (IOException e) {
+                // ignore
+            }
+        }
+
+        // override with system properties
+        properties.putAll(System.getProperties());
+
+        // override with environment variables
+        for (Map.Entry<String, String> entry : System.getenv().entrySet()) {
+            String reformattedKey = entry.getKey().replace('_', '.');
+
+            // only replace existing keys
+            if (properties.containsKey(reformattedKey)) {
+                properties.put(reformattedKey, entry.getValue());
+            }
+        }
+
+        // bind merged properties
+        bindProperties(properties);
+    }
+
 
     @Override
     protected final PropertyValueBindingBuilder bindProperty(final String name) {
