@@ -15,8 +15,10 @@ import org.immunogenomics.gl.service.spark.SparkGlServiceApplication;
 import spark.servlet.SparkFilter;
 
 public class GlSparkFilter extends SparkFilter {
+    /*
 
-    
+      Consider removing entirely.
+
     private String namespace;
 
     @Override
@@ -38,4 +40,5 @@ public class GlSparkFilter extends SparkFilter {
         request.setAttribute("Namespace", namespace); // Make it easy for JSP to use
         super.doFilter(request, response, chain);
     }
+    */
 }
