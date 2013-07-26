@@ -35,7 +35,7 @@ import spark.servlet.SparkApplication;
 /**
  * Wrapper for SparkGlService with Voldemort to allow Guice injection before initialization.
  */
-public final class SparkVoldemortGlServiceApplication extends SparkGlServiceApplication {
+public final class SparkVoldemortGlServiceApplication implements SparkApplication {
     @Override
     public void init() {
         Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),

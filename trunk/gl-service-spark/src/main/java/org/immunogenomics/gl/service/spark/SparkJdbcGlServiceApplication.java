@@ -35,7 +35,7 @@ import spark.servlet.SparkApplication;
 /**
  * Wrapper for SparkGlService with JDBC to allow Guice injection before initialization.
  */
-public final class SparkJdbcGlServiceApplication extends SparkGlServiceApplication {
+public final class SparkJdbcGlServiceApplication implements SparkApplication {
     @Override
     public void init() {
         Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),

@@ -35,7 +35,7 @@ import spark.servlet.SparkApplication;
 /**
  * Wrapper for SparkGlService with Redis+jedis to allow Guice injection before initialization.
  */
-public final class SparkJedisGlServiceApplication extends SparkGlServiceApplication {
+public final class SparkJedisGlServiceApplication implements SparkApplication {
     @Override
     public void init() {
         Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
