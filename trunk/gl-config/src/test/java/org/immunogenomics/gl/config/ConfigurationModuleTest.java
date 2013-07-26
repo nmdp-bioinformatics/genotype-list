@@ -26,6 +26,9 @@ package org.immunogenomics.gl.config;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Binding;
 import com.google.inject.Guice;
@@ -108,6 +111,27 @@ public final class ConfigurationModuleTest {
         @Override
         protected void bindConfigurations() {
             bindProperties("/org/immunogenomics/gl/config/named.properties");
+        }
+    }
+
+    /**
+     * Module calling bindPropertiesAndEnvironmentVariables with null classpath resource property file.
+     */
+    final static class NullPropertyFileModule extends ConfigurationModule {
+        @Override
+        protected void bindConfigurations() {
+            bindPropertiesWithOverrides(null);
+        }
+    }
+
+    /**
+     * Module with one bound string property read from a classpath resource property file
+     * which may be overridden by system properties or environment variables.
+     */
+    final static class PropertyFileWithOverridesModule extends ConfigurationModule {
+        @Override
+        protected void bindConfigurations() {
+            bindPropertiesWithOverrides("/org/immunogenomics/gl/config/property.properties");
         }
     }
 
@@ -208,5 +232,24 @@ public final class ConfigurationModuleTest {
         assertEquals("value1", target.getInner1Value());
         assertEquals("value2", target.getInner2Value());
         assertEquals("namedValue", target.getNamedValue());
+    }
+
+    @Test(expected=com.google.inject.CreationException.class)
+    public void testBindPropertiesWithOverridesNullPropertyFile() {
+        // turn off Guice's Logger
+        Logger.getLogger("com.google.inject").setLevel(Level.OFF);
+
+        Guice.createInjector(new NullPropertyFileModule());
+    }
+
+    @Test
+    public void testBindPropertiesWithOverrides() {
+        Injector injector = Guice.createInjector(new PropertyFileWithOverridesModule());
+        assertNotNull(injector);
+
+        Binding<String> binding = injector.getBinding(Key.get(String.class, Property.class));
+        assertNotNull(binding);
+        String value = binding.getProvider().get();
+        assertEquals("value", value);
     }
 }
