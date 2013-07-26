@@ -16,7 +16,7 @@
 
   <filter>
     <filter-name>SparkFilter</filter-name>
-    <filter-class>org.immunogenomics.gl.service.webapp.GlSparkFilter</filter-class>
+    <filter-class>spark.servlet.SparkFilter</filter-class>
     <init-param>
       <param-name>applicationClass</param-name>
       <param-value>org.immunogenomics.gl.service.spark.SparkGlServiceApplication</param-value>

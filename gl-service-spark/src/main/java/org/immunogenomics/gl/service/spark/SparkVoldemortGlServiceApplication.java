@@ -23,18 +23,24 @@
 */
 package org.immunogenomics.gl.service.spark;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import org.immunogenomics.gl.service.Namespace;
+import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.voldemort.VoldemortModule;
 
-import com.google.inject.Module;
+import spark.servlet.SparkApplication;
 
 /**
  * Wrapper for SparkGlService with Voldemort to allow Guice injection before initialization.
  */
 public final class SparkVoldemortGlServiceApplication extends SparkGlServiceApplication {
-
     @Override
-    protected Module newPersistenceModule() {
-        return new VoldemortModule();
+    public void init() {
+        Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
+                                                 new VoldemortModule(), new IdModule());
+        SparkApplication application = injector.getInstance(SparkApplication.class);
+        application.init();
     }
-
 }
