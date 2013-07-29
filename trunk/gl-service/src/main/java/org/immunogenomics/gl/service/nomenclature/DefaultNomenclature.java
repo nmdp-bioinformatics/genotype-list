@@ -42,12 +42,12 @@ public final class DefaultNomenclature implements Nomenclature {
 
     @Override
     public String getVersion() {
-        return "0.0.0";
+        return "1.0";
     }
 
     @Override
     public String getURL() {
-        return "";
+        return null;
     }
 
     @Override

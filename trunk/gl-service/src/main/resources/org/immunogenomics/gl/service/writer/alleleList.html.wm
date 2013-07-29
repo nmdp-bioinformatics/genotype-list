@@ -1,17 +1,53 @@
 <!DOCTYPE html>
+<!--
+
+    gl-service  URI-based RESTful service for the gl project.
+    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>${alleleList.Id}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/skeleton.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/gl-service.css">
+    <link rel="shortcut icon" href="../ico/favicon.ico>">
   </head>
   <body>
-    <p class="type"><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></p>
-    <p class="title">${alleleList.Id}</p>
-    <p class="identifier">${alleleList.Id}</p>
-    <p class="label">${alleleList.Id}</p>
-    <p class="comment">An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}</p>
-    <p class="hasGlstring">${alleleList.Glstring}</p>
+    <div class="container">
+      <h3 class="remove-bottom" style="margin-top: 40px">${alleleList.Id}</h3>
+      <h5><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></p></h5>
+      <hr/>
+
+      <div class="two-thirds column">
+        <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${alleleList.Id}</span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></span></p>
+        <p><span class="label">comment:</span> &nbsp;<span class="comment">An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}</span></p>
+        <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${alleleList.Glstring}</span></p>
 #foreach ($a in ${alleleList.Alleles})
-    <p class="hasAllele"><a href="http://gl.immunogenomics.org/gl-ontology/Allele">http://gl.immunogenomics.org/gl-ontology/Allele</a> <a href="${a.Id}.html">${a.Id}</a></p>
+        <p><span class="label">hasAllele:</span> &nbsp;<span class="hasAllele"><a href="${a.Id}.html">${a.Id}</a></span></p>
 #end
+      </div>
+    </div>
   </body>
 </html>
