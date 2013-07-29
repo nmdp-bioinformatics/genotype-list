@@ -29,11 +29,13 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +60,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.servlet.SparkApplication;
+import spark.template.velocity.VelocityRoute;
 
 import com.google.inject.Inject;
 
@@ -218,16 +221,32 @@ public final class SparkGlService implements SparkApplication {
             }
         });
 
+        get(new VelocityRoute("/") {
+                @Override
+                public Object handle(final Request request, final Response response) {
+                    Map<String, Object> model = new HashMap<String, Object>();
+                    model.put("namespace", ns);
+                    model.put("nomenclature", nomenclature);
+                    return modelAndView(model, "/org/immunogenomics/gl/service/spark/index.wm");
+                }
+            });
+
         post(new Route("/load") {
                 @Override
                 public Object handle(final Request request, final Response response) {
                     try {
                         List<Allele> alleles = nomenclature.load();
                         response.status(200);
-                        response.type("text/html");
+                        response.type("text/plain");
                         logger.trace("OK (200) loaded {} alleles", alleles.size());
-                        // todo:  might want to generate text/plain instead, for e.g. wget -X post
-                        return generateLoadReport(alleles);
+
+                        PrintWriter writer = response.raw().getWriter();
+                        for (Allele allele : alleles) {
+                            writer.print(allele.getId());
+                            writer.print("\t");
+                            writer.println(allele.getGlstring());
+                        }
+                        return null;
                     }
                     catch (IOException e) {
                         response.status(400);
@@ -376,28 +395,4 @@ public final class SparkGlService implements SparkApplication {
         }
         return "";
     }
-
-    // todo:  replace with JSP or template
-    private String generateLoadReport(final List<Allele> alleles) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(HEADER);
-        sb.append(ns);
-        sb.append("</h5><hr/><div class=\"two-thirds column\"><p>");
-        sb.append(nomenclature.getName());
-        sb.append(" ");
-        sb.append(nomenclature.getVersion());
-        sb.append("<br/><a href=\"" + nomenclature.getURL() + "\">" + nomenclature.getURL() + "</a>");
-        sb.append("</p><p>Loaded ");
-        sb.append(alleles.size());
-        sb.append(" alleles:</p><p>");
-        for (Allele allele : alleles) {
-            sb.append(allele.getGlstring());
-            sb.append(" &nbsp;");
-            sb.append("<a href=\"" + allele.getId() + "\">" + allele.getId() + "</a><br/>");
-        }
-        sb.append("</p></div></div></body></html>");
-        return sb.toString();
-    }
-
-    private static final String HEADER = "<html lang=\"en\"><head><meta charset=\"utf-8\"><title>Genotype List service</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"><link rel=\"stylesheet\" href=\"style/base.css\"><link rel=\"stylesheet\" href=\"style/skeleton.css\"><link rel=\"stylesheet\" href=\"style/layout.css\"><link rel=\"stylesheet\" href=\"style/gl-service.css\"><link rel=\"shortcut icon\" href=\"ico/favicon.ico\"></head><body><div class=\"container\"><h1 class=\"remove-bottom\" style=\"margin-top: 40px\">Genotype List service</h1><h5>Version 1.0-SNAPSHOT, Namespace ";
 }
