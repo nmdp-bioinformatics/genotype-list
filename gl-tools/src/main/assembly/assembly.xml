@@ -42,7 +42,6 @@
     <fileSet>
       <directory>target/appassembler/bin</directory>
       <outputDirectory>bin</outputDirectory>
-      <fileMode>744</fileMode>
     </fileSet>
   </fileSets>
   <dependencySets>
