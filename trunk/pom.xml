@@ -76,6 +76,7 @@
     <module>gl-service-webroot</module>
     <module>gl-service-functional-tests</module>
     <module>gl-service-performance-tests</module>
+    <module>gl-service-id-jdbc</module>
     <module>gl-service-id-thrift</module>
     <module>gl-service-id-thrift-server</module>
     <module>gl-client</module>
