@@ -25,6 +25,7 @@ package org.immunogenomics.gl.service.spark;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 import static com.google.common.base.Strings.isNullOrEmpty;
+
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -40,6 +41,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.velocity.app.VelocityEngine;
+
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
 import org.immunogenomics.gl.Genotype;
@@ -53,6 +56,7 @@ import org.immunogenomics.gl.service.GlWriter;
 import org.immunogenomics.gl.service.IdResolver;
 import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.Nomenclature;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +64,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.servlet.SparkApplication;
+
 import spark.template.velocity.VelocityRoute;
 
 import com.google.inject.Inject;
@@ -74,15 +79,17 @@ public final class SparkGlService implements SparkApplication {
     private final IdResolver idResolver;
     private final Nomenclature nomenclature;
     private final Map<String, GlWriter> glWriters;
+    private final VelocityEngine velocityEngine;
     private final Logger logger = LoggerFactory.getLogger(SparkGlService.class);
 
     @Inject
-    public SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Nomenclature nomenclature, final Map<String, GlWriter> glWriters) {
+    public SparkGlService(@Namespace final String ns, final GlReader glReader, final IdResolver idResolver, final Nomenclature nomenclature, final Map<String, GlWriter> glWriters, final VelocityEngine velocityEngine) {
         this.ns = ns;
         this.glReader = glReader;
         this.idResolver = idResolver;
         this.nomenclature = nomenclature;
         this.glWriters = glWriters;
+        this.velocityEngine = velocityEngine;
     }
 
 
@@ -221,7 +228,7 @@ public final class SparkGlService implements SparkApplication {
             }
         });
 
-        get(new VelocityRoute("/") {
+        get(new VelocityRoute("/", velocityEngine) {
                 @Override
                 public Object handle(final Request request, final Response response) {
                     Map<String, Object> model = new HashMap<String, Object>();
