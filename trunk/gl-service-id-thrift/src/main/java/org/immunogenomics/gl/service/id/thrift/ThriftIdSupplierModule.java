@@ -28,6 +28,7 @@ import static com.facebook.swift.service.guice.ThriftClientBinder.thriftClientBi
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
+import com.google.inject.Singleton;
 
 import org.immunogenomics.gl.service.IdSupplier;
 
@@ -39,9 +40,9 @@ public final class ThriftIdSupplierModule implements Module {
     @Override
     public void configure(final Binder binder) {
         // client
-        thriftClientBinder(binder).bindThriftClient(ThriftIdSupplier.class);
+        thriftClientBinder(binder).bindThriftClient(ThriftIdSupplier.class).in(Singleton.class);
 
         // client --> IdSupplier
-        binder.bind(IdSupplier.class).to(ThriftIdSupplierClient.class);
+        binder.bind(IdSupplier.class).to(ThriftIdSupplierClient.class).in(Singleton.class);
     }
 }
