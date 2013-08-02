@@ -40,7 +40,7 @@ public final class ThriftIdSupplierModule implements Module {
     @Override
     public void configure(final Binder binder) {
         // client
-        thriftClientBinder(binder).bindThriftClient(ThriftIdSupplier.class).in(Singleton.class);
+        thriftClientBinder(binder).bindThriftClient(ThriftIdSupplier.class);
 
         // client --> IdSupplier
         binder.bind(IdSupplier.class).to(ThriftIdSupplierClient.class).in(Singleton.class);
