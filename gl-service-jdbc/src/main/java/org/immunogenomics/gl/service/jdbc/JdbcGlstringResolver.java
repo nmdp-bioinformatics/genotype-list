@@ -95,7 +95,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
                     public String call() {
                         QueryRunner queryRunner = new QueryRunner(dataSource);
                         try {
-                            String id = (String) queryRunner.query(LOCUS_ID_SQL, hash(glstring), new ScalarHandler());
+                            String id = (String) queryRunner.query(LOCUS_ID_SQL, new ScalarHandler(), hash(glstring));
                             if (id != null) {
                                 return id;
                             }
@@ -124,7 +124,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
                     public String call() {
                         QueryRunner queryRunner = new QueryRunner(dataSource);
                         try {
-                            String id = (String) queryRunner.query(ALLELE_ID_SQL, hash(glstring), new ScalarHandler());
+                            String id = (String) queryRunner.query(ALLELE_ID_SQL, new ScalarHandler(), hash(glstring));
                             if (id != null) {
                                 return id;
                             }
@@ -148,7 +148,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(ALLELE_LIST_ID_SQL, hash(glstring), new ScalarHandler());
+            String id = (String) queryRunner.query(ALLELE_LIST_ID_SQL, new ScalarHandler(), hash(glstring));
             if (id != null) {
                 return id;
             }
@@ -165,7 +165,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(HAPLOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
+            String id = (String) queryRunner.query(HAPLOTYPE_ID_SQL, new ScalarHandler(), hash(glstring));
             if (id != null) {
                 return id;
             }
@@ -182,7 +182,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(GENOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
+            String id = (String) queryRunner.query(GENOTYPE_ID_SQL, new ScalarHandler(), hash(glstring));
             if (id != null) {
                 return id;
             }
@@ -199,7 +199,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(GENOTYPE_LIST_ID_SQL, hash(glstring), new ScalarHandler());
+            String id = (String) queryRunner.query(GENOTYPE_LIST_ID_SQL, new ScalarHandler(), hash(glstring));
             if (id != null) {
                 return id;
             }
@@ -216,7 +216,7 @@ final class JdbcGlstringResolver implements GlstringResolver {
         checkArgument(!glstring.isEmpty());
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
-            String id = (String) queryRunner.query(MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, hash(glstring), new ScalarHandler());
+            String id = (String) queryRunner.query(MULTILOCUS_UNPHASED_GENOTYPE_ID_SQL, new ScalarHandler(), hash(glstring));
             if (id != null) {
                 return id;
             }

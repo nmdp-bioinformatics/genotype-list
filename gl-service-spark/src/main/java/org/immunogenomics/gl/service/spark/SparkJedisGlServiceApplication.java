@@ -26,7 +26,6 @@ package org.immunogenomics.gl.service.spark;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.redis.JedisModule;
 
