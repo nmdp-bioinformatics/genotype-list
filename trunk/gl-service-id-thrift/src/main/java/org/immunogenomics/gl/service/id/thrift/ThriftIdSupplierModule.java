@@ -27,7 +27,6 @@ import static com.facebook.swift.service.guice.ThriftClientBinder.thriftClientBi
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 
 import org.immunogenomics.gl.service.IdSupplier;

@@ -35,9 +35,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import com.google.inject.Stage;
-import com.google.inject.TypeLiteral;
 
 import io.airlift.configuration.ConfigurationFactory;
 import io.airlift.configuration.ConfigurationModule;
@@ -45,10 +43,8 @@ import io.airlift.configuration.ConfigurationModule;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import org.immunogenomics.gl.service.IdSupplier;
 import org.immunogenomics.gl.service.Namespace;
 import org.immunogenomics.gl.service.id.IdModule;
 
@@ -57,10 +53,6 @@ import org.immunogenomics.gl.service.id.IdModule;
  */
 public final class ThriftIdSupplierServerModuleTest {
     private ThriftIdSupplierServerModule thriftIdSupplierServerModule;
-
-    @Mock
-    private IdSupplier mockIdSupplier;
-
 
     @Before
     public void setUp() {
