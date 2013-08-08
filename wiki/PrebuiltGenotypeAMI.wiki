@@ -7,7 +7,8 @@ To demonstrate the genotype list service, we have made two AMIs available -- one
 
 = Details =
 
-* Finding the AMIs 
+ * Finding the AMIs 
+
   The preloaded and data-free AMIs are available in both East and West (Oregon) regions of Amazon.
  <ul>
      <li>West/Oregon
@@ -26,21 +27,24 @@ To demonstrate the genotype list service, we have made two AMIs available -- one
 
 = Using the AMIs =
 
-* Before Launching the AMI
+<ol>
+<li>Before Launching the AMI
 <ol>
    <li>get yourself an elastic IP address.  Write it down.</li>
    <li>get a DNSname to refer to the elastic IP address.  Write that down, you'll need it soon.</li>
 </ol>
-
-* Launching the AMI
+</li>
+<li>Launching the AMI
 Launch a new machine using the AMI, but from the quick-launch wizard, you'll want to do a few things
 <ol>
      <li>set your namespace in the "user details" section.  You'll want to set it thusly:
 NAMESPACE=domainname.that.points.to.your.public.ip -- using the name you got up in step #2 of "before". </li>
      <li>Set your security group to allow inbound ssh and http traffic.  If you want https traffic, we recommend you put your certificate on an Elastic Load Balancer, and terminate the SSL traffic there.  Contact Jeremy Anderson, janders3@nmdp.org, for more information on that.</li>
 </ol>
-
-* Using the AMI
+</li>
+<li>Using the AMI
  Give your new machine a few minutes to start up, and for the scripts to automatically adjust the namespace in the application.  Then, point your browser to http://domainname.that.points.to.your.public.ip/  -- or whatever you actually put in the user-details section above.
+</li>
+</ol>
 
 What size should you use?  We're working on that.  I suspect a micro will be a bit underpowered for you, but on the other hand, if it's your only AWS EC2 machine, it's free.  We'll be adding performance data soon.
