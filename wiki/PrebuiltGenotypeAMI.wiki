@@ -16,7 +16,7 @@ To demonstrate the genotype list service, we have made two AMIs available -- one
           <li>ami-cf0193ff does not include preloaded imgt-hla data.</li>
         </ul>
      </li>
-      <li> East/Virginia
+     <li>East/Virginia
         <ul>
           <li>ami-54b7f03d includes preloaded imgt-hla data</li>
           <li>ami-24b7f04d does not include preloaded imgt-hla data.</li>
