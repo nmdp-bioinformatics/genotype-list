@@ -1,0 +1,25 @@
+#summary How to use the pre-built AMIs to get up and running
+
+= Introduction =
+
+To demonstrate the genotype list service, we have made two AMIs available -- one with preloaded imgt-hla data, and one without any preloaded data.
+
+
+= Details =
+
+* Finding the AMIs *
+  The preloaded and data-free AMIs are available in both East and West (Oregon) regions of Amazon.
+  West/Oregon:
+  ami-57069467 includes preloaded imgt-hla data
+  ami-cf0193ff does not include preloaded imgt-hla data.
+
+  East/Virginia:
+  ami-54b7f03d includes preloaded imgt-hla data
+  ami-24b7f04d does not include preloaded imgt-hla data.
+
+
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
