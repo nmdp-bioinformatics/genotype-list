@@ -22,6 +22,17 @@ To demonstrate the genotype list service, we have made two AMIs available -- one
 </ul></li>
 </ul>
 
+* Using the AMIs *
+
+Launch a new machine using the AMI, but from the quick-launch wizard, you'll want to do a few things
+<ol>
+<li>set your namespace in the "user details" section, as shown in the screenshot below.  You'll want to set it thusly:
+NAMESPACE=domainname.that.points.to.your.public.ip
+Note that the setting up DNS is beyond the scope of this document.</ol>
+<li>Set your security group to allow inbound ssh and http traffic.  If you want https traffic, we recommend you put your certificate on an Elastic Load Balancer, and terminate the SSL traffic there.  Contact Jeremy Anderson, janders3@nmdp.org, for more information on that.</li>
+</ol>
+
+
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
