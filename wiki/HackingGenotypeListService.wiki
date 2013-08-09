@@ -214,5 +214,7 @@ $ mvn -DdescriptorId=jar-with-dependencies assembly:assembly
 
 and refer to gl-service-performance-tests/README.txt for further instructions.
 
+<br />
+Too much work?  Try https://code.google.com/p/genotype-list/wiki/PrebuiltGenotypeAMI 
 
 <br/>
