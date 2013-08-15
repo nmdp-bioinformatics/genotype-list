@@ -7,4 +7,4 @@
 <locus> = 1*<validchar>
 <allelenamepart> = 1*<validchar>
 <validchar> = <ALPHA> / <DIGIT> / <other_char>  ; ALPHA and DIGIT are built-in types to ABNF
-<other_char> = "!" / "@" / "#" / "$" / "%" / "&" / "(" / ")" / "-" / ":" / "_" / "=" / "\" / "]" / "[" / "{" / "}" / "<" / ">" / "?" / "`" / "." / "," / "‘" / <DQUOTE> 
+<other_char> = "!" / "@" / "#" / "$" / "%" / "&" / "(" / ")" / "-" / ":" / "_" / "=" / "\" / "]" / "[" / "{" / "}" / "<" / ">" / "?" / "`" / "." / "," / "'" / <DQUOTE> 
