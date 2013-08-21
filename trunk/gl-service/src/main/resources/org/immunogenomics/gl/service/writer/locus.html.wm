@@ -36,12 +36,12 @@
   <body>
     <div class="container">
       <h3 class="remove-bottom" style="margin-top: 40px">${locus.Id}</h3>
-      <h5><a href="http://gl.immunogenomics.org/gl-ontology/Locus">http://gl.immunogenomics.org/gl-ontology/Locus</a></p></h5>
+      <h5><a href="https://gl.immunogenomics.org/gl-ontology/Locus">https://gl.immunogenomics.org/gl-ontology/Locus</a></p></h5>
       <hr/>
 
       <div class="two-thirds column">
         <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${locus.Id}</span></p>
-        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="http://gl.immunogenomics.org/gl-ontology/Locus">http://gl.immunogenomics.org/gl-ontology/Locus</a></span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="https://gl.immunogenomics.org/gl-ontology/Locus">https://gl.immunogenomics.org/gl-ontology/Locus</a></span></p>
         <p><span class="label">comment:</span> &nbsp;<span class="comment">A locus represented by glstring ${locus.Glstring}</span></p>
         <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${locus.Glstring}</span></p>
       </div>

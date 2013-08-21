@@ -4,8 +4,8 @@ GL_BIN=../../../target/appassembler/bin/
 
 for f in tests/*; 
 do 
-#ARGS="--namespace http://gl.immunogenomics.org/1.0 -g $f"
-ARGS="--namespace http://gl.immunogenomics.org/gl-demo -g $f -t Od7hoCBghHSzuxPl"
+#ARGS="--namespace https://gl.immunogenomics.org/1.0 -g $f"
+ARGS="--namespace https://gl.immunogenomics.org/gl-demo -g $f -t Od7hoCBghHSzuxPl"
 echo $ARGS
 $GL_BIN/gl-register-loci $ARGS
 $GL_BIN/gl-register-alleles $ARGS

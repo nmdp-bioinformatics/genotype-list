@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gl:AlleleList xmlns:gl="http://gl.immunogenomics.org/gl-resource">
+<gl:AlleleList xmlns:gl="https://gl.immunogenomics.org/gl-resource">
   <gl:id>${alleleList.Id}</gl:id>
   <gl:glstring>${alleleList.Glstring}</gl:glstring>
   <gl:alleles>

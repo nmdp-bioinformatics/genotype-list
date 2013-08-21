@@ -36,12 +36,12 @@
   <body>
     <div class="container">
       <h3 class="remove-bottom" style="margin-top: 40px">${alleleList.Id}</h3>
-      <h5><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></p></h5>
+      <h5><a href="https://gl.immunogenomics.org/gl-ontology/AlleleList">https://gl.immunogenomics.org/gl-ontology/AlleleList</a></p></h5>
       <hr/>
 
       <div class="two-thirds column">
         <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${alleleList.Id}</span></p>
-        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="http://gl.immunogenomics.org/gl-ontology/AlleleList">http://gl.immunogenomics.org/gl-ontology/AlleleList</a></span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="https://gl.immunogenomics.org/gl-ontology/AlleleList">https://gl.immunogenomics.org/gl-ontology/AlleleList</a></span></p>
         <p><span class="label">comment:</span> &nbsp;<span class="comment">An allele list with ${alleleList.Alleles.size()} allele#if (${alleleList.Alleles.size()} != 1)s#end represented by glstring ${alleleList.Glstring}</span></p>
         <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${alleleList.Glstring}</span></p>
 #foreach ($a in ${alleleList.Alleles})
