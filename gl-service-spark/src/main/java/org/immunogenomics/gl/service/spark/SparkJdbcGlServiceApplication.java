@@ -26,8 +26,9 @@ package org.immunogenomics.gl.service.spark;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.jdbc.JdbcModule;
+
+import org.immunogenomics.gl.service.id.jdbc.MysqlJdbcIdSupplierModule;
 
 import spark.servlet.SparkApplication;
 
@@ -38,7 +39,7 @@ public final class SparkJdbcGlServiceApplication implements SparkApplication {
     @Override
     public void init() {
         Injector injector = Guice.createInjector(new SparkConfigurationModule(), new SparkModule(),
-                                                 new JdbcModule(), new IdModule());
+                                                 new JdbcModule(), new MysqlJdbcIdSupplierModule());
         SparkApplication application = injector.getInstance(SparkApplication.class);
         application.init();
     }
