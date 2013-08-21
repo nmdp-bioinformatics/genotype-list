@@ -9,13 +9,13 @@
 ]>
 
 
-<rdf:RDF xmlns="http://gl.immunogenomics.org/gl-ontology#"
-     xml:base="http://gl.immunogenomics.org/gl-ontology"
+<rdf:RDF xmlns="https://gl.immunogenomics.org/gl-ontology#"
+     xml:base="https://gl.immunogenomics.org/gl-ontology"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://gl.immunogenomics.org/gl-ontology"/>
+    <owl:Ontology rdf:about="https://gl.immunogenomics.org/gl-ontology"/>
     
 
 
@@ -52,62 +52,62 @@
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasAllele -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasAllele -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasAllele">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasAllele">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/Allele"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/AlleleList"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/Allele"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/AlleleList"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasAlleleList -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasAlleleList -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasAlleleList">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasAlleleList">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/AlleleList"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/Haplotype"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/AlleleList"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/Haplotype"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasGenotype -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasGenotype -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasGenotype">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasGenotype">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/Genotype"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/Genotype"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasGenotypeList -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasGenotypeList -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasGenotypeList">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasGenotypeList">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasHaplotype -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasHaplotype -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasHaplotype">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasHaplotype">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/Genotype"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/Haplotype"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/Genotype"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/Haplotype"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasLocus -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasLocus -->
 
-    <owl:ObjectProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasLocus">
+    <owl:ObjectProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasLocus">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/Allele"/>
-        <rdfs:range rdf:resource="http://gl.immunogenomics.org/gl-ontology/Locus"/>
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/Allele"/>
+        <rdfs:range rdf:resource="https://gl.immunogenomics.org/gl-ontology/Locus"/>
     </owl:ObjectProperty>
     
 
@@ -123,27 +123,27 @@
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasAccession -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasAccession -->
 
-    <owl:DatatypeProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasAccession">
-        <rdfs:domain rdf:resource="http://gl.immunogenomics.org/gl-ontology/Allele"/>
+    <owl:DatatypeProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasAccession">
+        <rdfs:domain rdf:resource="https://gl.immunogenomics.org/gl-ontology/Allele"/>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/hasGlstring -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/hasGlstring -->
 
-    <owl:DatatypeProperty rdf:about="http://gl.immunogenomics.org/gl-ontology/hasGlstring">
+    <owl:DatatypeProperty rdf:about="https://gl.immunogenomics.org/gl-ontology/hasGlstring">
         <rdfs:domain>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Allele"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/AlleleList"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Genotype"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Haplotype"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Locus"/>
-                    <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Allele"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/AlleleList"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Genotype"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Haplotype"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Locus"/>
+                    <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
@@ -162,57 +162,57 @@
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/Allele -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/Allele -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/Allele">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/Allele">
         <rdfs:comment rdf:datatype="&xsd;string">An allele describes variation at a particular locus.  The allele representation in GL String format must not contain any of the following characters: &apos;/&apos;, &apos;~&apos;, &apos;+&apos;, &apos;|&apos;, &apos;^&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/AlleleList -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/AlleleList -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/AlleleList">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/AlleleList">
         <rdfs:comment rdf:datatype="&xsd;string">An allele list is an unordered collection of one or more alleles representing alleleic ambiguity separated in GL String format by the character &apos;/&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/Genotype -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/Genotype -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/Genotype">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/Genotype">
         <rdfs:comment rdf:datatype="&xsd;string">A genotype is an unordered collection of one or more haplotypes separated in GL String format by the character &apos;+&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/GenotypeList -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/GenotypeList -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/GenotypeList">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/GenotypeList">
         <rdfs:comment rdf:datatype="&xsd;string">A genotype list is an unordered collection of one or more genotypes representing genotypic ambiguity separated in GL String format by the character &apos;|&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/Haplotype -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/Haplotype -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/Haplotype">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/Haplotype">
         <rdfs:comment rdf:datatype="&xsd;string">A haplotype is an unordered collection of one or more allele lists in phase separated in GL String format by the character &apos;~&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/Locus -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/Locus -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/Locus">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/Locus">
         <rdfs:comment rdf:datatype="&xsd;string">A locus identifies a genomic location at which alleles may be defined.  The locus representation in GL String format must not contain any of the following characters: &apos;*&apos;, &apos;/&apos;, &apos;~&apos;, &apos;+&apos;, &apos;|&apos;, &apos;^&apos;.</rdfs:comment>
     </owl:Class>
     
 
 
-    <!-- http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype -->
+    <!-- https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype -->
 
-    <owl:Class rdf:about="http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype">
+    <owl:Class rdf:about="https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype">
         <rdfs:comment rdf:datatype="&xsd;string">A multilocus unphased genotype is an unordered collection of one or more genotype lists separated in GL String format by the character &apos;^&apos;.</rdfs:comment>
     </owl:Class>
     
@@ -229,13 +229,13 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
         <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Allele"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/AlleleList"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Genotype"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Haplotype"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/Locus"/>
-            <rdf:Description rdf:about="http://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Allele"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/AlleleList"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Genotype"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/GenotypeList"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Haplotype"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/Locus"/>
+            <rdf:Description rdf:about="https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
         </owl:members>
     </rdf:Description>
 </rdf:RDF>
