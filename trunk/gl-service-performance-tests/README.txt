@@ -33,6 +33,8 @@ $ java -classpath target/gl-service-performance-tests-1.0-SNAPSHOT-jar-with-depe
 
 On smaller machines, you may wish to use '-n 2'.  
 
+Don't forget to ensure that tomcat7 has enough memory to run!  on ubuntu, it defaults to 128M of memory.  This must be adjusted in /etc/default/tomcat7 on ubuntu-based systems.
+
 To perform HTTP GET performance tests, first run the HTTP POST performance tests or otherwise register a lot of new resources.  Then collect locations for jmeter testing
 
 $ src/main/scripts/locations-for-jmeter.sh $log-file > src/main/jmeter/locations.txt
