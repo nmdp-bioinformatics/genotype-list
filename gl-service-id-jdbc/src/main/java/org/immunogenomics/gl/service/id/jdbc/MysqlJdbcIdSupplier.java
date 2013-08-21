@@ -26,7 +26,9 @@ package org.immunogenomics.gl.service.id.jdbc;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.sql.SQLException;
+
 import javax.annotation.concurrent.Immutable;
+
 import javax.sql.DataSource;
 
 import com.google.inject.Inject;
@@ -48,8 +50,9 @@ final class MysqlJdbcIdSupplier implements IdSupplier {
     private final String ns;
     private final DataSource dataSource;
     private final Logger logger = LoggerFactory.getLogger(MysqlJdbcIdSupplier.class);
-    private static final String UPDATE_SQL = "update sequence set sequence_value = (@next := sequence_value +1) where sequence_name = ?";
-    private static final String SELECT_SQL = "select @next";
+    // todo: this works but happens in two separate statements
+    private static final String UPDATE_SQL = "update sequence set sequence_value = (sequence_value + 1) where sequence_name = ?";
+    private static final String SELECT_SQL = "select sequence_value from sequence where sequence_name = ?";
 
     @Inject
     MysqlJdbcIdSupplier(@Namespace final String ns, final DataSource dataSource) {
@@ -64,7 +67,7 @@ final class MysqlJdbcIdSupplier implements IdSupplier {
         QueryRunner queryRunner = new QueryRunner(dataSource);
         try {
             queryRunner.update(UPDATE_SQL, name);
-            return (Long) queryRunner.query(SELECT_SQL, new ScalarHandler());
+            return (Long) queryRunner.query(SELECT_SQL, new ScalarHandler(), name);
         }
         catch (SQLException e) {
             logger.warn("could not select next sequence value for sequence " + name, e);
@@ -108,7 +111,7 @@ final class MysqlJdbcIdSupplier implements IdSupplier {
         return ns + "multilocus-unphased-genotype/" + encode(nextSequence("multilocus-unphased-genotype"));
     }
 
-    static String encode(final long value) {
+    static String encode(final Long value) {
         return Long.toString(value, 36);
     }
 }
