@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gl:Genotype xmlns:gl="http://gl.immunogenomics.org/gl-resource">
+<gl:Genotype xmlns:gl="https://gl.immunogenomics.org/gl-resource">
   <gl:id>${genotype.Id}</gl:id>
   <gl:glstring>${genotype.Glstring}</gl:glstring>
   <gl:haplotypes>

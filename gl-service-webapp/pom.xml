@@ -67,13 +67,11 @@
   </dependencyManagement>
   <dependencies>
     <!-- enable when using mysql database -->
-    <!--
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
     </dependency>
-    -->
     <dependency>
       <groupId>org.immunogenomics.gl</groupId>
       <artifactId>gl-service</artifactId>

@@ -13,12 +13,12 @@
   <body>
     <div class="container">
       <h3 class="remove-bottom" style="margin-top: 40px">${allele.Id}</h3>
-      <h5><a href="http://gl.immunogenomics.org/gl-ontology/Allele">http://gl.immunogenomics.org/gl-ontology/Allele</a></p></h5>
+      <h5><a href="https://gl.immunogenomics.org/gl-ontology/Allele">https://gl.immunogenomics.org/gl-ontology/Allele</a></p></h5>
       <hr/>
 
       <div class="two-thirds column">
         <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${allele.Id}</span></p>
-        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="http://gl.immunogenomics.org/gl-ontology/Allele">http://gl.immunogenomics.org/gl-ontology/Allele</a></span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="https://gl.immunogenomics.org/gl-ontology/Allele">https://gl.immunogenomics.org/gl-ontology/Allele</a></span></p>
         <p><span class="label">comment:</span> &nbsp;<span class="comment">An allele with#if (${allele.Accession} != "") accession ${allele.Accession} and#end locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</span></p>
         <p><span class="label">hasAccession:</span> &nbsp;<span class="hasAccession">${allele.Accession}</span></p>
         <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${allele.Glstring}</span></p>

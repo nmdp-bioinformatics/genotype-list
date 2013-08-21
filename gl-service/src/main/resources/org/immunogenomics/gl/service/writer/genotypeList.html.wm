@@ -36,12 +36,12 @@
   <body>
     <div class="container">
       <h3 class="remove-bottom" style="margin-top: 40px">${genotypeList.Id}</h3>
-      <h5><a href="http://gl.immunogenomics.org/gl-ontology/GenotypeList">http://gl.immunogenomics.org/gl-ontology/GenotypeList</a></p></h5>
+      <h5><a href="https://gl.immunogenomics.org/gl-ontology/GenotypeList">https://gl.immunogenomics.org/gl-ontology/GenotypeList</a></p></h5>
       <hr/>
 
       <div class="two-thirds column">
         <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${genotypeList.Id}</span></p>
-        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="http://gl.immunogenomics.org/gl-ontology/GenotypeList">http://gl.immunogenomics.org/gl-ontology/GenotypeList</a></span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="https://gl.immunogenomics.org/gl-ontology/GenotypeList">https://gl.immunogenomics.org/gl-ontology/GenotypeList</a></span></p>
         <p><span class="label">comment:</span> &nbsp;<span class="comment">A genotype list with ${genotypeList.Genotypes.size()} genotype#if (${genotypeList.Genotypes.size()} != 1)s#end represented by glstring ${genotypeList.Glstring}</a></span></p>
         <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${genotypeList.Glstring}</span></p>
 #foreach ($g in ${genotypeList.Genotypes})
