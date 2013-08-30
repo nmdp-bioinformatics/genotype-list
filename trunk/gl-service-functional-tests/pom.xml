@@ -167,6 +167,30 @@
 
   <profiles>
     <profile>
+      <id>jetty9x</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jetty9x</containerId>
+                <artifactInstaller>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>jetty-distribution</artifactId>
+                  <version>9.0.2.v20130417</version>
+                </artifactInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>jetty7x</id>
       <activation>
         <activeByDefault>true</activeByDefault>
