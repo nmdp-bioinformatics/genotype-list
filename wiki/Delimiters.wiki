@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Add reference to the GL String publication.
+See the [http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3715123/ Genotype List String paper] in Tissue Antigens for further information.
 
 
 = Details =
