@@ -166,17 +166,19 @@ function updateContentType() {
     apiData.contentType = contentType.substring(start + 1, end);
     $(".contentType").html(apiData.contentType);
 }
+
 function updateApiData() {
     apiData.methodSelected = $("#method :selected").text();
     apiData.contentExtension = $("#content-type :selected").val();
-    apiData.getArgs = $("#get-args").val();
-    apiData.postArgs = $("#post-args").val();
+    apiData.getArgs = $("#get-args").val().replace(/^\s+|\s+$/g, '');
+    apiData.postArgs = $("#post-args").val().replace(/^\s+|\s+$/g, '')
 
     updateDoc();
     updateContentType();
 }
 
 var googleURL = "http://chart.apis.google.com/chart?cht=qr&chs=128x128&chld=L&choe=UTF-8&chl=";
+
 function handleQRCode() {
     var glURL =  serverURL + apiData.methodSelected + "/" + apiData.getArgs;
     var qrURL = googleURL +  encodeURIComponent(glURL);
