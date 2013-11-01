@@ -353,7 +353,7 @@
       <dependency>
         <groupId>com.sparkjava</groupId>
         <artifactId>spark-core</artifactId>
-        <version>1.0</version>
+        <version>1.1.1</version>
         <!-- override transitive dependency on slf4j 1.7.2 -->
         <exclusions>
           <exclusion>
@@ -370,6 +370,13 @@
         <groupId>com.sparkjava</groupId>
         <artifactId>spark-template-velocity</artifactId>
         <version>1.0</version>
+        <!-- override transitive dependency on spark-core 1.0 -->
+        <exclusions>
+          <exclusion>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>commons-codec</groupId>
