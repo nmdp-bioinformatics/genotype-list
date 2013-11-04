@@ -43,9 +43,6 @@
   <build>
     <finalName>ROOT</finalName>
   </build>
-  <properties>
-    <immunogenomics.componentId>gl.service.webroot</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.tuckey</groupId>

@@ -40,9 +40,6 @@
     <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-core</developerConnection>
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
-  <properties>
-    <immunogenomics.componentId>gl</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

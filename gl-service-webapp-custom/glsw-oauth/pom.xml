@@ -170,9 +170,6 @@
       </plugins>
     </pluginManagement>
   </build>
-  <properties>
-    <immunogenomics.componentId>gl.service.webapp</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <!-- base war that will be updated -->
     <dependency>

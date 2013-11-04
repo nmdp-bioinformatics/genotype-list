@@ -40,9 +40,6 @@
     <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service</developerConnection>
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
-  <properties>
-    <immunogenomics.componentId>gl.service</immunogenomics.componentId>
-  </properties>
   <build>
     <plugins>
       <plugin>

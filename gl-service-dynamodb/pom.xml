@@ -40,9 +40,6 @@
     <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-dynamodb</developerConnection>
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
-  <properties>
-    <immunogenomics.componentId>gl.service.dynamodb</immunogenomics.componentId>
-  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

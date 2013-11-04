@@ -132,9 +132,6 @@
       </plugins>
     </pluginManagement>
   </build>
-  <properties>
-    <immunogenomics.componentId>gl.service.webapp</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.immunogenomics.gl</groupId>
