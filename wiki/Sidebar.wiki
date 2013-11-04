@@ -29,7 +29,6 @@
     * [RedisJedis Redis-Jedis]
     * [Voldemort]
   * ==Other Need-To-Know Information==
-  * [ThirdPartyDependencies Third Party Dependencies]
   * [ContentTypes Content Types]
 
 
