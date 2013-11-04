@@ -22,19 +22,12 @@ protected void configure() {
 <br/>
 === Load loci and alleles ===
 
-To load loci and alleles from the bound nomenclature (version 3.10.0 in this case), either
+To load loci and alleles from the bound nomenclature (version 3.10.0 in this case)
 
 {{{
 $ curl -X post http://localhost:10080/gl/load
 }}}
 
-or visit
-
-{{{
-http://localhost:10080/gl
-}}}
-
-in a web browser and hit the Load IMGT/HLA Database version 3.10.0 alleles button.
 
 
 <br/>
