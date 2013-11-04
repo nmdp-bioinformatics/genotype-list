@@ -6,7 +6,7 @@
 
 Install
 
- * JDK version 1.6 or later, http://openjdk.java.net/
+ * JDK version 1.7 or later, http://openjdk.java.net/
  * Genotype list command line tools, http://code.google.com/p/genotype-list/downloads/list
 
 <br/>
