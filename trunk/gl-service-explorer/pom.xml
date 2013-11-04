@@ -44,9 +44,6 @@
   <build>
     <finalName>explorer</finalName>
   </build>
-  <properties>
-    <immunogenomics.componentId>gl.service.explorer</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.immunogenomics.gl.oauth</groupId>

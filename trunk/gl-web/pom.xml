@@ -40,9 +40,6 @@
     <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-web</developerConnection>
     <url>http://code.google.com/p/genotype-list/source/browse/</url>
   </scm>
-  <properties>
-    <immunogenomics.componentId>gl-web</immunogenomics.componentId>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>

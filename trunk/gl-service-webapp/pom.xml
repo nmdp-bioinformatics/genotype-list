@@ -43,9 +43,6 @@
   <build>
     <finalName>gl</finalName>
   </build>
-  <properties>
-    <immunogenomics.componentId>gl.service.webapp</immunogenomics.componentId>
-  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

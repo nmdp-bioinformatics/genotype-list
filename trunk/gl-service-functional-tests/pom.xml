@@ -42,7 +42,6 @@
   </scm>
   <properties>
     <servlet.port>10080</servlet.port>
-    <immunogenomics.componentId>gl.service.ft</immunogenomics.componentId>
   </properties>
   <build>
     <plugins>
