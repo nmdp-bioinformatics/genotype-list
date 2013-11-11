@@ -1,7 +1,7 @@
 gl-service
 ---
 
-Install jdk 1.7 or later, maven 3.0.5 or later.
+Install jdk 1.7 or later, maven 3.1 or later.
 
 
 To build
