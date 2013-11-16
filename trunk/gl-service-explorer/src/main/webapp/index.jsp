@@ -22,7 +22,6 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 -->
-<%@page import="java.util.Properties" %>
 <%
   String serverURL = org.immunogenomics.gl.explorer.JspSupport.getServerUrl(request);
   String bearerToken = org.immunogenomics.gl.explorer.JspSupport.getAccessToken();
@@ -51,14 +50,13 @@
         <%// WARNING: This exposes bearerToken in JSP.  This is not too risky since it is only for unauthenticated users. %>
         var bearerToken = "<%=bearerToken%>";
     </script>
-    <!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script> -->
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/gl-explorer.js" type="text/javascript"></script>
 </head>
 <body>
   <div class="container">
     <h1 class="remove-bottom" style="margin-top: 40px">Genotype List API explorer</h1>
-    <h5>Version 1.0-SNAPSHOT, Namespace <%=serverURL%></h5>
+    <h5>Namespace <%=serverURL%></h5>
     <hr />
 
     <form action="/" method="post">
