@@ -34,6 +34,10 @@ public class JspSupport {
     }
     
     public static synchronized String getServerUrl(HttpServletRequest request) {
+        /*
+
+          temporary fix for issue 151
+
         String baseUri = System.getProperty("BaseURI");
         if (baseUri == null) {
             return getPropertyServerUrl();
@@ -41,6 +45,8 @@ public class JspSupport {
         String contextPath = request.getContextPath();
         String glPath = contextPath.replaceAll("-explorer", "");
         return baseUri + glPath + "/";
+        */
+        return getPropertyServerUrl();
     }
     
     private static String getPropertyServerUrl() {
