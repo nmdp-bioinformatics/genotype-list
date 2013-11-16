@@ -45,7 +45,11 @@ public class ImmunogenomicsAuthorizationDao {
     private List<Identity> identityList = new ArrayList<Identity>();
 
     public ImmunogenomicsAuthorization getAuthorization(String itemId) {
-        return loadOrCreate(byId(itemId));
+        Identity identity = byId(itemId);
+        if (identity == null) {
+            return findByEmail("");
+        }
+        return loadOrCreate(identity);
     }
 
     public ImmunogenomicsAuthorization findByEmail(String email) {
@@ -57,7 +61,14 @@ public class ImmunogenomicsAuthorizationDao {
      * @return matching Identity or null.
      */
     private synchronized Identity byId(String itemId) {
-        int index = Integer.parseInt(itemId, 36);
+        if (itemId == null || itemId.isEmpty()) return null;
+        int index = 0;
+        try {
+            index = Integer.parseInt(itemId, 36);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
         if (index < 0 || index >= identityList.size()) return null;
         return identityList.get(index);
     }
