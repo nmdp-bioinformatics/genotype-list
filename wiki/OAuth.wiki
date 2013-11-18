@@ -5,10 +5,6 @@
 Basic functionality has been implemented for [http://tools.ietf.org/html/rfc6750 OAuth 2.0 Bearer Tokens]. 
 (see [https://code.google.com/p/genotype-list/issues/detail?id=25 Issue:25])
 
-==TODO==
-  * more hardening
-  * more tests
-
 = GL OAuth Resource Server Diagram =
 http://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GL-OAuth-Resource-Server.png
 gl-oauth-apache components are in green.
@@ -35,15 +31,14 @@ To build and launch wars
 {{{
 ## at trunk
 mvn install 
-cd gl-jetty
-mvn jetty:run
+mvn -pl gl-jetty jetty:run
 }}}
 
-Perform POST operations to interact with authorization server.
+Perform POST operations to interact with authorization server (toy-portal).
 {{{
-$ curl -d "" "http://localhost:8080/portal/oauth/get_token?userid=adam&realm=immunogenomics" ;echo
+$ curl -d "" "http://localhost:10080/portal/oauth/get_token?userid=adam&realm=immunogenomics" ;echo
 mgwed5jdy6h8
-$ curl -d "" "http://localhost:8080/portal/oauth/validate?token=mgwed5jdy6h8" ;echo
+$ curl -d "" "http://localhost:10080/portal/oauth/validate?token=mgwed5jdy6h8" ;echo
 expires_in=3522,id=adam,duration=3600,realm=immunogenomics,scope=load allele admin
 }}}
 
@@ -56,7 +51,7 @@ $ curl -d "" "http://localhost:8080/gl/load" ;echo
 Use Bearer token for secured operations
 {{{
 $ curl -v --header "content-type: text/plain" \
-  --header "Authenticate: Bearer mgwed5jdy6h8" \
+  --header "Authentication: Bearer mgwed5jdy6h8" \
   --data "HLA-DRB1*08:30:02~HLA-DRB3*02:02:01:01" \
   -X POST http://localhost:8080/gl/haplotype && echo
 }}}
@@ -68,7 +63,7 @@ To use openid instead of the toy portal, within gl-jetty directory do
 {{{
 mvn jetty:run -Dportal=openid
 }}}
-http://localhost:8080/portal will ask you to sign in with a Yahoo or Google account.  Once signed, in you will have access to a GL Service menu item to get a new bearer token.
+http://localhost:10080/portal will ask you to sign in with a Yahoo or Google account.  Once signed, in you will have access to a GL Service menu item to get a new bearer token.
 
 = Implementing an Authorization Server =
 Some sample `OAuthProvider` implementations are available in the toy-portal project.
