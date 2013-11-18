@@ -144,4 +144,12 @@ public class AccessTokenDetails {
         sb.append(name).append('=').append(value);
     }
 
+    public static AccessTokenDetails empty() {
+        return new AccessTokenDetails();
+    }
+    
+    public boolean isEmpty() {
+        return this.tokenId == null;
+    }
+
 }

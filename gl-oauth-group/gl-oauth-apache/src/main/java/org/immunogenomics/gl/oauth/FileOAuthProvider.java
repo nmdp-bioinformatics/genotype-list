@@ -173,7 +173,10 @@ public class FileOAuthProvider implements AuthorizationDetailsDao {
     }
 
     private void checkArg(String name, String arg) {
-        if (arg == null || arg.contains("\t")) {
+        if (arg == null || arg.isEmpty()) {
+            throw new IllegalArgumentException(name + " is missing");
+        }
+        if (arg.contains("\t")) {
             throw new IllegalArgumentException(name + " is invalid: " + arg);
         }
     }
