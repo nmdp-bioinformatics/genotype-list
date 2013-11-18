@@ -87,16 +87,20 @@ public final class TokenValidateUtil {
             sb.append(", scope=\"").append(scope.getScope()).append('"');
         }
         OAuthErrorCode error = details.getError();
-        if (error != null) {
+        if (error != null && exists(error.getError())) {
             sb.append(", error=\"").append(error.getError()).append('"');
         }
-        if (details.getErrorDescription() != null) {
+        if (exists(details.getErrorDescription())) {
             sb.append(", error_description=\"").append(details.getErrorDescription()).append('"');
         }
         response.setHeader(WWW_AUTHENTICATE, sb.toString());
         response.sendError(error.getStatusCode(), error.getStatusMessage());
     }
 
+    public static boolean exists(String str) {
+        return str != null && !str.isEmpty();
+    }
+    
     /** Returns the url used to validate a token. */
     public static String encodeValidateTokenUrl(String validateUrl, String token) {
         return validateUrl + "?" + TokenValidateUtil.TOKEN_PARAM + "=" + token;

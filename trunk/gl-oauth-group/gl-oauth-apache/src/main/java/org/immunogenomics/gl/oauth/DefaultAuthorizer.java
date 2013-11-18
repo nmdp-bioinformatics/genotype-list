@@ -42,6 +42,9 @@ public class DefaultAuthorizer implements Authorizer {
         if (authorization == null) {
             throw new AuthorizationException(OAuthErrorCode.INVALID_REQUEST, "authorization is required");
         }
+        if (authorization.isEmpty()) {
+            throw new AuthorizationException(OAuthErrorCode.EMPTY_AUTHORIZATION);
+        }
         if (!requestScope.hasRealm(authorization.getRealm())) {
             throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "token does not have realm "
                     + requestScope.getRealm());

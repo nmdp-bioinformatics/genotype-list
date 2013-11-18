@@ -38,7 +38,11 @@ import javax.servlet.http.HttpServletResponse;
 public class BearerTokenFilterHelper {
 
     /** OAuth 2.0 authenticate request header. */
-    public static final String AUTHENTICATE = "Authenticate";
+    public static final String AUTHENTICATION = "Authorization";
+    /** non-standard header. */
+    private static final String AUTHENTICATE = "Authenticate";
+    public static final String BEARER_TOKEN_REQUIRED = "Bearer token required";
+    public static final String TOKEN_MISSING_OR_INVALID = "Bearer token missing or invalid";
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private TokenValidator tokenValidator;
@@ -76,21 +80,35 @@ public class BearerTokenFilterHelper {
      * validate it.
      */
     protected AccessTokenDetails checkAuthorization(HttpServletRequest request) throws AuthorizationException {
-        String authenticate = request.getHeader(AUTHENTICATE);
+        String authorization = request.getHeader(AUTHENTICATION);
+        AuthorizationException exception = null;
+        if (authorization == null) {
+            // Try alternate
+            authorization = request.getHeader(AUTHENTICATE);
+        }
         try {
-            if (authenticate != null) {
-                authenticate = authenticate.trim();
+            if (authorization != null) {
+                authorization = authorization.trim();
                 String bearerPrefix = "Bearer ";
-                if (authenticate.startsWith(bearerPrefix)) {
-                    String bearerToken = authenticate.substring(bearerPrefix.length()).trim();
-                    return tokenValidator.validate(bearerToken);
+                if (authorization.startsWith(bearerPrefix)) {
+                    String bearerToken = authorization.substring(bearerPrefix.length()).trim();
+                    AccessTokenDetails validate = tokenValidator.validate(bearerToken);
+                    if (validate != null) {
+                        return validate;
+                    }
+                    exception = new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, TOKEN_MISSING_OR_INVALID);
+                } else {
+                    exception = new AuthorizationException(OAuthErrorCode.INVALID_REQUEST, BEARER_TOKEN_REQUIRED);
                 }
             }
         } catch (Exception e) {
             logger.throwing(getClass().getName(), "checkAuthorization", e);
             throw new AuthorizationException(OAuthErrorCode.INVALID_TOKEN, "See log");
         }
-        return null;
+        if (exception != null) {
+            throw exception;
+        }
+        return AccessTokenDetails.empty();
     }
 
     public AuthorizedHooks getAuthorizedHooks() {

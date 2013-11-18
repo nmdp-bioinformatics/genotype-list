@@ -54,16 +54,25 @@ public final class AuthorizationException extends Exception {
         this.errorCode = errorCode;
     }
 
+    public AuthorizationException(OAuthErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
     public OAuthErrorCode getError() {
         return errorCode;
     }
 
     @Override
     public String toString() {
-        return errorCode + ":" + getErrorDescription();
+        String errorDescription = getErrorDescription();
+        if (errorDescription == null || errorDescription.isEmpty()) {
+            return errorCode.toString();
+        } else {
+            return errorCode + ":" + errorDescription;
+        }
     }
 
-    public Object getErrorDescription() {
+    public String getErrorDescription() {
         return getMessage();
     }
 }

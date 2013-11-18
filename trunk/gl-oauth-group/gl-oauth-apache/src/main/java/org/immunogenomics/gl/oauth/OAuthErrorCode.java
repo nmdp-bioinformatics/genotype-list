@@ -57,7 +57,14 @@ public enum OAuthErrorCode {
      * resource server SHOULD respond with the HTTP 400 (Bad Request) status
      * code.
      */
-    INVALID_REQUEST("invalid_request", 400, "Bad Request");
+    INVALID_REQUEST("invalid_request", 400, "Bad Request"),
+    /**
+     * The request lacks any authentication information (e.g., the client
+     * was unaware that authentication is necessary or attempted using an
+     * unsupported authentication method), the resource server SHOULD NOT
+     * include an error code or other error information.
+     */
+    EMPTY_AUTHORIZATION(null, 401, "Unauthorized");
 
     private final String error;
     private final int statusCode;
