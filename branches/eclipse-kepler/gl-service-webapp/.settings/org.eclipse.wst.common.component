@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="gl-service-webapp">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="gl-service-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service/gl-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-core-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-core/gl-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-service-spark-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service-spark/gl-service-spark">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-config-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-config/gl-config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-service-id-jdbc-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service-id-jdbc/gl-service-id-jdbc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-service-jdbc-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service-jdbc/gl-service-jdbc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-service-redis-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service-redis/gl-service-redis">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gl-service-voldemort-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/gl-service-voldemort/gl-service-voldemort">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="gl"/>
+        <property name="java-output-path" value="/gl-service-webapp/target/classes"/>
+    </wb-module>
+</project-modules>

@@ -120,6 +120,9 @@ public class ImmunogenomicsAuthorizationDao {
     }
     
     public static AuthorizationDetails buildDefaultAuthorizationDetails(String userid) {
+        if (userid == null || userid.trim().isEmpty()) {
+            userid = "new";
+        }
         AuthorizationDetails authorization = new AuthorizationDetails();
         authorization.setId(userid);
         authorization.setDuration(1000);
