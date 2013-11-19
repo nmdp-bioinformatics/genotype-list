@@ -51,7 +51,7 @@ $ curl -d "" "http://localhost:8080/gl/load" ;echo
 Use Bearer token for secured operations
 {{{
 $ curl -v --header "content-type: text/plain" \
-  --header "Authentication: Bearer mgwed5jdy6h8" \
+  --header "Authorization: Bearer mgwed5jdy6h8" \
   --data "HLA-DRB1*08:30:02~HLA-DRB3*02:02:01:01" \
   -X POST http://localhost:8080/gl/haplotype && echo
 }}}
