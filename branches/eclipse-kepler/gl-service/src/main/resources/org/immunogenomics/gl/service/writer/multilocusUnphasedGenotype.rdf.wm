@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gl="https://gl.immunogenomics.org/gl-ontology/1.0"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="${multilocusUnphasedGenotype.Id}">
+    <rdf:type rdf:resource="https://gl.immunogenomics.org/gl-ontology/MultilocusUnphasedGenotype"/>
+    <dc:title>${multilocusUnphasedGenotype.Id}</dc:title>
+    <dc:identifier>${multilocusUnphasedGenotype.Id}</dc:identifier>
+    <rdfs:label>${multilocusUnphasedGenotype.Id}</rdfs:label>
+    <rdfs:comment>A multilocus unphased genotype with ${multilocusUnphasedGenotype.GenotypeLists.size()} genotype list#if (${multilocusUnphasedGenotype.GenotypeLists.size()} != 1)s#end represented by glstring ${multilocusUnphasedGenotype.Glstring}</rdfs:comment>
+    <gl:hasGlstring>${multilocusUnphasedGenotype.Glstring}</gl:hasGlstring>
+#foreach ($gl in ${multilocusUnphasedGenotype.GenotypeLists})
+    <gl:hasGenotypeList rdf:Resource="${gl.Id}"/>
+#end
+  </rdf:Description>
+</rdf:RDF>

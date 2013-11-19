@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glx:Allele xmlns:glx="https://gl.immunogenomics.org/gl-resource-xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <glx:id>${allele.Id}</glx:id>
+  <glx:accession>${allele.Accession}</glx:accession>
+  <glx:glstring>${allele.Glstring}</glx:glstring>
+  <glx:locus xlink:href="${allele.Locus.Id}"></glx:locus>
+</glx:Allele>

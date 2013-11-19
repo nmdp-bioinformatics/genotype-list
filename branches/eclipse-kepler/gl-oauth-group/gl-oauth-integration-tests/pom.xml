@@ -1,0 +1,300 @@
+<!-- 
+ 
+ gl-oauth-integration-tests  OAuth integration tests.
+Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation; either version 3 of the License, or (at
+your option) any later version.
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this library;  if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+> http://www.fsf.org/licensing/licenses/lgpl.html
+> http://www.opensource.org/licenses/lgpl-license.php
+
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.immunogenomics.gl.oauth</groupId>
+    <artifactId>gl-oauth-group</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>gl-oauth-integration-tests</artifactId>
+  <packaging>jar</packaging>
+  <name>gl-oauth-integration-tests</name>
+  <description>OAuth integration tests</description>
+
+  <properties>
+    <!--  10080 is hard wired in war and JUnit tests -->
+    <servlet.port>10080</servlet.port>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*IT.java</include>
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>perform-it</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+            <configuration>
+              <systemProperties>
+                <property>
+                  <name>org.immunogenomics.gl.service.Namespace</name>
+                  <value>http://localhost:${servlet.port}/gl/</value>
+                </property>
+              </systemProperties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>verify-it</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <configuration>
+          <configuration>
+            <deployables>
+              <deployable>
+                <groupId>org.immunogenomics.gl</groupId>
+                <artifactId>glsw-oauth</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>gl</context>
+                </properties>
+              </deployable>
+              <deployable>
+                <groupId>org.immunogenomics.gl.oauth.toy</groupId>
+                <artifactId>toy-portal</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>toy</context>
+                </properties>
+              </deployable>
+            </deployables>
+            <properties>
+              <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+            </properties>
+          </configuration>
+          <container>
+            <systemProperties>
+              <servlet.port>${servlet.port}</servlet.port>
+              <oauth.validate.url>http://localhost:${servlet.port}/toy/file/validate</oauth.validate.url>
+            </systemProperties>
+          </container>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-cargo</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-cargo</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>glsw-oauth</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl.oauth.toy</groupId>
+      <artifactId>toy-portal</artifactId>
+      <type>war</type>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.restassured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>jetty7x</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jetty7x</containerId>
+                <artifactInstaller>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>jetty-distribution</artifactId>
+                  <version>7.6.3.v20120416</version>
+                </artifactInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jetty6x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jetty6x</containerId>
+                <type>embedded</type>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>tomcat6x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>tomcat6x</containerId>
+                <zipUrlInstaller>
+                  <url>http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.35/bin/apache-tomcat-6.0.35.zip</url>
+                </zipUrlInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jonas5x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <version>1.2.2</version>
+            <configuration>
+              <container>
+                <containerId>jonas5x</containerId>
+                <artifactInstaller>
+                  <groupId>org.ow2.jonas.assemblies.profiles</groupId>
+                  <artifactId>jonas-full</artifactId>
+                  <version>5.2.3</version>
+                  <classifier>bin</classifier>
+                </artifactInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jboss51x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jboss51x</containerId>
+                <zipUrlInstaller>
+                  <url>http://downloads.sourceforge.net/jboss/jboss-5.1.0.GA.zip?big_mirror=1</url>
+                </zipUrlInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jboss71x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jboss71x</containerId>
+                <artifactInstaller>
+                  <groupId>org.jboss.as</groupId>
+                  <artifactId>jboss-as-dist</artifactId>
+                  <version>7.1.1.Final</version>
+                </artifactInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>glassfish3x</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>glassfish3x</containerId>
+                <zipUrlInstaller>
+                  <url>http://download.java.net/glassfish/3.1.2/release/glassfish-3.1.2.zip</url>
+                </zipUrlInstaller>
+              </container>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

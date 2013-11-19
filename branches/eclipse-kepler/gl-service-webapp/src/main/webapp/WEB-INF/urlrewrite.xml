@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+          "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<!--
+
+    Configuration file for UrlRewriteFilter
+    http://tuckey.org/urlrewrite/
+    http://urlrewritefilter.googlecode.com
+
+-->
+<urlrewrite>
+  <rule>
+    <name>Serve HTML To Browser</name>
+    <note>Browser sends Accept header with text.html.</note>
+    <condition type="method">GET</condition>
+    <condition name="Accept">.*text/html.*</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.html</to>
+  </rule>
+
+  <rule>
+    <name>Serve HTML</name>
+    <note>Serve HTML when content type is text/html and no .html extension</note>
+    <condition type="method">GET</condition>
+    <condition type="content-type">text/html</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.html</to>
+  </rule>        
+            
+  <rule>
+    <name>Serve RDF</name>
+    <note>Serve RDF when content type is application/rdf+xml and no .rdf extension</note>
+    <condition type="method">GET</condition>
+    <condition type="content-type">application/rdf\+xml</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.rdf</to>
+  </rule>
+
+  <rule>
+    <name>Serve RDF wildcards</name>
+    <note>Serve RDF when Accept content type is application/rdf+xml or similar and no .rdf extension</note>
+    <condition type="method">GET</condition>
+    <condition name="Accept">.*application/rdf\+xml.*</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.rdf</to>
+  </rule>
+      
+  <rule>
+    <name>Serve Text</name>
+    <note>Browser sends Accept header with text/plain</note>
+    <condition type="method">GET</condition>
+    <condition name="Accept">.*text/plain.*</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.glstring</to>
+  </rule>
+
+  <rule>
+    <name>Serve Text by default</name>
+    <note>No suffix or Accept header so send text/plain</note>
+    <condition type="method">GET</condition>
+    <from>/[a-z\-]+/([a-z0-9]+)$</from>
+    <to type="redirect">$1.glstring</to>
+  </rule>
+</urlrewrite>
+

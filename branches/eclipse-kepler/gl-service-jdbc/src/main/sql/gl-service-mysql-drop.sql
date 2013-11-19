@@ -1,0 +1,14 @@
+drop table if exists multilocus_unphased_genotype;
+drop table if exists genotype_list;
+drop table if exists genotype;
+drop table if exists haplotype;
+drop table if exists allele_list;
+drop table if exists allele;
+drop table if exists locus;
+drop table if exists multilocus_unphased_genotype_id;
+drop table if exists genotype_list_id;
+drop table if exists genotype_id;
+drop table if exists haplotype_id;
+drop table if exists allele_list_id;
+drop table if exists allele_id;
+drop table if exists locus_id;

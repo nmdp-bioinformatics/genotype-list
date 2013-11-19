@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+    xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_gl_openid_portal_auth" idField="id" modelAttribute="user" path="/admin" versionField="none">
+        <field:input field="email" id="c_gl_openid_portal_auth_email" required="true"/>
+        <field:checkbox field="admin" id="c_gl_openid_portal_auth_scopeadmin" />
+        <field:checkbox field="writeScope" id="c_gl_openid_portal_auth_scopewrite" />
+        <field:checkbox field="alleleScope" id="c_gl_openid_portal_auth_scopeallele" />
+        <field:checkbox field="silverScope" id="c_gl_openid_portal_auth_scopesilver" />
+        <field:input field="duration" id="c_gl_openid_portal_auth_duration" />
+    </form:update>
+</div>

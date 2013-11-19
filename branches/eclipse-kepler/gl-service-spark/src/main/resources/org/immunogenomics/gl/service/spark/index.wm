@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+
+    gl-service-spark  Implementation of a URI-based RESTful service for the gl project using Spark.
+    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Genotype List service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="style/base.css">
+    <link rel="stylesheet" href="style/skeleton.css">
+    <link rel="stylesheet" href="style/layout.css">
+    <link rel="stylesheet" href="style/gl-service.css">
+    <link rel="shortcut icon" href="ico/favicon.ico">
+</head>
+<body>
+  <div class="container">
+    <h1 class="remove-bottom" style="margin-top: 40px">Genotype List service</h1>
+    <h5>Namespace ${namespace}, Nomenclature ${nomenclature.Name} ${nomenclature.Version}
+#if ($nomenclature.URL)
+<a href="${nomenclature.URL}">${nomenclature.URL}</a>
+#end
+</h5>
+    <hr/>
+
+    <div class="two-thirds column">
+      <br/>
+      <h3>Developer resources</h3>
+
+      <p>Genotype List service, client library, and command line tools (licensed LGPL version 3.0 or later)<br/>
+        &gt; <a href="http://code.google.com/p/genotype-list/">http://code.google.com/p/genotype-list/</a>
+      <p>
+
+      <p>Genotype List ontology definition, in OWL/RDF format<br/>
+        &gt; <a href="https://gl.immunogenomics.org/gl-ontology.owl">https://gl.immunogenomics.org/gl-ontology.owl</a>
+      <p>
+
+      <p>Genotype List ontology definition, documentation in HTML format<br/>
+        &gt; <a href="https://gl.immunogenomics.org/gl-ontology/">https://gl.immunogenomics.org/gl-ontology/</a>
+      <p>
+
+      <p>Genotype List XML Schema<br/>
+        &gt; <a href="https://gl.immunogenomics.org/gl-resource.xsd">https://gl.immunogenomics.org/gl-resource.xsd</a>
+      <p>
+
+      <p>Genotype List XML+XLINK Schema<br/>
+        &gt; <a href="https://gl.immunogenomics.org/gl-resource-xlink.xsd">https://gl.immunogenomics.org/gl-resource-xlink.xsd</a>
+      <p>
+    </div>
+  </div>
+</body>
+</html>

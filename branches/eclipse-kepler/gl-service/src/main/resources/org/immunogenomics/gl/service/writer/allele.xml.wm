@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gl:Allele xmlns:gl="https://gl.immunogenomics.org/gl-resource">
+  <gl:id>${allele.Id}</gl:id>
+  <gl:accession>${allele.Accession}</gl:accession>
+  <gl:glstring>${allele.Glstring}</gl:glstring>
+  <gl:locus>
+    <gl:id>${allele.Locus.Id}</gl:id>
+    <gl:glstring>${allele.Locus.Glstring}</gl:glstring>
+  </gl:locus>
+</gl:Allele>

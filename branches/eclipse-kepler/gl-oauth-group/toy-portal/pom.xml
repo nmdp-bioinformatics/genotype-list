@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.immunogenomics.gl</groupId>
+    <relativePath>../../pom.xml</relativePath>
+    <artifactId>gl</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.immunogenomics.gl.oauth</groupId>
+  <artifactId>toy-portal</artifactId>
+  <packaging>war</packaging>
+  <name>toy-portal</name>
+  <description>Sample Portal used as Oauth 2.0 provider</description>
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl.oauth</groupId>
+      <artifactId>gl-oauth-apache</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <port>9090</port>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

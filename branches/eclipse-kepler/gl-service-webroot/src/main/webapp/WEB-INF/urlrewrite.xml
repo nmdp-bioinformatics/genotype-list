@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<!--
+
+    Configuration file for UrlRewriteFilter
+    http://tuckey.org/urlrewrite/
+    http://urlrewritefilter.googlecode.com
+
+-->
+<urlrewrite>
+  <rule>
+    <name>Serve HTML overview content from vocabulary URI if requested</name>
+    <condition name="Accept" next="or">text/html</condition>
+    <condition name="Accept">application/xhtml\+xml</condition>
+    <from>^/gl-ontology/$</from>
+    <to type="redirect">/gl-ontology-content/index.html</to>
+  </rule>
+
+  <rule>
+    <name>Serve HTML class and property documentation content from vocabulary URI if requested</name>
+    <condition name="Accept" next="or">text/html</condition>
+    <condition name="Accept">application/xhtml\+xml</condition>
+    <from>^/gl-ontology/(.+)$</from>
+    <to type="redirect">/gl-ontology-content/$1.html</to>
+  </rule>
+
+  <rule>
+    <name>Serve RDF/XML content from gl-ontology.owl if requested</name>
+    <condition name="Accept">application/rdf\+xml</condition>
+    <from>^/gl-ontology/</from>
+    <to type="redirect">/gl-ontology.owl</to>
+  </rule>
+
+  <rule>
+    <name>Serve RDF/XML content by default</name>
+    <from>^/gl-ontology/</from>
+    <to type="redirect">/gl-ontology.owl</to>
+  </rule>
+</urlrewrite>

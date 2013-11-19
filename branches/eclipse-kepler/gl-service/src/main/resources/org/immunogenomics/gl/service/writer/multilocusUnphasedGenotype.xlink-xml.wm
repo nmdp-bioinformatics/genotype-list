@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glx:MultilocusUnphasedGenotype xmlns:glx="https://gl.immunogenomics.org/gl-resource-xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <glx:id>${multilocusUnphasedGenotype.Id}</glx:id>
+  <glx:glstring>${multilocusUnphasedGenotype.Glstring}</glx:glstring>
+  <glx:genotypeLists>
+#foreach ($genotypeList in ${multilocusUnphasedGenotype.GenotypeLists})
+    <glx:genotypeList xlink:href="${genotypeList.Id}"></glx:genotypeList>
+#end
+  </glx:genotypeLists>
+</glx:MultilocusUnphasedGenotype>

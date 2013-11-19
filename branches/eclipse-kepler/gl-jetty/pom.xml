@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+
+    gl-jetty Pull wars together and launch in jetty
+    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.immunogenomics.gl</groupId>
+    <artifactId>gl</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>gl-jetty</artifactId>
+  <packaging>pom</packaging>
+
+  <name>gl-jetty</name>
+  <description>Jetty test server.</description>
+  
+  <properties>
+    <gl.port>10080</gl.port>
+    <portal>toy</portal>
+    <!-- Override with -Dportal=openid on mvn command line -->
+    <!-- <portal>openid</portal> -->
+  </properties>
+
+  <scm>
+    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-jetty</connection>
+    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-jetty</developerConnection>
+    <url>http://code.google.com/p/genotype-list/source/browse/</url>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.5.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <excludeTransitive>true</excludeTransitive>
+             <includeTypes>war</includeTypes>
+             <stripVersion>true</stripVersion>
+            </configuration>
+          </execution>
+         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>8.1.8.v20121106</version>
+        <configuration>
+          <systemProperties>
+            <systemProperty>
+              <name>BaseURI</name>
+              <value>http://localhost:${gl.port}</value>
+            </systemProperty>
+          </systemProperties>
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>${gl.port}</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
+          <webApp>
+             <contextPath>/</contextPath>
+          </webApp>
+          <contextHandlers>
+            <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+              <war>${project.build.directory}/dependency/gl-service-explorer.war</war>
+              <contextPath>/gl-demo-explorer</contextPath>
+            </contextHandler>
+            <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+              <war>${project.build.directory}/dependency/glsw-oauth.war</war>
+              <contextPath>/gl-demo</contextPath>
+            </contextHandler>
+            <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+              <war>${project.build.directory}/dependency/${portal}-portal.war</war>
+              <contextPath>/portal</contextPath>
+            </contextHandler>
+          </contextHandlers> 
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>gl-service-explorer</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>glsw-oauth</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl.oauth</groupId>
+      <artifactId>${portal}-portal</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>

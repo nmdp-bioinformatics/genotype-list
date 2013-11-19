@@ -1,0 +1,38 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>gl-service-webapp</display-name>
+
+  <filter>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    <init-param>
+      <param-name>logLevel</param-name>
+      <param-value>WARN</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>SparkFilter</filter-name>
+    <filter-class>spark.servlet.SparkFilter</filter-class>
+    <init-param>
+      <param-name>applicationClass</param-name>
+      <param-value>org.immunogenomics.gl.service.spark.SparkGlServiceApplication</param-value>  
+      <!-- <param-value>org.immunogenomics.gl.service.spark.SparkJdbcGlServiceApplication</param-value>  -->
+      <!-- <param-value>org.immunogenomics.gl.service.spark.SparkJedisGlServiceApplication</param-value> -->
+      <!-- <param-value>org.immunogenomics.gl.service.spark.SparkVoldemortGlServiceApplication</param-value> -->
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>SparkFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>

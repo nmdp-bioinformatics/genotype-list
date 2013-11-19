@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glx:Genotype xmlns:glx="https://gl.immunogenomics.org/gl-resource-xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <glx:id>${genotype.Id}</glx:id>
+  <glx:glstring>${genotype.Glstring}</glx:glstring>
+  <glx:haplotypes>
+ #foreach ($haplotype in ${genotype.Haplotypes})
+    <glx:haplotype xlink:href="${haplotype.Id}"></glx:haplotype>
+#end
+  </glx:haplotypes>
+</glx:Genotype>

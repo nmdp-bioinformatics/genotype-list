@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>${allele.Id}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/skeleton.css">
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/gl-service.css">
+    <link rel="shortcut icon" href="../ico/favicon.ico>">
+  </head>
+  <body>
+    <div class="container">
+      <h3 class="remove-bottom" style="margin-top: 40px">${allele.Id}</h3>
+      <h5><a href="https://gl.immunogenomics.org/gl-ontology/Allele">https://gl.immunogenomics.org/gl-ontology/Allele</a></p></h5>
+      <hr/>
+
+      <div class="two-thirds column">
+        <p><span class="label">identifier:</span> &nbsp;<span class="identifier">${allele.Id}</span></p>
+        <p><span class="label">type:</span> &nbsp;<span class="type"><a href="https://gl.immunogenomics.org/gl-ontology/Allele">https://gl.immunogenomics.org/gl-ontology/Allele</a></span></p>
+        <p><span class="label">comment:</span> &nbsp;<span class="comment">An allele with#if (${allele.Accession} != "") accession ${allele.Accession} and#end locus ${allele.Locus.Glstring} represented by the glstring ${allele.Glstring}</span></p>
+        <p><span class="label">hasAccession:</span> &nbsp;<span class="hasAccession">${allele.Accession}</span></p>
+        <p><span class="label">hasGlstring:</span> &nbsp;<span class="hasGlstring">${allele.Glstring}</span></p>
+        <p><span class="label">hasLocus:</span> &nbsp;<span class="hasLocus"><a href="${allele.Locus.Id}.html">${allele.Locus.Id}</a></span></p>
+      </div>
+    </div>
+  </body>
+</html>

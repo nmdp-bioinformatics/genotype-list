@@ -1,0 +1,15 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix gl: <https://gl.immunogenomics.org/gl-ontology/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<${haplotype.Id}> a <https://gl.immunogenomics.org/gl-ontology/Haplotype> ;
+  dc:title "${haplotype.Id}" ;
+  dc:identifier "${haplotype.Id}" ;
+  rdfs:label "${haplotype.Id}" ;
+  rdfs:comment "A haplotype with ${haplotype.AlleleLists.size()} allele list#if (${haplotype.AlleleLists.size()} != 1)s#end represented by glstring ${haplotype.Glstring}" ;
+  gl:hasGlstring "${haplotype.Glstring}" ;
+#foreach ($al in ${haplotype.AlleleLists})
+  gl:hasAlleleList <${al.Id}> ;
+#end
