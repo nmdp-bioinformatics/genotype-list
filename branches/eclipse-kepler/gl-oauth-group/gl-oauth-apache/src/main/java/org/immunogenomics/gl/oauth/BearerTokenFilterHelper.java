@@ -37,6 +37,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BearerTokenFilterHelper {
 
+    /** OAuth 2.0 authenticate request header. */
+    public static final String AUTHENTICATION = "Authorization";
     /** non-standard header. */
     private static final String AUTHENTICATE = "Authenticate";
     public static final String BEARER_TOKEN_REQUIRED = "Bearer token required";
@@ -78,7 +80,7 @@ public class BearerTokenFilterHelper {
      * validate it.
      */
     protected AccessTokenDetails checkAuthorization(HttpServletRequest request) throws AuthorizationException {
-        String authorization = request.getHeader(OAuthHeader.AUTHORIZATION);
+        String authorization = request.getHeader(AUTHENTICATION);
         AuthorizationException exception = null;
         if (authorization == null) {
             // Try alternate
@@ -90,9 +92,7 @@ public class BearerTokenFilterHelper {
                 String bearerPrefix = "Bearer ";
                 if (authorization.startsWith(bearerPrefix)) {
                     String bearerToken = authorization.substring(bearerPrefix.length()).trim();
-                    System.out.println("DELETE ME:  bearer token " + bearerToken);
                     AccessTokenDetails validate = tokenValidator.validate(bearerToken);
-                    System.out.println("token validate " + validate);
                     if (validate != null) {
                         return validate;
                     }
@@ -108,7 +108,6 @@ public class BearerTokenFilterHelper {
         if (exception != null) {
             throw exception;
         }
-        logger.fine("no Authentication header");
         return AccessTokenDetails.empty();
     }
 
