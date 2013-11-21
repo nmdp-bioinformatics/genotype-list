@@ -90,11 +90,11 @@
           <contextHandlers>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/gl-service-explorer.war</war>
-              <contextPath>/gl-demo-explorer</contextPath>
+              <contextPath>/gl-explorer</contextPath>
             </contextHandler>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/glsw-oauth.war</war>
-              <contextPath>/gl-demo</contextPath>
+              <contextPath>/gl</contextPath>
             </contextHandler>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${project.build.directory}/dependency/${portal}-portal.war</war>
