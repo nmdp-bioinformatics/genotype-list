@@ -87,7 +87,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
                 </properties>
               </deployable>
               <deployable>
-                <groupId>org.immunogenomics.gl.oauth.toy</groupId>
+                <groupId>org.immunogenomics.gl.oauth</groupId>
                 <artifactId>toy-portal</artifactId>
                 <type>war</type>
                 <properties>
@@ -135,7 +135,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl.oauth.toy</groupId>
+      <groupId>org.immunogenomics.gl.oauth</groupId>
       <artifactId>toy-portal</artifactId>
       <type>war</type>
       <version>${project.version}</version>

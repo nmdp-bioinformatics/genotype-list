@@ -65,8 +65,8 @@ public class SimpleWebIT {
     
     @Test
     public void testNoAccessToken() {
-        expect().statusCode(HttpStatus.SC_BAD_REQUEST)
-        .header("WWW-Authenticate", containsString("authorization is required"))
+        expect().statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .header("WWW-Authenticate", containsString("realm=\"immunogenomics\""))
         .when().request().body(HLA_Z)
         .post(glUrl("/locus"));
     }
@@ -75,7 +75,7 @@ public class SimpleWebIT {
     public void testToyAccessTokenNoWriteAccess() {
         String token = getImmunogenomicToken("eve");
         expect().statusCode(HttpStatus.SC_FORBIDDEN)
-        .header("WWW-Authenticate", containsString("scope=\"write\""))
+        .header("WWW-Authenticate", containsString("scope=\"write"))
         .when().request().header("Authenticate", "Bearer " + token)
         .contentType(ContentType.TEXT)
         .body(HLA_Z).post(glUrl("/locus"));

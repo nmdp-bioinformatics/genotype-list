@@ -54,7 +54,7 @@ public final class RestAssuredOAuthHttpClient implements HttpClient {
     @Inject
     public RestAssuredOAuthHttpClient(@BearerToken final String bearerToken) {
         checkNotNull(bearerToken);
-        header = new Header("Authenticate", "Bearer " + bearerToken);
+        header = new Header("Authorization", "Bearer " + bearerToken);
     }
 
     @Override

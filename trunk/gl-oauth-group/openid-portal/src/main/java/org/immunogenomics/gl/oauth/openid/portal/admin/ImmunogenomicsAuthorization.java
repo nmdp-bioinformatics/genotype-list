@@ -109,6 +109,9 @@ public class ImmunogenomicsAuthorization {
     }
 
     public AuthorizationDetails getDetails() {
+        if (details == null) {
+            details = new AuthorizationDetails();
+        }
         return details;
     }
     
@@ -126,7 +129,7 @@ public class ImmunogenomicsAuthorization {
 
     @Override
     public String toString() {
-        return "ImmunogenomicsAuthorization [id=" + id + ", openid=" + openid + ", " + details + "]";
+        return "ImmunogenomicsAuthorization [id=" + id + ", openid=" + openid + ", details=[" + details + "]]";
     }
 
     public String getOpenid() {

@@ -36,11 +36,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public final class TokenValidateUtil {
 
-    /** OAuth 2.0 authenticate request header. */
-    public static final String AUTHENTICATE = "Authenticate";
-    /** OAuth 2.0 authenticate response header. */
-    public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
-
     /** Parameter name for passing the access token. */
     public static final String TOKEN_PARAM = "token";
 
@@ -93,7 +88,7 @@ public final class TokenValidateUtil {
         if (exists(details.getErrorDescription())) {
             sb.append(", error_description=\"").append(details.getErrorDescription()).append('"');
         }
-        response.setHeader(WWW_AUTHENTICATE, sb.toString());
+        response.setHeader(OAuthHeader.WWW_AUTHENTICATE, sb.toString());
         response.sendError(error.getStatusCode(), error.getStatusMessage());
     }
 

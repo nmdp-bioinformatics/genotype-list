@@ -41,5 +41,6 @@
     <module>openid-portal</module>
     <module>toy-portal</module>
     <module>toy-rest-app</module>
+    <module>gl-oauth-integration-tests</module>
   </modules>
 </project>

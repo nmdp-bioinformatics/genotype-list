@@ -38,6 +38,7 @@ public class AccessTokenDetails {
     private String tokenId; // user or sytem id for tracking purposes.
     private long expiresAt = 0;
     private AuthorizationDetails authorization = new AuthorizationDetails();
+    private transient boolean emptyFlag;
 
     public String getId() {
         return authorization.getId();
@@ -145,11 +146,13 @@ public class AccessTokenDetails {
     }
 
     public static AccessTokenDetails empty() {
-        return new AccessTokenDetails();
+        AccessTokenDetails details = new AccessTokenDetails();
+        details.emptyFlag = true;
+        return details;
     }
     
     public boolean isEmpty() {
-        return this.tokenId == null;
+        return this.emptyFlag;
     }
 
 }
