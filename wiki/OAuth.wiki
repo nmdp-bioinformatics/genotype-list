@@ -45,7 +45,7 @@ expires_in=3522,id=adam,duration=3600,realm=immunogenomics,scope=load allele adm
 
 Make sure reference data loaded (POST method is required)
 {{{
-$ curl -d "" "http://localhost:8080/gl/load" ;echo
+$ curl -d "" "http://localhost:10080/gl/load" ;echo
 }}}
 
 Use Bearer token for secured operations
@@ -53,7 +53,7 @@ Use Bearer token for secured operations
 $ curl -v --header "content-type: text/plain" \
   --header "Authorization: Bearer mgwed5jdy6h8" \
   --data "HLA-DRB1*08:30:02~HLA-DRB3*02:02:01:01" \
-  -X POST http://localhost:8080/gl/haplotype && echo
+  -X POST http://localhost:10080/gl/haplotype && echo
 }}}
 
 = OpenID =
