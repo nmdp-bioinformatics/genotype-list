@@ -25,6 +25,7 @@ package org.immunogenomics.glsw.oauth;
  */
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -108,7 +109,13 @@ public class GlBearerTokenFilter extends DefaultAuthorizer implements Filter, Sc
             return;
         }
         // POST and other methods require Authorization
-        super.checkAuthorized(requestScope, authorization);
+        try {
+            logger.debug("authorization {}", authorization);
+            super.checkAuthorized(requestScope, authorization);
+        } catch (AuthorizationException ae) {
+            logger.debug("{} {} {}", ae, requestScope, authorization);
+            throw ae;
+        }
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,
