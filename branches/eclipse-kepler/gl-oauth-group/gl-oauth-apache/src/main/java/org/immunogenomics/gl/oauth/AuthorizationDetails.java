@@ -23,14 +23,16 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
  */
 package org.immunogenomics.gl.oauth;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * Authorization properties.
  */
-public class AuthorizationDetails implements Comparable<AuthorizationDetails>{
+public class AuthorizationDetails implements Comparable<AuthorizationDetails>, Serializable{
     
+    private static final long serialVersionUID = 1L;
     public static final String ADMIN_SCOPE = "admin";
     public static final String[] ADMIN_SCOPES = {"admin"};
     

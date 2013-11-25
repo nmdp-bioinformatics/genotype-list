@@ -39,6 +39,9 @@ public class JmxDemoAuth implements DemoAuthMXBean {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         try {
             ObjectName mbeanName = new ObjectName(MXBEAN_FULL_NAME);
+            if (mBeanServer.isRegistered(mbeanName)) {
+                mBeanServer.unregisterMBean(mbeanName);
+            }
             mBeanServer.registerMBean(new DemoAuthBean(delegate), mbeanName);
         } catch (Exception e) {
             Logger.getLogger(JmxDemoAuth.class.getName()).warning("JMXBean " + MXBEAN_FULL_NAME + " not registered due to " + e);

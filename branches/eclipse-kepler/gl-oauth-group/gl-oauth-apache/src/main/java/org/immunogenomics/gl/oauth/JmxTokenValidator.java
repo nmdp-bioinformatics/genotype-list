@@ -45,6 +45,9 @@ public class JmxTokenValidator implements TokenValidator {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         try {
             ObjectName mbeanName = new ObjectName(MXBEAN_FULL_NAME);
+            if (mBeanServer.isRegistered(mbeanName)) {
+                mBeanServer.unregisterMBean(mbeanName);
+            }
             mBeanServer.registerMBean(new ValidatorBean(delegate), mbeanName);
         } catch (Exception e) {
             Logger.getLogger(JmxTokenValidator.class.getName()).warning("JMXBean " + MXBEAN_FULL_NAME + " not registered due to " + e);

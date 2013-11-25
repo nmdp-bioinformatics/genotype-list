@@ -24,12 +24,14 @@
 
 package org.immunogenomics.gl.oauth.openid.portal.admin;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import org.immunogenomics.gl.oauth.AuthorizationDetails;
 
-public class ImmunogenomicsAuthorization {
+public class ImmunogenomicsAuthorization implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final String WRITE_SCOPE = "write";
     private static final String ALLELE_SCOPE = "allele";
     private static final String SILVER_SCOPE = "silver";
