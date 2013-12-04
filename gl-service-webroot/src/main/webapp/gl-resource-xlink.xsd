@@ -7,7 +7,7 @@
   elementFormDefault="qualified">
 
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"></xs:import>
-  <xs:complexType name="GlResource">
+  <xs:complexType name="GlResource" abstract="true">
     <xs:annotation>
       <xs:documentation>Abstract class for all resources representable in GL String format.</xs:documentation>
     </xs:annotation>
