@@ -5,7 +5,7 @@
   targetNamespace="https://gl.immunogenomics.org/gl-resource"
   elementFormDefault="qualified">
 
-  <xs:complexType name="GlResource">
+  <xs:complexType name="GlResource" abstract="true">
     <xs:annotation>
       <xs:documentation>Abstract class for all resources representable in GL String format.</xs:documentation>
     </xs:annotation>
