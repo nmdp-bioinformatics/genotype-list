@@ -85,6 +85,7 @@
     <module>gl-web</module>
     <module>gl-oauth-group</module>
     <module>gl-service-explorer</module>
+    <module>gl-service-webapp-custom/glsw-d-o-s-filter</module>
     <module>gl-service-webapp-custom/glsw-oauth</module>
     <module>gl-jetty</module>
     <module>gl-tools</module>
