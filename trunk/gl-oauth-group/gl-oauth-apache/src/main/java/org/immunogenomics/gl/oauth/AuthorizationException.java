@@ -34,7 +34,6 @@ public final class AuthorizationException extends Exception {
 
     /**
      * 
-     * @see org.immunogenomics.gl.oauth.ReponseErrorCode
      * @param errorCode
      *            value from ReponseErrorCode
      * @param errorDescription

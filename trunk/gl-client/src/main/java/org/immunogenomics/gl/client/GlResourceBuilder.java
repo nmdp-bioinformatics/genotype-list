@@ -86,7 +86,7 @@ public final class GlResourceBuilder {
 
     /**
      * Return this gl resource builder configured with the specified allele. Calls to this method must
-     * be interspersed by calls to operator methods ({@link #allicAmbiguity()}, {@link #inPhase()},
+     * be interspersed by calls to operator methods ({@link #allelicAmbiguity()}, {@link #inPhase()},
      * {@link #plus()}, {@link #genotypicAmbiguity()}, and {@link #locus(String)}).
      *
      * @param glstring allele in GL String format, must not be null
