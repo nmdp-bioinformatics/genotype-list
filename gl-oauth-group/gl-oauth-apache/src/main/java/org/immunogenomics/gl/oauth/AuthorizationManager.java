@@ -48,7 +48,7 @@ public class AuthorizationManager implements TokenValidator {
      * 
      * @param userid
      * @param realm
-     * @return
+     * @return an access token for the specified userid and realm
      */
     public String getAuthorization(String userid, String realm) {
         AuthorizationDetails authorization = authorizationProvider.getAuthorization(userid, realm);

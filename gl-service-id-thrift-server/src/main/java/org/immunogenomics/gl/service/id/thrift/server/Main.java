@@ -55,7 +55,7 @@ public final class Main {
     /**
      * Main.
      *
-     * @params args command line arguments, ignored
+     * @param args command line arguments, ignored
      */
     public static void main(final String[] args) {
         Injector injector = Guice.createInjector(Stage.PRODUCTION,

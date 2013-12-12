@@ -47,7 +47,6 @@ public final class RegisterMultilocusUnphasedGenotypes extends StreamingRegister
      *
      * @param ns namespace, must not be null
      * @param n number of threads, must be &gt;= zero
-     * @param glstringFile glstring file
      */
     public RegisterMultilocusUnphasedGenotypes(final String ns, final int n) {
         this(ns, n, null);

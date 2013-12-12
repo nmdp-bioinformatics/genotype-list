@@ -43,7 +43,7 @@ public final class TokenValidateUtil {
      * Returns the token attached to the request by the toPost method.
      * 
      * @param request
-     * @return
+     * @return the token attached to the request by the toPost method
      */
     public static String extractToken(HttpServletRequest request) {
         return request.getParameter(TOKEN_PARAM);
@@ -55,7 +55,7 @@ public final class TokenValidateUtil {
      * 
      * @param request
      * @param validator
-     * @return
+     * @return text/plain content to be returned containing information about the token
      */
     public static String generateResponse(HttpServletRequest request, TokenValidator validator) {
         String token = TokenValidateUtil.extractToken(request);

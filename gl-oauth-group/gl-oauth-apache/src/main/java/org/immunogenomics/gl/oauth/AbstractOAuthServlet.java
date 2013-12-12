@@ -94,7 +94,7 @@ public abstract class AbstractOAuthServlet extends HttpServlet {
     /**
      * Process a token validate request.
      * 
-     * @param req
+     * @param token token
      * @return String representation of AuthorizationDetails
      */
     protected String validateToken(String token) {
