@@ -1,7 +1,7 @@
 /*
 
     gl-service-id-thrift-server  Thrift distributed identifier supplier server.
-    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published

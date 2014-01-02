@@ -2,7 +2,7 @@
 
     gl-client-functional-tests  Functional tests for the client library for the
     URI-based RESTful service for the gl project.
-    Copyright (c) 2012-2013 National Marrow Donor Program (NMDP)
+    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
