@@ -30,6 +30,7 @@
     * [Voldemort]
   * ==Other Need-To-Know Information==
   * [ContentTypes Content Types]
+  * [StrictMode Strict Mode]
 
 
 [Sidebar Expand this sidebar.]
