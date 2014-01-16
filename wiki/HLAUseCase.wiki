@@ -8,12 +8,12 @@ The primary use case for the IDAWG Genotype List service is to support the regis
 <br/>
 === Configure nomenclature ===
 
-Support for IMGT/HLA Database nomenclature is provided by the service and is configured at compile time.  In the {{{gl-service-spark}}} module a specific version of the nomenclature is bound to the {{{Nomenclature}}} class in [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-spark/src/main/java/org/immunogenomics/gl/service/spark/SparkModule.java SparkModule.java].  For example, for IMGT/HLA Database version 3.10.0
+Support for IMGT/HLA Database nomenclature is provided by the service and is configured at compile time.  In the {{{gl-service-spark}}} module a specific version of the nomenclature is bound to the {{{Nomenclature}}} class in [http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-spark/src/main/java/org/immunogenomics/gl/service/spark/SparkModule.java SparkModule.java].  For example, for IMGT/HLA Database version 3.14.0
 
 {{{
 @Override
 protected void configure() {
-  bind(Nomenclature.class).to(ImgtHla3_10_0.class);
+  bind(Nomenclature.class).to(ImgtHla3_14_0.class);
   // ...
 }
 }}}
@@ -22,7 +22,7 @@ protected void configure() {
 <br/>
 === Load loci and alleles ===
 
-To load loci and alleles from the bound nomenclature (version 3.10.0 in this case)
+To load loci and alleles from the bound nomenclature (version 3.14.0 in this case)
 
 {{{
 $ curl -X post http://localhost:10080/gl/load
