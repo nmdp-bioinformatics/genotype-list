@@ -165,7 +165,7 @@ $ curl --header "content-type: text/plain" \
 <br/>
 {{{
 $ curl --header "content-type: text/plain" \
-       --data "HLA-A*01:01:01:01/HLA-A*01:01:01:02N"
+       --data "HLA-A*01:01:01:01/HLA-A*01:01:01:02N" \
        -X POST http://localhost:10080/gl/allele-list -v && echo
 }}}
 
