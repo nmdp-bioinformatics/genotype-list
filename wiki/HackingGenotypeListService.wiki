@@ -4,7 +4,7 @@
 
 Install
  * JDK version 1.7 or later, http://openjdk.java.net/
- * Apache Maven version 3.0.5 or later, http://maven.apache.org/
+ * Apache Maven version 3.2.1 or later, http://maven.apache.org/
 
 
 <br/>
