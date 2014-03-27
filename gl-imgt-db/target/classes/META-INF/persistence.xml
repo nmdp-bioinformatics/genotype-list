@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    gl-imgt-db  IMGT/HLA database persistence domain and data access objects for the gl project.
+    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="IMGT" transaction-type="RESOURCE_LOCAL">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+
+		<class>org.immunogenomics.gl.imgt.db.model.AlignmentReference</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Allele</class>
+		<class>org.immunogenomics.gl.imgt.db.model.AlleleRlsVerDtl</class>
+		<class>org.immunogenomics.gl.imgt.db.model.AmbigComboElement</class>
+		<class>org.immunogenomics.gl.imgt.db.model.AmbigComboGroup</class>
+		<class>org.immunogenomics.gl.imgt.db.model.CdnaCoordinate</class>
+		<class>org.immunogenomics.gl.imgt.db.model.CdnaIndel</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Citation</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Ethnicity</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Feature</class>
+		<class>org.immunogenomics.gl.imgt.db.model.FeatureTranslation</class>
+		<class>org.immunogenomics.gl.imgt.db.model.GGroup</class>
+		<class>org.immunogenomics.gl.imgt.db.model.GGroupAllele</class>
+		<class>org.immunogenomics.gl.imgt.db.model.GGrpRlsVerDtl</class>
+		<class>org.immunogenomics.gl.imgt.db.model.IncompleteAllele</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Locus</class>
+		<class>org.immunogenomics.gl.imgt.db.model.NucSequence</class>
+		<class>org.immunogenomics.gl.imgt.db.model.ReleaseVersion</class>
+		<class>org.immunogenomics.gl.imgt.db.model.RemovedAllele</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Sample</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Sequence</class>
+		<class>org.immunogenomics.gl.imgt.db.model.SequenceCoordinate</class>
+		<class>org.immunogenomics.gl.imgt.db.model.SourceMaterial</class>
+		<class>org.immunogenomics.gl.imgt.db.model.SourceXref</class>
+		<class>org.immunogenomics.gl.imgt.db.model.Species</class>
+		<!-- <jta-data-source>jdbc/IMGT_db</jta-data-source> -->
+
+		<properties>
+<!-- 			<property name="openjpa.Log" value="DefaultLevel=TRACE, Tool=INFO, SQL=TRACE" /> -->
+			<property name="openjpa.Log" value="DefaultLevel=ERROR, Tool=INFO, SQL=ERROR" />
+
+			<property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=72" />
+
+			<property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver" />
+			<property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/imgt_hla" />
+			<property name="openjpa.ConnectionUserName" value="imgt_admin" />
+			<property name="openjpa.ConnectionPassword" value="imgthla" />
+<!-- 			<property name="openjpa.ConnectionRetainMode" value="transaction"/> -->
+		</properties>
+
+	</persistence-unit>
+</persistence>
