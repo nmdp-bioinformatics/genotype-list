@@ -4,18 +4,54 @@
 
 == Prerequisites ==
 
-Install
-
  * JDK version 1.7 or later, http://openjdk.java.net/
-
-= Introduction =
-
-Add your content here.
+ * MySQL version 5.6.16 or later
 
 
-= Details =
+== Build ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+# Change directory to {path to genotype list service root}/gl-imgt-loader
+# mvn clean compile assembly:single
+
+
+== Prepare the Database ==
+
+* Log into MySQL as root using the MySQL command-line tool:
+
+*mysql --user=root mysql -p*
+
+* Create the imgt_hla database and imgt_admin user by running the following command:
+
+*source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-admin.sql*
+
+* Quit MySQL command-line tool and login as imgt_admin:
+
+*mysql -u imgt_admin -p*
+
+Create the tables making up the imgt_hla database:
+
+*source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-create.sql*
+
+* Load the LOCUS table:
+
+*source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-load.sql*
+
+
+== Run Loader ==
+
+Assumes current working directory is {path to genotype list service root}/gl-imgt-loader
+
+java -Dimgt.hla.database.path=../gl-imgt-xml/src/main/xsd/v3_11_0_1 -cp ./target/gl-imgt-loader-1.0-SNAPSHOT-jar-with-dependencies.jar org/immunogenomics/gl/imgt/loader/driver/LoadHLADriver
+
+Where "imgt.database.path" refers to the location of the IMGT/HLA Database XML source file. The loader assumes the name of the XML file is "hla.xml". *Note:* Loader is known to be compatible with IMGT/HLA Database XML versions 3.10 - 3.12. Version 3.11.0 is supplied by the gl-imgt-xml project. For other versions, see [http://hla.alleles.org/xml/]
+
+If the "imgt.database.path" system property is not used, the loader assumes the current working directory as the location of the IMGT/HLA Database XML source file.
+
+The loader can be run from any folder. Be sure to specify a full path to the loader jar file.
+
+Example:
+java -cp ~/Documents/genotype-list/gl-imgt-loader/target/gl-imgt-loader-1.0-SNAPSHOT-jar-with-dependencies.jar org/immunogenomics/gl/imgt/loader/driver/LoadHLADriver
+
+
+ 
+== Eclipse Setup ==
