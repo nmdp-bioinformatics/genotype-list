@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    gl-imgt-loader  IMGT/HLA database loader for the gl project.
+    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+   	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+      	<param name="Threshold" value="ERROR" />
+     	<param name="Target" value="System.out" />
+      	<layout class="org.apache.log4j.PatternLayout">
+         	<param name="ConversionPattern" value="%d{MM-dd HH:mm:ss} %-5p [%t] %C{2} - %m%n" />
+      	</layout>
+   	</appender>
+
+   	<appender name="mainLogFile" class="org.apache.log4j.RollingFileAppender">
+      <!-- 	<param name="Threshold" value="ERROR" /> -->
+      	<param name="Append" value="true" />
+      	<param name="MaxFileSize" value="5000KB" />
+      	<param name="File" value="logs/imgtApp.log"/>
+      	<!-- Keep two backup files -->
+		<param name="MaxBackupIndex" value="5" />
+      	<layout class="org.apache.log4j.PatternLayout">
+         	<param name="ConversionPattern" value="%d %-5p  [%c{1}] %m %n" />
+      	</layout>
+    	<filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="DEBUG" />
+        	<param name="levelMax" value="WARN" />
+        </filter>
+   	</appender>
+
+	<appender name="dbLogFile" class="org.apache.log4j.RollingFileAppender">
+    	<param name="Threshold" value="ERROR" />
+      	<param name="Append" value="true" />
+      	<param name="MaxFileSize" value="5000KB" />
+      	<param name="File" value="logs/dbLog.log"/>
+      	<!-- Keep two backup files -->
+		<param name="MaxBackupIndex" value="5" />
+  		<layout class="org.apache.log4j.PatternLayout">
+    		<param name="ConversionPattern" value="%d %-5p  [%c{1}] %m %n" />
+   		</layout>
+   	</appender>
+
+	<appender name="xmlLogFile" class="org.apache.log4j.RollingFileAppender">
+    	<param name="Threshold" value="ERROR" />
+      	<param name="Append" value="true" />
+      	<param name="MaxFileSize" value="5000KB" />
+      	<param name="File" value="logs/xmlLog.log"/>
+      	<!-- Keep two backup files -->
+		<param name="MaxBackupIndex" value="5" />
+      	<layout class="org.apache.log4j.PatternLayout">
+         	<param name="ConversionPattern" value="%d %-5p  [%c{1}] %m %n" />
+      	</layout>
+   	</appender>
+
+	<logger name="dbEventLogger">
+     	<appender-ref ref="dbLogFile"/>
+	</logger>
+
+   	<logger name="xmlEventLogger" additivity="false">
+    	<appender-ref ref="xmlLogFile"/>
+   	</logger>
+
+   	<logger name="mainEventLogger">
+    	<appender-ref ref="mainLogFile"/>
+   	</logger>
+
+	<root>
+        <level value="INFO"/>
+        <appender-ref ref="consoleAppender"/>
+
+  	</root>
+</log4j:configuration>
