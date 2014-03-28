@@ -89,6 +89,9 @@
     <module>gl-service-webapp-custom/glsw-oauth</module>
     <module>gl-jetty</module>
     <module>gl-tools</module>
+    <module>gl-imgt-db</module>
+    <module>gl-imgt-loader</module>
+    <module>gl-imgt-xml</module>
   </modules>
 
   <properties>
@@ -228,7 +231,7 @@
                 <requireJavaVersion>
                   <version>[1.7,1.8)</version>
                 </requireJavaVersion>
-              </rules>    
+              </rules>
             </configuration>
           </execution>
         </executions>
@@ -322,7 +325,7 @@
       </dependency>
       <dependency>
         <groupId>commons-dbutils</groupId>
-        <artifactId>commons-dbutils</artifactId>  
+        <artifactId>commons-dbutils</artifactId>
         <version>1.4</version>
       </dependency>
       <dependency>
@@ -358,7 +361,7 @@
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId> 
+        <artifactId>mockito-core</artifactId>
         <version>1.9.5</version>
       </dependency>
       <dependency>
