@@ -34,7 +34,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+//import org.apache.log4j.xml.DOMConfigurator;
 import org.immunogenomics.gl.imgt.xml.model.hla.ambig.AmbiguityData;
 import org.immunogenomics.gl.imgt.xml.model.hla.Alleles;
 
@@ -48,10 +48,10 @@ public class XmlUnmarshaller
 	private static final Logger LOGGER = LoggerFactory
             .getLogger("xmlEventLogger." + XmlUnmarshaller.class);
 
-	static
-	{
-		DOMConfigurator.configure("src/main/resources/log4j.xml");
-	}
+//	static
+//	{
+//		DOMConfigurator.configure("src/main/resources/log4j.xml");
+//	}
 
 	/**
 	 * unmarshalAlleles takes an xml file, the root element of which
