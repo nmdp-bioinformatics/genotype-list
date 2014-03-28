@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    gl-imgt-loader  IMGT/HLA database loader for the gl project.
+    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="AlleleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Allele</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a date-format="yyyy-MM-dd">dateassigned</a>
+			<b>alleleDateAssigned</b>
+		</field>
+		<field>
+			<a>id</a>
+			<b>alleleId</b>
+		</field>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+		<field map-id="ReleaseVersionsMap">
+			<a>releaseversions</a>
+			<b>releaseVersion</b>
+		</field>
+	</mapping>
+	<mapping map-id="LocusMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Locus</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Locus</class-b>
+		<field>
+			<a>clazz</a>
+			<b>class_</b>
+		</field>
+		<field>
+			<a>genesystem</a>
+			<b>geneSystem</b>
+		</field>
+		<field>
+			<a>locusname</a>
+			<b>locusName</b>
+		</field>
+	</mapping>
+
+	<mapping map-id="CitationMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Citation</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Citation</class-b>
+		<field>
+			<a>authors</a>
+			<b>authors</b>
+		</field>
+		<field>
+			<a>location</a>
+			<b>citationLocation</b>
+		</field>
+		<field>
+			<a>pubmed</a>
+			<b>pubMed</b>
+		</field>
+		<field>
+			<a>title</a>
+			<b>title</b>
+		</field>
+	</mapping>
+	<mapping map-id="SourceXrefMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Xref</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.SourceXref</class-b>
+		<field>
+			<a>acc</a>
+			<b>xref</b>
+		</field>
+		<field>
+			<a>pid</a>
+			<b>pid</b>
+		</field>
+	</mapping>
+	<mapping map-id="SpeciesMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Species</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Species</class-b>
+		<field>
+			<a>commonname</a>
+			<b>commonName</b>
+		</field>
+		<field>
+			<a>latinname</a>
+			<b>latinName</b>
+		</field>
+		<field>
+			<a>ncbitaxon</a>
+			<b>ncbiTaxon</b>
+		</field>
+	</mapping>
+	<mapping map-id="SourceMaterialMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Sourcematerial</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.SourceMaterial</class-b>
+		<field map-id="SampleMap">
+			<a>samples.sample</a>
+			<b>samples</b>
+		</field>
+	</mapping>
+
+	<mapping map-id="SampleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Sample</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Sample</class-b>
+		<field>
+			<a>name</a>
+			<b>sampleName</b>
+		</field>
+
+	</mapping>
+	<mapping map-id="AlignmentReferenceMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Alignmentreference</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.AlignmentReference</class-b>
+		<field>
+			<a>allelename</a>
+			<b>referenceAlleleName</b>
+		</field>
+	</mapping>
+
+	<mapping map-id="SequenceNucSeqMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Sequence</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.NucSequence</class-b>
+		<field>
+			<a>nucsequence</a>
+			<b>nucSequence</b>
+		</field>
+	</mapping>
+	<mapping map-id="FeatureMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Feature</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Feature</class-b>
+		<field>
+			<a>featuretype</a>
+			<b>featureType</b>
+		</field>
+		<field>
+			<a>name</a>
+			<b>featureName</b>
+		</field>
+		<field>
+			<a>order</a>
+			<b>featureOrder</b>
+		</field>
+		<field>
+			<a>status</a>
+			<b>featureStatus</b>
+		</field>
+	</mapping>
+	<mapping map-id="FeatureSeqCoordMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Feature</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.SequenceCoordinate</class-b>
+		<field>
+			<a>sequenceCoordinates.end</a>
+			<b>sequenceCoordinateEnd</b>
+		</field>
+		<field>
+			<a>sequenceCoordinates.start</a>
+			<b>sequenceCoordinateStart</b>
+		</field>
+	</mapping>
+	<mapping map-id="FeatureCDNACoordMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Feature</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.CdnaCoordinate</class-b>
+		<field>
+			<a>cdnaCoordinates.end</a>
+			<b>cdnaCoordinateEnd</b>
+		</field>
+		<field>
+			<a>cdnaCoordinates.start</a>
+			<b>cdnaCoordinateStart</b>
+		</field>
+		<field>
+			<a>cdnaCoordinates.readingframe</a>
+			<b>cdnaCoordinateReadingFrame</b>
+		</field>
+	</mapping>
+	<mapping map-id="FeatureCDNAindelMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Feature</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.CdnaIndel</class-b>
+		<field>
+			<a>cdnAindel.end</a>
+			<b>cdnaIndelEnd</b>
+		</field>
+		<field>
+			<a>cdnAindel.start</a>
+			<b>cdnaIndelStart</b>
+		</field>
+		<field>
+			<a>cdnAindel.expressed</a>
+			<b>cdnaIndelExpressed</b>
+		</field>
+		<field>
+			<a>cdnAindel.size</a>
+			<b>cdnaIndelSize</b>
+		</field>
+		<field>
+			<a>cdnAindel.type</a>
+			<b>cdnaIndelType</b>
+		</field>
+	</mapping>
+	<mapping map-id="FeatureTranslationMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Feature</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.FeatureTranslation</class-b>
+		<field>
+			<a>translation</a>
+			<b>featureTranslation</b>
+		</field>
+	</mapping>
+	<mapping map-id="ReleaseVersionsMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Releaseversions</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.ReleaseVersion</class-b>
+		<field>
+			<a>currentrelease</a>
+			<b>releaseVerCurrentRelease</b>
+		</field>
+<!-- 		<field> -->
+<!-- 			<a>firstreleased</a> -->
+<!-- 			<b>releaseVerFirstReleased</b> -->
+<!-- 		</field> -->
+<!-- 		<field> -->
+<!-- 			<a>lastupdated</a> -->
+<!-- 			<b>releaseVerLastUpdated</b> -->
+<!-- 		</field> -->
+<!-- 		<field> -->
+<!-- 			<a>releasestatus</a> -->
+<!-- 			<b>releaseVerStatus</b> -->
+<!-- 		</field> -->
+<!-- 		<field> -->
+<!-- 			<a>confirmed</a> -->
+<!-- 			<b>releaseVerConfirmedStatus</b> -->
+<!-- 		</field> -->
+	</mapping>
+
+
+
+<mapping map-id="AlleleRelVerDtlMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Releaseversions</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.AlleleRlsVerDtl</class-b>
+		<field>
+			<a>firstreleased</a>
+			<b>releaseVerFirstReleased</b>
+		</field>
+		<field>
+			<a>lastupdated</a>
+			<b>releaseVerLastUpdated</b>
+		</field>
+		<field>
+			<a>releasestatus</a>
+			<b>releaseVerStatus</b>
+		</field>
+		<field>
+			<a>confirmed</a>
+			<b>releaseVerConfirmedStatus</b>
+		</field>
+	</mapping>
+	<!-- Mappings for Ambiguity files -->
+	<mapping map-id="PartialAlleleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.PartialAllele</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+	<mapping map-id="ExtensionAlleleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.ExtensionAllele</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+
+	<mapping map-id="RemovedAlleleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.RemovedAllele</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+	<mapping map-id="GGroupAlleleMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.GGroupAllele</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+	<mapping map-id="AmbigAllele1Map" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.AmbigAllele1</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+	<mapping map-id="AmbigAllele2Map" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.AmbigAllele2</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.Allele</class-b>
+		<field>
+			<a>name</a>
+			<b>alleleName</b>
+		</field>
+	</mapping>
+
+	<mapping map-id="AmbigReleaseVersionMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.ambig.ReleaseVersion</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.ReleaseVersion</class-b>
+		<field>
+			<a>currentRelease</a>
+			<b>releaseVerCurrentRelease</b>
+		</field>
+	</mapping>
+	<mapping map-id="GGroupRelVerDtlMap" map-null="false">
+		<class-a>org.immunogenomics.gl.imgt.xml.model.hla.Releaseversions</class-a>
+		<class-b>org.immunogenomics.gl.imgt.db.model.GGrpRlsVerDtl</class-b>
+		<field>
+			<a>firstreleased</a>
+			<b>releaseVerFirstReleased</b>
+		</field>
+		<field>
+			<a>lastupdated</a>
+			<b>releaseVerLastUpdated</b>
+		</field>
+<!-- 		<field> -->
+<!-- 			<a>releasestatus</a> -->
+<!-- 			<b>releaseVerStatus</b> -->
+<!-- 		</field> -->
+<!-- 		<field> -->
+<!-- 			<a>confirmed</a> -->
+<!-- 			<b>releaseVerConfirmedStatus</b> -->
+<!-- 		</field> -->
+	</mapping>
+</mappings>
