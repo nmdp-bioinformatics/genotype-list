@@ -1,4 +1,12 @@
-# Tool used to load the IMGT/HLA Database
+#summary IMGT/HLA Database loader
+
+= IMGT/HLA Loader =
+
+== Prerequisites ==
+
+Install
+
+ * JDK version 1.7 or later, http://openjdk.java.net/
 
 = Introduction =
 
