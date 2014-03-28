@@ -27,7 +27,7 @@ import java.io.File;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+//import org.apache.log4j.xml.DOMConfigurator;
 import org.immunogenomics.gl.imgt.loader.processor.AlleleSetDataProcessor;
 import org.immunogenomics.gl.imgt.xml.model.hla.Alleles;
 import org.immunogenomics.gl.imgt.xml.parser.XmlUnmarshaller;
@@ -42,9 +42,9 @@ public class LoadHLADriver {
 	private static final Logger LOGGER = Logger.getLogger("mainEventLogger."
 			+ LoadHLADriver.class);
 
-	static {
-		DOMConfigurator.configure("src/main/resources/log4j.xml");
-	}
+//	static {
+//		DOMConfigurator.configure("src/main/resources/log4j.xml");
+//	}
 
 	/**
 	 * @param args
