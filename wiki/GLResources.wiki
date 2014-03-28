@@ -48,12 +48,11 @@ Each GL Resource type is registered in the GL Service individually.
  * ID
  * GL String
  * List of {{{AlleleLists}}}
- * List of {{{Haplotypes}}}
 
 ===GenotypeList:===
  * ID
  * GL String
- * Nothing else (sic)
+ * List of {{{Genotypes}}}
 
 ===MultilocusUnphasedGenotype:===
  * ID
