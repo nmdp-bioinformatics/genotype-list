@@ -3,7 +3,7 @@
   * [HackingGenotypeListService Building, Deploying, and Using the GL Service]
   * [Delimiters GL String Delimiters]
   * [CommandLineTools Command Line Tools]
-  * [IMGT HLA Database Loader]
+  * [IMGT/HLA Database Loader]
   * [IssueWorkflow Using the Issue Tracker]
   * ==Implementation Details==
   * [SparkGlService Spark RESTful Web Service]
