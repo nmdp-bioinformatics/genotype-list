@@ -51,9 +51,9 @@ Assumes current working directory is {path to genotype list service root}/gl-img
 
 *java -Dimgt.hla.database.path=../gl-imgt-xml/src/main/xsd/v3_11_0_1 -cp ./target/gl-imgt-loader-1.0-SNAPSHOT-jar-with-dependencies.jar org/immunogenomics/gl/imgt/loader/driver/LoadHLADriver*
 
-Where "imgt.database.path" refers to the location of the IMGT/HLA Database XML source file. The loader assumes the name of the XML file is "hla.xml". *Note:* Loader is known to be compatible with IMGT/HLA Database XML versions 3.8 - 3.12. Version 3.11.0 is supplied by the gl-imgt-xml project. For other versions, see [http://hla.alleles.org/xml/]
+Where "imgt.database.path" refers to the location of the IMGT/HLA Database XML source file. The loader assumes the name of the XML file is "hla.xml". *Note:* Loader is known to be compatible with IMGT/HLA Database XML versions 3.8 - 3.12. Version 3.11.0.1 is supplied by the gl-imgt-xml project. For other versions, see [http://hla.alleles.org/xml/]
 
-If the "imgt.database.path" system property is not used, the loader assumes the current working directory as the location of the IMGT/HLA Database XML source file.
+If the "imgt.database.path" system property is not supplied, the loader assumes the current working directory as the location of the IMGT/HLA Database XML source file.
 
 The loader can be run from any folder. Be sure to specify a full path to the loader jar file.
 
@@ -105,14 +105,17 @@ Select folder "target/generated/source/main/java" by clicking box to left of the
 
 Click OK, click OK.
 
-(Project will rebuild automatically if configured to do so, "cannot resolve to a type" errors will disappear)
+(Project will rebuild automatically if configured to do so, "cannot resolve to a type" errors should be resolved)
 
 To eliminate remaining build errors, perform the following steps:
 
 Click Preferences->Maven->Lifecycle Mappings
 
-Under "Change mapping file location", keep the default but be sure it matches the following pattern:
+Under "Change mapping file location", be sure the location matches the following pattern:
+
 {path to workspace}/.metadata/.plugins/org.eclipse.m2e.core/lifecycle-mapping-metadata.xml
+
+to insure these settings apply to the current workspace only.
 
 Click the "Open workspace lifecycle mappings metadata" button.
 Click "Apply" if you made any changes to the mapping file location.
@@ -199,4 +202,4 @@ Click Maven->Update Project...
 
 Select all of the imgt projects (and the gl-client project, if imported), click "Force Update of Snapshots/Releases" and click OK.
 
-This will rebuild the selected projects and the remaining build errors should disappear.
+This will rebuild the selected projects and the remaining build errors should resolve.
