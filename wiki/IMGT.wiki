@@ -1,6 +1,6 @@
-#summary IMGT/HLA Database loader
+#summary IMGT/HLA Database Loader
 
-= IMGT/HLA Loader =
+= IMGT/HLA Database Loader =
 
 == Prerequisites ==
 
