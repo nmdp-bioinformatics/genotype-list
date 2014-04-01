@@ -42,6 +42,20 @@
     <fileSet>
       <directory>target/appassembler/bin</directory>
       <outputDirectory>bin</outputDirectory>
+      <excludes>
+        <exclude>*.bat</exclude>
+      </excludes>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0755</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>target/appassembler/bin</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>*.bat</include>
+      </includes>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0644</fileMode>
     </fileSet>
   </fileSets>
   <dependencySets>
