@@ -26,6 +26,7 @@ package org.immunogenomics.gl.imgt.loader.driver;
 import java.io.File;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 //import org.apache.log4j.xml.DOMConfigurator;
 import org.immunogenomics.gl.imgt.loader.processor.AlleleSetDataProcessor;
@@ -51,42 +52,72 @@ public class LoadHLADriver {
 	 */
 	public static void main(String[] args) {
 
-		String pathname = System.getProperty("user.dir");
 		String hlaDatabasePath =
 				System.getProperty(LoaderConstants.HLA_DATABASE_PATH_SYS_PROP);
+		File xml = null;
+		boolean isValidPath = false;
 
-		if (hlaDatabasePath != null && !hlaDatabasePath.trim().equals("")) {
-			pathname = hlaDatabasePath.trim();
-			if (hlaDatabasePath.endsWith(File.separator)) {
-				pathname = pathname.substring(0, pathname.length() - 1);
+		if (hlaDatabasePath != null && !hlaDatabasePath.equals("")) {
+			if ( hlaDatabasePath.startsWith("~" + File.separator)) {
+				hlaDatabasePath = StringUtils.replaceOnce(hlaDatabasePath, "~", System.getProperty("user.home"));
+			}
+
+			xml = new File(hlaDatabasePath);
+
+			if (xml.isFile() && xml.exists()) {
+				isValidPath = true;
+			}
+			else if (xml.isDirectory()) {
+				if (hlaDatabasePath.endsWith(File.separator)) {
+					hlaDatabasePath = hlaDatabasePath.substring(0, hlaDatabasePath.length() - 1);
+				}
+				hlaDatabasePath = hlaDatabasePath + File.separator + LoaderConstants.HLA_DATABASE_FILENAME;
+				xml = new File(hlaDatabasePath);
+
+				if (xml.exists()) {
+					isValidPath = true;
+				}
+			}
+		}
+		else {
+			hlaDatabasePath =
+					System.getProperty("user.dir") + File.separator + LoaderConstants.HLA_DATABASE_FILENAME;
+			xml = new File(hlaDatabasePath);
+
+			if (xml.exists()) {
+				isValidPath = true;
 			}
 		}
 
-		File xml = new File(pathname + File.separator + LoaderConstants.HLA_DATABASE_FILENAME);
+		if (isValidPath) {
+			Date start = null;
+			Alleles alleles = null;
+			XmlUnmarshaller x = new XmlUnmarshaller();
+			AlleleSetDataProcessor alleleSetProcessor = new AlleleSetDataProcessor();
 
-		Date start = null;
-		Alleles alleles = null;
-		XmlUnmarshaller x = new XmlUnmarshaller();
-		AlleleSetDataProcessor alleleSetProcessor = new AlleleSetDataProcessor();
+			LOGGER.info("LoadHLADriver.main:: Started loading the HLA database from the XML file: "
+					+ xml.getPath());
 
-		LOGGER.info("LoadHLADriver.main:: Started loading the hla database from the XML file: "
-				+ xml.getPath());
+			try {
+				start = new Date(System.currentTimeMillis());
 
-		try {
-			start = new Date(System.currentTimeMillis());
+				// unmarshal the xml
+				alleles = x.unmarshalAlleles(xml);
 
-			// unmarshal the xml
-			alleles = x.unmarshalAlleles(xml);
+				// insert the alleles
+				alleleSetProcessor.insertAlleleSetBatch(alleles.getAllele());
+			} catch (Exception e) {
+				LOGGER.error("LoadHLADriver.main:: Exception: " + e);
+			}
 
-			// insert the alleles
-			alleleSetProcessor.insertAlleleSetBatch(alleles.getAllele());
-		} catch (Exception e) {
-			LOGGER.error("LoadHLADriver.main:: Exception: " + e);
+			LOGGER.info("LoadHLADriver.main:: Finished loading the HLA database.");
+			LOGGER.info("Start time was: " + start);
+			LOGGER.info("end was: " + new Date(System.currentTimeMillis()));
 		}
-
-		LOGGER.info("LoadHLADriver.main:: Finished loading the hla database.");
-		LOGGER.info("Start time was: " + start);
-		LOGGER.info("end was: " + new Date(System.currentTimeMillis()));
+		else {
+			LOGGER.info("LoadHLADriver.main:: HLA database XML file '" + hlaDatabasePath + "' not found");
+			System.out.println("HLA database XML file '" + hlaDatabasePath + "' not found");
+		}
 
 	}
 

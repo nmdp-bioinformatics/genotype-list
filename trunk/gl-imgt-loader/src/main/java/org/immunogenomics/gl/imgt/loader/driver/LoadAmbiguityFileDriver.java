@@ -26,7 +26,8 @@ package org.immunogenomics.gl.imgt.loader.driver;
 import java.io.File;
 import java.util.Date;
 
-import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.commons.lang.StringUtils;
+//import org.apache.log4j.xml.DOMConfigurator;
 import org.immunogenomics.gl.imgt.loader.processor.AlleleSetDataProcessor;
 import org.immunogenomics.gl.imgt.xml.model.hla.ambig.AmbiguityData;
 import org.immunogenomics.gl.imgt.xml.parser.XmlUnmarshaller;
@@ -43,51 +44,80 @@ public class LoadAmbiguityFileDriver {
 	private static final Logger LOGGER = LoggerFactory.getLogger("mainEventLogger."
 			+ LoadAmbiguityFileDriver.class);
 
-	static {
-		DOMConfigurator.configure("src/main/resources/log4j.xml");
-	}
+//	static {
+//		DOMConfigurator.configure("src/main/resources/log4j.xml");
+//	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		String pathname = System.getProperty("user.dir");
 		String hlaDatabasePath =
 				System.getProperty(LoaderConstants.HLA_AMBIG_DATABASE_PATH_SYS_PROP);
+		File xml = null;
+		boolean isValidPath = false;
 
-		if (hlaDatabasePath != null && !hlaDatabasePath.trim().equals("")) {
-			pathname = hlaDatabasePath.trim();
-			if (hlaDatabasePath.endsWith(File.separator)) {
-				pathname = pathname.substring(0, pathname.length() - 1);
+		if (hlaDatabasePath != null && !hlaDatabasePath.equals("")) {
+			if ( hlaDatabasePath.startsWith("~" + File.separator)) {
+				hlaDatabasePath = StringUtils.replaceOnce(hlaDatabasePath, "~", System.getProperty("user.home"));
+			}
+
+			xml = new File(hlaDatabasePath);
+
+			if (xml.isFile() && xml.exists()) {
+				isValidPath = true;
+			}
+			else if (xml.isDirectory()) {
+				if (hlaDatabasePath.endsWith(File.separator)) {
+					hlaDatabasePath = hlaDatabasePath.substring(0, hlaDatabasePath.length() - 1);
+				}
+				hlaDatabasePath = hlaDatabasePath + File.separator + LoaderConstants.HLA_AMBIG_DATABASE_FILENAME;
+				xml = new File(hlaDatabasePath);
+
+				if (xml.exists()) {
+					isValidPath = true;
+				}
+			}
+		}
+		else {
+			hlaDatabasePath =
+					System.getProperty("user.dir") + File.separator + LoaderConstants.HLA_AMBIG_DATABASE_FILENAME;
+			xml = new File(hlaDatabasePath);
+
+			if (xml.exists()) {
+				isValidPath = true;
 			}
 		}
 
-		File xml = new File(pathname + File.separator + LoaderConstants.HLA_AMBIG_DATABASE_FILENAME);
+		if (isValidPath) {
+			Date start = null;
+			AmbiguityData ambigData = null;
+			XmlUnmarshaller x = new XmlUnmarshaller();
+			AlleleSetDataProcessor alleleSetProcessor = new AlleleSetDataProcessor();
 
-		Date start = null;
-		AmbiguityData ambigData = null;
-		XmlUnmarshaller x = new XmlUnmarshaller();
-		AlleleSetDataProcessor alleleSetProcessor = new AlleleSetDataProcessor();
+			LOGGER.info("LoadAmbiguityFileDriver.main:: Started loading the hla ambig database from the XML file: "
+					+ xml.getPath());
 
-		LOGGER.info("LoadAmbiguityFileDriver.main:: Started loading the hla ambig database from the XML file: "
-				+ xml.getPath());
+			try {
+				start = new Date(System.currentTimeMillis());
 
-		try {
-			start = new Date(System.currentTimeMillis());
+				// unmarshal the xml
+				ambigData = x.unmarshalAmbiguousAlleles(xml);
 
-			// unmarshal the xml
-			ambigData = x.unmarshalAmbiguousAlleles(xml);
+				// insert the alleles
+				alleleSetProcessor.insertAmbiguousAlleleSet(ambigData);
+			} catch (Exception e) {
+				LOGGER.error("LoadAmbiguityFileDriver.main:: Exception: " + e);
+			}
 
-			// insert the alleles
-			alleleSetProcessor.insertAmbiguousAlleleSet(ambigData);
-		} catch (Exception e) {
-			LOGGER.error("LoadAmbiguityFileDriver.main:: Exception: " + e);
+			LOGGER.info("LoadAmbiguityFileDriver.main:: Finished loading the hla ambig database.");
+			LOGGER.info("Start time was: " + start);
+			LOGGER.info("end was: " + new Date(System.currentTimeMillis()));
 		}
-
-		LOGGER.info("LoadAmbiguityFileDriver.main:: Finished loading the hla ambig database.");
-		LOGGER.info("Start time was: " + start);
-		LOGGER.info("end was: " + new Date(System.currentTimeMillis()));
+		else {
+			LOGGER.info("LoadHLADriver.main:: HLA ambig database XML file '" + hlaDatabasePath + "' not found");
+			System.out.println("HLA ambig database XML file '" + hlaDatabasePath + "' not found");
+		}
 
 	} // end main
 

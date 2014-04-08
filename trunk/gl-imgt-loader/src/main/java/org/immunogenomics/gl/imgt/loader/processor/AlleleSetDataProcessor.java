@@ -159,6 +159,10 @@ public class AlleleSetDataProcessor {
 			if(allele.getLocus() != null){
 				locusDb = mapper.map(allele.getLocus(), org.immunogenomics.gl.imgt.db.model.Locus.class, "LocusMap");
 
+				// The locusname specified in Locus schema is incomplete. To get the complete locusname, the
+				// Allele.name attribute is parsed by taking the string found to the left of the '*'.
+				locusDb.setLocusName(allele.getName().substring(0, allele.getName().indexOf("*")));
+
 				locusDb.setLastUpdateDte(d);
 				locusDb.setCreateDte(d);
 				locusDb.setLastUpdateUserId(lastUpdateUserId);
