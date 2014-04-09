@@ -17,9 +17,13 @@ opening a terminal/command window. Change directory to the containing (parent) f
 
 Where xxx is your google username.
 
+Change directory to {path to genotype list service root}, type the command:
+
+*mvn install*
+
 Change directory to {path to genotype list service root}/gl-imgt-loader, type the command:
 
-*mvn clean compile assembly:single*
+*mvn assembly:single*
 
 
 == Prepare the Database ==
@@ -39,10 +43,6 @@ Quit MySQL command-line tool and login as imgt_admin:
 Create the tables making up the imgt_hla database:
 
 *source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-create.sql*
-
-Load the LOCUS table:
-
-*source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-load.sql*
 
 
 == Run Loader ==
