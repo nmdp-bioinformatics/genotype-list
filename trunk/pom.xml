@@ -92,6 +92,7 @@
     <module>gl-imgt-db</module>
     <module>gl-imgt-loader</module>
     <module>gl-imgt-xml</module>
+    <module>gl-imgt-biosql-jpa</module>
   </modules>
 
   <properties>
