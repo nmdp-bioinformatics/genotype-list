@@ -40,7 +40,7 @@ import org.immunogenomics.gl.service.IdResolver;
 /**
  * Classpath nomenclature.
  */
-abstract class ClasspathNomenclature extends AbstractNomenclature {
+public abstract class ClasspathNomenclature extends AbstractNomenclature {
     private final String resource;
 
     protected ClasspathNomenclature(final String resource,
