@@ -1,6 +1,6 @@
 /*
 
-    gl-service  URI-based RESTful service for the gl project.
+    gl-service-nomenclature-imgt  IMGT/HLA nomenclature.
     Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,16 +21,18 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.service.nomenclature;
+package org.immunogenomics.gl.service.nomenclature.imgt;
 
 import org.immunogenomics.gl.service.GlRegistry;
 import org.immunogenomics.gl.service.GlstringResolver;
 import org.immunogenomics.gl.service.IdResolver;
 
+import org.immunogenomics.gl.service.nomenclature.ClasspathNomenclature;
+
 import com.google.inject.Inject;
 
 /**
- * IMGT HLA version 3.15.0 nomenclature.
+ * IMGT/HLA version 3.15.0 nomenclature.
  */
 public final class ImgtHla3_15_0 extends ClasspathNomenclature {
 
