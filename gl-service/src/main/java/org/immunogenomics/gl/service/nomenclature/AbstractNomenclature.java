@@ -40,7 +40,7 @@ import org.immunogenomics.gl.service.Nomenclature;
 /**
  * Abstract implementation of Nomenclature.
  */
-abstract class AbstractNomenclature implements Nomenclature {
+public abstract class AbstractNomenclature implements Nomenclature {
     private static final Pattern LOCUS_PATTERN = Pattern.compile("^[a-zA-Z0-9-_]+$");
     private static final Pattern ALLELE_PATTERN = Pattern.compile("^([a-zA-Z0-9-_]+)\\*([a-zA-Z0-9:]+)$");
 
