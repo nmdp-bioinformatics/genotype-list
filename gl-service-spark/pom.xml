@@ -54,6 +54,11 @@
       </dependency>
       <dependency>
         <groupId>org.immunogenomics.gl</groupId>
+        <artifactId>gl-service-nomenclature-imgt</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.immunogenomics.gl</groupId>
         <artifactId>gl-service-id-jdbc</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -103,6 +108,11 @@
     <dependency>
       <groupId>org.immunogenomics.gl</groupId>
       <artifactId>gl-service</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.immunogenomics.gl</groupId>
+      <artifactId>gl-service-nomenclature-imgt</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
