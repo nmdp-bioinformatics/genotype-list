@@ -21,29 +21,43 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.liftover;
+package org.immunogenomics.gl.liftover.impl;
+
+import com.google.common.cache.LoadingCache;
+
+import com.google.common.collect.Table;
+
+import org.immunogenomics.gl.client.GlClient;
+
+import org.immunogenomics.gl.liftover.AbstractLiftoverServiceTest;
+import org.immunogenomics.gl.liftover.LiftoverService;
+
+import org.junit.Before;
+
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
- * Genotype list liftover service exception.
+ * Unit test for LiftoverServiceImpl.
  */
-public final class LiftoverServiceException extends Exception {
+public final class LiftoverServiceImplTest extends AbstractLiftoverServiceTest {
+    @Mock
+    private LoadingCache<String, GlClient> clients;
 
-    /**
-     * Create a new liftover service exception with the specified message.
-     *
-     * @param message message
-     */
-    public LiftoverServiceException(final String message) {
-        super(message);
+    @Mock
+    private Table<String, String, String> locusNames;
+
+    @Mock
+    private Table<String, String, String> alleleNames;
+
+    @Override
+    protected LiftoverService createLiftoverService() {
+        return new LiftoverServiceImpl(clients, locusNames, alleleNames);
     }
 
-    /**
-     * Create a new liftover service exception with the specified message and cause.
-     *
-     * @param message message
-     * @param cause cause
-     */
-    public LiftoverServiceException(final String message, final Throwable cause) {
-        super(message, cause);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        super.setUp();
     }
 }

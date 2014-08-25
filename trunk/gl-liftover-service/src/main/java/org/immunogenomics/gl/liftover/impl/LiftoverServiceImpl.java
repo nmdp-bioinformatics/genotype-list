@@ -59,11 +59,26 @@ import org.slf4j.LoggerFactory;
  * Genotype list liftover service implementation.
  */
 final class LiftoverServiceImpl implements LiftoverService {
+    /** Cache of gl clients keyed by namespace. */
     private final LoadingCache<String, GlClient> clients;
+
+    /** Table of locus names keyed by namespace and glstring. */
     private final Table<String, String, String> locusNames;
+
+    /** Table of allele names keyed by namespace and accession number. */
     private final Table<String, String, String> alleleNames;
+
+    /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(LiftoverServiceImpl.class);
 
+
+    /**
+     * Create a new genotype list liftover service implementation.
+     *
+     * @param clients clients, must not be null
+     * @param locusNames locus names, must not be null
+     * @param alleleNames allele names, must not be null
+     */
     @Inject
     LiftoverServiceImpl(final LoadingCache<String, GlClient> clients,
                         @LocusNames final Table<String, String, String> locusNames,
