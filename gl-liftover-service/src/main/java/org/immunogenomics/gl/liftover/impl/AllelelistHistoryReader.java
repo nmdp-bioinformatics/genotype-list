@@ -55,7 +55,7 @@ final class AllelelistHistoryReader {
     private final Table<String, String, String> alleleNames;
 
     /** Logger. */
-    private final Logger logger = LoggerFactory.getLogger(LiftoverServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(AllelelistHistoryReader.class);
 
     /** Non-HLA loci. */
     private static final List<String> nonHlaLoci = Arrays.asList(new String[] { "MICA", "MICB", "MICC", "MICD", "MICE", "PSMB9", "PSMB8", "TAP1", "TAP2" });
