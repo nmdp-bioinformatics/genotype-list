@@ -83,6 +83,7 @@ public final class LiftoverServiceModule extends AbstractModule {
         AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
         try {
             allelelistHistoryReader.readAllelelistHistory();
+            allelelistHistoryReader.readGgroups();
         }
         catch (IOException e) {
             throw new RuntimeException("could not read Allelelist_history.txt", e);
@@ -95,6 +96,7 @@ public final class LiftoverServiceModule extends AbstractModule {
         AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
         try {
             allelelistHistoryReader.readAllelelistHistory();
+            allelelistHistoryReader.readGgroups();
         }
         catch (IOException e) {
             throw new RuntimeException("could not read Allelelist_history.txt", e);

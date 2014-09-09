@@ -84,6 +84,8 @@
     <module>gl-client-functional-tests</module>
     <module>gl-ambiguity-service</module>
     <module>gl-liftover-service</module>
+    <module>gl-liftover-service-spark</module>
+    <module>gl-liftover-service-webapp</module>
     <module>gl-web</module>
     <module>gl-oauth-group</module>
     <module>gl-service-explorer</module>
