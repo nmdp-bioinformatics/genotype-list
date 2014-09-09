@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.base.Splitter;
+
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
@@ -143,6 +145,42 @@ final class AllelelistHistoryReader {
                         locusNames.put(namespace, "HLA-C", locus);
                     }
                 }
+            }
+        }
+        finally {
+            try {
+                reader.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
+    void readGgroups() throws IOException {
+        int count = 0;
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("g-groups.txt")));
+
+            while (reader.ready()) {
+                String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                List<String> tokens = Splitter.on(" ").omitEmptyStrings().splitToList(line);
+                String ggroup = fixAllele(tokens.get(0));
+                String accession = String.format("G%05d", count);
+                for (String alleleToken : Splitter.on("/").split(tokens.get(1))) {
+                    String allele = locus(ggroup) + "*" + alleleToken;
+                    for (String namespace : alleleNames.rowKeySet()) {
+                        if (alleleNames.row(namespace).values().contains(allele)) {
+                            alleleNames.put(namespace, accession, ggroup);
+                        }
+                    }
+
+                }
+                count++;
             }
         }
         finally {
