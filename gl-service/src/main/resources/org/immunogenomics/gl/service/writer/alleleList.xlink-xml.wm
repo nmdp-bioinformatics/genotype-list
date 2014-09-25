@@ -6,5 +6,5 @@
 #foreach ($allele in ${alleleList.Alleles})
     <glx:allele xlink:href="${allele.Id}"></glx:allele>
 #end
-  </glx:allele>
-</glx:Allele>
+  </glx:alleles>
+</glx:AlleleList>
