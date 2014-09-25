@@ -25,6 +25,8 @@ package org.immunogenomics.gl.liftover.impl;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.core.JsonFactory;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -45,7 +47,7 @@ import org.immunogenomics.gl.client.http.HttpClient;
 
 import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
 
-import org.immunogenomics.gl.client.xml.XmlGlClient;
+import org.immunogenomics.gl.client.json.JsonGlClient;
 
 import org.immunogenomics.gl.liftover.AlleleNames;
 import org.immunogenomics.gl.liftover.LiftoverService;
@@ -67,11 +69,12 @@ public final class LiftoverServiceModule extends AbstractModule {
                 @Override
                 public GlClient load(final String namespace) {
                     HttpClient httpClient = new RestAssuredHttpClient();
+                    JsonFactory jsonFactory = new JsonFactory(); // todo:  this could be injected in
                     Cache<String, Locus> loci = CacheBuilder.newBuilder().maximumSize(1000).build();
                     Cache<String, String> locusIds = CacheBuilder.newBuilder().maximumSize(1000).build();
                     Cache<String, Allele> alleles = CacheBuilder.newBuilder().maximumSize(10000).build();
                     Cache<String, String> alleleIds = CacheBuilder.newBuilder().maximumSize(10000).build();
-                    return new XmlGlClient(namespace, httpClient, loci, locusIds, alleles, alleleIds);
+                    return new JsonGlClient(namespace, jsonFactory, httpClient, loci, locusIds, alleles, alleleIds);
                 }
             });
     }
