@@ -6,5 +6,5 @@
 #foreach ($genotype in ${genotypeList.Genotypes})
     <glx:genotype xlink:href="${genotype.Id}"></glx:genotype>
 #end
-  </glx:genotype>
-</glx:Genotype>
+  </glx:genotypes>
+</glx:GenotypeList>
