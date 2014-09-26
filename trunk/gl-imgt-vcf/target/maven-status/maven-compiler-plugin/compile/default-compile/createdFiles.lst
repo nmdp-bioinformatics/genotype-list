@@ -1,0 +1,7 @@
+org/immunogenomics/gl/imgt/vcf/processor/VcfWriter.class
+org/immunogenomics/gl/imgt/vcf/processor/PtvProcess.class
+org/immunogenomics/gl/imgt/vcf/PairToVariants2.class
+org/immunogenomics/gl/imgt/vcf/driver/PairToVariants.class
+org/immunogenomics/gl/imgt/vcf/processor/ReferenceSequence.class
+org/immunogenomics/gl/imgt/vcf/driver/PairToVariants$TargetSequence.class
+org/immunogenomics/gl/imgt/vcf/processor/PtvContext.class
