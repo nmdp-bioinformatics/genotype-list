@@ -63,7 +63,7 @@
                   <packagename>org.immunogenomics.gl.imgt.xml.model.hla</packagename>
                 </xsdOption>
                 <xsdOption>
-                  <xsd>src/main/xsd/hla_ambig.xsd</xsd>
+                  <xsd>src/main/xsd/hla_ambigs.xsd</xsd>
                   <packagename>org.immunogenomics.gl.imgt.xml.model.hla.ambig</packagename>
                 </xsdOption>
               </xsdOptions>
