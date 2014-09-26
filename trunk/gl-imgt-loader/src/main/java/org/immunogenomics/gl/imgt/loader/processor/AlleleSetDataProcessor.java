@@ -137,7 +137,7 @@ public class AlleleSetDataProcessor {
 				rvDb.setLastUpdateUserId(lastUpdateUserId);
 
 				// Check if length of ReleaseVerStatus > 100, truncate if so
-				if (arvDtlDb.getReleaseVerStatus().length() > 100) {
+				if (arvDtlDb.getReleaseVerStatus() != null && arvDtlDb.getReleaseVerStatus().length() > 100) {
 					arvDtlDb.setReleaseVerStatus(arvDtlDb.getReleaseVerStatus().substring(0, 100));
 				}
 
@@ -518,7 +518,7 @@ public class AlleleSetDataProcessor {
 		AmbigComboElementDto ambigComboElementDto = null;
 		AmbigGroupDto ambigGroupDto = null;
 
-		try{
+		try {
 			// convert the release version
 			releaseVer = mapper.map(ambigData.getReleaseVersion(), org.immunogenomics.gl.imgt.db.model.ReleaseVersion.class, "AmbigReleaseVersionMap");
 
@@ -642,10 +642,10 @@ public class AlleleSetDataProcessor {
 			} // end for gene
 
 		}
-		catch(MappingException e){
+		catch(MappingException e) {
 			e.printStackTrace();
 		}
-		finally{
+		finally {
 
 			geneList = null;
 			releaseVer = null;
@@ -676,7 +676,6 @@ public class AlleleSetDataProcessor {
 			ambigGroupDto = null;
 
 		}
-
 	} // end insertAmbiguousAlleleSet
 
 	public void insertAlleleSetBatch(List<org.immunogenomics.gl.imgt.xml.model.hla.Allele> alleleList) throws Exception {
