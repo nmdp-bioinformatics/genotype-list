@@ -239,14 +239,16 @@
 <!-- 			<a>lastupdated</a> -->
 <!-- 			<b>releaseVerLastUpdated</b> -->
 <!-- 		</field> -->
-<!-- 		<field> -->
-<!-- 			<a>releasestatus</a> -->
-<!-- 			<b>releaseVerStatus</b> -->
-<!-- 		</field> -->
-<!-- 		<field> -->
-<!-- 			<a>confirmed</a> -->
+		<field-exclude>
+			<a>releasestatus</a>
+			<b>releasestatus</b>
+<!-- 			<b>releaseVerStatus</b>  -->
+		</field-exclude>
+		<field-exclude>
+			<a>confirmed</a>
+			<b>confirmed</b>
 <!-- 			<b>releaseVerConfirmedStatus</b> -->
-<!-- 		</field> -->
+		</field-exclude>
 	</mapping>
 
 
