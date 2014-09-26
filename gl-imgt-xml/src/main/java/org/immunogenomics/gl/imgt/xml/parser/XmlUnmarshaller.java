@@ -42,8 +42,7 @@ import org.immunogenomics.gl.imgt.xml.model.hla.Alleles;
  * @author awalts Adrienne N. Walts <awalts@nmdp.org> (National Marrow Donor Program)
  *
  */
-public class XmlUnmarshaller
-{
+public class XmlUnmarshaller {
 
 	private static final Logger LOGGER = LoggerFactory
             .getLogger("xmlEventLogger." + XmlUnmarshaller.class);
@@ -64,8 +63,7 @@ public class XmlUnmarshaller
 	 * @return the unmarshalled Alleles object
 	 * @throws JAXBException
 	 */
-	public Alleles unmarshalAlleles(File xml) throws JAXBException
-	{
+	public Alleles unmarshalAlleles(File xml) throws JAXBException {
 
 		LOGGER.debug("Start::XmlUnmarshaller.unmarshalAlleles");
 
@@ -73,8 +71,7 @@ public class XmlUnmarshaller
 		JAXBContext jc = null;
 		Unmarshaller u = null;
 
-		try
-		{
+		try {
 			jc = JAXBContext.newInstance("org.immunogenomics.gl.imgt.xml.model.hla");
 			u = jc.createUnmarshaller();
 
@@ -84,17 +81,14 @@ public class XmlUnmarshaller
 			// unmarshal
 			Object o = u.unmarshal(xml);
 
-			if (o instanceof Alleles)
-			{
+			if (o instanceof Alleles) {
 				results = (Alleles)o;
 			}
-			else
-			{
+			else {
 				LOGGER.warn("XmlUnmarshaller.unmarshalAlleles:: The JAXBElement is not an instanceof Alleles.");
 			}
 		}
-		catch (JAXBException e)
-		{
+		catch (JAXBException e) {
 			LOGGER.error("XmlUnmarshaller.unmarshalAlleles:: JAXBException " + e);
 			throw e;
 		}
@@ -109,8 +103,7 @@ public class XmlUnmarshaller
 
 	} // end unmarshall
 
-	public AmbiguityData unmarshalAmbiguousAlleles(File xml) throws JAXBException
-	{
+	public AmbiguityData unmarshalAmbiguousAlleles(File xml) throws JAXBException {
 
 		LOGGER.debug("Start::XmlUnmarshaller.unmarshalAmbiguousAlleles");
 
@@ -118,8 +111,7 @@ public class XmlUnmarshaller
 		JAXBContext jc = null;
 		Unmarshaller u = null;
 
-		try
-		{
+		try {
 			jc = JAXBContext.newInstance("org.immunogenomics.gl.imgt.xml.model.hla.ambig");
 			u = jc.createUnmarshaller();
 
@@ -129,17 +121,14 @@ public class XmlUnmarshaller
 			// unmarshal
 			Object o = u.unmarshal(xml);
 
-			if (o instanceof AmbiguityData)
-			{
+			if (o instanceof AmbiguityData) {
 				results = (AmbiguityData)o;
 			}
-			else
-			{
+			else {
 				LOGGER.warn("XmlUnmarshaller.unmarshalAmbiguousAlleles:: The JAXBElement is not an instanceof AmbiguityData.");
 			}
 		}
-		catch (JAXBException e)
-		{
+		catch (JAXBException e) {
 			LOGGER.error("XmlUnmarshaller.unmarshalAmbiguousAlleles:: JAXBException " + e);
 			throw e;
 		}
@@ -164,8 +153,7 @@ public class XmlUnmarshaller
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unused")
-	private String xmlFileToString(File xml) throws FileNotFoundException
-	{
+	private String xmlFileToString(File xml) throws FileNotFoundException {
 
 		StringBuilder data = new StringBuilder();
 		Scanner scanner = null;
@@ -179,10 +167,10 @@ public class XmlUnmarshaller
 
 			} // end while
 		}
-		catch(FileNotFoundException e){
+		catch(FileNotFoundException e) {
 			LOGGER.error("XmlUnmarshaller.xmlFileToString:: FileNotFoundException " + e);
 		}
-		finally{
+		finally {
 			scanner.close();
 		}
 
