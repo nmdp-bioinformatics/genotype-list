@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://hla.alleles.org/xml" xmlns:x="http://hla.alleles.org/xml">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hla.alleles.org/xml" targetNamespace="http://hla.alleles.org/xml" elementFormDefault="qualified">
   <xs:element name="alleles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="x:allele"/>
+        <xs:element maxOccurs="unbounded" ref="allele"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="allele">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="x:releaseversions"/>
-        <xs:element ref="x:locus"/>
-        <xs:element minOccurs="0" ref="x:citations"/>
-        <xs:element minOccurs="0" ref="x:sourcexrefs"/>
-        <xs:sequence minOccurs="0">
-          <xs:element ref="x:sourcematerial"/>
-          <xs:element ref="x:sequence"/>
-        </xs:sequence>
+        <xs:element ref="releaseversions"/>
+        <xs:element ref="locus"/>
+        <xs:element minOccurs="0" ref="citations"/>
+        <xs:element minOccurs="0" ref="sourcexrefs"/>
+        <xs:element ref="sourcematerial"/>
+        <xs:element ref="sequence"/>
       </xs:sequence>
       <xs:attribute name="dateassigned" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="id" use="required" type="xs:NCName"/>
@@ -43,7 +41,7 @@
   <xs:element name="citations">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="x:citation"/>
+        <xs:element maxOccurs="unbounded" ref="citation"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -58,7 +56,7 @@
   <xs:element name="sourcexrefs">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="x:xref"/>
+        <xs:element maxOccurs="unbounded" ref="xref"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -71,9 +69,9 @@
   <xs:element name="sourcematerial">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="x:species"/>
-        <xs:element ref="x:ethnicity"/>
-        <xs:element minOccurs="0" ref="x:samples"/>
+        <xs:element ref="species"/>
+        <xs:element ref="ethnicity"/>
+        <xs:element minOccurs="0" ref="samples"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -87,7 +85,7 @@
   <xs:element name="ethnicity">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="x:sample_ethnicity"/>
+        <xs:element maxOccurs="unbounded" ref="sample_ethnicity"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -95,7 +93,7 @@
   <xs:element name="samples">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="x:sample"/>
+        <xs:element maxOccurs="unbounded" ref="sample"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,9 +105,9 @@
   <xs:element name="sequence">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="x:alignmentreference"/>
-        <xs:element ref="x:nucsequence"/>
-        <xs:element maxOccurs="unbounded" ref="x:feature"/>
+        <xs:element ref="alignmentreference"/>
+        <xs:element ref="nucsequence"/>
+        <xs:element maxOccurs="unbounded" ref="feature"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -124,12 +122,12 @@
     <xs:complexType>
       <xs:sequence>
         <xs:sequence minOccurs="0">
-          <xs:element ref="x:SequenceCoordinates"/>
-          <xs:element ref="x:cDNACoordinates"/>
+          <xs:element ref="SequenceCoordinates"/>
+          <xs:element ref="cDNACoordinates"/>
         </xs:sequence>
         <xs:choice minOccurs="0">
-          <xs:element ref="x:cDNAindel"/>
-          <xs:element ref="x:translation"/>
+          <xs:element ref="cDNAindel"/>
+          <xs:element ref="translation"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="featuretype" use="required" type="xs:NCName"/>

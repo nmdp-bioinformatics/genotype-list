@@ -1,4 +1,4 @@
 This file indicates the version of the XSD's residing in this folder.
 
-hla: v3_8_0
-hla_ambig: v5_0
+hla: v3_16_0 modified
+hla_ambigs: v3_17_0
