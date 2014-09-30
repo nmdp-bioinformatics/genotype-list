@@ -37,7 +37,7 @@ public interface AmbiguityService2 {
 
     /**
      * Return the bit set representing the specified allele or <code>null</code>
-     * if the allele is not recognized by this ambiguity service
+     * if the allele is not recognized by this ambiguity service.
      *
      * @param allele allele, must not be null
      * @return the bit set representing the specified allele or <code>null</code>
@@ -47,7 +47,7 @@ public interface AmbiguityService2 {
 
     /**
      * Return the bit set representing the specified allele list or <code>null</code>
-     * if the allele list is not recognized by this ambiguity service
+     * if the allele list is not recognized by this ambiguity service.
      *
      * @param alleleList allele list, must not be null
      * @return the bit set representing the specified allele list or <code>null</code>
