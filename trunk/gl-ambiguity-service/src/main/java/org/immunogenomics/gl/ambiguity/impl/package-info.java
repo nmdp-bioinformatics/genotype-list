@@ -25,4 +25,4 @@
 /**
  * Genotype list ambiguity service.
  */
-package org.immunogenomics.gl.ambiguity;
+package org.immunogenomics.gl.ambiguity.impl;
