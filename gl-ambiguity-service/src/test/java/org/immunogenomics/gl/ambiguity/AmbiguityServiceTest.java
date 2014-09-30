@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.ambiguity.service;
+package org.immunogenomics.gl.ambiguity;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -49,16 +49,16 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.GlClient;
 
 /**
- * Unit test for GlAmbiguityService.
+ * Unit test for AmbiguityService.
  */
-public final class GlAmbiguityServiceTest {
+public final class AmbiguityServiceTest {
     private Locus locus = new Locus("http://localhost:10080/gl/locus/0", "HLA-A");
     private Allele allele0 = new Allele("http://localhost:10080/gl/allele/0", "A1234", "HLA-A*01:01:01:01", locus);
     private Allele allele1 = new Allele("http://localhost:10080/gl/allele/1", "A1235", "HLA-A*01:01:01:02N", locus);
     private Allele allele2 = new Allele("http://localhost:10080/gl/allele/2", "A1236", "HLA-A*01:01:02:01", locus);
     private Allele allele3 = new Allele("http://localhost:10080/gl/allele/3", "A1237", "HLA-A*01:01:02:02", locus);
     private List<Allele> alleles = ImmutableList.of(allele0, allele1, allele2, allele3);
-    private GlAmbiguityService ambiguityService;
+    private AmbiguityService ambiguityService;
 
     @Mock
     private GlClient client;
@@ -66,17 +66,17 @@ public final class GlAmbiguityServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ambiguityService = new GlAmbiguityService(client, alleles);
+        ambiguityService = new AmbiguityService(client, alleles);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullClient() {
-        new GlAmbiguityService(null, alleles);
+        new AmbiguityService(null, alleles);
     }
 
     @Test(expected=NullPointerException.class)
     public void testConstructorNullAlleles() {
-        new GlAmbiguityService(client, null);
+        new AmbiguityService(client, null);
     }
 
     @Test
@@ -180,17 +180,17 @@ public final class GlAmbiguityServiceTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAllelicAmbiguityNullName() {
+    public void testRegisterAllelicAmbiguityNullName() throws Exception {
         ambiguityService.registerAllelicAmbiguity(null, "HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAllelicAmbiguityNullGlstring() {
-        ambiguityService.registerAllelicAmbiguity("HLA-A*01", null);
+    public void testRegisterAllelicAmbiguityNullGlstring() throws Exception {
+        ambiguityService.registerAllelicAmbiguity("HLA-A*01", (String) null);
     }
 
     @Test
-    public void testRegisterAllelicAmbiguity() {
+    public void testRegisterAllelicAmbiguity() throws Exception {
         when(client.getAlleleList(eq("HLA-A*01:01:01:01/HLA-A*01:01:01:02N"))).thenReturn(new AlleleList("http://localhost:10080/allele-list/0", ImmutableList.of(allele0, allele1)));
 
         AlleleList alleleList = ambiguityService.registerAllelicAmbiguity("HLA-A*01", "HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
@@ -202,17 +202,17 @@ public final class GlAmbiguityServiceTest {
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAllelicAmbiguityAsBitsNullName() {
+    public void testRegisterAllelicAmbiguityAsBitsNullName() throws Exception {
         ambiguityService.registerAllelicAmbiguityAsBits(null, "HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
     }
 
     @Test(expected=NullPointerException.class)
-    public void testRegisterAllelicAmbiguityAsBitsNullGlstring() {
-        ambiguityService.registerAllelicAmbiguityAsBits("HLA-A*01", null);
+    public void testRegisterAllelicAmbiguityAsBitsNullGlstring() throws Exception {
+        ambiguityService.registerAllelicAmbiguityAsBits("HLA-A*01", (String) null);
     }
 
     @Test
-    public void testRegisterAllelicAmbiguityAsBits() {
+    public void testRegisterAllelicAmbiguityAsBits() throws Exception {
         when(client.getAlleleList(eq("HLA-A*01:01:01:01/HLA-A*01:01:01:02N"))).thenReturn(new AlleleList("http://localhost:10080/allele-list/0", ImmutableList.of(allele0, allele1)));
 
         ImmutableBitSet bits = ambiguityService.registerAllelicAmbiguityAsBits("HLA-A*01", "HLA-A*01:01:01:01/HLA-A*01:01:01:02N");

@@ -21,9 +21,11 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.ambiguity.service;
+package org.immunogenomics.gl.ambiguity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.net.URI;
 
 import java.util.List;
 import java.util.Map;
@@ -41,14 +43,14 @@ import org.immunogenomics.gl.client.GlClient;
 /**
  * Genotype list ambiguity service.
  */
-public final class GlAmbiguityService {
+public final class AmbiguityService {
     private final GlClient client;
     private final long size;
     private final Map<Allele, ImmutableBitSet> alleleBitSets;
     private final Map<AlleleList, ImmutableBitSet> alleleListBitSets;
     private final Map<String, AlleleList> allelicAmbiguities;
 
-    public GlAmbiguityService(final GlClient client, final List<Allele> alleles) {
+    public AmbiguityService(final GlClient client, final List<Allele> alleles) {
         checkNotNull(client);
         this.client = client;
 
@@ -98,7 +100,15 @@ public final class GlAmbiguityService {
         return alleleListBitSets.get(alleleList);
     }
 
-    public AlleleList registerAllelicAmbiguity(final String name, final String glstring) {
+    public AlleleList get(final String name) {
+        return null;
+    }
+
+    public AlleleList registerAllelicAmbiguity(final String name, final URI uri) throws AmbiguityServiceException {
+        return null;
+    }
+
+    public AlleleList registerAllelicAmbiguity(final String name, final String glstring) throws AmbiguityServiceException {
         checkNotNull(name);
         checkNotNull(glstring);
 
@@ -115,7 +125,7 @@ public final class GlAmbiguityService {
         return allelicAmbiguities.get(name);
     }
 
-    public ImmutableBitSet registerAllelicAmbiguityAsBits(final String name, final String glstring) {
+    public ImmutableBitSet registerAllelicAmbiguityAsBits(final String name, final String glstring) throws AmbiguityServiceException {
         return asBits(registerAllelicAmbiguity(name, glstring));
     }
 }

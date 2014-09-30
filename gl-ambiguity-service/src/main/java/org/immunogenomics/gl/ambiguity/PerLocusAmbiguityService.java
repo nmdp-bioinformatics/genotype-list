@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.ambiguity.service;
+package org.immunogenomics.gl.ambiguity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,16 +41,16 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.GlClient;
 
 /**
- * Genotype list ambiguity service.
+ * Genotype list per locus ambiguity service.
  */
-public final class PerLocusGlAmbiguityService {
+public final class PerLocusAmbiguityService {
     private final GlClient client;
     private final ListMultimap<Locus, Allele> alleles;
     private final Map<Allele, ImmutableBitSet> alleleBitSets;
     private final Map<AlleleList, ImmutableBitSet> alleleListBitSets;
     private final Map<String, AlleleList> allelicAmbiguities;
 
-    public PerLocusGlAmbiguityService(final GlClient client, final ListMultimap<Locus, Allele> alleles) {
+    public PerLocusAmbiguityService(final GlClient client, final ListMultimap<Locus, Allele> alleles) {
         checkNotNull(client);
         this.client = client;
 
