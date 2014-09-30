@@ -21,8 +21,33 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.ambiguity.impl;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+
+import org.immunogenomics.gl.Allele;
+import org.immunogenomics.gl.Locus;
+
+import org.immunogenomics.gl.ambiguity.AmbiguityService2;
 
 /**
- * Genotype list ambiguity service.
+ * Genotype list ambiguity service module.
  */
-package org.immunogenomics.gl.ambiguity;
+public final class AmbiguityServiceModule extends AbstractModule {
+
+    @Override
+    protected void configure() {
+        bind(AmbiguityService2.class).to(AmbiguityService2Impl.class);
+    }
+
+    @Provides @Singleton
+    ListMultimap<Locus, Allele> createAlleles() {
+        return ArrayListMultimap.create();
+    }
+}
+
