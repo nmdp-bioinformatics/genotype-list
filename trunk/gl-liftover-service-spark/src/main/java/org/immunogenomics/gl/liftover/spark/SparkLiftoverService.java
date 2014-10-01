@@ -155,6 +155,17 @@ public final class SparkLiftoverService implements SparkApplication {
             String sourceNamespace = null;
             String sourceUri = null;
             String targetNamespace = null;
+            JsonParser parser = null;
+            try {
+                parser = jsonFactory.createJsonParser(request.body());
+                parser.nextToken();
+                while (parser.nextToken() != JsonToken.END_OBJECT) {
+                    String field = parser.getCurrentName();
+                    parser.nextToken();
+
+                    if ("sourceNamespace".equals(field)) {
+                        sourceNamespace = parser.getText();
+                    }
                     else if ("sourceUri".equals(field)) {
                         sourceUri = parser.getText();
                     }
