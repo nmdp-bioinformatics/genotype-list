@@ -32,15 +32,15 @@ import org.immunogenomics.gl.service.nomenclature.ClasspathNomenclature;
 import com.google.inject.Inject;
 
 /**
- * IMGT/HLA version 3.9.0 nomenclature.
+ * IMGT/HLA version 1.13.0 nomenclature.
  */
-public final class ImgtHla3_9_0 extends ClasspathNomenclature {
+public final class ImgtHla1_13_0 extends ClasspathNomenclature {
 
     @Inject
-    public ImgtHla3_9_0(final GlstringResolver glstringResolver,
+    public ImgtHla1_13_0(final GlstringResolver glstringResolver,
                          final IdResolver idResolver,
                          final GlRegistry glRegistry) {
-        super("imgt-hla-3.9.0.txt", glstringResolver, idResolver, glRegistry);
+        super("imgt-hla-1.13.0.txt", glstringResolver, idResolver, glRegistry);
     }
 
     @Override
@@ -50,7 +50,7 @@ public final class ImgtHla3_9_0 extends ClasspathNomenclature {
 
     @Override
     public String getVersion() {
-        return "3.9.0";
+        return "1.13.0";
     }
 
     @Override
