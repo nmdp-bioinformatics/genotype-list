@@ -184,7 +184,92 @@ final class SparkAmbiguityService implements SparkApplication {
                     }
                 }
             });
+
+        /*
+
+          todo:  this method would require GlClient
+
+        post(new Route("bits") {
+                @Override
+                public Object handle(final Request request, final Response response) {
+                    response.type("application/json");
+
+                    if (isNullOrEmpty(request.body())) {
+                        response.status(400);
+                        logger.warn("Unable to retrieve bits (400), request body was empty");
+                        return errorJson("Unable to retrieve bits, request body was empty");
+                    }
+                    String glstring = null;
+                    URI uri = null;
+                    JsonParser parser = null;
+                    try {
+                        parser = jsonFactory.createJsonParser(request.body());
+                        parser.nextToken();
+                        while (parser.nextToken() != JsonToken.END_OBJECT) {
+                            String field = parser.getCurrentName();
+                            parser.nextToken();
+
+                            if ("glstring".equals(field)) {
+                                glstring = parser.getText();
+                            }
+                            else if ("uri".equals(field)) {
+                                try {
+                                    uri = new URI(parser.getText());
+                                }
+                                catch (URISyntaxException e) {
+                                    throw new IOException("invalid uri", e);
+                                }
+                            }
+                        }
+
+                        if (isNullOrEmpty(glstring) && uri == null) {
+                            response.status(400);
+                            logger.warn("Unable to retrieve bits (400), at least one of { glstring, uri } is required");
+                            return errorJson("Unable to retrieve bits, at least one of { glstring, uri } is required");
+                        }
+
+                        response.status(200);
+                        logger.trace("Retrieved bits (200) {}");
+                        return bitsJson(bits);
+                    }
+                    catch (IOException e) {
+                        response.status(400);
+                        logger.warn("Unable to retrieve bits (400), caught {}", e.getMessage());
+                        return errorJson("Unable to retrieve bits");
+                    }
+                    catch (AmbiguityServiceException e) {
+                        response.status(400);
+                        logger.warn("Unable to retrieve bits (400), caught {}", e.getMessage());
+                        return errorJson("Unable to retrieve bits");
+                    }
+                }
+            });
+        */
     }
+
+    /*
+    private String bitsJson(final ImmutableBitSet bits) {
+        StringWriter writer = new StringWriter();
+        try {
+            JsonGenerator generator = jsonFactory.createJsonGenerator(writer);
+            generator.writeStartObject();
+            generator.writeFieldName("bits");
+            generator.writeStartArray();
+            UnsafeBitSet copy = bits.unsafeCopy();
+            for (long value : bits.getBits()) {
+                generator.writeString(String.valueOf(value));
+            }
+            generator.writeEndArray();
+            generator.writeIntegerField("wlen", bits.getWlen());
+            generator.writeEndObject();
+            generator.close();
+        }
+        catch (IOException e) {
+            // ignore
+        }
+        return writer.toString();
+    }
+    */
 
     private String errorJson(final String error) {
         StringWriter writer = new StringWriter();

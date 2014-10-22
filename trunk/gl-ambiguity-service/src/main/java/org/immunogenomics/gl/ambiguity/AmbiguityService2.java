@@ -44,6 +44,8 @@ public interface AmbiguityService2 {
      *    if the allele is not recognized by this ambiguity service
      */
     ImmutableBitSet bits(Allele allele);
+    // use string array for bits and string value for wlen
+    // use application/x-java-serialized-object mime type if requested
 
     /**
      * Return the bit set representing the specified allele list or <code>null</code>
