@@ -143,14 +143,13 @@ public final class SparkLiftoverService implements SparkApplication {
             this.name = path.replace("/", "").replace('-', ' ');
         }
 
+
         @Override
         public Object handle(final Request request, final Response response) {
             response.type("application/json");
 
             if (isNullOrEmpty(request.body())) {
-                response.status(400);
-                logger.warn("Unable to liftover {} (400), request body was empty", name);
-                return errorJson("Unable to liftover " + name);
+                return badRequest(response, "request body was empty");
             }
             String sourceNamespace = null;
             String sourceUri = null;
@@ -175,36 +174,28 @@ public final class SparkLiftoverService implements SparkApplication {
                 }
 
                 if (isNullOrEmpty(sourceNamespace)) {
-                    response.status(400);
-                    logger.warn("Unable to liftover {} (400), missing source namespace", name);
-                    return errorJson( "Unable to liftover " + name);
+                    return badRequest(response, "missing source namespace");
                 }
                 if (isNullOrEmpty(sourceUri)) {
-                    response.status(400);
-                    logger.warn("Unable to liftover {} (400), missing source URI", name);
-                    return errorJson( "Unable to liftover " + name);
+                    return badRequest(response, "missing source URI");
                 }
                 if (isNullOrEmpty(targetNamespace)) {
-                    response.status(400);
-                    logger.warn("Unable to liftover {} (400), missing target namespace", name);
-                    return errorJson( "Unable to liftover " + name);
+                    return badRequest(response, "missing target namespace");
                 }
                 GlResource glResource = liftoverGlResource(sourceNamespace, sourceUri, targetNamespace);
-                response.status(201);
-                response.header("Location", glResource.getId());
-                logger.trace("Liftover (201) Location {}", glResource.getId());
+                response.status(200);
+                logger.trace("Liftover (200) target URI {}", glResource.getId());
                 return responseJson(sourceNamespace, sourceUri, targetNamespace, glResource.getId());
             }
-            catch (IOException e) {
-                response.status(400);
-                logger.warn("Unable to liftover {} (400), caught {}", name, e.getMessage());
-                return errorJson( "Unable to liftover " + name);
+            catch (IOException | LiftoverServiceException e) {
+                return badRequest(response, "caught " + e.getMessage());
             }
-            catch (LiftoverServiceException e) {
-                response.status(400);
-                logger.warn("Unable to liftover {} (400), caught {}", name, e.getMessage());
-                return errorJson( "Unable to liftover " + name);
-            }
+        }
+
+        private String badRequest(final Response response, final String message) {
+            response.status(400);
+            logger.warn("Unable to liftover {} (400), {}", name, message);
+            return errorJson("Unable to liftover " + name + ", " + message);
         }
 
         /**
