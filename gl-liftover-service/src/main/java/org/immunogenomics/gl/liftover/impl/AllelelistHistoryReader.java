@@ -31,7 +31,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Splitter;
 
@@ -157,8 +159,39 @@ final class AllelelistHistoryReader {
         }
     }
 
+
+    Map<String, String> readGgroupIds() throws IOException {
+        BufferedReader reader = null;
+        Map<String, String> ggroupIds = new HashMap<String, String>();
+        try {
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("g-group-ids.txt")));
+
+            while (reader.ready()) {
+                String line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+                List<String> tokens = Splitter.on("\t").omitEmptyStrings().splitToList(line);
+                String alleleToken = tokens.get(0);
+                String accession = tokens.get(1);
+
+                ggroupIds.put(alleleToken, accession);
+            }
+        }
+        finally {
+            try {
+                reader.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
+        }
+        return ggroupIds;
+    }
+
     void readGgroups() throws IOException {
-        int count = 0;
+        Map<String, String> ggroupIds = readGgroupIds();
+
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("g-groups.txt")));
@@ -169,8 +202,10 @@ final class AllelelistHistoryReader {
                     break;
                 }
                 List<String> tokens = Splitter.on(" ").omitEmptyStrings().splitToList(line);
+                String ggroupToken = tokens.get(0);
                 String ggroup = fixAllele(tokens.get(0));
-                String accession = String.format("G%05d", count);
+                String accession = ggroupIds.get(ggroupToken);
+                if (accession == null) { System.out.println("could not find accession for " + ggroupToken); } else {
                 for (String alleleToken : Splitter.on("/").split(tokens.get(1))) {
                     String allele = locus(ggroup) + "*" + alleleToken;
                     for (String namespace : alleleNames.rowKeySet()) {
@@ -178,9 +213,8 @@ final class AllelelistHistoryReader {
                             alleleNames.put(namespace, accession, ggroup);
                         }
                     }
-
                 }
-                count++;
+                }
             }
         }
         finally {
