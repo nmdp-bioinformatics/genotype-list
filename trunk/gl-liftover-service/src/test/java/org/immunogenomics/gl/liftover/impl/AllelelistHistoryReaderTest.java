@@ -53,7 +53,7 @@ public final class AllelelistHistoryReaderTest {
 
         assertEquals("HLA-A*01:01:01:01", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA00001"));
         assertEquals("HLA-A*010101", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/2.0.0/", "HLA00001"));
-        assertEquals("HLA-A*02:07:01G", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "G00005"));
+        assertEquals("HLA-A*02:07:01G", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HGG00006"));
         assertEquals("HLA-C", locusNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA-C"));
         assertEquals("HLA-C", locusNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA-Cw"));
         assertEquals("HLA-Cw", locusNames.get("https://gl.immunogenomics.org/imgt-hla/2.0.0/", "HLA-C"));
