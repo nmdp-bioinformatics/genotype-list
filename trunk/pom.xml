@@ -81,6 +81,7 @@
     <module>gl-service-id-thrift</module>
     <module>gl-service-id-thrift-server</module>
     <module>gl-client</module>
+    <module>gl-client-local</module>
     <module>gl-client-functional-tests</module>
     <module>gl-ambiguity-service</module>
     <module>gl-ambiguity-service-spark</module>
