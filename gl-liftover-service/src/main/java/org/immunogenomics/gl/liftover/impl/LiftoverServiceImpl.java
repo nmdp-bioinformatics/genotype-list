@@ -108,7 +108,7 @@ final class LiftoverServiceImpl implements LiftoverService {
 
             targetLocusName = locusNames.get(targetNamespace, sourceLocus.getGlstring());
             if (targetLocusName == null) {
-                throw new LiftoverServiceException("could not find locus in target nomenclature with glstring " + sourceLocus.getGlstring());
+                throw new LiftoverServiceException("could not find locus in target nomenclature " + targetNamespace + " with glstring " + sourceLocus.getGlstring());
             }
         }
         catch (ExecutionException e) {
@@ -148,7 +148,7 @@ final class LiftoverServiceImpl implements LiftoverService {
 
             targetAlleleName = alleleNames.get(targetNamespace, sourceAllele.getAccession());
             if (targetAlleleName == null) {
-                throw new LiftoverServiceException("could not find allele in target nomenclature with glstring " + sourceAllele.getGlstring());
+                throw new LiftoverServiceException("could not find allele in target nomenclature " + targetNamespace + " with accession " + sourceAllele.getAccession() + " or glstring " + sourceAllele.getGlstring());
             }
         }
         catch (ExecutionException e) {
