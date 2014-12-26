@@ -85,49 +85,49 @@ public final class SparkLiftoverService implements SparkApplication {
         post(new PostRoute("/locus") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverLocus(sourceNamespace, sourceUri, targetNamespace + "locus");
+                    return liftoverService.liftoverLocus(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/allele") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverAllele(sourceNamespace, sourceUri, targetNamespace + "allele");
+                    return liftoverService.liftoverAllele(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/allele-list") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverAlleleList(sourceNamespace, sourceUri, targetNamespace + "allele-list");
+                    return liftoverService.liftoverAlleleList(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/haplotype") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverHaplotype(sourceNamespace, sourceUri, targetNamespace + "haplotype");
+                    return liftoverService.liftoverHaplotype(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/genotype") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverGenotype(sourceNamespace, sourceUri, targetNamespace + "genotype");
+                    return liftoverService.liftoverGenotype(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/genotype-list") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverGenotypeList(sourceNamespace, sourceUri, targetNamespace + "genotype-list");
+                    return liftoverService.liftoverGenotypeList(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
 
         post(new PostRoute("/multilocus-unphased-genotype") {
                 @Override
                 public GlResource liftoverGlResource(final String sourceNamespace, final String sourceUri, final String targetNamespace) throws LiftoverServiceException {
-                    return liftoverService.liftoverMultilocusUnphasedGenotype(sourceNamespace, sourceUri, targetNamespace + "multilocus-unphased-genotype");
+                    return liftoverService.liftoverMultilocusUnphasedGenotype(sourceNamespace, sourceUri, targetNamespace);
                 }
             });
     }
