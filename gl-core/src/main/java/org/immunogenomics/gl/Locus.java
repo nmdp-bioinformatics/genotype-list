@@ -26,6 +26,7 @@ package org.immunogenomics.gl;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -62,5 +63,23 @@ public final class Locus extends GlResource implements Serializable {
     @Override
     public String toString() {
         return glstring;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getGlstring());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Locus)) {
+            return false;
+        }
+        Locus locus = (Locus) o;
+        return Objects.equals(getId(), locus.getId())
+            && Objects.equals(getGlstring(), locus.getGlstring());
     }
 }

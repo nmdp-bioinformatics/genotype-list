@@ -24,6 +24,7 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -107,5 +108,30 @@ public final class AlleleListTest {
     public void testAlleles() {
         AlleleList alleleList = new AlleleList("http://immunogenomics.org/allele-list/0", alleles);
         assertEquals(alleles, alleleList.getAlleles());
+    }
+
+    @Test
+    public void testHashCode() {
+        AlleleList a = new AlleleList("http://immunogenomics.org/allele-list/0", alleles);
+        AlleleList sameA = new AlleleList("http://immunogenomics.org/allele-list/0", alleles);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        AlleleList a = new AlleleList("http://immunogenomics.org/allele-list/0", alleles);
+        AlleleList altA = new AlleleList("http://alt.immunogenomics.org/allele-list/0", alleles);
+        AlleleList differentGlstring = new AlleleList("http://immunogenomics.org/allele-list/0", single);
+        AlleleList sameA = new AlleleList("http://immunogenomics.org/allele-list/0", alleles);
+        AlleleList b = new AlleleList("http://immunogenomics.org/allele-list/1", single);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }

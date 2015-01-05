@@ -24,6 +24,8 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -57,5 +59,30 @@ public final class LocusTest {
     public void testToStringIsGlstring() {
         Locus locus = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
         assertEquals(locus.getGlstring(), locus.toString());
+    }
+
+    @Test
+    public void testHashCode() {
+        Locus a = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
+        Locus sameA = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Locus a = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
+        Locus altA = new Locus("http://alt.immunogenomics.org/locus/0", "HLA-A");
+        Locus differentGlstring = new Locus("http://immunogenomics.org/locus/0", "HLA-B");
+        Locus sameA = new Locus("http://immunogenomics.org/locus/0", "HLA-A");
+        Locus b = new Locus("http://immunogenomics.org/locus/1", "HLA-B");
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }

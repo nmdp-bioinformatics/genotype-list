@@ -24,6 +24,8 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -75,5 +77,32 @@ public final class AlleleTest {
     public void testLocus() {
         Allele allele = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
         assertEquals(locus, allele.getLocus());
+    }
+
+    @Test
+    public void testHashCode() {
+        Allele a = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
+        Allele sameA = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Allele a = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
+        Allele altA = new Allele("http://alt.immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
+        Allele differentAccession = new Allele("http://immunogenomics.org/allele/0", "A12345", "HLA-A*01:01:01:01", locus);
+        Allele differentGlstring = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:02N", locus);
+        Allele sameA = new Allele("http://immunogenomics.org/allele/0", "A01234", "HLA-A*01:01:01:01", locus);
+        Allele b = new Allele("http://immunogenomics.org/allele/1", "A12345", "HLA-B*01:01:01:01", locus);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentAccession));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }
