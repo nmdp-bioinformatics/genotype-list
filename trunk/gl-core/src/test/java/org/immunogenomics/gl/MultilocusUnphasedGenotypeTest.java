@@ -24,7 +24,9 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
@@ -119,5 +121,30 @@ public final class MultilocusUnphasedGenotypeTest {
     public void testToStringIsGlstring() {
         MultilocusUnphasedGenotype genotype = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
         assertEquals(genotype.getGlstring(), genotype.toString());
+    }
+
+    @Test
+    public void testHashCode() {
+        MultilocusUnphasedGenotype a = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
+        MultilocusUnphasedGenotype sameA = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        MultilocusUnphasedGenotype a = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
+        MultilocusUnphasedGenotype altA = new MultilocusUnphasedGenotype("http://alt.immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
+        MultilocusUnphasedGenotype differentGlstring = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", single);
+        MultilocusUnphasedGenotype sameA = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/0", genotypeLists);
+        MultilocusUnphasedGenotype b = new MultilocusUnphasedGenotype("http://immunogenomics.org/multilocus-unphased-genotype/1", single);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }

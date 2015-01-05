@@ -27,6 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -89,5 +90,23 @@ public final class AlleleList extends GlResource implements Serializable {
     @Override
     public String toString() {
         return glstring;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getGlstring());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof AlleleList)) {
+            return false;
+        }
+        AlleleList alleleList = (AlleleList) o;
+        return Objects.equals(getId(), alleleList.getId())
+            && Objects.equals(getGlstring(), alleleList.getGlstring());
     }
 }

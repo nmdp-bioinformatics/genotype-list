@@ -24,7 +24,9 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
@@ -97,5 +99,30 @@ public final class HaplotypeTest {
     public void testAlleleLists() {
         Haplotype haplotype = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
         assertEquals(alleleLists, haplotype.getAlleleLists());
+    }
+
+    @Test
+    public void testHashCode() {
+        Haplotype a = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
+        Haplotype sameA = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Haplotype a = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
+        Haplotype altA = new Haplotype("http://alt.immunogenomics.org/haplotype/0", alleleLists);
+        Haplotype differentGlstring = new Haplotype("http://immunogenomics.org/haplotype/0", single);
+        Haplotype sameA = new Haplotype("http://immunogenomics.org/haplotype/0", alleleLists);
+        Haplotype b = new Haplotype("http://immunogenomics.org/haplotype/1", single);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }

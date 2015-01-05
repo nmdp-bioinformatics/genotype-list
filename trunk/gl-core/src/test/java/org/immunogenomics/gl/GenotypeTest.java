@@ -24,6 +24,7 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -109,5 +110,30 @@ public final class GenotypeTest {
     public void testHaplotypes() {
         Genotype genotype = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
         assertEquals(haplotypes, genotype.getHaplotypes());
+    }
+
+    @Test
+    public void testHashCode() {
+        Genotype a = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+        Genotype sameA = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Genotype a = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+        Genotype altA = new Genotype("http://alt.immunogenomics.org/genotype/0", haplotypes);
+        Genotype differentGlstring = new Genotype("http://immunogenomics.org/genotype/0", single);
+        Genotype sameA = new Genotype("http://immunogenomics.org/genotype/0", haplotypes);
+        Genotype b = new Genotype("http://immunogenomics.org/genotype/1", single);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }

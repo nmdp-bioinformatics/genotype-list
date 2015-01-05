@@ -24,6 +24,7 @@
 package org.immunogenomics.gl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -114,5 +115,30 @@ public final class GenotypeListTest {
     public void testGenotypes() {
         GenotypeList genotypeList = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotypes);
         assertEquals(genotypes, genotypeList.getGenotypes());
+    }
+
+    @Test
+    public void testHashCode() {
+        GenotypeList a = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotypes);
+        GenotypeList sameA = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotypes);
+
+        assertEquals(a.hashCode(), sameA.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        GenotypeList a = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotypes);
+        GenotypeList altA = new GenotypeList("http://alt.immunogenomics.org/genotype-list/0", genotypes);
+        GenotypeList differentGlstring = new GenotypeList("http://immunogenomics.org/genotype-list/0", single);
+        GenotypeList sameA = new GenotypeList("http://immunogenomics.org/genotype-list/0", genotypes);
+        GenotypeList b = new GenotypeList("http://immunogenomics.org/genotype-list/1", single);
+
+        assertFalse(a.equals(null));
+        assertFalse(a.equals(new Object()));
+        assertTrue(a.equals(a));
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(altA));
+        assertFalse(a.equals(differentGlstring));
+        assertTrue(a.equals(sameA));
     }
 }
