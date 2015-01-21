@@ -86,7 +86,8 @@
     <module>gl-ambiguity-service</module>
     <module>gl-ambiguity-service-spark</module>
     <module>gl-ambiguity-service-webapp</module>
-    <module>gl-ambiguity-service-functional-tests</module>
+    <module>gl-ambiguity-service-functional-tests</module> 
+    <module>gl-ambiguity-client</module>
     <module>gl-liftover-service</module>
     <module>gl-liftover-service-spark</module>
     <module>gl-liftover-service-webapp</module>
