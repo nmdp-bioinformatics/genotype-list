@@ -32,22 +32,23 @@ import static spark.Spark.post;
 import java.io.StringWriter;
 import java.io.IOException;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
-import com.google.common.net.UrlEscapers;
-
 import com.google.inject.Inject;
+
+import org.dishevelled.bitset.ImmutableBitSet;
+import org.dishevelled.bitset.UnsafeBitSet;
 
 import org.immunogenomics.gl.AlleleList;
 
-import org.immunogenomics.gl.ambiguity.AmbiguityService2;
+import org.immunogenomics.gl.ambiguity.AmbiguityService;
 import org.immunogenomics.gl.ambiguity.AmbiguityServiceException;
+
+import org.immunogenomics.gl.client.GlClient;
+import org.immunogenomics.gl.client.GlClientException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,15 +63,18 @@ import spark.servlet.SparkApplication;
  * Implementation of a RESTful genotype list ambiguity service using Spark.
  */
 final class SparkAmbiguityService implements SparkApplication {
+    private final GlClient client;
     private final JsonFactory jsonFactory;
-    private final AmbiguityService2 ambiguityService;
+    private final AmbiguityService ambiguityService;
     private final Logger logger = LoggerFactory.getLogger(SparkAmbiguityService.class);
 
 
     @Inject
-    SparkAmbiguityService(final JsonFactory jsonFactory, final AmbiguityService2 ambiguityService) {
+    SparkAmbiguityService(final GlClient client, final JsonFactory jsonFactory, final AmbiguityService ambiguityService) {
+        checkNotNull(client);
         checkNotNull(jsonFactory);
         checkNotNull(ambiguityService);
+        this.client = client;
         this.jsonFactory = jsonFactory;
         this.ambiguityService = ambiguityService;
     }
@@ -99,7 +103,7 @@ final class SparkAmbiguityService implements SparkApplication {
                         return errorJson("Not found");
                     }
                     response.status(200);
-                    return responseJson(name, alleleList.getGlstring(), alleleList.getId(), request.url());
+                    return ambiguityJson(name, alleleList.getGlstring(), alleleList.getId());
                 }
             });
 
@@ -115,7 +119,7 @@ final class SparkAmbiguityService implements SparkApplication {
                     }
                     String name = null;
                     String glstring = null;
-                    URI uri = null;
+                    String uri = null;
                     JsonParser parser = null;
                     try {
                         parser = jsonFactory.createJsonParser(request.body());
@@ -131,12 +135,7 @@ final class SparkAmbiguityService implements SparkApplication {
                                 glstring = parser.getText();
                             }
                             else if ("uri".equals(field)) {
-                                try {
-                                    uri = new URI(parser.getText());
-                                }
-                                catch (URISyntaxException e) {
-                                    throw new IOException("invalid uri", e);
-                                }
+                                uri = parser.getText();
                             }
                         }
 
@@ -152,12 +151,12 @@ final class SparkAmbiguityService implements SparkApplication {
                         }
 
                         AlleleList alleleList = null;
-                        // use uri if both are specificed
+                        // use uri if both are specified
                         if (uri != null) {
-                            alleleList = ambiguityService.register(name, uri);
+                            alleleList = client.getAlleleList(uri);
                         }
                         else {
-                            alleleList = ambiguityService.register(name, glstring);
+                            alleleList = client.createAlleleList(glstring);
                         }
 
                         if (alleleList == null) {
@@ -165,19 +164,13 @@ final class SparkAmbiguityService implements SparkApplication {
                             logger.warn("Unable to register allelic ambiguity (400)");
                             return errorJson("Unable to register alleleic ambiguity");
                         }
+                        ambiguityService.register(name, alleleList);
  
-                        response.status(201);
-                        String location = request.url() + "/" + urlEncode(name);
-                        response.header("Location", location);
-                        logger.trace("Registered allelic ambiguity (201) {} Location {}", alleleList.getId(), location);
-                        return responseJson(name, glstring, alleleList.getId(), location);
+                        response.status(200);
+                        logger.trace("Registered allelic ambiguity (200) {} --> {}", name, alleleList.getId());
+                        return ambiguityJson(name, glstring, alleleList.getId());
                     }
-                    catch (IOException e) {
-                        response.status(400);
-                        logger.warn("Unable to register allelic ambiguity (400), caught {}", e.getMessage());
-                        return errorJson( "Unable to register allelic ambiguity");
-                    }
-                    catch (AmbiguityServiceException e) {
+                    catch (AmbiguityServiceException | GlClientException | IOException e) {
                         response.status(400);
                         logger.warn("Unable to register allelic ambiguity (400), caught {}", e.getMessage());
                         return errorJson( "Unable to register allelic ambiguity");
@@ -185,9 +178,27 @@ final class SparkAmbiguityService implements SparkApplication {
                 }
             });
 
-        /*
+        get(new Route("bits/${name}") {
+                @Override
+                public Object handle(final Request request, final Response response) {
+                    response.type("application/json");
+                    String name = request.params(":name");
 
-          todo:  this method would require GlClient
+                    AlleleList alleleList = ambiguityService.get(name);
+                    if (alleleList == null) {
+                        response.status(404);
+                        return errorJson("Not found");
+                    }
+                    ImmutableBitSet bits = ambiguityService.bits(alleleList);
+                    if (bits == null) {
+                        response.status(404);
+                        return errorJson("Not found");
+                    }
+
+                    response.status(200);
+                    return bitsJson(bits);
+                }
+            });
 
         post(new Route("bits") {
                 @Override
@@ -199,8 +210,9 @@ final class SparkAmbiguityService implements SparkApplication {
                         logger.warn("Unable to retrieve bits (400), request body was empty");
                         return errorJson("Unable to retrieve bits, request body was empty");
                     }
+                    String name = null;
                     String glstring = null;
-                    URI uri = null;
+                    String uri = null;
                     JsonParser parser = null;
                     try {
                         parser = jsonFactory.createJsonParser(request.body());
@@ -209,45 +221,60 @@ final class SparkAmbiguityService implements SparkApplication {
                             String field = parser.getCurrentName();
                             parser.nextToken();
 
-                            if ("glstring".equals(field)) {
+                            if ("name".equals(field)) {
+                                name = parser.getText();
+                            }
+                            else if ("glstring".equals(field)) {
                                 glstring = parser.getText();
                             }
                             else if ("uri".equals(field)) {
-                                try {
-                                    uri = new URI(parser.getText());
-                                }
-                                catch (URISyntaxException e) {
-                                    throw new IOException("invalid uri", e);
-                                }
+                                uri = parser.getText();
                             }
                         }
 
-                        if (isNullOrEmpty(glstring) && uri == null) {
+                        if (isNullOrEmpty(name) && isNullOrEmpty(glstring) && (uri == null)) {
                             response.status(400);
-                            logger.warn("Unable to retrieve bits (400), at least one of { glstring, uri } is required");
-                            return errorJson("Unable to retrieve bits, at least one of { glstring, uri } is required");
+                            logger.warn("Unable to retrieve bits (400), at least one of { name, glstring, uri } is required");
+                            return errorJson("Unable to retrieve bits, at least one of { name, glstring, uri } is required");
+                        }
+
+                        AlleleList alleleList = null;
+                        if (name != null) {
+                            alleleList = ambiguityService.get(name);
+                        }
+                        else if (uri != null) {
+                            alleleList = client.getAlleleList(uri);
+                        }
+                        else if (glstring != null) {
+                            alleleList = client.createAlleleList(glstring);
+                        }
+
+                        if (alleleList == null) {
+                            response.status(400);
+                            logger.warn("Unable to retrieve bits (400)");
+                            return errorJson("Unable to retrieve bits");
+                        }
+                        ImmutableBitSet bits = ambiguityService.bits(alleleList);
+                        if (bits == null) {
+                            response.status(400);
+                            logger.warn("Unable to retrieve bits (400)");
+                            return errorJson("Unable to retrieve bits");
                         }
 
                         response.status(200);
-                        logger.trace("Retrieved bits (200) {}");
+                        logger.trace("Retrieved bits (200) {} {} {}", name, uri, abbrev(glstring));
                         return bitsJson(bits);
                     }
-                    catch (IOException e) {
+                    catch (GlClientException | IOException e) {
                         response.status(400);
                         logger.warn("Unable to retrieve bits (400), caught {}", e.getMessage());
-                        return errorJson("Unable to retrieve bits");
-                    }
-                    catch (AmbiguityServiceException e) {
-                        response.status(400);
-                        logger.warn("Unable to retrieve bits (400), caught {}", e.getMessage());
-                        return errorJson("Unable to retrieve bits");
+                        return errorJson( "Unable to retrieve bits");
                     }
                 }
             });
-        */
     }
 
-    /*
+
     private String bitsJson(final ImmutableBitSet bits) {
         StringWriter writer = new StringWriter();
         try {
@@ -256,11 +283,11 @@ final class SparkAmbiguityService implements SparkApplication {
             generator.writeFieldName("bits");
             generator.writeStartArray();
             UnsafeBitSet copy = bits.unsafeCopy();
-            for (long value : bits.getBits()) {
+            for (long value : copy.getBits()) {
                 generator.writeString(String.valueOf(value));
             }
             generator.writeEndArray();
-            generator.writeIntegerField("wlen", bits.getWlen());
+            generator.writeNumberField("wlen", copy.getWlen());
             generator.writeEndObject();
             generator.close();
         }
@@ -269,7 +296,6 @@ final class SparkAmbiguityService implements SparkApplication {
         }
         return writer.toString();
     }
-    */
 
     private String errorJson(final String error) {
         StringWriter writer = new StringWriter();
@@ -286,7 +312,7 @@ final class SparkAmbiguityService implements SparkApplication {
         return writer.toString();
     }
 
-    private String responseJson(final String name, final String glstring, final String uri, final String location) {
+    private String ambiguityJson(final String name, final String glstring, final String uri) {
         StringWriter writer = new StringWriter();
         try {
             JsonGenerator generator = jsonFactory.createJsonGenerator(writer);
@@ -299,9 +325,6 @@ final class SparkAmbiguityService implements SparkApplication {
             generator.writeStartObject();
             generator.writeStringField("uri", uri);
             generator.writeEndObject();
-            generator.writeStartObject();
-            generator.writeStringField("location", location);
-            generator.writeEndObject();
             generator.close();
         }
         catch (IOException e) {
@@ -310,7 +333,10 @@ final class SparkAmbiguityService implements SparkApplication {
         return writer.toString();
     }
 
-    private static String urlEncode(final String name) {
-        return UrlEscapers.urlPathSegmentEscaper().escape(name);
+    private static String abbrev(final String value) {
+        if (value == null) {
+            return null;
+        }
+        return (value.length() > 64) ? value.substring(0, 64) + "..." : value;
     }
 }

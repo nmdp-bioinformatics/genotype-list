@@ -46,7 +46,7 @@ import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
 import org.immunogenomics.gl.Locus;
 
-import org.immunogenomics.gl.ambiguity.AmbiguityService2;
+import org.immunogenomics.gl.ambiguity.AmbiguityService;
 import org.immunogenomics.gl.ambiguity.AmbiguityServiceException;
 
 import org.immunogenomics.gl.client.GlClient;
@@ -55,8 +55,7 @@ import org.immunogenomics.gl.client.GlClientException;
 /**
  * Genotype list ambiguity service.
  */
-final class AmbiguityService2Impl implements AmbiguityService2 {
-    private final GlClient client;
+final class AmbiguityServiceImpl implements AmbiguityService {
     private final ImmutableListMultimap<Locus, Allele> alleles;
     private final ImmutableMap<Allele, ImmutableBitSet> alleleBitSets;
     private final ConcurrentMap<AlleleList, ImmutableBitSet> alleleListBitSets;
@@ -64,10 +63,8 @@ final class AmbiguityService2Impl implements AmbiguityService2 {
     private static final int DEFAULT_CAPACITY = 100000;
 
     @Inject
-    AmbiguityService2Impl(final GlClient client, final ListMultimap<Locus, Allele> alleles) {
-        checkNotNull(client);
+    AmbiguityServiceImpl(final ListMultimap<Locus, Allele> alleles) {
         checkNotNull(alleles);
-        this.client = client;
         this.alleles = ImmutableListMultimap.copyOf(alleles);
 
         ImmutableMap.Builder<Allele, ImmutableBitSet> builder = ImmutableMap.builder();
@@ -89,49 +86,20 @@ final class AmbiguityService2Impl implements AmbiguityService2 {
 
     @Override
     public ImmutableBitSet bits(final Allele allele) {
+        checkNotNull(allele);
         return alleleBitSets.get(allele);
     }
 
     @Override
     public ImmutableBitSet bits(final AlleleList alleleList) {
+        checkNotNull(alleleList);
         return alleleListBitSets.get(alleleList);
     }
 
     @Override
     public AlleleList get(final String name) {
+        checkNotNull(name);
         return allelicAmbiguities.get(name);
-    }
-
-    @Override
-    public AlleleList register(final String name, final URI uri) throws AmbiguityServiceException {
-        checkNotNull(name);
-        checkNotNull(uri);
-
-        if (allelicAmbiguities.containsKey(name)) {
-            return allelicAmbiguities.get(name);
-        }
-        AlleleList alleleList = client.getAlleleList(uri.toString());
-        if (alleleList == null) {
-            throw new AmbiguityServiceException("could not register allelic ambiguity, no allele list found at uri " + uri.toString());
-        }
-        return register(name, alleleList);
-    }
-
-    @Override
-    public AlleleList register(final String name, final String glstring) throws AmbiguityServiceException {
-        checkNotNull(name);
-        checkNotNull(glstring);
-
-        if (allelicAmbiguities.containsKey(name)) {
-            return allelicAmbiguities.get(name);
-        }
-
-        try {
-            return register(name, client.registerAlleleList(glstring));
-        }
-        catch (GlClientException e) {
-            throw new AmbiguityServiceException("could not register allelic ambiguity", e);
-        }
     }
 
     @Override

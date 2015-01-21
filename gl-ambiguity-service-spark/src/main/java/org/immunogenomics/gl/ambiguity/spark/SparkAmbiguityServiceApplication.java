@@ -61,7 +61,7 @@ public final class SparkAmbiguityServiceApplication implements SparkApplication 
         protected void configure() {
             bind(GlClient.class).to(JsonGlClient.class);
             bind(HttpClient.class).to(RestAssuredHttpClient.class);
-            bind(String.class).annotatedWith(Namespace.class).toInstance("https://gl.immunogenomics.org/imgt-hla/3.17.0/");
+            bind(String.class).annotatedWith(Namespace.class).toInstance("https://gl.immunogenomics.org/imgt-hla/3.18.0/");
         }
     }
 }

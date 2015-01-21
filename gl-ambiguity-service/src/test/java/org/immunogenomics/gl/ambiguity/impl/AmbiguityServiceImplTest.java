@@ -26,27 +26,34 @@ package org.immunogenomics.gl.ambiguity.impl;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.Locus;
 
+import org.immunogenomics.gl.ambiguity.AbstractAmbiguityServiceTest;
 import org.immunogenomics.gl.ambiguity.AmbiguityService;
 
-/**
- * Genotype list ambiguity service module.
- */
-public final class AmbiguityServiceModule extends AbstractModule {
+import org.junit.Before;
+import org.junit.Test;
 
-    @Override
-    protected void configure() {
-        bind(AmbiguityService.class).to(AmbiguityServiceImpl.class);
+/**
+ * Unit test for AmbiguityServiceImpl.
+ */
+public final class AmbiguityServiceImplTest extends AbstractAmbiguityServiceTest {
+    private ListMultimap<Locus, Allele> alleles;
+
+    @Before
+    public void setUp() {
+        alleles = ArrayListMultimap.create();
+        super.setUp();
     }
 
-    @Provides @Singleton
-    ListMultimap<Locus, Allele> createAlleles() {
-        return ArrayListMultimap.create();
+    @Override
+    protected AmbiguityService createAmbiguityService() {
+        return new AmbiguityServiceImpl(alleles);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullAlleles() {
+        new AmbiguityServiceImpl(null);
     }
 }
