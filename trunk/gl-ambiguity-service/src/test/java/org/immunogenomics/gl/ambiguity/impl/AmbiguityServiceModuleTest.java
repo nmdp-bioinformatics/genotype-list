@@ -1,6 +1,6 @@
 /*
 
-    gl-ambiguity-service-spark  Implementation of a RESTful genotype list ambiguity service using Spark.
+    gl-ambiguity-service  Genotype list ambiguity service.
     Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,60 +21,37 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.ambiguity.spark;
+package org.immunogenomics.gl.ambiguity.impl;
 
 import static org.junit.Assert.assertNotNull;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import org.immunogenomics.gl.ambiguity.AmbiguityService;
 
-import org.immunogenomics.gl.client.GlClient;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 /**
- * Unit test for SparkAmbiguityServiceModule.
+ * Unit test for AmbiguityServiceModule.
  */
-public final class SparkAmbiguityServiceModuleTest {
-    private SparkAmbiguityServiceModule ambiguityServiceModule;
-
-    @Mock
-    private GlClient glClient;
-    @Mock
-    private AmbiguityService ambiguityService;
+public final class AmbiguityServiceModuleTest {
+    private AmbiguityServiceModule module;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        ambiguityServiceModule = new SparkAmbiguityServiceModule();
+        module = new AmbiguityServiceModule();
     }
 
     @Test
     public void testConstructor() {
-        assertNotNull(ambiguityServiceModule);
+        assertNotNull(module);
     }
 
     @Test
-    public void testAmbiguityServiceModule() {
-        Injector injector = Guice.createInjector(ambiguityServiceModule, new TestModule());
-        assertNotNull(injector);
-    }
-
-    /**
-     * Test module.
-     */
-    private class TestModule extends AbstractModule {
-        @Override
-        protected void configure() {
-            bind(GlClient.class).toInstance(glClient);
-            bind(AmbiguityService.class).toInstance(ambiguityService);
-        }
+    public void testModule() {
+        Injector injector = Guice.createInjector(module);
+        assertNotNull(injector.getInstance(AmbiguityService.class));
     }
 }

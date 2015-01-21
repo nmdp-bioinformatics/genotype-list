@@ -23,109 +23,55 @@
 */
 package org.immunogenomics.gl.ambiguity;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.net.URI;
 
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Maps;
-
 import org.dishevelled.bitset.ImmutableBitSet;
-import org.dishevelled.bitset.MutableBitSet;
 
 import org.immunogenomics.gl.Allele;
 import org.immunogenomics.gl.AlleleList;
 
-import org.immunogenomics.gl.client.GlClient;
-
 /**
  * Genotype list ambiguity service.
  */
-public final class AmbiguityService {
-    private final GlClient client;
-    private final long size;
-    private final Map<Allele, ImmutableBitSet> alleleBitSets;
-    private final Map<AlleleList, ImmutableBitSet> alleleListBitSets;
-    private final Map<String, AlleleList> allelicAmbiguities;
+public interface AmbiguityService {
 
-    public AmbiguityService(final GlClient client, final List<Allele> alleles) {
-        checkNotNull(client);
-        this.client = client;
+    /**
+     * Return the bit set representing the specified allele or <code>null</code>
+     * if the allele is not recognized by this ambiguity service.
+     *
+     * @param allele allele, must not be null
+     * @return the bit set representing the specified allele or <code>null</code>
+     *    if the allele is not recognized by this ambiguity service
+     */
+    ImmutableBitSet bits(Allele allele);
 
-        checkNotNull(alleles);
-        size = (long) alleles.size();
-        alleleBitSets = Maps.newHashMapWithExpectedSize(alleles.size());
-        alleleListBitSets = Maps.newHashMapWithExpectedSize(100000);
-        allelicAmbiguities = Maps.newHashMapWithExpectedSize(100000);
+    /**
+     * Return the bit set representing the specified allele list or <code>null</code>
+     * if the allele list is not recognized by this ambiguity service.
+     *
+     * @param alleleList allele list, must not be null
+     * @return the bit set representing the specified allele list or <code>null</code>
+     *    if the allele list is not recognized by this ambiguity service
+     */
+    ImmutableBitSet bits(AlleleList alleleList);
 
-        /*
-        // inject CacheBuilderSpec?
-        this.alleleListBitSets = CacheBuilder.newBuilder().build(new CacheLoader<AlleleList, ImmutableBitSet>() {
-                @Override
-                public ImmutableBitSet load(final AlleleList alleleList) {
-                    MutableBitSet bits = new MutableBitSet(size);
-                    for (Allele allele : alleleList.getAlleles()) {
-                        bits.or(alleleBitSets.get(allele));
-                    }
-                    return bits.immutableCopy();
-                }
-            });
-        */
+    /**
+     * Return the allele list registered for the specified name or <code>null</code>
+     * if no such allele list exists.
+     *
+     * @param name name, must not be null
+     * @return the allele list registered for the specified name or <code>null</code>
+     *    if no such allele list exists.
+     */
+    AlleleList get(String name);
 
-        // populate allele bit sets
-        for (int i = 0; i < size; i++) {
-            MutableBitSet bits = new MutableBitSet(size);
-            bits.set(i);
-            alleleBitSets.put(alleles.get(i), bits.immutableCopy());
-        }
-    }
-
-    public ImmutableBitSet asBits(final Allele allele) {
-        checkNotNull(allele);
-        return alleleBitSets.get(allele);
-    }
-
-    public ImmutableBitSet asBits(final AlleleList alleleList) {
-        checkNotNull(alleleList);
-
-        if (!alleleListBitSets.containsKey(alleleList)) {
-            MutableBitSet bits = new MutableBitSet(size);
-            for (Allele allele : alleleList.getAlleles()) {
-                bits.or(alleleBitSets.get(allele));
-            }
-            alleleListBitSets.put(alleleList, bits.immutableCopy());
-        }
-        return alleleListBitSets.get(alleleList);
-    }
-
-    public AlleleList get(final String name) {
-        return null;
-    }
-
-    public AlleleList registerAllelicAmbiguity(final String name, final URI uri) throws AmbiguityServiceException {
-        return null;
-    }
-
-    public AlleleList registerAllelicAmbiguity(final String name, final String glstring) throws AmbiguityServiceException {
-        checkNotNull(name);
-        checkNotNull(glstring);
-
-        if (!allelicAmbiguities.containsKey(name)) {
-            AlleleList alleleList = client.getAlleleList(glstring);
-            allelicAmbiguities.put(name, alleleList);
-
-            MutableBitSet bits = new MutableBitSet(size);
-            for (Allele allele : alleleList.getAlleles()) {
-                bits.or(alleleBitSets.get(allele));
-            }
-            alleleListBitSets.put(alleleList, bits.immutableCopy());
-        }
-        return allelicAmbiguities.get(name);
-    }
-
-    public ImmutableBitSet registerAllelicAmbiguityAsBits(final String name, final String glstring) throws AmbiguityServiceException {
-        return asBits(registerAllelicAmbiguity(name, glstring));
-    }
+    /**
+     * Register the specified allele list for the specified name.
+     *
+     * @param name name, must not be null
+     * @param alleleList allele list to register, must not be null
+     * @return the allele list registered for the specified name
+     * @throws AmbiguityServiceException if an error occurs
+     */
+    AlleleList register(String name, AlleleList alleleList) throws AmbiguityServiceException;
 }
