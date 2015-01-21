@@ -47,6 +47,22 @@ public final class AmbiguityServiceModule extends AbstractModule {
 
     @Provides @Singleton
     ListMultimap<Locus, Allele> createAlleles() {
+        /*
+
+          todo:
+
+          if this is a slow operation, say hitting an external service with the gl client
+          to load all the alleles per locus, then perhaps a Provider should be created and
+          injected instead.
+
+        Locus a = new Locus("http://localhost/locus/0", "HLA-A");
+        Allele a01 = new Allele("http://localhost/allele/0", "HLA00001", "HLA-A*01:01:01:01", a);
+        Allele a02n = new Allele("http://localhost/allele/1", "HLA00002", "HLA-A*01:01:01:02N", a);
+        ListMultimap<Locus, Allele> alleles = ArrayListMultimap.create();
+        alleles.put(a, a01);
+        alleles.put(a, a02n);
+        return alleles;
+        */
         return ArrayListMultimap.create();
     }
 }

@@ -68,10 +68,9 @@ final class AmbiguityServiceImpl implements AmbiguityService {
         this.alleles = ImmutableListMultimap.copyOf(alleles);
 
         ImmutableMap.Builder<Allele, ImmutableBitSet> builder = ImmutableMap.builder();
-        for (Locus locus : alleles.keys()) {
+        for (Locus locus : alleles.keySet()) {
             List<Allele> allelesPerLocus = alleles.get(locus);
-            long size = (long) allelesPerLocus.size();
-            for (int i = 0; i < size; i++) {
+            for (int i = 0, size = allelesPerLocus.size(); i < size; i++) {
                 MutableBitSet bits = new MutableBitSet(size);
                 bits.set(i);
                 builder.put(allelesPerLocus.get(i), bits.immutableCopy());
