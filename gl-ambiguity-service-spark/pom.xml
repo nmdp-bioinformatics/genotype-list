@@ -2,7 +2,7 @@
 <!--
 
     gl-ambiguity-service-spark  Implementation of a RESTful genotype list ambiguity service using Spark.
-    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
+    Copyright (c) 2012-2015 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
