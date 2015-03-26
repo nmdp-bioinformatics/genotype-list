@@ -1,7 +1,7 @@
 /*
 
     gl-imgt-db  IMGT/HLA database for the gl project.
-    Copyright (c) 2012-2014 National Marrow Donor Program (NMDP)
+    Copyright (c) 2012-2015 National Marrow Donor Program (NMDP)
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -227,7 +227,8 @@ create table G_GROUP
     constraint AK_G_GROUP unique (G_GROUP_ID, RELEASE_VERSION_IID, LOCUS_IID),
     constraint AK_G_GROUP_02 unique (RELEASE_VERSION_IID, G_GROUP_NAME),
     index (RELEASE_VERSION_IID),
-    index (LOCUS_IID),    constraint FK_G_GROUP_01 foreign key (RELEASE_VERSION_IID)
+    index (LOCUS_IID),
+    constraint FK_G_GROUP_01 foreign key (RELEASE_VERSION_IID)
         references RELEASE_VERSION (RELEASE_VERSION_IID),
     constraint FK_G_GROUP_02 foreign key (LOCUS_IID)
         references LOCUS (LOCUS_IID)
