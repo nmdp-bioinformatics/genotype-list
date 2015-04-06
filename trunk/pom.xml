@@ -361,6 +361,11 @@
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-bitset</artifactId>
+        <version>3.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
         <artifactId>dsh-commandline</artifactId>
         <version>1.0</version>
       </dependency>
