@@ -71,6 +71,7 @@
     <module>gl-service-redis</module>
     <module>gl-service-dynamodb</module>
     <module>gl-service-nomenclature-imgt</module>
+    <module>gl-service-nomenclature-ipd</module>
     <module>gl-service-voldemort</module>
     <module>gl-service-spark</module>
     <module>gl-service-webapp</module>
