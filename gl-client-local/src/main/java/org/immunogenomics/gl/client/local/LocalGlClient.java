@@ -54,7 +54,7 @@ import org.immunogenomics.gl.service.Nomenclature;
 import org.immunogenomics.gl.service.cache.CacheModule;
 import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.nomenclature.DefaultNomenclature;
-import org.immunogenomics.gl.service.nomenclature.imgt.ImgtHla3_19_0;
+import org.immunogenomics.gl.service.nomenclature.hla.ImgtHla3_19_0;
 import org.immunogenomics.gl.service.reader.GlstringGlReader;
 
 /**
