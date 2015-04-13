@@ -1,0 +1,10 @@
+# Sequence Diagrams #
+
+**Click to enlarge.**
+
+|               | **POST** | **GET** |
+|:--------------|:---------|:--------|
+| **Comments**    | <a href='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST.png'><img src='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST.png' alt='HTTP POST sequence diagram for the GL Service, with comments.' width='317px' height='200px' /></a> | <a href='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET.png'><img src='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET.png' alt='HTTP GET sequence diagram for the GL Service, with comments.' width='287px' height='200px' /></a> |
+| **No Comments** | <a href='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST-NoComments.png'><img src='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServicePOST-NoComments.png' alt='HTTP POST sequence diagram for the GL Service, without comments.' width='371px' height='200px' /></a> | <a href='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET-NoComments.png'><img src='https://genotype-list.googlecode.com/svn/wiki/images/sequence-diagrams/GlServiceGET-NoComments.png' alt='HTTP GET sequence diagram for the GL Service, without comments.' width='301px' height='200px' /></a> |
+
+**NMDP Developers**: The original Visio files (for editing) may be found at `..SilverStandard/GLStringDocumentation.vsd`.

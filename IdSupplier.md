@@ -1,0 +1,60 @@
+Contents:
+
+
+# Introduction #
+
+The GlStringResolver utilizes the `IdSupplier` to create a new id for an unregistered or otherwise not found GL String.
+
+In brief, the `IdSupplier`:
+  * Creates and returns new identifiers.
+
+# Details #
+
+## Components ##
+
+The following classes are _part_ of the IdSupplier:
+| **Name** | **Function** |
+|:---------|:-------------|
+| [IdSupplier.java](.md) | Interface |
+| [AtomicLongIdSupplier.java](.md) | Atomic Long implementation of `IdSupplier` |
+| [Base36IdSupplier.java](.md) | Base 36 implementation of `IdSupplier` |
+| [SharedAtomicLongIdSupplier.java](.md) | Shared Atomic Long implementation of `IdSupplier` (not specific to any GL Resource) |
+
+
+The following classes are _referenced_ by the IdSupplier:
+| **Name** | **Function** |
+|:---------|:-------------|
+| None | n/a |
+
+## How it Works ##
+
+### Initializing an Implementation ###
+
+There are several different implementations of the `IdSupplier`: Atomic Long, Base 36, and Shared Atomic Long. For any given instance of the service, the `IdSupplier` implementation is determined when the [GlStringResolver](GlStringResolver.md) is initialized.
+
+For example, with the Jedis implementation of the GlStringResolver:
+```
+JedisGlstringResolver(final IdSupplier idSupplier, final JedisPool jedisPool) {
+        checkNotNull(idSupplier);
+        checkNotNull(jedisPool);
+        this.idSupplier = idSupplier;
+        this.jedisPool = jedisPool;
+    }
+```
+
+The `IdSupplier` is then called by the `GlStringResolver`.
+```
+idSupplier.createLocusId();
+```
+
+
+### Assigning New IDs ###
+
+Regardless of the ID type, a new ID is generated the same way.
+
+IDs are assigned in ascending order. Each type of [GL Resource](GLResources.md) has its own set of IDs, e.g. locusId, alleleId, and genotypeId, etc., and are all incremented separately. The IdSupplier only keeps track of the next free ID for each resource, so to generate a new ID, the IdSupplier calls the following:
+```
+locusId.getAndIncrement();
+```
+
+The only exception is the Shared Atomic Long implementation, which draws from the same pool of IDs for all GL Resources.

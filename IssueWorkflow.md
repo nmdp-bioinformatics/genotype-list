@@ -1,0 +1,51 @@
+# Issue workflow #
+
+
+#### New ####
+
+When creating a new issue, set Status to New, Owner to empty, and add a Priority-Medium label.
+
+
+#### New --> Accepted ####
+
+New issues should be triaged:
+
+If an issue is acceptable, set Status to Accepted, add a Milestone label (e.g. Release1.0.0), and update the Priority label if necessary.
+
+If an issue is not acceptable, set Status to one of Invalid, Duplicate, or WontFix as appropriate.
+
+
+#### Accepted --> Started ####
+
+When work begins on an accepted issue, set Status to Started and Owner to the responsible team member.
+
+Include the issue number in any subversion commit messages for commits related to a particular issue.  E.g.
+
+```
+$ svn commit -m "Issue 3 ; updating the specs on the rotary girdle" .
+```
+
+This creates a link to the issue from the source changes and revision pages.
+
+
+#### Started --> Fixed ####
+
+When work on a started issue is complete, set Status to Fixed and include the revision number in a comment.  E.g.
+
+```
+Fixed in revision 14.
+```
+
+This creates a link to the revision from the issue page.
+
+
+#### Fixed --> Verified ####
+
+Once an issue has been marked as fixed, the original submitter or a developer that did not work on the issue should review the fix, and if passes verification set Status to Verified.  Use the Code Review feature if helpful.
+
+
+#### Example ####
+
+The following issue went through this workflow:
+
+http://code.google.com/p/genotype-list/issues/detail?id=3

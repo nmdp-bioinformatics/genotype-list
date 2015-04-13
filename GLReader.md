@@ -1,0 +1,81 @@
+Contents:
+
+
+# Introduction #
+
+The GL Service utilizes the `GlStringGlReader` to read a GL String and return an object and a URI.
+
+In brief, the reader:
+  * Checks whether the GL String has an ID by calling the glstringResolver and idResolver
+  * Registers the GL String if the ID/object doesn't exist
+    * Recursively reads smaller and smaller pieces based on the [delimiters](Delimiters.md), resolving and registering new objects along the way.
+  * Returns the object
+
+# Details #
+
+## Components ##
+
+The following classes are _part_ of the GL Reader:
+| **Name** | **Function** |
+|:---------|:-------------|
+| [GlReader.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlReader.java) | Interface |
+| [GlStringGlReader.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/reader/GlstringGlReader.java) | GL String Implementation of GlReader |
+
+The following classes are _referenced_ by the GL Reader:
+| **Name** | **Function** |
+|:---------|:-------------|
+| [GlstringResolver.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java) | Interface: Resolve GL String to ID |
+| [IdResolver.java](.md) | Interface: Resolve ID to [&lt;GlResource&gt;](GLResources.md)object |
+| [GlRegistry.java](.md) | Interface: FUNCTION|
+
+## How it Works ##
+
+### Initializing the Reader ###
+
+The reader uses the following constructor:
+```
+GlstringGlReader(final GlstringResolver glstringResolver, final IdResolver idResolver, final GlRegistry glRegistry)
+```
+This allows for an easy change in the caching and registry implementations. Caching options currently being evaluated include Voldemort and Redis/Jedis. Final decisions will be made based on the outcome of several performance [tests](tests.md).
+
+### Resolving IDs ###
+
+The computation involved with resolving IDs is handled primarily by the GlStringResolver and IdResolver.
+
+The resolvers are called as follows:
+```
+final String id = glstringResolver.resolveLocus(glstring);
+Locus locus = idResolver.findLocus(id);
+```
+where `Locus` is replaced by any [GL Resource](GLResources.md).
+
+We'll leave the details about the [Resolvers](Resolvers.md) for a different discussion, so let's just talk about what this means to the Reader.
+
+  * If the GL String/ID already exists, its object is returned.
+  * If the GL String/ID does not exist, it needs to be registered, but first we check to see if any of its components have already been registered by recursing.
+
+### Recursive Reading ###
+
+The reader recurses when the GL String and ID do not already exist in the cache, or when the resolver times out.
+Since each object [contains a list of its components](GLResources.md), we need to make sure that all of its components are also registered.
+
+#### Special cases: ####
+
+`Locus`
+> Since the `locus` is the smallest possible GL Resource, the reader only has to make sure it is in a valid format before registering a new `locus`. In the future, it may be desirable to add additional validation to prevent creating loci that are not part of [HLA nomenclature](http://hla.alleles.org/).
+
+`Alleles`
+> Much like a `locus`, the reader verifies that the `allele` is in a valid format before registering anything new. The `locus` is also verified in this case. Because any new alleles registered with the GL Service are not necessarily in the [IMGT Database](http://www.ebi.ac.uk/imgt/hla/) and are therefore not official, this may be something we choose to disable to prevent creating alleles that are not part of [HLA nomenclature](http://hla.alleles.org/).
+
+#### All other cases: ####
+
+The GL String is split into components by its [delimiters](Delimiters.md) in order of precedence. For example, the `MultilocusUnphasedGenotype` splits the string into `GenotypeLists` wherever there is a `^`. After calling `readGenotypeList(component)` on each part, each is added to a list to be registered as part of the new object.
+
+### Registering Resources ###
+
+The work (reword) involved with registering objects is primarily handled by the `glRegistry`. The reader simply makes a call to the `glRegistry` as follows, using the new `<GlResource>object` created in the previous steps.
+```
+glRegistry.registerLocus(locus);
+```
+
+Current implementations of the `glRegistry` include CacheGlRegistry.java, JedisGlRegistry.java, VoldemortGlRegistry.java, and JdbcRegistry.java.

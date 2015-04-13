@@ -1,0 +1,205 @@
+# IMGT/HLA Database Loader #
+
+## Prerequisites ##
+
+  * JDK version 1.7 or later, http://openjdk.java.net/
+  * MySQL version 5.6.16 or later
+
+
+## Build ##
+
+Check-out the genotype-list service project from Subversion by first
+opening a terminal/command window. Change directory to the containing (parent) folder for the genotype-list service project you are about to check-out. Type the command:
+
+**svn checkout https://genotype-list.googlecode.com/svn/trunk/ genotype-list --username xxx**
+
+Where xxx is your google username.
+
+Change directory to {path to genotype list service root}, type the command:
+
+**mvn install**
+
+Change directory to {path to genotype list service root}/gl-imgt-loader, type the command:
+
+**mvn assembly:single**
+
+
+## Prepare the Database ##
+
+Open a terminal/command window and log into MySQL as root using the MySQL command-line tool:
+
+**mysql --user=root mysql -p**
+
+Create the imgt\_hla database and imgt\_admin user by running the following command:
+
+**source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-admin.sql**
+
+Quit MySQL command-line tool and login as imgt\_admin:
+
+**mysql -u imgt\_admin -p**
+
+Create the tables making up the imgt\_hla database:
+
+**source {path to genotype list service root}/gl-imgt-db/src/main/sql/gl-imgt-db-mysql-create.sql**
+
+
+## Run Loader ##
+
+Assumes current working directory is {path to genotype list service root}/gl-imgt-loader:
+
+**java -Dimgt.hla.database.path=../gl-imgt-xml/src/main/xsd/v3\_11\_0\_1 -cp ./target/gl-imgt-loader-1.0-SNAPSHOT-jar-with-dependencies.jar org/immunogenomics/gl/imgt/loader/driver/LoadHLADriver**
+
+Where "imgt.database.path" refers to the location of the IMGT/HLA Database XML source file. The loader assumes the name of the XML file is "hla.xml", if not specified.
+
+**Note:** Loader is known to be compatible with IMGT/HLA Database XML versions 3.8 - 3.15. Version 3.11.0.1 is supplied by the gl-imgt-xml project. For other versions, see http://hla.alleles.org/xml/
+
+If the "imgt.database.path" system property is not supplied, the loader assumes the current working directory as the location of the IMGT/HLA Database XML source file.
+
+The loader can be run from any folder. Be sure to specify a full path to the loader jar file.
+
+Example:
+
+**java -cp ~/Documents/genotype-list/gl-imgt-loader/target/gl-imgt-loader-1.0-SNAPSHOT-jar-with-dependencies.jar org/immunogenomics/gl/imgt/loader/driver/LoadHLADriver**
+
+
+
+## Eclipse Setup ##
+
+To recreate the genotype-list service (gl) Eclipse project:
+
+Click File -> Import
+
+From the Import pane, select Maven -> Existing Maven Projects as the import source, click Next.
+Browse to the root directory of the genotype-list service project previously checked out from Subversion.
+Be sure all imgt projects as well as all other desired projects are selected.
+Click Finish.
+
+Wait for the import and build to complete.
+
+Open a terminal/command window and change directory to the genotype-list service root directory.
+
+If gl-client was imported, change directory to project folder for gl-client and run:
+
+**mvn clean install**
+
+Change directory to project folder for gl-imgt-db and run:
+
+**mvn clean install**
+
+Change directory to project folder for gl-imgt-loader and run:
+
+**mvn clean install**
+
+Change directory to project folder for gl-imgt-xml and run:
+
+**mvn clean install**
+
+In Eclipse, refresh the affected projects in Package or Project Explorer
+
+For projects gl-client (if imported) and gl-imgt-xml, modify the build path as follows:
+
+Right click project, click Build Path -> Configure Build Path...
+In Source pane, click Add Folder...
+
+Select folder "target/generated/source/main/java" by clicking box to left of the java folder.
+
+Click OK, click OK.
+
+(Project will rebuild automatically if configured to do so, "cannot resolve to a type" errors should be resolved)
+
+To eliminate remaining build errors, perform the following steps:
+
+Click Preferences->Maven->Lifecycle Mappings
+
+Under "Change mapping file location", be sure the location matches the following pattern:
+
+{path to workspace}/.metadata/.plugins/org.eclipse.m2e.core/lifecycle-mapping-metadata.xml
+
+to insure these settings apply to the current workspace only.
+
+Click the "Open workspace lifecycle mappings metadata" button.
+Click "Apply" if you made any changes to the mapping file location.
+Click OK.
+
+In the empty editor pane for lifecycle-mapping-metadata.xml, paste the following:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<lifecycleMappingMetadata>
+  <pluginExecutions>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <goals>
+          <goal>copy-dependencies</goal>
+          <goal>unpack</goal>
+        </goals>
+        <versionRange>[0.0,)</versionRange>
+      </pluginExecutionFilter>
+      <action>
+        <ignore />
+      </action>
+    </pluginExecution>
+
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-xjc-plugin</artifactId>
+        <goals>
+          <goal>xsdtojava</goal>
+          <goal>xsdtojava-tests</goal>
+        </goals>
+        <versionRange>[2.3.0,)</versionRange>
+      </pluginExecutionFilter>
+      <action>
+        <ignore />
+      </action>
+    </pluginExecution>
+
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>openjpa-maven-plugin</artifactId>
+        <goals>
+          <goal>enhance</goal>
+        </goals>
+        <versionRange>[1.2,)</versionRange>
+      </pluginExecutionFilter>
+      <action>
+        <ignore />
+      </action>
+    </pluginExecution>
+
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <goals>
+          <goal>enforce</goal>
+        </goals>
+        <versionRange>[1.0-alpha-1,)</versionRange>
+      </pluginExecutionFilter>
+      <action>
+        <ignore />
+      </action>
+    </pluginExecution>
+
+  </pluginExecutions>
+</lifecycleMappingMetadata>
+```
+
+Save the changes.
+
+Again, click Preferences->Maven->Lifecycle Mappings.
+
+Click the "Reload workspace lifecycle mappings metadata" button.
+Click OK.
+
+In Package or Project Explorer, right click one of the projects that have build errors.
+
+Click Maven->Update Project...
+
+Select all of the imgt projects (and the gl-client project, if imported), click "Force Update of Snapshots/Releases" and click OK.
+
+This will rebuild the selected projects and the remaining build errors should resolve.

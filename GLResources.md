@@ -1,0 +1,57 @@
+# Introduction #
+There are currently seven GL Resource types used within the GL Service, listed in ascending order of size:
+
+  * `Locus`
+  * `Allele`
+  * `AlleleList`
+  * `Haplotype`
+  * `Genotype`
+  * `GenotypeList`
+  * `MultilocusUnphasedGenotype`
+
+Each GL String is made out of smaller elements. For example, an `AlleleList` contains `Alleles` and `Loci`, separated by delimiters.
+
+A particular string's resource type is its largest component, and no larger. For example, a `GenotypeList` with one element should be called a `Genotype` by convention.
+
+Each GL Resource type is registered in the GL Service individually.
+
+# Details #
+
+  * All seven GL Resource types implement the interface `GlResource`
+  * Each contains its id, glstring, and a list of any subcomponents
+
+
+### Locus: ###
+  * ID
+  * GL String
+
+### Allele: ###
+  * ID
+  * GL String
+  * [Accession number](http://www.ebi.ac.uk/imgt/hla/allele.html)
+  * `Locus`
+
+### AlleleList: ###
+  * ID
+  * GL String
+  * List of `Alleles`
+
+### Haplotype: ###
+  * ID
+  * GL String
+  * List of `AlleleLists`
+
+### Genotype: ###
+  * ID
+  * GL String
+  * List of `AlleleLists`
+
+### GenotypeList: ###
+  * ID
+  * GL String
+  * List of `Genotypes`
+
+### MultilocusUnphasedGenotype: ###
+  * ID
+  * GL String
+  * List of `GenotypeLists`

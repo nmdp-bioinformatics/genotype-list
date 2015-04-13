@@ -1,0 +1,122 @@
+# Deployment options #
+
+
+
+<br />
+In all cases, the genotype list service (gl.war and explorer.war, specifically) can be configured and deployed to a servlet engine (Jetty, Tomcat, etc.) running on e.g. an Amazon Elastic Compute Cloud (Amazon EC2) instance.
+
+http://aws.amazon.com/ec2/
+
+Pricing
+
+http://aws.amazon.com/ec2/pricing/
+
+<br />
+It may also be advantageous to put an Apache or Nginx ahead of the servlet engine as a proxy and to consider using Amazon Elastic Load Balancing.
+
+http://aws.amazon.com/elasticloadbalancing/
+
+<br />
+## Cache ##
+
+The simplest deployment option is to use the RAM-only cache implementation provided by the gl-service module.  This option does not provide any persistence.
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/cache.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/cache.png)
+
+<br />
+## JDBC + RDS ##
+
+The genotype list service with the gl-service-jdbc module can be configured and deployed against the Amazon Relational Database Service (Amazon RDS) managed MySQL database service.
+
+http://aws.amazon.com/rds/
+
+Pricing
+
+http://aws.amazon.com/rds/pricing/
+
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/jdbc-rds.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/jdbc-rds.png)
+
+<br />
+## JDBC + MySQL ##
+
+The genotype list service with the gl-service-jdbc module can also be configured and deployed against one or more MySQL database(s) on one or more EC2 instance(s) with Amazon Elastic Block Store (EBS) for file storage.
+
+http://aws.amazon.com/ebs/
+
+Pricing, see Projecting Costs section
+
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/jdbc-mysql.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/jdbc-mysql.png)
+
+<br />
+## Redis ##
+
+The genotype list service with the gl-service-redis module can be configured and deployed against a Redis distributed cache deployed to one or more EC2 instance(s) with Amazon Elastic Block Store (EBS) for file storage.
+
+http://aws.amazon.com/ebs/
+
+Pricing, see Projecting Costs section
+
+
+<br />
+Redis
+
+http://redis.io
+
+
+<br />
+A sample Redis configuration is checked into svn at
+
+http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-redis/src/main/conf/redis.conf
+
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/redis.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/redis.png)
+
+<br />
+## Voldemort ##
+
+The genotype list service with the gl-service-voldemort module can be configured and deployed against a Voldemort distributed cache deployed to one or more EC2 instance(s) with Amazon Elastic Block Store (EBS) for file storage.  The MySQL Voldemort Store is not appropriate for the genotype list service, since its minimum key size is too small.  The Berkeley DB (BDB) Voldemort Store has a reasonable maximum key size.
+
+http://aws.amazon.com/ebs/
+
+Pricing, see Projecting Costs section
+
+
+<br />
+Voldemort
+
+http://www.project-voldemort.com/voldemort/
+
+Voldemort configuration
+
+http://www.project-voldemort.com/voldemort/configuration.html
+
+
+<br />
+A sample Voldemort configuration is checked into svn at
+
+http://code.google.com/p/genotype-list/source/browse/trunk/gl-service-voldemort/src/main/conf/config/
+
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/voldemort.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/voldemort.png)
+
+<br />
+## DynamoDB ##
+
+The genotype list service with the gl-service-dynamodb module can be configured and deployed against Amazon DynamoDB, a managed scalable NoSQL database.
+
+http://aws.amazon.com/dynamodb/
+
+Pricing
+
+http://aws.amazon.com/dynamodb/pricing/
+
+
+<br />
+![http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/dynamodb.png](http://genotype-list.googlecode.com/svn/wiki/images/deployment-options/dynamodb.png)

@@ -1,0 +1,94 @@
+Contents:
+
+
+# Introduction #
+
+Guava Cache is one of the 4 storage possibilities currently being evaluated for use in the GL Service.
+
+The others include:
+  * [JDBC](JDBC.md)
+  * [Redis-Jedis Redis-Jedis]
+  * [Voldemort](Voldemort.md)
+
+The core function of the GL Service is to store, retrive, and persist GL Strings; looking up GLResources by IDs and IDs by GL Strings.
+As such, three major parts of the GL Service are impacted by this storage option:
+  * GlStringResolver
+  * IdResolver
+  * [GLRegistry](GLRegistry.md)
+
+# Details #
+
+## Components ##
+
+The following classes are _part_ of the Cache implementations:
+| **Name** | **Function** |
+|:---------|:-------------|
+| [GlstringResolver.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlstringResolver.java) | GlStringResolver interface |
+| [CacheGlstringResolver.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/cache/CacheGlstringResolver.java) | Cache implementation of the GlStringResolver |
+| [IdResolver.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/IdResolver.java) | IdResolver interface |
+| [CacheIdResolver.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/cache/CacheIdResolver.java) | Cache implementation of the IdResolver |
+| [GlRegistry.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/GlRegistry.java) | GLRegistry interface |
+| [CacheGlRegistry.java](http://code.google.com/p/genotype-list/source/browse/trunk/gl-service/src/main/java/org/immunogenomics/gl/service/cache/CacheGlRegistry.java) | Cache implementation of the GLRegistry |
+
+The following classes are _referenced_ by the Cache implementations:
+| **Name** | **Function** |
+|:---------|:-------------|
+| None | n/a |
+
+## About Guava Cache ##
+
+According to the [Javadoc for Guava Cache](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/Cache.html), the Cache is a "semi-persistent mapping from keys to values. Cache entries are manually added using `get(Object, Callable)` or `put(Object, Object)`, and are stored in the cache until either evicted or manually invalidated."
+
+Since the GL Service is dependent on the persistence of resources, for our purposes the cache size must _always_ be as large or larger than the stored resources, or information will be lost and the service will be broken.
+
+## CacheGlstringResolver ##
+
+The CacheGlstringResolver implements the interface GlStringResolver. The goal of the GlStringResolver is to take in a GL String and return its corresponding ID, or null if none is found.
+
+With the Cache implementation, a non-null, non-empty GL String is the key that is looked up, and the ID is the value that is returned. If no ID is found, the method returns null.
+
+The following is an example using the `Locus` [GL Resource](GLResources.md):
+
+```
+@Override
+public String resolveLocus(final String glstring) {
+    checkNotNull(glstring);
+    checkArgument(!glstring.isEmpty());
+    return locusIds.getUnchecked(glstring);
+}
+```
+
+## CacheIdResolver ##
+
+The CacheIdResolver implements the interface IdResolver. The intent of the IdResolver is to take in an ID and return its corresponding [GL Resource](GLResources.md), or null if none is found.
+
+With the Cache implementation, the ID is the key that is looked up in the cache, and the GL Resource is the value that is returned. If no GL Resource is found by that ID, the method returns null.
+
+The following is an example using the `Locus` [GL Resource](GLResources.md):
+
+```
+@Override
+public Locus findLocus(final String id) {
+    return loci.getIfPresent(id);
+}
+```
+
+## CacheGlRegistry ##
+
+The CacheGlRegistry implements the interface [GLRegistry](GLRegistry.md). The purpose of the [GLRegistry](GLRegistry.md) is to enter [GL Resources](GLResources.md) in the two caches (GL String -> ID and ID -> GL Resource) where they can be looked up by the GlStringResolver and IdResolver.
+
+With the Cache implementation, the GL Resource is passed in using simple `put(key, value)` methods. The keys and values are extracted from the GL Resource as needed.
+
+The following is an example using the `Locus` [GL Resource](GLResources.md):
+
+```
+@Override
+public void registerLocus(final Locus locus) {
+    loci.put(locus.getId(), locus);
+    locusIds.put(locus.getGlstring(), locus.getId());
+}
+```
+
+# Performance Testing Results #
+
+To be added after performance tests have been completed.

@@ -1,0 +1,20 @@
+# Introduction #
+
+See the [Genotype List String paper](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3715123/) in Tissue Antigens for further information.
+
+
+# Details #
+
+GL String Delimiters and Precedence
+
+| **Order** | **Delimiter** | **Description** | **GLString Example** |
+|:----------|:--------------|:----------------|:---------------------|
+| 1 | `^` | Unphased multilocus genotype | `HLA-A*02:69+HLA-A*23:30|HLA-A*02:302+HLA-A*23:26/HLA-A*23:39^HLA-B*44:02:13+HLA-B*49:08` |
+| 2 | `|` | Genotype list | `HLA-A*02:69+HLA-A*23:30|HLA-A*02:302+HLA-A*23:26/HLA-A*23:39` |
+| 3 | `+` | Genotype | `HLA-A*02:302+HLA-A*23:26/HLA-A*23:39`|
+| 4 | `~` | Haplotype | `HLA-A*23:26~HLA-B*44:02:13` |
+| 5 | `/` | Allele list | `HLA-A*23:26/HLA-A*23:39` |
+
+Although the GL String was built with HLA in mind, the GL String can be used for **additional types of genotypic information**.
+
+In these cases, the delimiters **maintain the same precedence**, but the description may be shifted around slightly to accommodate varying formats.
