@@ -63,7 +63,7 @@ public final class JdbcModuleTest {
     private static class TestModule extends AbstractModule {
         @Override
         protected void configure() {
-            bind(String.class).annotatedWith(Namespace.class).toInstance("http://immunogenomics.org/");
+            bind(String.class).annotatedWith(Namespace.class).toInstance("http://nmdp.org/");
         }
     }
 }

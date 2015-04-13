@@ -109,7 +109,7 @@ public abstract class ConfigurationModule
      * @return true if the specified property name looks like an annotation name
      */
     protected static final boolean looksLikeAnnotationName(final String name) {
-        return name.startsWith("org.immunogenomics") && Character.isUpperCase(name.charAt(name.lastIndexOf(".") + 1));
+        return name.startsWith("org.nmdp") && Character.isUpperCase(name.charAt(name.lastIndexOf(".") + 1));
     }
 
     /**

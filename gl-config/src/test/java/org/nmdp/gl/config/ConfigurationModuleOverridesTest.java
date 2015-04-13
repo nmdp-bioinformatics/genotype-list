@@ -44,7 +44,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({System.class})
 public final class ConfigurationModuleOverridesTest {
-    private Map<String, String> environmentVariables = ImmutableMap.of("org_immunogenomics_gl_config_Property", "overridden-value");
+    private Map<String, String> environmentVariables = ImmutableMap.of("org_nmdp_gl_config_Property", "overridden-value");
 
     /**
      * Module with one bound string property read from a classpath resource property file

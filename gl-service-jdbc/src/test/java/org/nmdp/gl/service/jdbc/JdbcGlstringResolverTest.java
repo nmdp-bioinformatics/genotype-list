@@ -55,13 +55,13 @@ public final class JdbcGlstringResolverTest extends AbstractGlstringResolverTest
 
         locusIds = CacheBuilder.newBuilder().build();
         alleleIds = CacheBuilder.newBuilder().build();
-        when(idSupplier.createLocusId()).thenReturn("http://immunogenomics.org/locus/0");
-        when(idSupplier.createAlleleId()).thenReturn("http://immunogenomics.org/allele/0");
-        when(idSupplier.createAlleleListId()).thenReturn("http://immunogenomics.org/allele-list/0");
-        when(idSupplier.createHaplotypeId()).thenReturn("http://immunogenomics.org/haplotype/0");
-        when(idSupplier.createGenotypeId()).thenReturn("http://immunogenomics.org/genotype/0");
-        when(idSupplier.createGenotypeListId()).thenReturn("http://immunogenomics.org/genotype-list/0");
-        when(idSupplier.createMultilocusUnphasedGenotypeId()).thenReturn("http://immunogenomics.org/multilocus-unphased-genotype/0");
+        when(idSupplier.createLocusId()).thenReturn("http://nmdp.org/locus/0");
+        when(idSupplier.createAlleleId()).thenReturn("http://nmdp.org/allele/0");
+        when(idSupplier.createAlleleListId()).thenReturn("http://nmdp.org/allele-list/0");
+        when(idSupplier.createHaplotypeId()).thenReturn("http://nmdp.org/haplotype/0");
+        when(idSupplier.createGenotypeId()).thenReturn("http://nmdp.org/genotype/0");
+        when(idSupplier.createGenotypeListId()).thenReturn("http://nmdp.org/genotype-list/0");
+        when(idSupplier.createMultilocusUnphasedGenotypeId()).thenReturn("http://nmdp.org/multilocus-unphased-genotype/0");
         super.setUp();
     }
 

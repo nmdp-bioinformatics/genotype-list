@@ -39,15 +39,15 @@ public final class JdbcUtilsTest {
 
     @Test
     public void testSerialize() {
-        assertNotNull(serialize(new Locus("http://immunogenomics.org/locus/0", "HLA-A")));
+        assertNotNull(serialize(new Locus("http://nmdp.org/locus/0", "HLA-A")));
     }
 
     @Test
     public void testDeserialize() {
-        byte[] bytes = serialize(new Locus("http://immunogenomics.org/locus/0", "HLA-A"));
+        byte[] bytes = serialize(new Locus("http://nmdp.org/locus/0", "HLA-A"));
         Locus locus = (Locus) deserialize(bytes);
         assertNotNull(locus);
-        assertEquals("http://immunogenomics.org/locus/0", locus.getId());
+        assertEquals("http://nmdp.org/locus/0", locus.getId());
         assertEquals("HLA-A", locus.getGlstring());
     }
 }

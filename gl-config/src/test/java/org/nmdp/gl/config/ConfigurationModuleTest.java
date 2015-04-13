@@ -49,7 +49,7 @@ public final class ConfigurationModuleTest {
     final static class PropertyModule extends ConfigurationModule {
         @Override
         protected void bindConfigurations() {
-            bindProperty("org.immunogenomics.gl.config.Property").toValue("value");
+            bindProperty("org.nmdp.gl.config.Property").toValue("value");
         }
     }
 
@@ -69,7 +69,7 @@ public final class ConfigurationModuleTest {
     final static class IntegerPropertyModule extends ConfigurationModule {
         @Override
         protected void bindConfigurations() {
-            bindProperty("org.immunogenomics.gl.config.IntegerProperty").toValue("42");
+            bindProperty("org.nmdp.gl.config.IntegerProperty").toValue("42");
         }
     }
 
@@ -89,8 +89,8 @@ public final class ConfigurationModuleTest {
     final static class OuterInnerModule extends ConfigurationModule {
         @Override
         protected void bindConfigurations() {
-            bindProperty("org.immunogenomics.gl.config.Outer$Inner1").toValue("value1");
-            bindProperty("org.immunogenomics.gl.config.Outer$Inner2").toValue("value2");
+            bindProperty("org.nmdp.gl.config.Outer$Inner1").toValue("value1");
+            bindProperty("org.nmdp.gl.config.Outer$Inner2").toValue("value2");
         }
     }
 
