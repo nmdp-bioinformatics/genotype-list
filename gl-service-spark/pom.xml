@@ -25,7 +25,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.immunogenomics.gl</groupId>
+    <groupId>org.nmdp.gl</groupId>
     <artifactId>gl</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,35 +35,30 @@
   <name>gl-service-spark</name>
   <description>Implementation of a URI-based RESTful service for the gl project using Spark.</description>
 
-  <scm>
-    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-spark</connection>
-    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-spark</developerConnection>
-    <url>http://code.google.com/p/genotype-list/source/browse/</url>
-  </scm>
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-config</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-service</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-service-nomenclature-hla</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-service-jdbc</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-service-id-jdbc</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -91,27 +86,27 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-config</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-service</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-service-nomenclature-hla</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-service-id-jdbc</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-service-jdbc</artifactId>
       <scope>compile</scope>
     </dependency>

@@ -91,7 +91,7 @@ public final class XmlGlClient extends CacheGlClient {
         this.namespace = namespace;
         this.httpClient = httpClient;
         try {
-            jaxbContext = JAXBContext.newInstance("org.immunogenomics.gl.client.xml.jaxb");
+            jaxbContext = JAXBContext.newInstance("org.nmdp.gl.client.xml.jaxb");
         }
         catch (JAXBException e) {
             throw new RuntimeException(e);
@@ -119,7 +119,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            locus = toLocus(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.Locus.class).getValue());
+            locus = toLocus(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.Locus.class).getValue());
             putLocus(identifier, locus);
             return locus;
         }
@@ -187,7 +187,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            allele = toAllele(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.Allele.class).getValue());
+            allele = toAllele(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.Allele.class).getValue());
             putAllele(identifier, allele);
             return allele;
         }
@@ -245,7 +245,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return toAlleleList(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.AlleleList.class).getValue());
+            return toAlleleList(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.AlleleList.class).getValue());
         }
         catch (UnmarshalException ue) {
             logger.warn("could not get allele list " + identifier, ue);
@@ -289,7 +289,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return toHaplotype(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.Haplotype.class).getValue());
+            return toHaplotype(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.Haplotype.class).getValue());
         }
         catch (UnmarshalException ue) {
             logger.warn("could not get haplotype " + identifier, ue);
@@ -333,7 +333,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return toGenotype(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.Genotype.class).getValue());
+            return toGenotype(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.Genotype.class).getValue());
         }
         catch (UnmarshalException ue) {
             logger.warn("could not get genotype " + identifier, ue);
@@ -377,7 +377,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return toGenotypeList(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.GenotypeList.class).getValue());
+            return toGenotypeList(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.GenotypeList.class).getValue());
         }
         catch (UnmarshalException ue) {
             logger.warn("could not get genotype list " + identifier, ue);
@@ -421,7 +421,7 @@ public final class XmlGlClient extends CacheGlClient {
             inputStream = get(identifier + ".xml");
             reader = xmlInputFactory.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return toMultilocusUnphasedGenotype(unmarshaller.unmarshal(reader, org.immunogenomics.gl.client.xml.jaxb.MultilocusUnphasedGenotype.class).getValue());
+            return toMultilocusUnphasedGenotype(unmarshaller.unmarshal(reader, org.nmdp.gl.client.xml.jaxb.MultilocusUnphasedGenotype.class).getValue());
         }
         catch (UnmarshalException ue) {
             logger.warn("could not get multilocus unphased genotype " + identifier, ue);
@@ -469,61 +469,61 @@ public final class XmlGlClient extends CacheGlClient {
 
     // copy from jaxb resources --> core resources
 
-    private Locus toLocus(final org.immunogenomics.gl.client.xml.jaxb.Locus jaxbLocus) {
+    private Locus toLocus(final org.nmdp.gl.client.xml.jaxb.Locus jaxbLocus) {
         checkNotNull(jaxbLocus);
         return new Locus(jaxbLocus.getId(), jaxbLocus.getGlstring());
     }
 
-    private Allele toAllele(final org.immunogenomics.gl.client.xml.jaxb.Allele jaxbAllele) {
+    private Allele toAllele(final org.nmdp.gl.client.xml.jaxb.Allele jaxbAllele) {
         checkNotNull(jaxbAllele);
         Locus locus = toLocus(jaxbAllele.getLocus());
         return new Allele(jaxbAllele.getId(), jaxbAllele.getAccession(), jaxbAllele.getGlstring(), locus);
     }
 
-    private AlleleList toAlleleList(final org.immunogenomics.gl.client.xml.jaxb.AlleleList jaxbAlleleList) {
+    private AlleleList toAlleleList(final org.nmdp.gl.client.xml.jaxb.AlleleList jaxbAlleleList) {
         checkNotNull(jaxbAlleleList);
         List<Allele> alleles = new ArrayList<Allele>();
-        for (org.immunogenomics.gl.client.xml.jaxb.Allele jaxbAllele : jaxbAlleleList.getAlleles().getAlleles()) {
+        for (org.nmdp.gl.client.xml.jaxb.Allele jaxbAllele : jaxbAlleleList.getAlleles().getAlleles()) {
             Allele allele = toAllele(jaxbAllele);
             alleles.add(allele);
         }
         return new AlleleList(jaxbAlleleList.getId(), alleles);
     }
 
-    private Haplotype toHaplotype(final org.immunogenomics.gl.client.xml.jaxb.Haplotype jaxbHaplotype) {
+    private Haplotype toHaplotype(final org.nmdp.gl.client.xml.jaxb.Haplotype jaxbHaplotype) {
         checkNotNull(jaxbHaplotype);
         List<AlleleList> alleleLists = new ArrayList<AlleleList>();
-        for (org.immunogenomics.gl.client.xml.jaxb.AlleleList jaxbAlleleList : jaxbHaplotype.getAlleleLists().getAlleleLists()) {
+        for (org.nmdp.gl.client.xml.jaxb.AlleleList jaxbAlleleList : jaxbHaplotype.getAlleleLists().getAlleleLists()) {
             AlleleList alleleList = toAlleleList(jaxbAlleleList);
             alleleLists.add(alleleList);
         }
         return new Haplotype(jaxbHaplotype.getId(), alleleLists);
     }
 
-    private Genotype toGenotype(final org.immunogenomics.gl.client.xml.jaxb.Genotype jaxbGenotype) {
+    private Genotype toGenotype(final org.nmdp.gl.client.xml.jaxb.Genotype jaxbGenotype) {
         checkNotNull(jaxbGenotype);
         List<Haplotype> haplotypes = new ArrayList<Haplotype>();
-        for (org.immunogenomics.gl.client.xml.jaxb.Haplotype jaxbHaplotype : jaxbGenotype.getHaplotypes().getHaplotypes()) {
+        for (org.nmdp.gl.client.xml.jaxb.Haplotype jaxbHaplotype : jaxbGenotype.getHaplotypes().getHaplotypes()) {
             Haplotype haplotype = toHaplotype(jaxbHaplotype);
             haplotypes.add(haplotype);
         }
         return new Genotype(jaxbGenotype.getId(), haplotypes);
     }
 
-    private GenotypeList toGenotypeList(final org.immunogenomics.gl.client.xml.jaxb.GenotypeList jaxbGenotypeList) {
+    private GenotypeList toGenotypeList(final org.nmdp.gl.client.xml.jaxb.GenotypeList jaxbGenotypeList) {
         checkNotNull(jaxbGenotypeList);
         List<Genotype> genotypes = new ArrayList<Genotype>();
-        for (org.immunogenomics.gl.client.xml.jaxb.Genotype jaxbGenotype : jaxbGenotypeList.getGenotypes().getGenotypes()) {
+        for (org.nmdp.gl.client.xml.jaxb.Genotype jaxbGenotype : jaxbGenotypeList.getGenotypes().getGenotypes()) {
             Genotype genotype = toGenotype(jaxbGenotype);
             genotypes.add(genotype);
         }
         return new GenotypeList(jaxbGenotypeList.getId(), genotypes);
     }
 
-    private MultilocusUnphasedGenotype toMultilocusUnphasedGenotype(final org.immunogenomics.gl.client.xml.jaxb.MultilocusUnphasedGenotype jaxbMultilocusUnphasedGenotype) {
+    private MultilocusUnphasedGenotype toMultilocusUnphasedGenotype(final org.nmdp.gl.client.xml.jaxb.MultilocusUnphasedGenotype jaxbMultilocusUnphasedGenotype) {
         checkNotNull(jaxbMultilocusUnphasedGenotype);
         List<GenotypeList> genotypeLists = new ArrayList<GenotypeList>();
-        for (org.immunogenomics.gl.client.xml.jaxb.GenotypeList jaxbGenotypeList : jaxbMultilocusUnphasedGenotype.getGenotypeLists().getGenotypeLists()) {
+        for (org.nmdp.gl.client.xml.jaxb.GenotypeList jaxbGenotypeList : jaxbMultilocusUnphasedGenotype.getGenotypeLists().getGenotypeLists()) {
             GenotypeList genotypeList = toGenotypeList(jaxbGenotypeList);
             genotypeLists.add(genotypeList);
         }

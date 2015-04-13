@@ -24,7 +24,6 @@
 -->
 <%
   String serverURL = org.immunogenomics.gl.explorer.JspSupport.getServerUrl(request);
-  String bearerToken = org.immunogenomics.gl.explorer.JspSupport.getAccessToken();
 %>
 <html lang="en">
   <head>
@@ -47,8 +46,6 @@
 
     <script type="text/javascript">
         var serverURL = "<%=serverURL%>";
-        <%// WARNING: This exposes bearerToken in JSP.  This is not too risky since it is only for unauthenticated users. %>
-        var bearerToken = "<%=bearerToken%>";
     </script>
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/gl-explorer.js" type="text/javascript"></script>

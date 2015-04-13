@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:glx="https://gl.immunogenomics.org/gl-resource-xlink"
+  xmlns:glx="https://gl.nmdp.org/gl-resource-xlink"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  targetNamespace="https://gl.immunogenomics.org/gl-resource-xlink"
+  targetNamespace="https://gl.nmdp.org/gl-resource-xlink"
   elementFormDefault="qualified">
 
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"></xs:import>
