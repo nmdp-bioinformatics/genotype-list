@@ -44,10 +44,8 @@ import org.dishevelled.commandline.argument.StringArgument;
 import org.immunogenomics.gl.client.GlClient;
 import org.immunogenomics.gl.client.GlClientException;
 import org.immunogenomics.gl.client.cache.CacheGlClientModule;
-import org.immunogenomics.gl.client.http.BearerToken;
 import org.immunogenomics.gl.client.http.HttpClient;
 import org.immunogenomics.gl.client.http.restassured.RestAssuredHttpClient;
-import org.immunogenomics.gl.client.http.restassured.RestAssuredOAuthHttpClient;
 import org.immunogenomics.gl.client.json.JsonGlClient;
 import org.immunogenomics.gl.client.xml.XmlGlClient;
 import org.immunogenomics.gl.service.Namespace;
@@ -64,7 +62,7 @@ abstract class AbstractRegisterTask implements Runnable {
     private final File glstringFile;
     private final File identifierFile;
     protected final GlClient client;
-    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-t bearer-token] [-c json]";
+    private static final String USAGE_PARAMS = " --namespace http://localhost:8080/gl/ [-g glstrings.txt] [-i identifiers.txt] [-c json]";
 
 
     /**
@@ -146,10 +144,9 @@ abstract class AbstractRegisterTask implements Runnable {
         final StringArgument namespace = new StringArgument("s", "namespace", "namespace", true);
         final FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring input file", false);
         final FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier output file", false);
-        final StringArgument bearerToken = new StringArgument("t", "bearer-token", "OAuth 2.0 bearer token", false);
         final StringArgument client = new StringArgument("c", "client", "client implementation, json or xml, default json", false);
 
-        ArgumentList arguments = new ArgumentList(help, namespace, glstringFile, identifierFile, bearerToken, client);
+        ArgumentList arguments = new ArgumentList(help, namespace, glstringFile, identifierFile, client);
         CommandLine commandLine = new CommandLine(args);
         try
         {
@@ -183,13 +180,7 @@ abstract class AbstractRegisterTask implements Runnable {
                     bind(File.class).annotatedWith(IdentifierFile.class).toProvider(Providers.of((File) null));
                 }
 
-                if (bearerToken.wasFound()) {
-                    bind(String.class).annotatedWith(BearerToken.class).toInstance(bearerToken.getValue());
-                    bind(HttpClient.class).to(RestAssuredOAuthHttpClient.class);
-                }
-                else {
-                    bind(HttpClient.class).to(RestAssuredHttpClient.class);
-                }
+                bind(HttpClient.class).to(RestAssuredHttpClient.class);
 
                 if ("xml".equals(client.getValue("json"))) {
                     bind(GlClient.class).to(XmlGlClient.class);

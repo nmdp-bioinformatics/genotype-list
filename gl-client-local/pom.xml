@@ -85,7 +85,7 @@
       </dependency>
       <dependency>
         <groupId>org.immunogenomics.gl</groupId>
-        <artifactId>gl-service-nomenclature-imgt</artifactId>
+        <artifactId>gl-service-nomenclature-hla</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -119,7 +119,7 @@
     </dependency>
     <dependency>
       <groupId>org.immunogenomics.gl</groupId>
-      <artifactId>gl-service-nomenclature-imgt</artifactId>
+      <artifactId>gl-service-nomenclature-hla</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
