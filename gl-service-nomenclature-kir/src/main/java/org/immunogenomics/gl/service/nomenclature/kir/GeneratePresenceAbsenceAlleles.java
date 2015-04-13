@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.immunogenomics.gl.service.nomenclature.ipd;
+package org.immunogenomics.gl.service.nomenclature.kir;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
