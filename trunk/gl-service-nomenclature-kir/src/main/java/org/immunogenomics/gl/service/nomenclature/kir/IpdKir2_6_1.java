@@ -21,8 +21,40 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.immunogenomics.gl.service.nomenclature.kir;
+
+import org.immunogenomics.gl.service.GlRegistry;
+import org.immunogenomics.gl.service.GlstringResolver;
+import org.immunogenomics.gl.service.IdResolver;
+
+import org.immunogenomics.gl.service.nomenclature.ClasspathNomenclature;
+
+import com.google.inject.Inject;
 
 /**
- * IPD-KIR nomenclature.
+ * IPD-KIR version 2.6.1 nomenclature.
  */
-package org.immunogenomics.gl.service.nomenclature.ipd;
+public final class IpdKir2_6_1 extends ClasspathNomenclature {
+
+    @Inject
+    public IpdKir2_6_1(final GlstringResolver glstringResolver,
+                       final IdResolver idResolver,
+                       final GlRegistry glRegistry) {
+        super("ipd-kir-2.6.1.txt", glstringResolver, idResolver, glRegistry);
+    }
+
+    @Override
+    public String getName() {
+        return "IPD-KIR Database";
+    }
+
+    @Override
+    public String getVersion() {
+        return "2.6.1";
+    }
+
+    @Override
+    public String getURL() {
+        return "https://www.ebi.ac.uk/ipd/kir/";
+    }
+}
