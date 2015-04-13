@@ -5,45 +5,46 @@ Install jdk 1.7 or later, maven 3.2.1 or later.
 
 
 To build
-
+```
 $ mvn install
-
+```
 
 Functional tests are excuted against an embedded jetty during the build.
 
 
 To run performance tests
-
+```
 $ cd gl-service-performance-tests
 $ mvn -DdescriptorId=jar-with-dependencies assembly:assembly
-
+```
 and refer to gl-service-performance-tests/README.txt for further instructions.
 
 
 To deploy to an external jetty/tomcat
-
+```
 $ cp gl-service-webapp/target/gl.war $CONTAINER_HOME/webapps
 $ cp gl-service-explorer/target/explorer.war $CONTAINER_HOME/webapps
-
+```
 
 To install to a host:port other than the default (http://localhost:10080), edit the following property files, rebuild the war files, and redeploy
-
+```
 gl-service-webapp/src/main/resources/gl-service.properties
 gl-service-explorer/src/main/resources/gl-service.properties
-
+```
 
 To explore the gl-service API interactively, use the API explorer web interface at
-
+```
 http://localhost:10080/explorer
-
+```
 
 To retrieve a resource identified by a URI, use HTTP GET
-
+```
 $ wget -q -O - http://localhost:10080/gl/locus/0.gls && echo
 HLA-A
-
+```
 The file extension determines the content type of the response.
 
+```bash
 $ wget -q -O - http://localhost:10080/gl/locus/0.html && echo
 <!DOCTYPE html>
 <html lang="en">
@@ -59,8 +60,9 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.html && echo
     <p class="hasGlstring">HLA-A</p>
   </body>
 </html>
+```
 
-
+```bash
 $ wget -q -O - http://localhost:10080/gl/locus/0.rdf && echo
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF
@@ -79,7 +81,9 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.rdf && echo
     <gl:hasGlstring>HLA-A</gl:hasGlstring>
   </rdf:Description>
 </rdf:RDF>
+```
 
+```bash
 $ wget -q -O - http://localhost:10080/gl/locus/0.n3 && echo
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix gl: <http://immunogenomics.org/gl-ontology/1.0/> .
@@ -93,10 +97,10 @@ $ wget -q -O - http://localhost:10080/gl/locus/0.n3 && echo
   rdfs:label "http://localhost:10080/gl/locus/0" ;
   rdfs:comment "A locus represented by glstring HLA-A" ;
   gl:hasGlstring "HLA-A" ;
-
+```
 
 To register a new resource described by a glstring, use HTTP POST
-
+```bash
 $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01/HLA-A*01:01:01:02N" -X POST http://localhost:10080/gl/allele-list -v && echo
 * About to connect() to localhost port 10080 (#0)
 *   Trying 127.0.0.1... connected
@@ -118,11 +122,11 @@ $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01/HLA-A*01:01
 * Connection #0 to host localhost left intact
 * Closing connection #0
 HLA-A*01:01:01:01/HLA-A*01:01:01:02N
-
+```bash
 The URI for the newly created resource is returned as the Location in the response header.
 
 Other examples
-
+```bash
 $ curl --header "content-type: text/plain" --data "HLA-A" -X POST http://localhost:10080/gl/locus -v && echo
 
 $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01" -X POST http://localhost:10080/gl/allele -v && echo
@@ -136,3 +140,4 @@ $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01+HLA-A*01:01
 $ curl --header "content-type: text/plain" --data "HLA-A*01:01:01:01+HLA-A*01:01:01:02N|HLA-DRB1*08:30:02~HLA-DRB3*02:02:01:01+HLA-DRB1*08:30:02~HLA-DRB5*01:12" -X POST http://localhost:10080/gl/genotype-list -v && echo
 
 $ curl --header "content-type: text/plain" --data "HLA-A*02:01:44+HLA-A*24:20^HLA-B*15:29+HLA-B*82:02^HLA-C*05:42+HLA-C*12:13^HLA-DRB1*12:06~HLA-DRB4*01:03:01:01+HLA-DRB1*10:01:01~HLA-DRB3*02:02:03^HLA-DQB1*03:03:02:02+HLA-DQB1*06:15" -X POST http://localhost:10080/gl/multilocus-unphased-genotype -v && echo
+```
