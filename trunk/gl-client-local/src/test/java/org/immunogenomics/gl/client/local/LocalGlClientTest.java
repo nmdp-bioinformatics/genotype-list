@@ -34,6 +34,8 @@ import org.immunogenomics.gl.Locus;
 import org.immunogenomics.gl.client.AbstractGlClientTest;
 import org.immunogenomics.gl.client.GlClient;
 
+import org.immunogenomics.gl.service.nomenclature.imgt.ImgtHla3_19_0;
+
 import org.junit.Test;
 
 /**
@@ -66,6 +68,35 @@ public final class LocalGlClientTest extends AbstractGlClientTest {
         assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList.getGlstring());
         assertEquals("http://localhost/allele-list/0", alleleList.getId());
         assertEquals(alleleList, client.getAlleleList("http://localhost/allele-list/0"));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCreateStrictNullNomenclatureClass() throws Exception {
+        LocalGlClient.createStrict(null);
+    }
+
+    @Test
+    public void testCreateStrictNomenclature() throws Exception {
+        GlClient strict = LocalGlClient.createStrict(ImgtHla3_19_0.class);
+
+        Locus locus = strict.getLocus("http://localhost/locus/0");
+        assertNotNull(locus);
+        assertEquals("HLA-A", locus.getGlstring());
+        assertEquals("http://localhost/locus/0", locus.getId());
+        assertEquals(locus, strict.getLocus("http://localhost/locus/0"));
+        
+        Allele allele = strict.getAllele("http://localhost/allele/0");
+        assertNotNull(allele);
+        assertEquals("HLA-A*01:01:01G", allele.getGlstring());
+        assertEquals("http://localhost/allele/0", allele.getId());
+        assertEquals(allele, strict.getAllele("http://localhost/allele/0"));
+
+        assertNull(strict.getAlleleList("http://localhost/allele-list/0"));
+        AlleleList alleleList = strict.createAlleleList("HLA-A*01:01:01:01/HLA-A*01:01:01:02N");
+        assertNotNull(alleleList);
+        assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList.getGlstring());
+        assertEquals("http://localhost/allele-list/0", alleleList.getId());
+        assertEquals(alleleList, strict.getAlleleList("http://localhost/allele-list/0"));
     }
 
     @Test

@@ -54,7 +54,7 @@ import org.immunogenomics.gl.service.Nomenclature;
 import org.immunogenomics.gl.service.cache.CacheModule;
 import org.immunogenomics.gl.service.id.IdModule;
 import org.immunogenomics.gl.service.nomenclature.DefaultNomenclature;
-import org.immunogenomics.gl.service.nomenclature.imgt.ImgtHla3_18_0;
+import org.immunogenomics.gl.service.nomenclature.imgt.ImgtHla3_19_0;
 import org.immunogenomics.gl.service.reader.GlstringGlReader;
 
 /**
@@ -199,7 +199,27 @@ public final class LocalGlClient extends AbstractGlClient {
      * @throws IOException if an I/O error occurs
      */
     public static GlClient createStrict() throws IOException {
-        Injector injector = Guice.createInjector(new LocalStrictModule(), new CacheModule(), new IdModule());
+        Injector injector = Guice.createInjector(new LocalStrictImgtHlaModule(), new CacheModule(), new IdModule());
+        Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
+        nomenclature.load();
+        return injector.getInstance(GlClient.class);
+    }
+
+    /**
+     * Create and return a new instance of LocalGlClient configured in strict mode with the specified nomenclature.
+     *
+     * @param nomenclatureClass nomenclature class, must not be null
+     * @return a new instance of LocalGlClient configured in strict mode with the specified nomenclature
+     * @throws IOException if an I/O error occurs
+     */
+    public static GlClient createStrict(final Class<? extends Nomenclature> nomenclatureClass) throws IOException {
+        checkNotNull(nomenclatureClass);
+        Injector injector = Guice.createInjector(new LocalStrictModule(), new CacheModule(), new IdModule(), new AbstractModule() {
+                @Override
+                protected void configure() {
+                    bind(Nomenclature.class).to(nomenclatureClass);
+                }
+            });
         Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
         nomenclature.load();
         return injector.getInstance(GlClient.class);
@@ -231,7 +251,21 @@ public final class LocalGlClient extends AbstractGlClient {
             bind(Boolean.class).annotatedWith(AllowNewAlleles.class).toInstance(false);
             bind(String.class).annotatedWith(Namespace.class).toInstance("http://localhost/");
             bind(GlReader.class).to(GlstringGlReader.class);
-            bind(Nomenclature.class).to(ImgtHla3_18_0.class);
+            bind(GlClient.class).to(LocalGlClient.class);
+        }
+    }
+
+    /**
+     * Local strict-mode IMGT/HLA module.
+     */
+    static final class LocalStrictImgtHlaModule extends AbstractModule {
+        @Override 
+        protected void configure() {
+            bind(Boolean.class).annotatedWith(AllowNewLoci.class).toInstance(false);
+            bind(Boolean.class).annotatedWith(AllowNewAlleles.class).toInstance(false);
+            bind(String.class).annotatedWith(Namespace.class).toInstance("http://localhost/");
+            bind(GlReader.class).to(GlstringGlReader.class);
+            bind(Nomenclature.class).to(ImgtHla3_19_0.class);
             bind(GlClient.class).to(LocalGlClient.class);
         }
     }
