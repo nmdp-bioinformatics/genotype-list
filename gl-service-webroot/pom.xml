@@ -25,7 +25,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.immunogenomics.gl</groupId>
+    <groupId>org.nmdp.gl</groupId>
     <artifactId>gl</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,11 +35,6 @@
   <name>gl-service-webroot</name>
   <description>Web static content root for the gl project.</description>
 
-  <scm>
-    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-service-webroot</connection>
-    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-service-webroot</developerConnection>
-    <url>http://code.google.com/p/genotype-list/source/browse/</url>
-  </scm>
   <build>
     <finalName>ROOT</finalName>
   </build>

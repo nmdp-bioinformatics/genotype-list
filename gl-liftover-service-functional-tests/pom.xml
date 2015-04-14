@@ -25,7 +25,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.immunogenomics.gl</groupId>
+    <groupId>org.nmdp.gl</groupId>
     <artifactId>gl</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,11 +35,6 @@
   <name>gl-liftover-service-functional-tests</name>
   <description>Functional tests for RESTful genotype list liftover service.</description>
 
-  <scm>
-    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-liftover-service-functional-tests</connection>
-    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-liftover-service-functional-tests</developerConnection>
-    <url>http://code.google.com/p/genotype-list/source/browse/</url>
-  </scm>
   <properties>
     <servlet.port>10080</servlet.port>
   </properties>
@@ -75,7 +70,7 @@
             <configuration>
               <deployables>
                 <deployable>
-                  <groupId>org.immunogenomics.gl</groupId>
+                  <groupId>org.nmdp.gl</groupId>
                   <artifactId>gl-liftover-service-webapp</artifactId>
                   <type>war</type>
                   <properties>
@@ -116,17 +111,17 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-liftover-service</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-liftover-service-webapp</artifactId>
         <version>${project.version}</version>
         <type>war</type>
@@ -140,17 +135,17 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-liftover-service</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-liftover-service-webapp</artifactId>
       <type>war</type>
       <scope>test</scope>

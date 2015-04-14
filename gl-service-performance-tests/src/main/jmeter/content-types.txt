@@ -1,5 +1,0 @@
-text/plain
-text/html
-application/json
-application/rdf+xml
-text/n3

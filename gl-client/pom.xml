@@ -25,7 +25,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.immunogenomics.gl</groupId>
+    <groupId>org.nmdp.gl</groupId>
     <artifactId>gl</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,20 +35,15 @@
   <name>gl-client</name>
   <description>Client library for the URI-based RESTful service for the gl project.</description>
 
-  <scm>
-    <connection>scm:svn|http://genotype-list.googlecode.com/svn/trunk/gl-client</connection>
-    <developerConnection>scm:svn|https://genotype-list.googlecode.com/svn/trunk/gl-client</developerConnection>
-    <url>http://code.google.com/p/genotype-list/source/browse/</url>
-  </scm>
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.immunogenomics.gl</groupId>
+        <groupId>org.nmdp.gl</groupId>
         <artifactId>gl-service</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -71,12 +66,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.immunogenomics.gl</groupId>
+      <groupId>org.nmdp.gl</groupId>
       <artifactId>gl-service</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -138,13 +133,13 @@
                 <xsdOption>
                   <xsd>src/main/xsd/gl-resource.xsd</xsd>
                   <bindingFile>src/main/xsd/gl-resource.xjb</bindingFile>
-                  <packagename>org.immunogenomics.gl.client.xml.jaxb</packagename>
+                  <packagename>org.nmdp.gl.client.xml.jaxb</packagename>
                   <extension>true</extension>
                 </xsdOption>
                 <xsdOption>
                   <xsd>src/main/xsd/gl-resource-xlink.xsd</xsd>
                   <bindingFile>src/main/xsd/gl-resource-xlink.xjb</bindingFile>
-                  <packagename>org.immunogenomics.gl.client.xmlxlink.jaxb</packagename>
+                  <packagename>org.nmdp.gl.client.xmlxlink.jaxb</packagename>
                   <extension>true</extension>
                 </xsdOption>
               </xsdOptions>
