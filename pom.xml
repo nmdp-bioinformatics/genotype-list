@@ -256,7 +256,7 @@
   </dependencyManagement>
 
   <build>
-   <pluginManagement>
+    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -330,7 +330,7 @@
           <configuration>
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <useReleaseProfile>false</useReleaseProfile>
-            <releaseProfiles>release</releaseProfiles>
+            <releaseProfiles>release,server-artifacts</releaseProfiles>
             <goals>deploy</goals>
           </configuration>
         </plugin>
