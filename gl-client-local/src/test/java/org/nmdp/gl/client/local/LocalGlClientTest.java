@@ -27,6 +27,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.google.inject.Injector;
+import com.google.inject.Guice;
+
 import org.nmdp.gl.Allele;
 import org.nmdp.gl.AlleleList;
 import org.nmdp.gl.Locus;
@@ -122,5 +125,28 @@ public final class LocalGlClientTest extends AbstractGlClientTest {
         assertEquals("HLA-A*01:01:01:01/HLA-A*01:01:01:02N", alleleList.getGlstring());
         assertEquals("http://localhost/allele-list/0", alleleList.getId());
         Assert.assertEquals(alleleList, strict.getAlleleList("http://localhost/allele-list/0"));
+    }
+
+    @Test
+    public void testGetLocalModules() {
+        Injector injector = Guice.createInjector(LocalGlClient.getLocalModules());
+        assertNotNull(injector.getInstance(GlClient.class));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testGetLocalStrictModulesNullNomenclatureClass() {
+        LocalGlClient.getLocalStrictModules(null);
+    }
+
+    @Test
+    public void testGetLocalStrictModules() {
+        Injector injector = Guice.createInjector(LocalGlClient.getLocalStrictModules(ImgtHla3_19_0.class));
+        assertNotNull(injector.getInstance(GlClient.class));
+    }
+
+    @Test
+    public void testGetLocalStrictImgtHlaModules() {
+        Injector injector = Guice.createInjector(LocalGlClient.getLocalStrictImgtHlaModules());
+        assertNotNull(injector.getInstance(GlClient.class));
     }
 }
