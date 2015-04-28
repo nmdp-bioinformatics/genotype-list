@@ -4,10 +4,15 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
-/.settings/
 /bin/
 /.project
 /.classpath
+/.settings/
+*/.project
+*/.classpath
+*/.settings/
 /.idea
 .DS_Store
 ._.DS_Store
+*~
+**/*~
