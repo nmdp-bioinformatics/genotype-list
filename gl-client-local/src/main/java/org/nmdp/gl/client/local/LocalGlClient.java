@@ -27,6 +27,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.IOException;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -188,7 +192,7 @@ public final class LocalGlClient extends AbstractGlClient {
      * @return a new instance of LocalGlClient configured with the default nomenclature
      */
     public static GlClient create() {
-        Injector injector = Guice.createInjector(new LocalModule(), new CacheModule(), new IdModule());
+        Injector injector = Guice.createInjector(getLocalModules());
         return injector.getInstance(GlClient.class);
     }
 
@@ -199,7 +203,7 @@ public final class LocalGlClient extends AbstractGlClient {
      * @throws IOException if an I/O error occurs
      */
     public static GlClient createStrict() throws IOException {
-        Injector injector = Guice.createInjector(new LocalStrictImgtHlaModule(), new CacheModule(), new IdModule());
+        Injector injector = Guice.createInjector(getLocalStrictImgtHlaModules());
         Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
         nomenclature.load();
         return injector.getInstance(GlClient.class);
@@ -214,22 +218,69 @@ public final class LocalGlClient extends AbstractGlClient {
      */
     public static GlClient createStrict(final Class<? extends Nomenclature> nomenclatureClass) throws IOException {
         checkNotNull(nomenclatureClass);
-        Injector injector = Guice.createInjector(new LocalStrictModule(), new CacheModule(), new IdModule(), new AbstractModule() {
+        Injector injector = Guice.createInjector(getLocalStrictModules(nomenclatureClass));
+        Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
+        nomenclature.load();
+        return injector.getInstance(GlClient.class);
+    }
+
+    /**
+     * Return the list of modules that configure LocalGlClient with the default nomenclature.
+     *
+     * @return the list of modules that configure LocalGlClient with the default nomenclature
+     */
+    public static List<AbstractModule> getLocalModules() {
+        return ImmutableList.of(new LocalModule(), new CacheModule(), new IdModule());
+    }
+
+    /**
+     * Return the list of modules that configure LocalGlClient in strict mode with the specified nomenclature.
+     *
+     * <p>
+     * Note the nomenclature provided by an injector created from these modules must be loaded, e.g.
+     * <pre>
+     * Injector injector = Guice.createInjector(getLocalStrictModules(nomenclatureClass));
+     * Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
+     * nomenclature.load();
+     * </pre>
+     * </p>
+     *
+     * @param nomenclatureClass nomenclature class, must ot be null
+     * @return the list of modules that configure LocalGlClient in strict mode with the specified nomenclature
+     */
+    public static List<AbstractModule> getLocalStrictModules(final Class<? extends Nomenclature> nomenclatureClass) {
+        checkNotNull(nomenclatureClass);
+        return ImmutableList.of(new LocalStrictModule(), new CacheModule(), new IdModule(), new AbstractModule() {
                 @Override
                 protected void configure() {
                     bind(Nomenclature.class).to(nomenclatureClass);
                 }
             });
-        Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
-        nomenclature.load();
-        return injector.getInstance(GlClient.class);
+    }
+
+    /**
+     * Return the list of modules that configure LocalGlClient in strict mode with the latest IMGT/HLA nomenclature.
+     *
+     * <p>
+     * Note the nomenclature provided by an injector created from these modules must be loaded, e.g.
+     * <pre>
+     * Injector injector = Guice.createInjector(getLocalStrictImgtHlaModules());
+     * Nomenclature nomenclature = injector.getInstance(Nomenclature.class);
+     * nomenclature.load();
+     * </pre>
+     * </p>
+     *
+     * @return the list of modules that configure LocalGlClient in strict mode with the latest IMGT/HLA nomenclature
+     */
+    public static List<AbstractModule> getLocalStrictImgtHlaModules() {
+        return ImmutableList.of(new LocalStrictImgtHlaModule(), new CacheModule(), new IdModule());
     }
 
 
     /**
      * Local module.
      */
-    static final class LocalModule extends AbstractModule {
+    public static final class LocalModule extends AbstractModule {
         @Override 
         protected void configure() {
             bind(Boolean.class).annotatedWith(AllowNewLoci.class).toInstance(true);
@@ -244,7 +295,7 @@ public final class LocalGlClient extends AbstractGlClient {
     /**
      * Local strict-mode module.
      */
-    static final class LocalStrictModule extends AbstractModule {
+    public static final class LocalStrictModule extends AbstractModule {
         @Override 
         protected void configure() {
             bind(Boolean.class).annotatedWith(AllowNewLoci.class).toInstance(false);
@@ -258,7 +309,7 @@ public final class LocalGlClient extends AbstractGlClient {
     /**
      * Local strict-mode IMGT/HLA module.
      */
-    static final class LocalStrictImgtHlaModule extends AbstractModule {
+    public static final class LocalStrictImgtHlaModule extends AbstractModule {
         @Override 
         protected void configure() {
             bind(Boolean.class).annotatedWith(AllowNewLoci.class).toInstance(false);
