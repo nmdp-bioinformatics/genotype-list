@@ -103,7 +103,7 @@ public final class AllelelistHistoryReaderTest {
     /*
 
       run this to generate all imgt-hla-${version}.txt files
-      copy to ../gl-service-nomenclature-imgt/src/main/resources/org/immunogenomics/gl/service/nomenclature/imgt
+      copy to ../gl-service-nomenclature-hla/src/main/resources/org/immunogenomics/gl/service/nomenclature/hla
 
      */
     void testWriteLoadFiles() throws Exception {
