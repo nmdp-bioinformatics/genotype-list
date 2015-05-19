@@ -39,6 +39,31 @@
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
+        <artifactId>templating-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>filter-src</id>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- note:  order matters here, since all use package execution -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
         <artifactId>appassembler-maven-plugin</artifactId>
         <configuration>
           <repositoryLayout>flat</repositoryLayout>
@@ -47,31 +72,31 @@
           <programs>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterAlleleLists</mainClass>
-              <name>gl-register-allele-lists</name>
+              <id>gl-register-allele-lists</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterAlleles</mainClass>
-              <name>gl-register-alleles</name>
+              <id>gl-register-alleles</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterGenotypeLists</mainClass>
-              <name>gl-register-genotype-lists</name>
+              <id>gl-register-genotype-lists</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterGenotypes</mainClass>
-              <name>gl-register-genotypes</name>
+              <id>gl-register-genotypes</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterHaplotypes</mainClass>
-              <name>gl-register-haplotypes</name>
+              <id>gl-register-haplotypes</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterLoci</mainClass>
-              <name>gl-register-loci</name>
+              <id>gl-register-loci</id>
             </program>
             <program>
               <mainClass>org.nmdp.gl.tools.RegisterMultilocusUnphasedGenotypes</mainClass>
-              <name>gl-register-multilocus-unphased-genotypes</name>
+              <id>gl-register-multilocus-unphased-genotypes</id>
             </program>
           </programs>
         </configuration>
@@ -97,8 +122,51 @@
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>assembly</goal>
+              <goal>single</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>jdeb</artifactId>
+        <groupId>org.vafer</groupId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jdeb</goal>
+            </goals>
+            <configuration>
+              <dataSet>
+                <data>
+                  <src>${project.build.sourceDirectory}/../../deb/gl-tools.sh</src>
+                  <dst>/etc/profile.d/gl-tools.sh</dst>
+                  <type>file</type>
+                  <mapper>
+                    <type>perm</type>
+                    <uid>0</uid>
+                    <gid>0</gid>
+                    <user>root</user>
+                    <group>root</group>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
+                <data>
+                  <src>${project.build.directory}/${project.artifactId}-${project.version}-bin.tar.gz</src>
+                  <type>archive</type>
+                  <excludes>**/*.bat</excludes>
+                  <mapper>
+                    <type>perm</type>
+                    <strip>1</strip>
+                    <uid>0</uid>
+                    <gid>0</gid>
+                    <user>root</user>
+                    <group>root</group>
+                    <prefix>/opt/${project.artifactId}</prefix>
+                  </mapper>
+                </data>
+              </dataSet>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -140,4 +208,8 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <properties>
+    <maven.build.timestamp>${maven.build.timestamp}</maven.build.timestamp>
+    <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+  </properties>
 </project>
