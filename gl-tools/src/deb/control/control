@@ -1,0 +1,10 @@
+Package: [[name]]
+Version: [[version]]
+Section: misc
+Architecture: all
+Depends: openjdk-7-jre-headless
+Priority: extra
+Maintainer: Jason Brelsford <jbrelsf2@nmdp.org>
+Homepage: https://github.com/nmdp-bioinformatics/genotype-list
+Description: Genotype list tools.
+Distribution: development

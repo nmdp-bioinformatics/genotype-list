@@ -140,23 +140,36 @@ abstract class AbstractRegisterTask implements Runnable {
      */
     protected static final Injector init(final String commandName, final String[] args) {
         String usage = commandName + USAGE_PARAMS;
+        Switch about = new Switch("a", "about", "display about message");
         Switch help = new Switch("h", "help", "display help message");
         final StringArgument namespace = new StringArgument("s", "namespace", "namespace", true);
         final FileArgument glstringFile = new FileArgument("g", "glstrings", "glstring input file", false);
         final FileArgument identifierFile = new FileArgument("i", "identifiers", "identifier output file", false);
         final StringArgument client = new StringArgument("c", "client", "client implementation, json or xml, default json", false);
 
-        ArgumentList arguments = new ArgumentList(help, namespace, glstringFile, identifierFile, client);
+        ArgumentList arguments = new ArgumentList(about, help, namespace, glstringFile, identifierFile, client);
         CommandLine commandLine = new CommandLine(args);
         try
         {
             CommandLineParser.parse(commandLine, arguments);
-
+            if (about.wasFound()) {
+                About.about(System.out);
+                System.exit(0);
+            }
             if (help.wasFound()) {
                 Usage.usage(usage, null, commandLine, arguments, System.out);
+                System.exit(0);
             }
         }
         catch (CommandLineParseException e) {
+            if (about.wasFound()) {
+                About.about(System.out);
+                System.exit(0);
+            }
+            if (help.wasFound()) {
+                Usage.usage(usage, null, commandLine, arguments, System.out);
+                System.exit(0);
+            }
             Usage.usage(usage, e, commandLine, arguments, System.err);
             System.exit(-1);
         }
