@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nmdp.gl</groupId>
   <artifactId>gl</artifactId>
-  <version>1.0-rc1</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>gl</name>
   <description>Multimodule build for the gl project.</description>
@@ -37,7 +37,7 @@
     <connection>scm:git:git@github.com:nmdp-bioinformatics/genotype-list.git</connection>
     <developerConnection>scm:git:git@github.com:nmdp-bioinformatics/genotype-list.git</developerConnection>
     <url>git@github.com:nmdp-bioinformatics/genotype-list.git</url>
-    <tag>gl-1.0-rc1</tag>
+    <tag>HEAD</tag>
   </scm>
   <licenses>
     <license>
