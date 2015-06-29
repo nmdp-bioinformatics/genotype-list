@@ -15,7 +15,7 @@ public class JspSupport {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         try {
             properties.load(classLoader.getResourceAsStream("/gl-service.properties"));
-            String serverURL = properties.getProperty("org.immunogenomics.gl.service.Namespace");
+            String serverURL = properties.getProperty("org.nmdp.gl.service.Namespace");
             return serverURL;
         } catch (IOException e) {
             e.printStackTrace();
