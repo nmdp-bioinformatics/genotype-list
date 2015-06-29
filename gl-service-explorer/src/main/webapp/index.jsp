@@ -23,7 +23,7 @@
 
 -->
 <%
-  String serverURL = org.immunogenomics.gl.explorer.JspSupport.getServerUrl(request);
+  String serverURL = org.nmdp.gl.explorer.JspSupport.getServerUrl(request);
 %>
 <html lang="en">
   <head>
