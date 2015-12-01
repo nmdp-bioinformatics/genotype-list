@@ -58,7 +58,7 @@ import org.nmdp.gl.service.Nomenclature;
 import org.nmdp.gl.service.cache.CacheModule;
 import org.nmdp.gl.service.id.IdModule;
 import org.nmdp.gl.service.nomenclature.DefaultNomenclature;
-import org.nmdp.gl.service.nomenclature.hla.ImgtHla3_20_0;
+import org.nmdp.gl.service.nomenclature.hla.ImgtHla3_22_0;
 import org.nmdp.gl.service.reader.GlstringGlReader;
 
 /**
@@ -316,7 +316,7 @@ public final class LocalGlClient extends AbstractGlClient {
             bind(Boolean.class).annotatedWith(AllowNewAlleles.class).toInstance(false);
             bind(String.class).annotatedWith(Namespace.class).toInstance("http://localhost/");
             bind(GlReader.class).to(GlstringGlReader.class);
-            bind(Nomenclature.class).to(ImgtHla3_20_0.class);
+            bind(Nomenclature.class).to(ImgtHla3_22_0.class);
             bind(GlClient.class).to(LocalGlClient.class);
         }
     }
