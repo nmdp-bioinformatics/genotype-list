@@ -33,7 +33,7 @@ import org.apache.velocity.runtime.log.LogChute;
 import org.nmdp.gl.service.GlReader;
 import org.nmdp.gl.service.GlWriter;
 import org.nmdp.gl.service.Nomenclature;
-import org.nmdp.gl.service.nomenclature.hla.ImgtHla3_22_0;
+import org.nmdp.gl.service.nomenclature.hla.ImgtHla3_23_0;
 import org.nmdp.gl.service.reader.GlstringGlReader;
 import org.nmdp.gl.service.writer.GlstringGlWriter;
 import org.nmdp.gl.service.writer.HtmlGlWriter;
@@ -60,7 +60,7 @@ final class SparkModule extends AbstractModule {
     @Override 
     protected void configure() {
         bind(GlReader.class).to(GlstringGlReader.class);
-        bind(Nomenclature.class).to(ImgtHla3_22_0.class);
+        bind(Nomenclature.class).to(ImgtHla3_23_0.class);
         bind(SparkApplication.class).to(SparkGlService.class);
     }
 
