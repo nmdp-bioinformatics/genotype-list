@@ -90,7 +90,7 @@ public final class GlstringGlReader implements GlReader {
                 glRegistry.registerLocus(locus);
             }
             else {
-                throw new IOException("locus \"" + glstring + "\" not a valid formatted glstring");
+                throw new IOException("locus \"" + glstring + "\" not a properly formatted glstring");
             }
         }
         return locus;
@@ -113,7 +113,7 @@ public final class GlstringGlReader implements GlReader {
                 glRegistry.registerAllele(allele);
             }
             else {
-                throw new IOException("allele \"" + glstring + "\" not a valid formatted glstring");
+                throw new IOException("allele \"" + glstring + "\" not a properly formatted glstring");
             }
         }
         return allele;
