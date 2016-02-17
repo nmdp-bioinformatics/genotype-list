@@ -365,7 +365,7 @@ public final class SparkGlService implements SparkApplication {
                 response.status(400);
                 response.type("text/plain");
                 logger.warn("Unable to create {} (400), request body was empty", name);
-                return "Unable to create " + name;
+                return "Unable to create " + name + ", request body was empty";
             }
             try {
                 GlResource glResource = readGlResource(request.body());
@@ -379,7 +379,7 @@ public final class SparkGlService implements SparkApplication {
                 response.status(400);
                 response.type("text/plain");
                 logger.warn("Unable to create {} (400), caught {}", name, e.getMessage());
-                return "Unable to create " + name;
+                return "Unable to create " + name + ", " + e.getMessage();
             }
         }
 
