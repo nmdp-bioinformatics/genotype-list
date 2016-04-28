@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Script to generate presence/absence alleles.
  */
-public final class GeneratePresenceAbsenceAlleles implements Runnable {
+public final class GeneratePseudoAlleles implements Runnable {
 
     @Override
     public void run() {
@@ -56,6 +56,8 @@ public final class GeneratePresenceAbsenceAlleles implements Runnable {
                     writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), line, "NEG");
                 }
             }
+            writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), "KIR2DS4", "FUL");
+            writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), "KIR2DS4", "DEL");
         }
         catch (IOException e) {
             // ignore
@@ -82,8 +84,8 @@ public final class GeneratePresenceAbsenceAlleles implements Runnable {
      *
      * @param args command line arguments
      */
-    // $ cut -f 2 ipd-kir-2.6.1.txt | cut -f 1 -d "*" | sort -u | java GeneratePresenceAbsenceAlleles >> ipd-kir-2.6.1.txt
+    // $ cut -f 2 ipd-kir-2.6.1.txt | cut -f 1 -d "*" | sort -u | java GeneratePseudoAlleles >> ipd-kir-2.6.1.txt
     public static void main(final String[] args) {
-        new GeneratePresenceAbsenceAlleles().run();
+        new GeneratePseudoAlleles().run();
     }
 }
