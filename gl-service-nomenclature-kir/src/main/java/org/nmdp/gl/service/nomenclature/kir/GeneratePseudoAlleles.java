@@ -56,8 +56,58 @@ public final class GeneratePseudoAlleles implements Runnable {
                     writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), line, "NEG");
                 }
             }
-            writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), "KIR2DS4", "FUL");
-            writer.printf("NMDP%04d\t%s*%s\n", id.getAndIncrement(), "KIR2DS4", "DEL");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DS4*FUL");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DS4*DEL");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0010101");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0010102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0010103");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00103");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00104");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00105");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0050101");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0050102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0050103");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0050104");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01201");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01202");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*014");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*015");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020101");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020103");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020104");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020105");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020106");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0020107");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00202");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00203");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*003");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*004");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00601");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00602");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00603");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0070101");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0070102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0080101");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*0080102");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00802");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00803");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*00804");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*009");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*010");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*011");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01301");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01302");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01303");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*01304");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*016");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*017");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*018");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*019");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*020");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*POS");
+            writer.printf("NMDP%04d\t%s\n", id.getAndIncrement(), "KIR2DL5*NEG");
         }
         catch (IOException e) {
             // ignore
