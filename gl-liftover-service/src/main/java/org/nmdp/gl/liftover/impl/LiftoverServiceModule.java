@@ -83,7 +83,7 @@ public final class LiftoverServiceModule extends AbstractModule {
 
     @Provides @LocusNames @Singleton
     Table<String, String, String> createLocusNames() {
-        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
+        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.nmdp.org/imgt-hla/");
         try {
             allelelistHistoryReader.readAllelelistHistory();
             allelelistHistoryReader.readGgroups();
@@ -96,7 +96,7 @@ public final class LiftoverServiceModule extends AbstractModule {
 
     @Provides @AlleleNames @Singleton
     Table<String, String, String> createAlleleNames() {
-        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
+        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.nmdp.org/imgt-hla/");
         try {
             allelelistHistoryReader.readAllelelistHistory();
             allelelistHistoryReader.readGgroups();
