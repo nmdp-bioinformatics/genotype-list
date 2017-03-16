@@ -6,7 +6,7 @@ Genotype List service, client library, and command line tools.
 [![Build Status](https://travis-ci.org/nmdp-bioinformatics/genotype-list.svg?branch=master)](https://travis-ci.org/nmdp-bioinformatics/genotype-list)
 
 
-###Hacking genotype-list
+### Hacking genotype-list
 
 Install
 
