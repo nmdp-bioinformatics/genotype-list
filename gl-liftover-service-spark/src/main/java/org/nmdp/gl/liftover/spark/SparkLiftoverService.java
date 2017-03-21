@@ -230,18 +230,10 @@ public final class SparkLiftoverService implements SparkApplication {
         try {
             JsonGenerator generator = jsonFactory.createJsonGenerator(writer);
             generator.writeStartObject();
-            generator.writeStartObject();
             generator.writeStringField("sourceNamespace", sourceNamespace);
-            generator.writeEndObject();
-            generator.writeStartObject();
             generator.writeStringField("sourceUri", sourceUri);
-            generator.writeEndObject();
-            generator.writeStartObject();
             generator.writeStringField("targetNamespace", targetNamespace);
-            generator.writeEndObject();
-            generator.writeStartObject();
             generator.writeStringField("targetUri", targetUri);
-            generator.writeEndObject();
             generator.writeEndObject();
             generator.close();
         }
