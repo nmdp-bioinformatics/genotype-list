@@ -19,8 +19,8 @@
     <filter-class>spark.servlet.SparkFilter</filter-class>
     <init-param>
       <param-name>applicationClass</param-name>
-      <param-value>org.nmdp.gl.service.spark.SparkGlServiceApplication</param-value>
-      <!-- <param-value>org.nmdp.gl.service.spark.SparkJdbcGlServiceApplication</param-value>  -->
+      <!-- <param-value>org.nmdp.gl.service.spark.SparkGlServiceApplication</param-value> -->
+      <param-value>org.nmdp.gl.service.spark.SparkJdbcGlServiceApplication</param-value>
     </init-param>
   </filter>
 
