@@ -11,6 +11,10 @@ def main():
         for line in f:
             linecount += 1
             ggroup = line.split()[0]
+            # starting in 3.28, g-group-ids.txt started prepending with 'HLA-A'
+            # so adding this for the comparison
+            if ggroup[:4] == 'HLA-':
+                ggroup = ggroup[4:]
             ggroupids.add(ggroup)
             ggroupids_list.append(ggroup)
         print("# of lines in g-group-ids.txt =", linecount)
@@ -22,7 +26,6 @@ def main():
         for line in f:
             linecount += 1
             ggroup = line.split()[0]
-            ggroup = 'HLA-' + ggroup
             ggroups.add(ggroup)
             ggroups_list.append(ggroup)
         print("# of lines in g-groups.txt =", linecount)
@@ -31,19 +34,19 @@ def main():
     print('number of unique G-groups in g-groups.txt =', len(ggroups))
 
     print('duplicate G-groups in g-group-ids.txt')
-    print([item for item, count in collections.Counter(ggroupids_list).items()
-           if count > 1])
+    print(list.sort([item for item, count in collections.Counter(ggroupids_list).items()
+           if count > 1]))
 
     print('duplicate G-groups in g-groups.txt')
-    print([item for item, count in collections.Counter(ggroups_list).items()
-           if count > 1])
+    print(list.sort([item for item, count in collections.Counter(ggroups_list).items()
+           if count > 1]))
 
     print('G-groups in g-group-ids.txt but not in g-groups.txt')
-    for i in (ggroupids - ggroups):
+    for i in (sorted(ggroupids - ggroups)):
         print(i)
 
     print('G-groups in g-groups.txt but not in g-group-ids.txt')
-    for i in (ggroups - ggroupids):
+    for i in (sorted(ggroups - ggroupids)):
         print(i)
 
 
