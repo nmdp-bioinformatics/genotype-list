@@ -113,20 +113,25 @@ final class AllelelistHistoryReader {
                     break;
                 }
 
-                String[] tokens = line.split("\t");
-                if (!readHeaderLine) {
-                    for (int i = 1; i < tokens.length; i++) {
-                        String version = tokens[i];
-                        namespaces.add(namespacePrefix + fixVersion(version) + "/");
+                // skip metadata header lines
+                if (!line.startsWith("#")) {
+
+                    // Allelelist_history.txt was tab-delimited, comma-separated as of version 3.32.0
+                    String[] tokens = line.split(",");
+                    if (!readHeaderLine) {
+                        for (int i = 1; i < tokens.length; i++) {
+                            String version = tokens[i];
+                            namespaces.add(namespacePrefix + fixVersion(version) + "/");
+                        }
+                        readHeaderLine = true;
                     }
-                    readHeaderLine = true;
-                }
-                else {
-                    String accession = tokens[0];
-                    for (int i = 1; i < tokens.length; i++) {
-                        String glstring = tokens[i];
-                        if (!("NA".equals(glstring))) {
-                            alleleNames.put(namespaces.get(i), accession, fixAllele(glstring));
+                    else {
+                        String accession = tokens[0];
+                        for (int i = 1; i < tokens.length; i++) {
+                            String glstring = tokens[i];
+                            if (!("NA".equals(glstring))) {
+                                alleleNames.put(namespaces.get(i), accession, fixAllele(glstring));
+                            }
                         }
                     }
                 }
