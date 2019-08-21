@@ -82,28 +82,28 @@
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
-          <configuration>
-            <configuration>
-              <deployables>
-                <deployable>
-                  <groupId>org.nmdp.gl</groupId>
-                  <artifactId>gl-service-webapp</artifactId>
-                  <type>war</type>
-                  <properties>
-                    <context>gl</context>
-                  </properties>
-                </deployable>
-              </deployables>
+        <configuration>
+          <deployables>
+            <deployable>
+              <groupId>org.nmdp.gl</groupId>
+              <artifactId>gl-service-webapp</artifactId>
+              <type>war</type>
               <properties>
-                <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+                <context>gl</context>
               </properties>
-            </configuration>
-            <container>
-              <systemProperties>
-                <servlet.port>${servlet.port}</servlet.port>
-              </systemProperties>
-            </container>
+            </deployable>
+          </deployables>
+          <configuration>
+            <properties>
+              <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+            </properties>
           </configuration>
+          <container>
+            <systemProperties>
+              <servlet.port>${servlet.port}</servlet.port>
+            </systemProperties>
+          </container>
+        </configuration>
         <executions>
           <execution>
             <id>start-cargo</id>

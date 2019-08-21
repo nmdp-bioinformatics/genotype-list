@@ -75,17 +75,17 @@
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
           <configuration>
+            <deployables>
+              <deployable>
+                <groupId>org.nmdp.gl</groupId>
+                <artifactId>gl-liftover-service-webapp</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>liftover</context>
+                </properties>
+              </deployable>
+            </deployables>
             <configuration>
-              <deployables>
-                <deployable>
-                  <groupId>org.nmdp.gl</groupId>
-                  <artifactId>gl-liftover-service-webapp</artifactId>
-                  <type>war</type>
-                  <properties>
-                    <context>liftover</context>
-                  </properties>
-                </deployable>
-              </deployables>
               <properties>
                 <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
               </properties>
