@@ -45,19 +45,19 @@ public final class AllelelistHistoryReaderTest {
 
     @Test
     public void testAllelelistHistoryReader() throws Exception {
-        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
+        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.nmdp.org/imgt-hla/");
         allelelistHistoryReader.readAllelelistHistory();
         allelelistHistoryReader.readGgroups();
         Table<String, String, String> locusNames = allelelistHistoryReader.getLocusNames();
         Table<String, String, String> alleleNames = allelelistHistoryReader.getAlleleNames();
 
-        assertEquals("HLA-A*01:01:01:01", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA00001"));
-        assertEquals("HLA-A*010101", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/2.0.0/", "HLA00001"));
-        assertEquals("HLA-A*02:07:01G", alleleNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HGG00006"));
-        assertEquals("HLA-C", locusNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA-C"));
-        assertEquals("HLA-C", locusNames.get("https://gl.immunogenomics.org/imgt-hla/3.17.0/", "HLA-Cw"));
-        assertEquals("HLA-Cw", locusNames.get("https://gl.immunogenomics.org/imgt-hla/2.0.0/", "HLA-C"));
-        assertEquals("HLA-Cw", locusNames.get("https://gl.immunogenomics.org/imgt-hla/2.0.0/", "HLA-Cw"));
+        assertEquals("HLA-A*01:01:01:01", alleleNames.get("https://gl.nmdp.org/imgt-hla/3.17.0/", "HLA00001"));
+        assertEquals("HLA-A*010101", alleleNames.get("https://gl.nmdp.org/imgt-hla/2.0.0/", "HLA00001"));
+        assertEquals("HLA-A*02:07:01G", alleleNames.get("https://gl.nmdp.org/imgt-hla/3.17.0/", "HGG00006"));
+        assertEquals("HLA-C", locusNames.get("https://gl.nmdp.org/imgt-hla/3.17.0/", "HLA-C"));
+        assertEquals("HLA-C", locusNames.get("https://gl.nmdp.org/imgt-hla/3.17.0/", "HLA-Cw"));
+        assertEquals("HLA-Cw", locusNames.get("https://gl.nmdp.org/imgt-hla/2.0.0/", "HLA-C"));
+        assertEquals("HLA-Cw", locusNames.get("https://gl.nmdp.org/imgt-hla/2.0.0/", "HLA-Cw"));
     }
 
 
@@ -67,7 +67,7 @@ public final class AllelelistHistoryReaderTest {
 
      */
     void testWriteAll() throws Exception {
-        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.immunogenomics.org/imgt-hla/");
+        AllelelistHistoryReader allelelistHistoryReader = new AllelelistHistoryReader("https://gl.nmdp.org/imgt-hla/");
         allelelistHistoryReader.readAllelelistHistory();
         allelelistHistoryReader.readGgroups();
         Table<String, String, String> locusNames = allelelistHistoryReader.getLocusNames();
@@ -103,7 +103,7 @@ public final class AllelelistHistoryReaderTest {
     /*
 
       run this to generate all imgt-hla-${version}.txt files
-      copy to ../gl-service-nomenclature-hla/src/main/resources/org/immunogenomics/gl/service/nomenclature/hla
+      copy to ../gl-service-nomenclature-hla/src/main/resources/org/nmdp/gl/service/nomenclature/hla
 
      */
     void testWriteLoadFiles() throws Exception {
