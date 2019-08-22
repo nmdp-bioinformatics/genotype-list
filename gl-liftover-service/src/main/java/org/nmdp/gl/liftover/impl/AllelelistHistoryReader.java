@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Reader for <code>Allele_history.txt</code>.
  */
-final class AllelelistHistoryReader {
+public final class AllelelistHistoryReader {
     /** Namespace prefix. */
     private final String namespacePrefix;
 
@@ -64,7 +64,7 @@ final class AllelelistHistoryReader {
 
 
     //@Inject
-    AllelelistHistoryReader(final String namespacePrefix) {
+    public AllelelistHistoryReader(final String namespacePrefix) {
         checkNotNull(namespacePrefix);
         this.namespacePrefix = namespacePrefix;
 
@@ -99,7 +99,7 @@ final class AllelelistHistoryReader {
         }
     }
 
-    void readAllelelistHistory() throws IOException {
+    public void readAllelelistHistory() throws IOException {
         BufferedReader reader = null;
         boolean readHeaderLine = false;
         List<String> namespaces = new ArrayList<String>();
@@ -114,7 +114,10 @@ final class AllelelistHistoryReader {
                 }
 
                 // skip metadata header lines
-                if (!line.startsWith("#")) {
+                if (line.startsWith("#")) {
+                    logger.info("Allelelist_history.txt: " + line);
+                }
+                else {
 
                     // Allelelist_history.txt was tab-delimited, comma-separated as of version 3.32.0
                     String[] tokens = line.split(",");
@@ -123,6 +126,7 @@ final class AllelelistHistoryReader {
                             String version = tokens[i];
                             namespaces.add(namespacePrefix + fixVersion(version) + "/");
                         }
+                        logger.info("Allelelist_history.txt: " + line);
                         readHeaderLine = true;
                     }
                     else {
@@ -163,7 +167,7 @@ final class AllelelistHistoryReader {
     }
 
 
-    Map<String, String> readGgroupIds() throws IOException {
+    public Map<String, String> readGgroupIds() throws IOException {
         BufferedReader reader = null;
         Map<String, String> ggroupIds = new HashMap<String, String>();
         try {
@@ -192,7 +196,7 @@ final class AllelelistHistoryReader {
         return ggroupIds;
     }
 
-    void readGgroups() throws IOException {
+    public void readGgroups() throws IOException {
         Map<String, String> ggroupIds = readGgroupIds();
 
         BufferedReader reader = null;
@@ -208,15 +212,19 @@ final class AllelelistHistoryReader {
                 String ggroupToken = tokens.get(0);
                 String ggroup = fixAllele(tokens.get(0));
                 String accession = ggroupIds.get(ggroupToken);
-                if (accession == null) { System.out.println("could not find accession for " + ggroupToken); } else {
-                for (String alleleToken : Splitter.on("/").split(tokens.get(1))) {
-                    String allele = locus(ggroup) + "*" + alleleToken;
-                    for (String namespace : alleleNames.rowKeySet()) {
-                        if (alleleNames.row(namespace).values().contains(allele)) {
-                            alleleNames.put(namespace, accession, ggroup);
+
+                if (accession == null) {
+                    logger.warn("could not find accession for " + ggroupToken);
+                }
+                else {
+                    for (String alleleToken : Splitter.on("/").split(tokens.get(1))) {
+                        String allele = locus(ggroup) + "*" + alleleToken;
+                        for (String namespace : alleleNames.rowKeySet()) {
+                            if (alleleNames.row(namespace).values().contains(allele)) {
+                                alleleNames.put(namespace, accession, ggroup);
+                            }
                         }
                     }
-                }
                 }
             }
         }
@@ -231,11 +239,11 @@ final class AllelelistHistoryReader {
     }
 
 
-    Table<String, String, String> getLocusNames() {
+    public Table<String, String, String> getLocusNames() {
         return locusNames;
     }
 
-    Table<String, String, String> getAlleleNames() {
+    public Table<String, String, String> getAlleleNames() {
         return alleleNames;
     }
 }
