@@ -46,6 +46,10 @@
           <installArtifacts>false</installArtifacts>
           <programs>
             <program>
+              <mainClass>org.nmdp.gl.liftover.build.tools.CreateImgtHlaVersion</mainClass>
+              <id>create-imgt-hla-version</id>
+            </program>
+            <program>
               <mainClass>org.nmdp.gl.liftover.build.tools.WriteLoadFiles</mainClass>
               <id>write-load-files</id>
             </program>
