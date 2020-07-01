@@ -108,7 +108,7 @@
     <jsr305.version>2.0.3</jsr305.version>
     <junit.version>4.12</junit.version>
     <mockito.version>1.10.19</mockito.version>
-    <mysql.version>5.1.35</mysql.version>
+    <mysql.version>8.0.16</mysql.version>
     <powermock.version>1.5.1</powermock.version>
     <rest-assured.version>2.4.1</rest-assured.version>
     <rocoto.version>6.2</rocoto.version>
