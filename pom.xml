@@ -98,7 +98,7 @@
     <bonecp.version>0.8.0.RELEASE</bonecp.version>
     <commons-codec.version>1.8</commons-codec.version>
     <commons-dbutils.version>1.4</commons-dbutils.version>
-    <commons-lang3.version>3.4</commons-lang3.version>
+    <commons-lang3.version>3.18.0</commons-lang3.version>
     <dsh-bitset.version>3.0</dsh-bitset.version>
     <dsh-commandline.version>1.1</dsh-commandline.version>
     <guava.version>18.0</guava.version>
